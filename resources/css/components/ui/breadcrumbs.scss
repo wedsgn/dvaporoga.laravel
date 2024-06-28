@@ -1,0 +1,32 @@
+.breadcrumbs-section {
+  margin-top: 40px;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  svg {
+    display: block;
+  }
+
+  a {
+    transition: color 0.2s ease-in-out;
+    &:hover {
+      color: $red;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .breadcrumbs-section {
+    margin-top: 16px;
+  }
+  .breadcrumbs {
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    font-size: 14px;
+    line-height: 1;
+  }
+}

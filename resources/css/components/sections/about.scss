@@ -1,0 +1,144 @@
+.about-section__top {
+  margin-top: 32px;
+}
+
+.about-section__top_video {
+  aspect-ratio: 16/7;
+  border-radius: 8px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.about-section__top_text {
+  display: flex;
+  align-items: flex-start;
+  gap: 138px;
+  margin-top: 40px;
+
+  p {
+    width: 100%;
+  }
+}
+
+.about-section__cards {
+  display: flex;
+  flex-direction: column;
+  margin-top: 120px;
+  gap: 120px;
+}
+
+.about-section__card {
+  display: flex;
+  align-items: center;
+  gap: 138px;
+
+  &:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+}
+
+.about-section__card_image {
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 2/1;
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+}
+
+.about-section__card_content {
+  max-width: 468px;
+  width: 100%;
+}
+
+.about-section__card_title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 120%;
+}
+
+.about-section__card_text {
+  margin-top: 20px;
+  color: $grayDark;
+}
+
+@media screen and (max-width: 1440px) {
+  .about-section__cards {
+    gap: 80px;
+  }
+  .about-section__card {
+    gap: 32px;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .about-section__cards {
+    margin-top: 80px;
+    gap: 64px;
+  }
+  .about-section__card {
+    gap: 40px;
+  }
+
+  .about-section__card_content {
+    max-width: 30%;
+  }
+
+  .about-section__top_text {
+    gap: 32px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .about-section__top {
+    margin-top: 20px;
+  }
+  .about-section__top_text {
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 130%;
+  }
+
+  .about-section__card {
+    flex-direction: column;
+    gap: 20px;
+    &:nth-child(even) {
+      flex-direction: column;
+    }
+  }
+
+  .about-section__card_content {
+    max-width: none;
+  }
+
+  .about-section__card_image {
+    width: 100%;
+  }
+
+  .about-section__card_title {
+    font-size: 18px;
+  }
+
+  .about-section__card_text {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 130%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-section__cards {
+    gap: 56px;
+  }
+}

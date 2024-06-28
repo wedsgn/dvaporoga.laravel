@@ -1,0 +1,43 @@
+.input {
+  border-radius: 8px;
+  border: none;
+  border: 1px solid $grayLight;
+  margin: 0;
+  padding: 15px 19px;
+
+  transition: all 0.2s ease-in-out;
+  &:focus {
+    border: 1px solid $black;
+  }
+}
+
+.copyright {
+  // font-weight: 300;
+  font-size: 14px;
+  line-height: 130%;
+  a {
+    color: $red;
+    display: inline;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: $redHover;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .input {
+    border-radius: 8px;
+    border: none;
+    border: 1px solid $grayLight;
+    margin: 0;
+    padding: 12px 19px;
+
+    transition: all 0.2s ease-in-out;
+    &:focus {
+      border: 1px solid $black;
+    }
+  }
+}

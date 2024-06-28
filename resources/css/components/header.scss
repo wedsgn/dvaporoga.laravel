@@ -1,0 +1,133 @@
+.header {
+    padding: 10px 0;
+    background: $black;
+    color: $white;
+}
+
+.header__wrap {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo {
+    display: block;
+    img {
+        display: block;
+    }
+}
+
+.header__nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 56px;
+}
+
+.header__btns {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    a {
+        display: block;
+        svg {
+            display: block;
+        }
+        img {
+            display: block;
+        }
+    }
+}
+
+.header__phone {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 500;
+
+    a {
+        font-style: normal;
+        font-weight: 900;
+        line-height: 100%;
+    }
+    span {
+        display: block;
+        font-size: 12px;
+        line-height: 100%;
+        font-weight: 300;
+        color: $gray;
+    }
+}
+
+.header__link {
+    transition: color 0.2s ease-in-out;
+    &:hover {
+        color: $red;
+    }
+}
+
+.burger {
+    display: none;
+}
+
+@media screen and (max-width: 1440px) {
+    .burger {
+        width: 20px;
+        height: 16px;
+        display: block;
+        position: relative;
+        flex-shrink: 0;
+
+        span {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: $white;
+            border-radius: 2px;
+            left: 0;
+
+            &:nth-child(1) {
+                top: 0;
+            }
+            &:nth-child(2) {
+                top: 7px;
+            }
+            &:nth-child(3) {
+                bottom: 0;
+            }
+        }
+    }
+
+    .header__nav {
+        position: absolute;
+        // transform: translateY(-100%);
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .header-consultation-btn {
+        display: none;
+    }
+
+    .header__phone {
+        gap: 2px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .social-link {
+        display: none !important;
+    }
+
+    .header__phone {
+        display: none;
+    }
+
+    .header__logo {
+        img {
+            height: 24px;
+        }
+    }
+}

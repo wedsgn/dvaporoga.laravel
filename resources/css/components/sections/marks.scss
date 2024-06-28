@@ -1,0 +1,87 @@
+.marks-section {
+}
+
+.mark__wrap {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mark-image {
+  aspect-ratio: 1/1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.mark-info {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.mark-title {
+  text-transform: uppercase;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.mark-section-btn {
+  display: block;
+  text-align: center;
+  width: 224px;
+  margin: 56px auto 0;
+}
+
+@media screen and (max-width: 1200px) {
+  .mark-title {
+    font-size: 18px;
+  }
+  .mark__wrap {
+    margin-top: 48px;
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mark-title {
+    font-size: 18px;
+  }
+  .mark__wrap {
+    margin-top: 32px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .mark-title {
+    font-size: 18px;
+  }
+  .mark__wrap {
+    margin-top: 48px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mark-section-btn {
+    margin-top: 32px;
+    width: 100%;
+  }
+}
