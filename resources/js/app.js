@@ -9,6 +9,6 @@ window.addEventListener("load", () => {
   accordition();
   sliders();
   burger();
-  micromodal.init();
   tabs();
+  micromodal.init({});
 });

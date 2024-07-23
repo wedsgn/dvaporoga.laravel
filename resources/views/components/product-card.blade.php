@@ -45,6 +45,6 @@
             </li>
         </ul>
 
-        <button class="btn product-btn" data-modal-trigger="modal-1">Заказать сейчас</button>
+        <button class="btn product-btn" data-micromodal-trigger="modal-1">Заказать сейчас</button>
     </div>
 </div>
