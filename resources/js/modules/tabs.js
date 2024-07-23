@@ -3,8 +3,15 @@ export const tabs = () => {
 
   if (!tabs) return;
 
-  tabs.forEach(function (item) {
-    const tabButton = item.querySelectorAll(".tab-button");
-    const tabContent = item.querySelectorAll(".tab-content");
+  const tabButton = document.querySelectorAll(".tab-button");
+  const tabContent = document.querySelectorAll(".tab-content");
+
+  tabButton.forEach((tab, i) => {
+    tab.addEventListener("click", function () {
+      tabButton.forEach((tab) => tab.classList.remove("active"));
+      this.classList.add("active");
+      tabContent.forEach((content) => content.classList.remove("active"));
+      tabContent[i].classList.add("active");
+    });
   });
 };
