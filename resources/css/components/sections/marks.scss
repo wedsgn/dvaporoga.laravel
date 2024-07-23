@@ -56,8 +56,16 @@
     font-size: 18px;
   }
   .mark__wrap {
-    margin-top: 48px;
+    margin-top: 24px;
     grid-template-columns: repeat(6, 1fr);
+  }
+
+  .mark-info {
+    gap: 4px;
+  }
+
+  .mark-count {
+    font-size: 14px;
   }
 }
 
@@ -73,7 +81,8 @@
 
 @media screen and (max-width: 550px) {
   .mark-title {
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 100%;
   }
   .mark__wrap {
     margin-top: 48px;

@@ -1,4 +1,4 @@
-<section class="features-section section">
+<section id="features" class="features-section section">
     <div class="container">
         <div class="features-items__wrap">
             <!-- item -->

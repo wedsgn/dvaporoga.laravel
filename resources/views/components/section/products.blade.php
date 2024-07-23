@@ -1,4 +1,4 @@
-<section class="products-section">
+<section class="products-section" id='prices'>
     <div class="container">
         <div class="products-section__top">
             <h2 class="h2">
@@ -13,11 +13,11 @@
         </div>
 
         <div class="products-wrap">
-            <x-product-card />
-            <x-product-card />
-            <x-product-card />
-            <x-product-card />
-            <x-product-card />
+            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
+            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
+            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
+            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
+            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
         </div>
     </div>
 </section>

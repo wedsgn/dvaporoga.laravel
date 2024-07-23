@@ -14,6 +14,20 @@ use App\Http\Controllers\Client\WelcomePageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
+Route::get('/katalog', function() {
+  return view('catalog');
+})->name('catalog');
+
+
+Route::get('/blog', function() {
+  return view('blog');
+})->name('blog');
+
+Route::get('/blog/{slug}', function() {
+  return view('blog-single');
+})->name('blog.single');
+
+
 
 
 

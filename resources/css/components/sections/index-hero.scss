@@ -1,5 +1,5 @@
 .index-hero-section {
-  margin-top: 120px;
+  // margin-top: 120px;
 }
 
 .index-hero__subtitle {
@@ -25,7 +25,7 @@
     color: $red;
   }
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
@@ -58,21 +58,18 @@
 }
 
 @media screen and (max-width: 1440px) {
-  .index-hero-section {
-    margin-top: 80px;
-  }
-
   .index-hero__subtitle {
     font-size: 16px;
-    margin-top: 8px;
+    margin-top: 16px;
     display: inline-block;
+    font-weight: 500;
     border-radius: 100px;
-    border: 1px solid $red;
-    padding: 6px 12px;
+    border: 1px solid #e20d0d;
+    padding: 6px 24px;
   }
 
   .index-hero__wrap {
-    margin-top: 64px;
+    margin-top: 32px;
   }
 
   .index-hero__scheme {
@@ -81,10 +78,6 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .index-hero-section {
-    margin-top: 40px;
-  }
-
   .index-hero__scheme {
     margin-left: 0;
   }

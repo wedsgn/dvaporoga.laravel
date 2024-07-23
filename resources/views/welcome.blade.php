@@ -46,7 +46,7 @@
         <x-section.marks />
         <x-section.installing />
         <x-section.how-we-work />
-        <!-- Тут калькулятор -->
+        <x-section.about-parts />
         <x-section.about-company />
         <x-section.blog />
         <x-section.faq />

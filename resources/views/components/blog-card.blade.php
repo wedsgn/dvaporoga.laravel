@@ -1,20 +1,26 @@
+@props([
+    'title' => 'Как правильно подобрать порог?',
+    'image' => '',
+    'text' => 'Первые строки из статьи, которые займут, ну допустим где-то пять строк,
+            чтобы люди могли прочитать быстреко информацию и заинтересоваться в этой
+            статье, после чего перешли к ней и прочитали полностью. А еще это поможет
+            сео, ведь по тексту смогут найти страницу в поиске',
+    'date' => '12.02.2024',
+])
+
+
 <div class="blog-card">
     <div class="blog-card__image">
         <img src="/images/blog/1.jpg" alt="Как правильно подобрать порог?" />
     </div>
 
     <div class="blog-card__content">
-        <h3 class="blog-card__title">Как правильно подобрать порог?</h3>
-        <p class="blog-card__description">
-            Первые строки из статьи, которые займут, ну допустим где-то пять строк,
-            чтобы люди могли прочитать быстреко информацию и заинтересоваться в этой
-            статье, после чего перешли к ней и прочитали полностью. А еще это поможет
-            сео, ведь по тексту смогут найти страницу в поиске
-        </p>
+        <h3 class="blog-card__title">{{ $title }}</h3>
+        <p class="blog-card__description">{{ $text }}</p>
 
         <div class="blog-card__bottom">
-            <p class="blog-card__date">12.02.2024</p>
-            <a href="{{ route('blog-single', 'test') }}" class="blog-card__link">
+            <p class="blog-card__date">{{ $date }}</p>
+            <a href="{{ route('blog.single', 'asd') }}" class="blog-card__link">
                 <span>Читать статью</span>
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
