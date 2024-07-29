@@ -104,6 +104,24 @@
                                     </div>
                                 </div>
                                 <div class="col-xxl-6 col-md-6">
+                                  <div>
+                                      <label for="valueInput"
+                                          class="form-label">{{ __('admin.field_material') }}</label>
+                                      <input type="text" value="{{ $item->material }}" class="form-control"
+                                          id="valueInput" name="material"
+                                          placeholder="{{ __('admin.placeholder_text') }}">
+                                  </div>
+                              </div>
+                              <div class="col-xxl-6 col-md-6">
+                                <div>
+                                    <label for="valueInput"
+                                        class="form-label">{{ __('admin.field_side') }}</label>
+                                    <input type="text" value="{{ $item->side }}" class="form-control"
+                                        id="valueInput" name="side"
+                                        placeholder="{{ __('admin.placeholder_text') }}">
+                                </div>
+                            </div>
+                                <div class="col-xxl-6 col-md-6">
                                     <div>
                                         <label for="valueInput" class="form-label">{{ __('admin.field_size') }}
                                             *</label>

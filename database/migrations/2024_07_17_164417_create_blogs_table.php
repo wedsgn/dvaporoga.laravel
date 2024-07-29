@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
+            $table->string('image')->nullable();
+            $table->string('image_mob')->nullable();
+            $table->text('description_short');
             $table->text('description');
             $table->softDeletes();
             $table->timestamps();

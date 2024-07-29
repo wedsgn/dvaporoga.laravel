@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Page;
-use Illuminate\Http\Request;
+use App\Models\Blog;
+use App\Models\CarMake;
+use App\Models\Product;
 
 class WelcomePageController extends Controller
 {
   public function index()
   {
-
-    return view('welcome');
+    $products = Product::latest()->limit(8)->get();
+    $car_makes = CarMake::latest()->limit(10)->get();
+    $blogs = Blog::latest()->limit(10)->get();
+    return view('welcome', compact('products', 'car_makes', 'blogs'));
   }
 }
+

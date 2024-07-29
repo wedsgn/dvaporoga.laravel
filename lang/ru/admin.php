@@ -89,6 +89,7 @@ return [
   'field_current_presentation' => 'Текущая презентация',
   'field_current_document' => 'Текущий документ',
   'field_description' => 'Описание',
+  'field_description_short' => 'Описание(Краткое)',
   'field_description_footer' => 'Описание(Подвал)',
   'field_description_additional' => 'Описание(дополнительное)',
   'field_created' => 'Создано',
@@ -117,7 +118,8 @@ return [
   'fild_whats_app' => 'WhatsApp',
   'fild_telegram' => 'Telegram',
   'fild_company_details' => 'Реквизиты компании(ИНН, ОГРН, Адрес)',
-
+  'field_material'  => 'Материал',
+  'field_side' => 'Сторона',
 
   //Btns
   'btn_menu' => 'Меню',

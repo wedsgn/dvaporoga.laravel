@@ -13,11 +13,14 @@
         </div>
 
         <div class="products-wrap">
-            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
-            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
-            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
-            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
-            <x-product-card title="Порог" material="ХКС" thickness="1мм" side="Левая + Правая" />
+            @foreach($items as $item)
+                <x-product-card
+                    title="{{ $item->title }}"
+                    material="{{ $item->material }}"
+                    thickness="{{ $item->metal_thickness }}"
+                    side="{{ $item->side }}"
+                />
+            @endforeach
         </div>
     </div>
 </section>

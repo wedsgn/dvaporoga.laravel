@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Blog\StoreRequest;
 use App\Http\Requests\Admin\Blog\UpdateRequest;
 use App\Models\Blog;
@@ -10,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class BlogController extends Controller
+class BlogController extends BaseController
 {
   public function index()
   {
@@ -36,6 +35,11 @@ class BlogController extends Controller
   {
       $data = $request->validated();
       $data['slug'] = Str::slug($data['title']);
+      foreach (['image', 'image_mob'] as $image) {
+        if ($request->hasFile($image)) {
+            $data[$image] = $this->upload_service->imageConvertAndStore($request, $data[$image], $data['slug']);
+        }
+    }
       Blog::firstOrCreate($data);
 
       return redirect()->route('admin.blogs.index')->with('status', 'item-created');
@@ -52,6 +56,11 @@ class BlogController extends Controller
       $blog = Blog::whereSlug($blog_slug)->firstOrFail();
       $data = $request->validated();
       $data['slug'] = Str::slug($data['title']);
+      foreach (['image', 'image_mob'] as $image) {
+        if ($request->hasFile($image)) {
+            $data[$image] = $this->upload_service->imageConvertAndStore($request, $data[$image], $data['slug']);
+        }
+    }
       $blog->update($data);
       return redirect()->route('admin.blogs.index')->with('status', 'item-updated');
   }
@@ -75,3 +84,4 @@ class BlogController extends Controller
       return view('admin.blogs.index', compact('blogs', 'user'));
   }
 }
+

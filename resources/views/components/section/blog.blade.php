@@ -1,6 +1,4 @@
-@php
-    $data = ['', '', '', '', '', ''];
-@endphp
+
 
 <section class="blog-section section">
     <div class="container">
@@ -11,9 +9,9 @@
                 <div class="swiper-wrapper">
 
 
-                    @foreach ($data as $item)
+                    @foreach ($items as $item)
                         <div class="swiper-slide">
-                            <x-blog-card />
+                            <x-blog-card :item="$item" />
                         </div>
                     @endforeach
 

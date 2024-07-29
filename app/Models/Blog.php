@@ -13,6 +13,9 @@ class Blog extends Model
   protected $fillable = [
       'title',
       'slug',
+      'image',
+      'image_mob',
+      'description_short',
       'description'
   ];
   public static $blogs_routes = [
@@ -27,12 +30,12 @@ class Blog extends Model
       return 'slug';
   }
 
-  public function scopeFilter($items)
+  public function scopeFilter($items, $search)
   {
       if (request('search') !== null) {
-          $items->where('id', 'ilike', '%' . request('search') . '%')
-          ->orWhere('slug', 'ilike', '%' . request('search') . '%')
-          ->orWhere('title', 'ilike', '%' . request('search') . '%');
+          $items->where('title', 'ilike', "%{$search}%")
+          ->orWhere('description', 'ilike', "%{$search}%")
+          ->paginate(10);
       }
       return $items;
   }

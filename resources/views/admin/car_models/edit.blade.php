@@ -26,38 +26,41 @@
                 </div>
             @endif
         </div>
-        @if (!empty($item->image_mob))
-            <div class="col-xxl-6">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title-desc text-muted">{{ __('admin.field_current_image_mob') }}</p>
-                        <div class="live-preview">
-                            <div>
-                                <img src="{{ asset('storage') . '/' . $item->image_mob }}" class="img-fluid"
-                                    alt="Responsive image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @else
-        @endif
-        @if (!empty($item->image))
-            <div class="col-xxl-6">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title-desc text-muted">{{ __('admin.field_current_image') }}</p>
-                        <div class="live-preview">
-                            <div>
-                                <img src="{{ asset('storage') . '/' . $item->image }}" class="img-fluid"
-                                    alt="Responsive image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @else
-        @endif
+        <div class="row">
+          @if (!empty($item->image))
+              <div class="col-xxl-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <p class="card-title-desc text-muted">{{ __('admin.field_current_image') }}</p>
+                          <div class="live-preview">
+                              <div>
+                                  <img src="{{ asset('storage') . '/' . $item->image }}" class="img-fluid"
+                                      alt="Responsive image">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          @else
+          @endif
+
+          @if (!empty($item->image_mob))
+              <div class="col-xxl-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <p class="card-title-desc text-muted">{{ __('admin.field_current_image_mob') }}</p>
+                          <div class="live-preview">
+                              <div>
+                                  <img src="{{ asset('storage') . '/' . $item->image_mob }}" class="img-fluid"
+                                      alt="Responsive image">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          @else
+          @endif
+      </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">

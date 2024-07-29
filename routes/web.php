@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CarMakeController;
@@ -8,28 +7,22 @@ use App\Http\Controllers\Admin\CarModelController;
 use App\Http\Controllers\Admin\EditorImageUploadController;
 use App\Http\Controllers\Admin\ImportExelController;
 use App\Http\Controllers\Admin\MainController;
-use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\BlogPageController;
+use App\Http\Controllers\Client\CatalogConcernPageController;
 use App\Http\Controllers\Client\WelcomePageController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
-Route::get('/katalog', function() {
-  return view('catalog');
-})->name('catalog');
 
+Route::get('/catalog', [CatalogConcernPageController::class, 'index'])->name('catalog');
+Route::get('/catalog/search', [CatalogConcernPageController::class, 'search'])->name('catalog.search');
+Route::get('/catalog/car_makes/{slug}', [CatalogConcernPageController::class, 'car_make_show'])->name('car_make.show');
 
-Route::get('/blog', function() {
-  return view('blog');
-})->name('blog');
-
-Route::get('/blog/{slug}', function() {
-  return view('blog-single');
-})->name('blog.single');
-
-
-
-
+Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
+Route::get('/blog/search', [BlogPageController::class, 'search'])->name('blog.search');
+Route::get('/blog/{slug}', [BlogPageController::class, 'show'])->name('blog.single');
 
 
 Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {

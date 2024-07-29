@@ -25,10 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-      View::share('car_makes_routes', CarMake::$car_makes_routes);
-      View::share('car_models_routes', CarModel::$car_models_routes);
-      View::share('cars_routes', Car::$cars_routes);
-      View::share('products_routes', Product::$products_routes);
-      View::share('blogs_routes', Blog::$blogs_routes);
+        View::share([
+            'car_makes_routes' => CarMake::$car_makes_routes,
+            'car_models_routes' => CarModel::$car_models_routes,
+            'cars_routes' => Car::$cars_routes,
+            'products_routes' => Product::$products_routes,
+            'blogs_routes' => Blog::$blogs_routes,
+        ]);
     }
 }

@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blog;
 use App\Models\MainInfo;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
   public function run(): void
   {
     MainInfo::truncate();
+    Blog::truncate();
 
     $pages = [
       [
@@ -36,5 +38,12 @@ class DatabaseSeeder extends Seeder
       'password' => Hash::make('aspire5745g'),
       'email' => 'test@example.com',
     ]);
+
+    $blogs = Blog::factory()->count(10)->make()->each(function ($blog) {
+      $blog->description_short = Str::words($blog->description, 15);
+      $blog->description = Str::words(implode(' ', array_fill(0, 100, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, quidem.')), 100);
+      $blog->save();
+    });
   }
 }
+

@@ -29,5 +29,21 @@ class UpdateRequest extends FormRequest
             'description'  => ['nullable'],
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Поле "Название" обязательно для заполнения',
+            'title.max' => 'Поле "Название" должно быть не более 70 символов',
+            'title.unique' => 'Марка автомобиля с таким названием уже существует',
+            'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
+            'image_mob.max' => 'Размер изображения не должен превышать 200 Мбайт',
+        ];
+    }
 }
 

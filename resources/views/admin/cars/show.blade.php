@@ -58,6 +58,8 @@
                 </div>
                 <!--end card-body-->
             </div>
+
+            <div class="row">
             @if (!empty($item->image_mob))
                 <div class="col-xxl-6">
                     <div class="card">
@@ -100,6 +102,7 @@
                 </div>
             @else
             @endif
+          </div>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-header align-items-center d-flex">{{ __('admin.car_card_info') }}</h5>

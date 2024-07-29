@@ -31,8 +31,9 @@
                 </div>
 
                 <div class="blog-search">
-                    <form action="" method="POST">
-                        <input type="text" class="blog-search__input" placeholder="Поиск статьи" />
+                    <form action="{{ route('catalog.search') }}" method="get">
+                        @csrf
+                        <input type="text" name="search" class="blog-search__input" placeholder="Поиск статьи" />
                         <button type="submit" class="blog-search__btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                 fill="none">
@@ -51,17 +52,19 @@
         <section class="catalog-concern">
             <div class="container">
                 <div class="catalog-concern__wrap">
-                    <x-concern-card :title="'AUDI'" :count="3" image="images/mark/audi.webp" link="/" />
-                    <x-concern-card :title="'AUDI'" :count="3" image="images/mark/audi.webp" link="/" />
-                    <x-concern-card :title="'AUDI'" :count="3" image="images/mark/audi.webp" link="/" />
-                    <x-concern-card :title="'AUDI'" :count="3" image="images/mark/audi.webp" link="/" />
-                    <x-concern-card :title="'AUDI'" :count="3" image="images/mark/audi.webp" link="/" />
-                    <x-concern-card :title="'AUDI'" :count="3" image="images/mark/audi.webp" link="/" />
+                    @foreach ($car_makes as $car_make)
+                        <x-concern-card :title="$car_make->title" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
+                            link="{{ route('car_make.show', $car_make->slug) }}" />
+                    @endforeach
                 </div>
+            </div>
+            <div class="pagination-wrap">
+                {{ $car_makes->links('pagination::default') }}
+            </div>
             </div>
         </section>
 
-        <x-section.products />
+        <x-section.products :items="$products"/>
         <x-section.installing />
         <x-section.faq />
 

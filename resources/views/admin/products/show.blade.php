@@ -125,6 +125,14 @@
                                     <td class="text-muted">{{ $item->size }}</td>
                                 </tr>
                                 <tr>
+                                    <th class="ps-0" scope="row">{{ __('admin.field_material') }}:</th>
+                                    <td class="text-muted">{{ $item->material }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="ps-0" scope="row">{{ __('admin.field_side') }}:</th>
+                                  <td class="text-muted">{{ $item->side }}</td>
+                              </tr>
+                                <tr>
                                     <th class="ps-0" scope="row">{{ __('admin.field_created') }}:</th>
                                     <td class="text-muted">{{ $item->created_at }}</td>
                                 </tr>

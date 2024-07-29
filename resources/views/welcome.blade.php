@@ -42,13 +42,13 @@
         </section>
 
         <x-section.features />
-        <x-section.products />
-        <x-section.marks />
+        <x-section.products :items="$products"/>
+        <x-section.marks :items="$car_makes"/>
         <x-section.installing />
         <x-section.how-we-work />
         <x-section.about-parts />
         <x-section.about-company />
-        <x-section.blog />
+        <x-section.blog :items="$blogs"/>
         <x-section.faq />
 
         <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">

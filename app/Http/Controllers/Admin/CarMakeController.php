@@ -36,12 +36,11 @@ class CarMakeController extends BaseController
       $data = $request->validated();
       $data['slug'] = Str::slug($data['title']);
 
-      if ($request->hasFile('image')) :
-          $data['image'] = $this->upload_service->imageConvertAndStore($request, $data['image'], $data['slug']);
-      endif;
-      if ($request->hasFile('image_mob')) :
-          $data['image_mob'] = $this->upload_service->imageConvertAndStore($request, $data['image_mob'], $data['slug']);
-      endif;
+      foreach (['image', 'image_mob'] as $image) {
+        if ($request->hasFile($image)) {
+            $data[$image] = $this->upload_service->imageConvertAndStore($request, $data[$image], $data['slug']);
+        }
+    }
       CarMake::firstOrCreate($data);
 
       return redirect()->route('admin.car_makes.index')->with('status', 'item-created');
@@ -59,12 +58,11 @@ class CarMakeController extends BaseController
       $data = $request->validated();
       $data['slug'] = Str::slug($data['title']);
 
-      if ($request->hasFile('image')) :
-          $data['image'] = $this->upload_service->imageConvertAndStore($request, $data['image'], $data['slug']);
-      endif;
-      if ($request->hasFile('image_mob')) :
-          $data['image_mob'] = $this->upload_service->imageConvertAndStore($request, $data['image_mob'], $data['slug']);
-      endif;
+      foreach (['image', 'image_mob'] as $image) {
+        if ($request->hasFile($image)) {
+            $data[$image] = $this->upload_service->imageConvertAndStore($request, $data[$image], $data['slug']);
+        }
+    }
 
       $car_make->update($data);
       return redirect()->route('admin.car_makes.index')->with('status', 'item-updated');

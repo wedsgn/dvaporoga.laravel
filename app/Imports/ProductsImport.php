@@ -24,6 +24,7 @@ class ProductsImport implements ToCollection
           'price_set' => $row[6],
           'metal_thickness' => $row[2],
           'size' => $row[3],
+          'material' => $row[4],
 
           'description' => 'Ремкомплекты порогов предназначены для ремонта внешних порогов при корозии,
            а также деформации и незначительном повреждении при ДТП.

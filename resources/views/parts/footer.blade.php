@@ -15,8 +15,7 @@
                         <a href="/" class="footer__nav-link">Примеры установки</a>
                         <a href="/" class="footer__nav-link">Наши работы</a>
                         <a href="/" class="footer__nav-link">Как мы работаем</a>
-                        <a href="/" class="footer__nav-link">Калькулятор стоимости</a>
-                        <a href="/" class="footer__nav-link">Блог</a>
+                        <a href="{{ route('blog') }}" class="footer__nav-link">Блог</a>
                     </nav>
 
                     <div class="footer-socials">

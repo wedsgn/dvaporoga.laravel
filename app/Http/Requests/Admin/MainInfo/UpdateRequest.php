@@ -29,4 +29,21 @@ class UpdateRequest extends FormRequest
       'telegram' => ['nullable', 'string']
     ];
   }
+
+  /**
+   * Get the error messages for the defined validation rules.
+   *
+   * @return array<string, string>
+   */
+  public function messages(): array
+  {
+    return [
+      'company_title.string' => 'Название компании должно быть строкой',
+      'company_details.string' => 'Описание компании должно быть строкой',
+      'phone.string' => 'Телефон должен быть строкой',
+      'whats_app.string' => 'WhatsApp должен быть строкой',
+      'telegram.string' => 'Telegram должен быть строкой',
+    ];
+  }
 }
+

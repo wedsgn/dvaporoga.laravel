@@ -1,4 +1,4 @@
-@extends('catalog')
+@extends('layouts.front')
 
 @section('content')
     <main>
@@ -30,7 +30,8 @@
                 </div>
 
                 <div class="blog-search">
-                    <form action="" method="POST">
+                    <form action="{{ route('blog.search') }}" method="get">
+                        @csrf
                         <input type="text" class="blog-search__input" placeholder="Поиск статьи" />
                         <button type="submit" class="blog-search__btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -50,18 +51,15 @@
         <section class="blog-cards-catalog">
             <div class="container">
                 <div class="blog-cards__wrap">
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
-                    <x-blog-card />
+                  @foreach ($blogs as $blog)
+                  <x-blog-card :item="$blog" />
+                  @endforeach
                 </div>
             </div>
+            <div class="pagination-wrap">
+              {{ $blogs->links('pagination::default') }}
+          </div>
         </section>
     </main>
 @endsection
+

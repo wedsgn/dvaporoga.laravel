@@ -18,6 +18,8 @@ class Product extends Model
       'price_one_side',
       'price_set',
       'metal_thickness',
+      'material',
+      'side',
       'size',
       'image',
       'image_mob',

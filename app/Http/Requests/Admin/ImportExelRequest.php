@@ -25,4 +25,18 @@ class ImportExelRequest extends FormRequest
               'file_exel' => 'required|mimes:xlsx, xls'
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'file_exel.required' => 'Поле Файл обязательно для заполнения',
+            'file_exel.mimes' => 'Допустимые форматы файлов: xlsx, xls',
+        ];
+    }
 }
+

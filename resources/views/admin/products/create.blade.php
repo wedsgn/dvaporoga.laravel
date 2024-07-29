@@ -55,12 +55,29 @@
                                 </div>
                                 <div class="col-xxl-6 col-md-6">
                                     <div>
-                                        <label for="valueInput" class="form-label">{{ __('admin.field_metal_thickness') }}</label>
+                                        <label for="valueInput"
+                                            class="form-label">{{ __('admin.field_metal_thickness') }}</label>
                                         <input type="text" value="{{ old('metal_thickness') }}" class="form-control"
                                             id="valueInput" name="metal_thickness"
                                             placeholder="{{ __('admin.placeholder_text') }}">
                                     </div>
                                 </div>
+                                <div class="col-xxl-6 col-md-6">
+                                    <div>
+                                        <label for="valueInput" class="form-label">{{ __('admin.field_material') }}</label>
+                                        <input type="text" value="{{ old('material') }}" class="form-control"
+                                            id="valueInput" name="material"
+                                            placeholder="{{ __('admin.placeholder_text') }}">
+                                    </div>
+                                </div>
+                                <div class="col-xxl-6 col-md-6">
+                                  <div>
+                                      <label for="valueInput" class="form-label">{{ __('admin.field_side') }}</label>
+                                      <input type="text" value="{{ old('side') }}" class="form-control"
+                                          id="valueInput" name="side"
+                                          placeholder="{{ __('admin.placeholder_text') }}">
+                                  </div>
+                              </div>
                                 <div class="col-xxl-6 col-md-6">
                                     <div>
                                         <label for="valueInput" class="form-label">{{ __('admin.field_size') }}
@@ -72,24 +89,27 @@
                                 </div>
 
                                 <div class="col-xxl-6 col-md-6">
-                                  <div class="mb-3">
-                                      <label for="valueInput" class="form-label">{{ __('admin.aside_title_cars') }}</label>
+                                    <div class="mb-3">
+                                        <label for="valueInput"
+                                            class="form-label">{{ __('admin.aside_title_cars') }}</label>
 
-                                      @if (!count($cars) == 0)
-                                      <select id="valueInput" class="form-control" data-choices data-choices-removeItem name="cars[]" multiple>
-                                          @foreach ($cars as $car)
-                                          <option value="{{ $car->title }}" {{ collect(old('cars'))->contains($car->title) ? 'selected' : '' }}>
-                                              {{ $car->title }}
-                                          </option>
-                                          @endforeach
-                                      </select>
-                                      @else
-                                      <div class="text-danger">
-                                        {{ __('admin.notification_no_entries_cars') }}
-                                      </div>
-                                      @endif
-                                  </div>
-                              </div>
+                                        @if (!count($cars) == 0)
+                                            <select id="valueInput" class="form-control" data-choices
+                                                data-choices-removeItem name="cars[]" multiple>
+                                                @foreach ($cars as $car)
+                                                    <option value="{{ $car->title }}"
+                                                        {{ collect(old('cars'))->contains($car->title) ? 'selected' : '' }}>
+                                                        {{ $car->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @else
+                                            <div class="text-danger">
+                                                {{ __('admin.notification_no_entries_cars') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="col-xxl-6 col-md-6">
                                     <div>

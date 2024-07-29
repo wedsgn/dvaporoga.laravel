@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('price_one_side')->nullable();
             $table->string('price_set')->nullable();
             $table->string('metal_thickness')->nullable();
+            $table->string('material')->nullable();
+            $table->string('side')->nullable();
             $table->string('size')->nullable();
             $table->text('description')->nullable();
             $table->softDeletes();
