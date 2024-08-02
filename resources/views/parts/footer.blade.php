@@ -9,11 +9,8 @@
                 <div class="footer__nav">
                     <h4 class="footer__nav-title">Навигация</h4>
                     <nav class="footer__nav-list">
-                        <a href="/" class="footer__nav-link">Преимущества</a>
-                        <a href="/" class="footer__nav-link">Вопрос-ответ</a>
+                        <a href="#features" class="footer__nav-link">Преимущества</a>
                         <a href="/" class="footer__nav-link">Цены</a>
-                        <a href="/" class="footer__nav-link">Примеры установки</a>
-                        <a href="/" class="footer__nav-link">Наши работы</a>
                         <a href="/" class="footer__nav-link">Как мы работаем</a>
                         <a href="{{ route('blog') }}" class="footer__nav-link">Блог</a>
                     </nav>
@@ -63,8 +60,7 @@
         <div class="footer-bottom">
             <div class="footer-bottom__top">
                 <div class="footer-bottom__policies">
-                    <a href="#" download>Политика конфиденциальности</a>
-                    <a href="#" download>Политика конфиденциальности</a>
+                    <a href="#" download target="_blank">Политика конфиденциальности</a>
                 </div>
 
                 <div class="footer-bottom__company">

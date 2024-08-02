@@ -11,25 +11,33 @@ class CatalogConcernPageController extends Controller
 {
   public function index()
   {
-    $products = Product::latest()->limit(8)->get();
-    $car_makes = CarMake::latest()->paginate(10);
+    $products = Product::latest()->get();
+    // $car_makes = CarMake::latest()->paginate(12);
+    $car_makes = CarMake::all();
     return view('catalog_concern', compact('car_makes', 'products'));
   }
 
   public function car_make_show($slug)
   {
     $car_make = CarMake::where('slug', $slug)->first();
+    $car_models = CarMake::all();
+
     if (!$car_make) {
       abort(404);
     }
-    return view('catalog_concern_single', compact('car_make'));
+    return view('catalog_models', compact('car_make', 'car_models'));
   }
 
   public function search(Request $request)
   {
+    $products = Product::all();
     $search = $request->input('search');
-    $car_makes = CarMake::filter($search)->paginate(10);
-    return view('catalog_concern', compact('car_makes'));
+    $car_makes = CarMake::filter($search)->get();
+    return view('catalog_concern', compact('car_makes', 'products'));
+  }
+
+  public function show() {
+    return view('model_generations');
   }
 }
 

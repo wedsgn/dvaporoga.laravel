@@ -22,6 +22,7 @@
 
 .blog-card__title {
   font-size: 18px;
+  min-height: 36px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 18px */
@@ -32,8 +33,12 @@
   color: $grayDark;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  min-height: 68px;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  // white-space: nowrap;
+  word-wrap: normal;
 }
 
 .blog-card__bottom {

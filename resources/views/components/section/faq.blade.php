@@ -14,7 +14,7 @@
                     удовольствием расскажем все подробнее и проконсультируем вас.
                 </p>
 
-                <button class="btn">Получить консультацию</button>
+                <button class="btn" data-micromodal-trigger="modal-1">Получить консультацию</button>
             </div>
 
             <!-- Right -->

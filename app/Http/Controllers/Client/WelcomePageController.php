@@ -11,8 +11,8 @@ class WelcomePageController extends Controller
 {
   public function index()
   {
-    $products = Product::latest()->limit(8)->get();
-    $car_makes = CarMake::latest()->limit(10)->get();
+    $products = Product::latest()->get();
+    $car_makes = CarMake::latest()->limit(12)->get();
     $blogs = Blog::latest()->limit(10)->get();
     return view('welcome', compact('products', 'car_makes', 'blogs'));
   }

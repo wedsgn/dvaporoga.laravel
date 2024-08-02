@@ -2,7 +2,11 @@
 
 <a href="{{ $link }}" class="mark">
     <div class="mark-image">
-        <img src="{{ asset('storage') . '/' . $image }}" alt="Audi" />
+        @if ($image === 'default')
+            <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
+        @else
+            <img src="{{ asset('storage') . '/' . $image }}" alt="Логотип {{ $title }}" />
+        @endif
     </div>
     <div class="mark-info">
         <h3 class="mark-title">{{ $title }}</h3>

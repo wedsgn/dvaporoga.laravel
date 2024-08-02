@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="dark" data-sidebar="dark" data-sidebar-size="lg"
+<html lang="ru" data-layout="vertical" data-topbar="dark" data-sidebar="dark" data-sidebar-size="lg"
     data-sidebar-image="none" data-preloader="disable" data-sidebar-visibility="show" data-layout-style="default"
     data-bs-theme="dark" data-layout-width="fluid" data-layout-position="fixed">
 

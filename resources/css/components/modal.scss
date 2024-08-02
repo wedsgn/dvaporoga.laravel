@@ -2,11 +2,6 @@
   Basic Modal Styles
 \**************************/
 
-.modal {
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
-    helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-}
-
 .modal__overlay {
   position: fixed;
   top: 0;
@@ -22,7 +17,7 @@
 
 .modal__container {
   background-color: #fff;
-  padding: 30px;
+  padding: 16px;
   max-width: 500px;
   max-height: 100vh;
   border-radius: 4px;
@@ -40,10 +35,8 @@
   margin-top: 0;
   margin-bottom: 0;
   font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.25;
-  color: #00449e;
-  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 120%;
 }
 
 .modal__close {

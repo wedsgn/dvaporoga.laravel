@@ -39,7 +39,7 @@
 
         <section class="catalog-concern">
             <div class="container">
-                @if ($car_makes->count() > 0)
+                {{-- @if ($car_makes->count() > 0)
                     <div class="catalog-concern__wrap">
                         @foreach ($car_makes as $car_make)
                             <x-concern-card :title="$car_make->title" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
@@ -50,7 +50,7 @@
                     <div class="not-found-section">
                         <p>По вашему запросу ничего не найдено</p>
                     </div>
-                @endif
+                @endif --}}
             </div>
             {{-- <div class="pagination-wrap">
                 {{ $car_makes->links('pagination::default') }}
@@ -58,7 +58,7 @@
             </div>
         </section>
 
-        <x-section.products :items="$products" />
+        {{-- <x-section.products :items="$products" /> --}}
         <x-section.installing />
         <x-section.faq />
 

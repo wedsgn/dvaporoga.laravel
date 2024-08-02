@@ -49,12 +49,146 @@
 
 .index-hero__scheme {
   margin-left: auto;
+  z-index: 2;
+  position: relative;
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
+}
+
+.scheme-item-wrap {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  z-index: 10;
+
+  &.--arka {
+    top: 39%;
+    left: 17%;
+  }
+
+  &.--porog {
+    top: 80%;
+    left: 43%;
+  }
+
+  &.--arka-r {
+    top: 50%;
+    left: 97%;
+  }
+
+  &.--penka {
+    top: 32%;
+    left: 69%;
+  }
+
+  &.--bagaj {
+    top: -1%;
+    left: 62%;
+  }
+}
+
+.scheme-item {
+  width: max-content;
+  border-radius: 8px;
+  box-shadow: $shadow;
+  padding: 4px 16px 4px 4px;
+  background: $white;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.scheme-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scheme-item__img {
+  height: 64px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.scheme-item__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.scheme-item__price {
+  font-size: 14px;
+}
+
+.scheme-dot {
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  border-radius: 100%;
+  z-index: 10;
+  border: 1px solid $red;
+
+  &:nth-of-type(1) {
+    top: 56%;
+    left: 42%;
+  }
+
+  &:nth-of-type(2) {
+    top: 72%;
+    left: 65%;
+  }
+
+  &:nth-of-type(3) {
+    top: 50%;
+    left: 65%;
+  }
+
+  &:nth-of-type(4) {
+    top: 42%;
+    left: 95%;
+  }
+
+  &:nth-of-type(5) {
+    top: 42%;
+    left: 95%;
+  }
+
+  &.--bagaj {
+    top: 17%;
+    left: 93%;
+  }
+}
+
+.scheme-dot-center {
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background: $red;
+}
+
+.scheme-item__price {
 }
 
 @media screen and (max-width: 1440px) {
@@ -80,6 +214,18 @@
 @media screen and (max-width: 1200px) {
   .index-hero__scheme {
     margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .scheme-dot {
+    width: 16px;
+    height: 16px;
+  }
+
+  .scheme-dot-center {
+    width: 12px;
+    height: 12px;
   }
 }
 

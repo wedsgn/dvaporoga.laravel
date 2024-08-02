@@ -22,10 +22,10 @@
                 </div>
 
                 <a href="/" target="_blank" class="social-link">
-                    <img src="images/logos/tg.svg" alt="Логотип телеграм" />
+                    <img src="{{ asset('images/logos/tg.svg') }}" alt="Логотип телеграм" />
                 </a>
                 <a href="/" target="_blank" class="social-link">
-                    <img src="images/logos/wa.svg" alt="Логотип телеграм" />
+                    <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип телеграм" />
                 </a>
 
                 <button class="btn header-consultation-btn" data-micromodal-trigger="modal-1">

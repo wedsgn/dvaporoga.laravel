@@ -19,9 +19,9 @@
                             <span>7 минут</span> и ответим на все вопросы.
                         </p>
 
-                        <form class="index-hero-form" action="">
-                            <input type="text" placeholder="Имя" class="input" required />
-                            <input type="tel" placeholder="+7 (___) ___ __ __" class="input" required />
+                        <form class="index-hero-form" action="" id="indexHeroForm">
+                            <input type="text" placeholder="Имя" class="input" name="name" required />
+                            <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
                             <button class="btn lg" type="submit">Отправить</button>
 
                             <p class="copyright">
@@ -29,50 +29,175 @@
                                 <a href="" download=""> политикой конфиденциальности </a>
                             </p>
                         </form>
+
+                        <script>
+                            const form = document.querySelector('.index-hero-form');
+
+
+                            form.addEventListener('submit', async function(event) {
+                                event.preventDefault();
+
+                                const formData = new FormData(form);
+                                try {
+                                    const response = await fetch('/your-endpoint', {
+                                        method: 'POST',
+                                        body: formData
+                                    });
+
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+
+                                    const data = await response.json();
+                                    console.log(data);
+                                    // Очистка формы и удаление сообщения об ошибке
+                                    form.reset();
+                                    errorInput.classList.remove('error');
+                                    errorMessage.textContent = '';
+                                } catch (error) {
+                                    console.error('There has been a problem with your fetch operation:', error);
+                                    // Отображение сообщения об ошибке
+                                    errorInput.classList.add('error');
+                                    errorMessage.textContent = error.message;
+                                }
+                            });
+                        </script>
                     </div>
 
                     <div class="index-hero__scheme">
                         <picture>
-                            <source srcset="/images/hero-car.webp" type="image/webp"><img src="/images/hero-car.png"
-                                alt="Схема автомобиля" />
+                            <source srcset="{{ asset('/images/hero-car.webp') }}" type="image/webp"><img
+                                src="/images/hero-car.png" alt="Схема автомобиля" />
                         </picture>
+
+                        {{-- Арка --}}
+                        <div class="scheme-dot">
+                            <div class="scheme-dot-center"></div>
+                        </div>
+
+                        {{-- Порог --}}
+                        <div class="scheme-dot">
+                            <div class="scheme-dot-center"></div>
+                        </div>
+
+                        {{-- Дверь --}}
+                        <div class="scheme-dot">
+                            <div class="scheme-dot-center"></div>
+                        </div>
+
+
+                        {{-- Арка зад --}}
+                        <div class="scheme-dot">
+                            <div class="scheme-dot-center"></div>
+                        </div>
+
+                        {{-- Багажник --}}
+                        <div class="scheme-dot --bagaj">
+                            <div class="scheme-dot-center"></div>
+                        </div>
+
+                        {{-- Арка
+                        <div class="scheme-item-wrap --arka">
+                            <div class="scheme-item">
+
+                                <div class="scheme-item__img">
+                                    <img src="{{ asset('images/hero/arka.png') }}" alt="">
+                                </div>
+                                <div class="scheme-item__info">
+                                    <div class="scheme-item__title">Передняя арка</div>
+                                    <div class="scheme-item__price">от 1950 руб</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="scheme-item-wrap --porog">
+                            <div class="scheme-item">
+                                <div class="scheme-item__img">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="scheme-item__info">
+                                    <div class="scheme-item__title">Порог</div>
+                                    <div class="scheme-item__price">от 1950 руб</div>
+                                </div>
+                            </div>
+
+                            <div class="scheme-item">
+                                <div class="scheme-item__img">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="scheme-item__info">
+                                    <div class="scheme-item__title">Усилитель порога</div>
+                                    <div class="scheme-item__price">от 1950 руб</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scheme-item-wrap --arka-r">
+                            <div class="scheme-item">
+                                <div class="scheme-item__img">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="scheme-item__info">
+                                    <div class="scheme-item__title">Арка задняя</div>
+                                    <div class="scheme-item__price">от 1950 руб</div>
+                                </div>
+                            </div>
+
+                            <div class="scheme-item">
+                                <div class="scheme-item__img">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="scheme-item__info">
+                                    <div class="scheme-item__title">Арка внутренняя</div>
+                                    <div class="scheme-item__price">от 1950 руб</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="scheme-item-wrap --penka">
+
+                            <div class="scheme-item">
+                                <div class="scheme-item__img">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="scheme-item__info">
+                                    <div class="scheme-item__title">Пенка двери</div>
+                                    <div class="scheme-item__price">от 1950 руб</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="scheme-item-wrap --bagaj">
+
+                            <div class="scheme-item">
+                                <div class="scheme-item__img">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="scheme-item__info">
+                                    <div class="scheme-item__title">Пенка Багажника</div>
+                                    <div class="scheme-item__price">от 1950 руб</div>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
         </section>
 
         <x-section.features />
-        <x-section.products :items="$products"/>
-        <x-section.marks :items="$car_makes"/>
+        <x-section.products :items="$products" />
+        <x-section.marks :items="$car_makes" />
         <x-section.installing />
         <x-section.how-we-work />
         <x-section.about-parts />
         <x-section.about-company />
-        <x-section.blog :items="$blogs"/>
+        <x-section.blog :items="$blogs" />
         <x-section.faq />
 
-        <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-                    <header class="modal__header">
-                        <h2 class="modal__title" id="modal-1-title">Micromodal</h2>
-                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                    </header>
-                    <main class="modal__content" id="modal-1-content">
-                        <p>
-                            Try hitting the <code>tab</code> key and notice how the focus stays
-                            within the modal itself. Also, <code>esc</code> to close modal.
-                        </p>
-                    </main>
-                    <footer class="modal__footer">
-                        <button class="modal__btn modal__btn-primary">Continue</button>
-                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">
-                            Close
-                        </button>
-                    </footer>
-                </div>
-            </div>
-        </div>
+
 
     </main>
 @endsection

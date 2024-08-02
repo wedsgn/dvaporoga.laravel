@@ -1,6 +1,20 @@
-@import './base/vars';
-@import './grid.scss';
-@import './mixins';
-@import './base/base';
-@import './base/fonts';
-@import './components/**/*';
+@import "./base/vars";
+@import "./grid.scss";
+@import "./mixins";
+@import "./base/base";
+@import "./base/fonts";
+@import "./components/**/*";
+
+.not-found-section {
+  margin-top: 64px;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .not-found-section {
+    margin-top: 24px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
