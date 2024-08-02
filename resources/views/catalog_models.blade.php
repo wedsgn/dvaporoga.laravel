@@ -2,13 +2,14 @@
 
 @section('content')
     <main>
-        {{ Breadcrumbs::render('model', $car_make) }}
+
+        {{ Breadcrumbs::render('car_make.show', $car_make) }}
 
         <section class="catalog-page-section">
             <div class="container">
                 <div class="catalog-page-top --model">
                     <div class="catalog-page-top__left">
-                        <h1 class="h1 catalog-page__title">Каталог запчастей {{ $car_make->title }}</h1>
+                        <h1 class="h1 catalog-page__title">Модели автомобилей {{ $car_make->title }}</h1>
 
                         <p class="model-count">{{ $car_models->count() }} Моделей</p>
                     </div>
@@ -17,8 +18,9 @@
                     </p>
                 </div>
                 <div class="blog-search">
-                    <form action="" method="POST">
-                        <input type="text" class="blog-search__input" placeholder="Поиск модели" />
+                    <form action="{{ route('car_model.search', $car_make) }}" method="get">
+                        @csrf
+                        <input type="text" name="search" class="blog-search__input" placeholder="Поиск модели" />
                         <button type="submit" class="blog-search__btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                 fill="none">
@@ -41,17 +43,9 @@
                 <h2 class="h3">Выберите модель</h2>
                 <div class="catalog-models__wrap">
                     <!-- Card -->
-                    <a href="{{ route('car_gen', ['concern' => 'sd', 'model' => 'asd']) }}" class="car-model-card">
-                        <div class="car-model-card__image">
-                            <img src="/images/cars/audi-80.jpg" alt="Название авто на картинке" />
-                        </div>
-
-                        <div class="car-model-card__info">
-                            <h3 class="car-model-card__title">80</h3>
-                            <div class="car-model-card__count">5 поколений</div>
-                            <div class="car-model-card__years">(1994-2022)</div>
-                        </div>
-                    </a>
+                    @foreach ($car_models as $car_model)
+                        <x-car-model-card :car_make="$car_make" :car_model="$car_model" />
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -62,3 +56,4 @@
 
     </main>
 @endsection
+

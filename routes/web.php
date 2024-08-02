@@ -10,19 +10,22 @@ use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\BlogPageController;
 use App\Http\Controllers\Client\CatalogConcernPageController;
+use App\Http\Controllers\Client\CatalogGenerationPageController;
+use App\Http\Controllers\Client\CatalogModelPageController;
 use App\Http\Controllers\Client\WelcomePageController;
 
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
-
+//Concern
 Route::get('/katalog', [CatalogConcernPageController::class, 'index'])->name('catalog');
+Route::get('/katalog/{car_make_slug}/models', [CatalogConcernPageController::class, 'car_make_show'])->name('car_make.show');
 Route::get('/katalog/search', [CatalogConcernPageController::class, 'search'])->name('catalog.search');
-Route::get('/katalog/{concern}/{model}', function() {
-  return view('model_generations');
-})->name('car_gen');
-Route::get('/katalog/{slug}', [CatalogConcernPageController::class, 'car_make_show'])->name('car_make.show');
-
+//Car models
+Route::get('/katalog/{slug}/{model_slug}/generations', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
+Route::get('/katalog/{car_make_slug}/car_models/search', [CatalogModelPageController::class, 'search'])->name('car_model.search');
+//Car generations
+Route::get('/katalog/{concern}/{model}/{generation}/products', [CatalogGenerationPageController::class, 'car_generation_show'])->name('car_generation.show');
 
 Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
 Route::get('/blog/search', [BlogPageController::class, 'search'])->name('blog.search');

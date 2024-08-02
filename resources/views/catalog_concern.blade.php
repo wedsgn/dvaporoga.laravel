@@ -52,9 +52,6 @@
                     </div>
                 @endif
             </div>
-            {{-- <div class="pagination-wrap">
-                {{ $car_makes->links('pagination::default') }}
-            </div> --}}
             </div>
         </section>
 

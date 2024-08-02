@@ -1,32 +1,17 @@
-@props(['data'])
+@props(['car_make', 'car_model'])
 
-
-
-<div class="car-generation">
-    <div class="car-generation__info">
-        <div class="car-generation__years">1994-1997</div>
-        <div class="car-generation__frame">1 (C4)</div>
+<a href="{{ route('car_model.show', [$car_make->slug, $car_model->slug]) }}" class="car-model-card">
+    <div class="car-model-card__image">
+        @if ($car_model->image === 'default')
+            <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
+        @else
+            <img src="{{ asset('storage') . '/' . $car_model->image }}" alt="Логотип {{ $car_model->title }}" />
+        @endif
     </div>
 
-    <div class="car-generation__models">
-        <!-- Item -->
-        <a href="#" class="car-generation__model">
-            <div class="car-generation__model_image">
-                <img src="/images/cars/audi-80.jpg" alt="Название авто на фото" />
-            </div>
-
-            <h3 class="car-generation__model_title">Седан 4 двери</h3>
-        </a>
-
-        <!-- Item -->
-        <a href="#" class="car-generation__model">
-            <div class="car-generation__model_image">
-                <img src="/images/cars/audi-80.jpg" alt="Название авто на фото" />
-            </div>
-
-            <h3 class="car-generation__model_title">
-                Универсал 5 дверей
-            </h3>
-        </a>
+    <div class="car-model-card__info">
+        <h3 class="car-model-card__title">{{ $car_model->title }}</h3>
+        <div class="car-model-card__count">{{ $car_model->getGenerationsCount() }} поколений</div>
+        <div class="car-model-card__years">({{ $car_model->getFirstYear() }}-{{ $car_model->getLastYear() }})</div>
     </div>
-</div>
+</a>

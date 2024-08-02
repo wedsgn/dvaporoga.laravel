@@ -50,6 +50,15 @@ class CarModel extends Model
       }
       return $items;
   }
+  public function getGenerationsCount() {
+    return $this->cars()->count();
+  }
+  public function getFirstYear() {
+    return substr($this->cars()->min('years'), 0, 4);
+  }
+  public function getLastYear() {
+    return substr($this->cars()->max('years'), -4);
+  }
 
   // public function delete_files($item)
   // {

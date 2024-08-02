@@ -14,8 +14,7 @@
 
         <div class="products-wrap">
             @foreach ($items as $item)
-                <x-product-card title="{{ $item->title }}" material="{{ $item->material }}"
-                    thickness="{{ $item->metal_thickness }}" side="{{ $item->side }}" />
+                <x-product-card :part="$item" />
             @endforeach
         </div>
     </div>

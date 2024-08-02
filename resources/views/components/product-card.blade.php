@@ -1,48 +1,56 @@
 @props([
-    'title' => 'Ремонтный порог',
-    'material' => 'Холодная сталь',
-    'thickness' => '1мм',
-    'side' => 'Левый+Правый',
+    'part' => $part,
 ])
 
 <div class="product">
     <div class="product-image">
-        <img src="/images/product/porog.png" alt="Фото {{ $title }}" />
+        @if ($part->image === 'default')
+            <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
+        @else
+            <img src="{{ asset('storage') . '/' . $part->image }}" alt="Логотип {{ $part->title }}" />
+        @endif
     </div>
 
-    <h3 class="product-title">{{ $title }}</h3>
+    <h3 class="product-title">{{ $part->title }}</h3>
 
     <div class="product-info">
         <ul class="product-list">
             <!-- item -->
-            <li>
-                <div class="product-info__item">
-                    <div class="product-info__item_top">
-                        <p class="product-info__item_title">Материал:</p>
-                        <div class="product-info__item_value">{{ $material }}</div>
+            @if ($part->material)
+                <li>
+                    <div class="product-info__item">
+                        <div class="product-info__item_top">
+                            <p class="product-info__item_title">Материал:</p>
+                            <div class="product-info__item_value">{{ $part->material }}</div>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endif
 
             <!-- item -->
-            <li>
-                <div class="product-info__item">
-                    <div class="product-info__item_top">
-                        <p class="product-info__item_title">Толщина металла:</p>
-                        <div class="product-info__item_value">{{ $thickness }}</div>
+            @if ($part->metal_thickness)
+                <li>
+                    <div class="product-info__item">
+                        <div class="product-info__item_top">
+                            <p class="product-info__item_title">Толщина металла:</p>
+                            <div class="product-info__item_value">{{ $part->metal_thickness }}</div>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endif
 
             <!-- item -->
-            <li>
-                <div class="product-info__item">
-                    <div class="product-info__item_top">
-                        <p class="product-info__item_title">Сторона:</p>
-                        <div class="product-info__item_value">{{ $side }}</div>
+            @if ($part->side)
+                <li>
+                    <div class="product-info__item">
+                        <div class="product-info__item_top">
+                            <p class="product-info__item_title">Сторона:</p>
+                            <div class="product-info__item_value">{{ $side }}</div>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endif
+
         </ul>
 
         <button class="btn product-btn" data-micromodal-trigger="modal-1">Заказать сейчас</button>
