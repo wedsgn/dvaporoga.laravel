@@ -19,9 +19,10 @@
                 </div>
 
                 <div class="blog-search">
-                    <form action="{{ route('catalog.search') }}" method="get">
+                    <form method="get" id="concernSearchForm">
                         @csrf
-                        <input type="text" name="search" class="blog-search__input" placeholder="Поиск по марке" />
+                        <input type="text" name="search" class="blog-search__input" id="concernSearchInput"
+                            placeholder="Поиск по марке" />
                         <button type="submit" class="blog-search__btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                 fill="none">
@@ -37,21 +38,14 @@
             </div>
         </section>
 
-        <section class="catalog-concern">
+        <section class="catalog-concern" id="concernsCatalog">
             <div class="container">
-                @if ($car_makes->count() > 0)
-                    <div class="catalog-concern__wrap">
-                        @foreach ($car_makes as $car_make)
-                            <x-concern-card :title="$car_make->title" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
-                                link="{{ route('car_make.show', $car_make->slug) }}" />
-                        @endforeach
-                    </div>
-                @else
-                    <div class="not-found-section">
-                        <p>По вашему запросу ничего не найдено</p>
-                    </div>
-                @endif
-            </div>
+                <div class="catalog-concern__wrap">
+                    @foreach ($car_makes as $car_make)
+                        <x-concern-card :title="$car_make->title" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
+                            link="{{ route('car_make.show', $car_make->slug) }}" />
+                    @endforeach
+                </div>
             </div>
         </section>
 
@@ -61,4 +55,16 @@
 
 
     </main>
+    <script>
+        document.getElementById('concernSearchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchInput = document.getElementById('concernSearchInput').value;
+            const url = "{{ route('catalog.search') }}?search=" + searchInput;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('concernsCatalog').innerHTML = data;
+                });
+        });
+    </script>
 @endsection

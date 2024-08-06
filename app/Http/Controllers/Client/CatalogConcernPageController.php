@@ -32,10 +32,8 @@ class CatalogConcernPageController extends Controller
 
   public function search(Request $request)
   {
-    $products = Product::all();
     $search = $request->input('search');
     $car_makes = CarMake::filter($search)->get();
-    return view('catalog_concern', compact('car_makes', 'products'));
+    return view('partials.concern-card', compact('car_makes'));
   }
 }
-

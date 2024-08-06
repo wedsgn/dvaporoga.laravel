@@ -34,7 +34,7 @@ class UpdateRequest extends FormRequest
       'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
       'description'  => ['nullable'],
       'cars' => 'nullable|array',
-      'cars.*' => 'nullable|string|exists:cars,title'
+      // 'cars.*' => 'nullable|string|exists:cars,title'
     ];
   }
 

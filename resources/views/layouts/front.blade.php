@@ -22,10 +22,28 @@
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <main class="modal__content" id="modal-1-content">
-                    <p>
-                        Try hitting the <code>tab</code> key and notice how the focus stays
-                        within the modal itself. Also, <code>esc</code> to close modal.
+                  <form class="index-hero-form" action="{{ route('request_product.store', 'product-home-page-form') }}" id="indexHeroForm" method="POST">
+                    @csrf
+                    <input type="hidden" name="product_id[]" id="productIdInput" value="" />
+                    <input type="text" placeholder="Имя" class="input" name="name" required />
+                    @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
+                    @error('phone')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    <button class="btn lg" type="submit">Отправить</button>
+
+                    <p class="copyright">
+                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+                        <a href="" download=""> политикой конфиденциальности </a>
                     </p>
+                </form>
                 </main>
                 <footer class="modal__footer">
                     <button class="modal__btn modal__btn-primary">Continue</button>
@@ -36,6 +54,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.product-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const productId = button.getAttribute('data-product-id');
+                document.getElementById('productIdInput').value = productId;
+                microModal.show('modal-1');
+            });
+        });
+    </script>
+
 </body>
 
 </html>

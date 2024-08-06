@@ -8,10 +8,13 @@ use App\Http\Controllers\Admin\EditorImageUploadController;
 use App\Http\Controllers\Admin\ImportExelController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\RequestConsultationController;
+use App\Http\Controllers\Admin\RequestProductController;
 use App\Http\Controllers\Client\BlogPageController;
 use App\Http\Controllers\Client\CatalogConcernPageController;
 use App\Http\Controllers\Client\CatalogGenerationPageController;
 use App\Http\Controllers\Client\CatalogModelPageController;
+use App\Http\Controllers\Client\RequestsController;
 use App\Http\Controllers\Client\WelcomePageController;
 
 use Illuminate\Support\Facades\Route;
@@ -22,15 +25,17 @@ Route::get('/katalog', [CatalogConcernPageController::class, 'index'])->name('ca
 Route::get('/katalog/{car_make_slug}/models', [CatalogConcernPageController::class, 'car_make_show'])->name('car_make.show');
 Route::get('/katalog/search', [CatalogConcernPageController::class, 'search'])->name('catalog.search');
 //Car models
-Route::get('/katalog/{slug}/{model_slug}/generations', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
+Route::get('/katalog/{slug}/{model_slug}/', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
 Route::get('/katalog/{car_make_slug}/car_models/search', [CatalogModelPageController::class, 'search'])->name('car_model.search');
 //Car generations
 Route::get('/katalog/{concern}/{model}/{generation}/products', [CatalogGenerationPageController::class, 'car_generation_show'])->name('car_generation.show');
-
 Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
+Route::get('/blog/add-more', [BlogPageController::class, 'add_more'])->name('blog.add_more');
 Route::get('/blog/search', [BlogPageController::class, 'search'])->name('blog.search');
 Route::get('/blog/{slug}', [BlogPageController::class, 'show'])->name('blog.single');
 
+Route::post('/request-consultation{form}', [RequestsController::class, 'store_request_onsultation'])->name('request_consultation.store');
+Route::post('/request-product{form}', [RequestsController::class, 'store_request_product'])->name('request_product.store');
 
 Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
@@ -96,5 +101,17 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/{blog_slug}/edit', [BlogController::class, 'edit'])->name('edit');
     Route::patch('/{blog_slug}', [BlogController::class, 'update'])->name('update');
     Route::delete('/{blog_slug}', [BlogController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('request_consultations')->name('request_consultations.')->group(function () {
+    Route::get('/', [RequestConsultationController::class, 'index'])->name('index');
+    Route::get('/search', [RequestConsultationController::class, 'search'])->name('search');
+    Route::get('/{id}', [RequestConsultationController::class, 'show'])->name('show');
+});
+
+Route::prefix('request_products')->name('request_products.')->group(function () {
+    Route::get('/', [RequestProductController::class, 'index'])->name('index');
+    Route::get('/search', [RequestProductController::class, 'search'])->name('search');
+    Route::get('/{id}', [RequestProductController::class, 'show'])->name('show');
 });
 });

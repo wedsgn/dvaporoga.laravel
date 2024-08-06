@@ -47,19 +47,35 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $products_routes)) active @endif"
-                      href="{{ route('admin.products.index') }}" aria-expanded="false" aria-controls="sidebarLayouts">
-                      <i class="mdi mdi-car-door"></i> <span
-                          data-key="t-layouts">{{ __('admin.aside_title_products') }}</span>
+                    <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $products_routes)) active @endif"
+                        href="{{ route('admin.products.index') }}" aria-expanded="false" aria-controls="sidebarLayouts">
+                        <i class="mdi mdi-car-door"></i> <span
+                            data-key="t-layouts">{{ __('admin.aside_title_products') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $blogs_routes)) active @endif"
+                      href="{{ route('admin.blogs.index') }}" aria-expanded="false" aria-controls="sidebarLayouts">
+                      <i class="mdi mdi-note-edit-outline"></i> <span
+                          data-key="t-layouts">{{ __('admin.aside_title_blogs') }}</span>
                   </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $blogs_routes)) active @endif"
-                    href="{{ route('admin.blogs.index') }}" aria-expanded="false" aria-controls="sidebarLayouts">
-                    <i class="mdi mdi-note-edit-outline"></i> <span
-                        data-key="t-layouts">{{ __('admin.aside_title_blogs') }}</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $request_consultations_routes)) active @endif"
+                        href="{{ route('admin.request_consultations.index') }}" aria-expanded="false"
+                        aria-controls="sidebarLayouts">
+                        <i class="mdi mdi-account-question"></i> <span
+                            data-key="t-layouts">{{ __('admin.aside_title_request_consultations') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $request_products_routes)) active @endif"
+                      href="{{ route('admin.request_products.index') }}" aria-expanded="false"
+                      aria-controls="sidebarLayouts">
+                      <i class="mdi mdi-car-door"></i> <span
+                          data-key="t-layouts">{{ __('admin.aside_title_request_products') }}</span>
+                  </a>
+              </li>
             </ul>
         </div>
         <!-- Sidebar -->
@@ -67,3 +83,4 @@
 
     <div class="sidebar-background"></div>
 </div>
+

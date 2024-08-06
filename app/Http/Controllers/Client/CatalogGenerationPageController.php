@@ -16,7 +16,6 @@ class CatalogGenerationPageController extends Controller
     $car = $car_model->cars()->where('slug', $slug)->firstOrFail();
 
     $products = $car->products;
-
     return view('catalog_product', compact('products', 'car', 'car_model', 'car_make'));
   }
 }

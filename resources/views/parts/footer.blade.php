@@ -43,13 +43,18 @@
                     консультацию
                 </h3>
 
-                <form action="" class="footer-form">
-                    <input type="tel" class="footer-form-input" placeholder="+7 (___) ___ __ __" />
+                <form action="{{ route('request_consultation.store', 'footer-form') }}" class="footer-form" method="POST">
+                    @csrf
+                    <input type="tel" class="footer-form-input" placeholder="+7 (___) ___ __ __" name="phone" />
+                    @error('phone')
+                        <p class="form-error">{{ $message }}</p>
+                    @enderror
 
                     <button type="submit" class="footer-form-btn">
                         <img src="/images/icons/form-arrow.svg" alt="Отправить" />
                     </button>
                 </form>
+
                 <p class="copyright footer-copyright">
                     Отправляя форму вы соглашаетесь <br />
                     с нашей <a href="#" download>политикой конфиденциальности</a>

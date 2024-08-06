@@ -7,6 +7,8 @@ use App\Models\Car;
 use App\Models\CarMake;
 use App\Models\CarModel;
 use App\Models\Product;
+use App\Models\RequestConsultation;
+use App\Models\RequestProduct;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
             'cars_routes' => Car::$cars_routes,
             'products_routes' => Product::$products_routes,
             'blogs_routes' => Blog::$blogs_routes,
+            'request_consultations_routes' => RequestConsultation::$request_consultations_routes,
+            'request_products_routes' => RequestProduct::$request_products_routes,
         ]);
     }
 }

@@ -18,9 +18,9 @@
                     </p>
                 </div>
                 <div class="blog-search">
-                    <form action="{{ route('car_model.search', $car_make) }}" method="get">
+                    <form action="#" method="get" id="modelSearchForm">
                         @csrf
-                        <input type="text" name="search" class="blog-search__input" placeholder="Поиск модели" />
+                        <input type="text" name="search" class="blog-search__input" id="modelSearchInput" placeholder="Поиск модели" />
                         <button type="submit" class="blog-search__btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                 fill="none">
@@ -38,7 +38,7 @@
 
 
 
-        <section class="catalog-models ">
+        <section id="modelsCatalog" class="catalog-models ">
             <div class="container">
                 <h2 class="h3">Выберите модель</h2>
                 <div class="catalog-models__wrap">
@@ -55,5 +55,18 @@
         <x-section.faq />
 
     </main>
+    <script>
+      document.getElementById('modelSearchForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const searchInput = document.getElementById('modelSearchInput').value;
+          const url = "{{ route('car_model.search', $car_make) }}?search=" + searchInput;
+          fetch(url)
+              .then(response => response.text())
+              .then(data => {
+                  document.getElementById('modelsCatalog').innerHTML = data;
+              });
+      });
+    </script>
 @endsection
+
 

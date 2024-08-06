@@ -120,7 +120,7 @@ return [
   'fild_company_details' => 'Реквизиты компании(ИНН, ОГРН, Адрес)',
   'field_material'  => 'Материал',
   'field_side' => 'Сторона',
-
+  'field_created_at' => 'Создано',
   //Btns
   'btn_menu' => 'Меню',
   'btn_logout' => 'Выйти',
@@ -164,5 +164,17 @@ return [
   //Questions
   'question_delete' => 'Вы уверены что хотите удалить запись?',
   // Rols
-  'role_admin' => 'Администратор'
+  'role_admin' => 'Администратор',
+
+  //Titles request_consultations
+  'request_consultation_card_title' => 'Запись заявка на консультацию',
+  'request_consultation_card_info' => 'Информация о записи заявка на консультацию',
+  'field_name' => 'Имя',
+  'field_phone' => 'Телефон',
+  'aside_title_request_consultations' => 'Заявки на консультации',
+
+  //Titles request_products
+  'request_product_card_title' => 'Запись заявка на продукцию',
+  'request_product_card_info' => 'Информация о записи заявка на продукцию',
+  'aside_title_request_products' => 'Заявки на продукцию',
 ];

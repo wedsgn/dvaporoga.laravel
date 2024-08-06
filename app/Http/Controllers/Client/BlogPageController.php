@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 
 class BlogPageController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
     $products = Product::latest()->limit(8)->get();
-    $blogs = Blog::latest()->paginate(10);
-    return view('blog', compact('blogs', 'products'));
+    $blogs = Blog::latest()->paginate(8, ['*'], 'page', $request->page);
+    $pageCount = $blogs->lastPage();
+    $currentPage = $blogs->currentPage();
+    return view('blog', compact('blogs', 'products', 'pageCount', 'currentPage'));
   }
 
   public function show($slug)
@@ -29,8 +31,18 @@ class BlogPageController extends Controller
   public function search(Request $request)
   {
     $search = $request->input('search');
-    $blogs = Blog::filter($search)->paginate(10);
-    return view('blog', compact('blogs'));
+    $blogs = Blog::filter($search)->paginate(8);
+    $pageCount = $blogs->lastPage();
+    $currentPage = $blogs->currentPage();
+    return view('partials.blog-card', compact('blogs', 'pageCount', 'currentPage'));
+  }
+
+  public function add_more(Request $request)
+  {
+    $blogs = Blog::latest()->paginate(8, ['*'], 'page', $request->page);
+    $pageCount = $blogs->lastPage();
+    $currentPage = $blogs->currentPage();
+    return view('partials.blog-card', compact('blogs', 'pageCount', 'currentPage'));
   }
 }
 

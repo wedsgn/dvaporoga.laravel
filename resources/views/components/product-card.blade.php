@@ -53,6 +53,6 @@
 
         </ul>
 
-        <button class="btn product-btn" data-micromodal-trigger="modal-1">Заказать сейчас</button>
+        <button class="btn product-btn" data-micromodal-trigger="modal-1" data-product-id="{{ $part->id }}">Заказать сейчас</button>
     </div>
 </div>

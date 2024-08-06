@@ -21,7 +21,7 @@
             <div class="container">
                 <div class="blog-catalog__top">
                     <h1 class="h1">Блог</h1>
-                    <p class="blog-catalog__descpription">
+                    <p class="blog-catalog__description">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
                         eius officia, illum dignissimos cupiditate ab quo harum unde
                         labore, corporis, odio quisquam assumenda officiis consequatur rem
@@ -30,9 +30,9 @@
                 </div>
 
                 <div class="blog-search">
-                    <form action="{{ route('blog.search') }}" method="get">
+                    <form action="#" method="get" id="blogSearchForm">
                         @csrf
-                        <input type="text" class="blog-search__input" placeholder="Поиск статьи" />
+                        <input type="text" class="blog-search__input" placeholder="Поиск статьи" id="blogSearchInput" />
                         <button type="submit" class="blog-search__btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                 fill="none">
@@ -48,7 +48,7 @@
             </div>
         </section>
 
-        <section class="blog-cards-catalog">
+        <section class="blog-cards-catalog" id="blogCatalog">
             <div class="container">
                 <div class="blog-cards__wrap">
                   @foreach ($blogs as $blog)
@@ -56,10 +56,44 @@
                   @endforeach
                 </div>
             </div>
-            <div class="pagination-wrap">
-              {{ $blogs->links('pagination::default') }}
-          </div>
         </section>
+        <button id="loadMoreBtn" class="load-more-btn">Показать больше</button>
+
     </main>
+
+    <script>
+        document.getElementById('blogSearchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchInput = document.getElementById('blogSearchInput').value;
+            const url = "{{ route('blog.search') }}?search=" + searchInput;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('blogCatalog').innerHTML = data;
+                });
+        });
+
+        let pageCount = Number("{{ $pageCount }}");
+        let currentPage = Number("{{ $currentPage }}");
+
+        document.getElementById('loadMoreBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            currentPage = currentPage + 1;
+            const url = "{{ route('blog.add_more') }}?page=" + currentPage;
+
+            if(currentPage == pageCount) {
+              document.getElementById('loadMoreBtn').style.display = 'none';
+            }
+            else {
+              document.getElementById('loadMoreBtn').style.display = 'block';
+            }
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('blogCatalog').innerHTML += data;
+
+                });
+        });
+    </script>
 @endsection
 
