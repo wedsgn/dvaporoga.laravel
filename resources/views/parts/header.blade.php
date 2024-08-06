@@ -12,7 +12,7 @@
                 <a href="{{ route('blog') }}" class="header__link">Статьи</a>
 
                 <a href="{{ route('home') }}#about" class="header__link">О нас</a>
-                <a href="{{ route('home') }}#reviews" class="header__link">Отзывы</a>
+                {{-- <a href="{{ route('home') }}#reviews" class="header__link">Отзывы</a> --}}
             </nav>
 
             <div class="header__btns">

@@ -1,4 +1,4 @@
-<section id="features" class="features-section section">
+<section id="features" class="features-section section" style="scroll-margin-top: 50px;">
     <div class="container">
         <div class="features-items__wrap">
             <!-- item -->
