@@ -45,8 +45,15 @@
                     @endforeach
                 </div>
             </div>
+
+            <div class="container">
+
+                <div class="load-more-btn__wrap">
+
+                    <button id="loadMoreBtn" class="load-more-btn btn">Показать больше</button>
+                </div>
+            </div>
         </section>
-        <button id="loadMoreBtn" class="load-more-btn">Показать больше</button>
 
     </main>
 

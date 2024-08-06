@@ -40,6 +40,15 @@
   gap: 32px 16px;
 }
 
+.load-more-btn__wrap {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.load-more-btn {
+}
+
 @media screen and (max-width: 1200px) {
   .blog-catalog-section {
     margin-top: 40px;
