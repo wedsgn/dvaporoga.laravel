@@ -49,13 +49,13 @@
 
                                         <div class="product-part__info_item">
                                             <p class="product-part__info_item_title">Профиль:</p>
-                                            <p>Стандартный</p>
+                                            <p class="product-part__info_item_value">Стандартный</p>
                                         </div>
 
                                         @if ($part->metal_thickness)
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Толщина:</p>
-                                                <p>{{ $part->metal_thickness }}</p>
+                                                <p class="product-part__info_item_value">{{ $part->metal_thickness }}</p>
                                             </div>
                                         @endif
 
@@ -64,14 +64,14 @@
                                         @if ($part->side)
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Сторона:</p>
-                                                <p>{{ $part->side }}</p>
+                                                <p class="product-part__info_item_value">{{ $part->side }}</p>
                                             </div>
                                         @endif
 
                                         @if ($part->size)
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Размер:</p>
-                                                <p>{{ $part->size }} мм</p>
+                                                <p class="product-part__info_item_value">{{ $part->size }} </p>
                                             </div>
                                         @endif
                                     </div>
@@ -79,7 +79,8 @@
                                     <div class="product-part__bottom">
                                         <div class="product-part__price">
                                             <p class="product-part__price-price">Цена:</p>
-                                            <div class="product-part__price_num">{{ $part->price_one_side }} руб</div>
+                                            <div class="product-part__price_num"><span>{{ $part->price_one_side }}</span>
+                                                руб</div>
 
                                         </div>
 
@@ -90,28 +91,42 @@
                         @endforeach
                     </div>
                     <div class="product-parts__total">
-                        <h4 class="product-parts__total_title">Ваш заказ</h4>
+                        <div class="product-parts__total_head">
+                            <h4 class="product-parts__total_title">Ваш заказ</h4>
 
-                        <form class="total-form">
+                            <button class="product-parts__total_clear">Очистить</button>
+                        </div>
+
+                        <div class="total-form">
                             <div class="total-form__car">
                                 <div class="total-form__car_title">Автомобиль:</div>
                                 <div class="total-form__car_value"> {{ $car->title }} {{ $car->years }}</div>
                             </div>
 
                             <div class="total-form__parts">
-                                <div class="total-form__part">
-                                    <p class="total-form__part_title">asdasd</p>
-                                </div>
-                                <div class="total-form__part">
-                                    <p class="total-form__part_title">asdasd</p>
-                                </div>
-                                <div class="total-form__part">
-                                    <p class="total-form__part_title">asdasd</p>
+                                <div class="total-form__empty">
+                                    Добавьте запчасти в заказ
                                 </div>
                             </div>
 
+                            <div class="total-form__total">
+                                <div class="total-form__total_title">Итого:</div>
+                                <div class="total-form__total_value"><span>0</span> руб.</div>
+                            </div>
+                        </div>
+
+                        <form class="cart-form " id="cart-form">
+                            @csrf
+                            <input type="text" placeholder="Имя" class="input" name="name" required />
+                            <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
+                            <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
+
+                            <p class="copyright">
+                                Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+                                <a href=""> политикой конфиденциальности </a>
+                            </p>
                         </form>
-                        <button class="btn product-parts__total_btn">Заказать</button>
+
                     </div>
                 </div>
             </div>
