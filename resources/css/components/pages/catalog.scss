@@ -233,12 +233,16 @@
 
 .total-form__car {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
   justify-content: space-between;
   padding-bottom: 8px;
   border-bottom: 1px solid #e6e6e6;
 }
 
+.total-form__part_price {
+  flex-shrink: 0;
+}
 .total-form__car_value {
   font-weight: 600;
 }
@@ -277,6 +281,7 @@
 
 .total-form__part_title {
   font-weight: 600;
+  line-height: 120%;
   flex-grow: 1;
 }
 

@@ -38,6 +38,9 @@
                                         {{ $part->title }}
                                     </h3>
 
+
+                                    <input type="hidden" class="product-part__id" value="{{ $part->id }}">
+
                                     <div class="product-part__info_wrap">
                                         @if ($part->material)
                                             <div class="product-part__info_item">
@@ -115,10 +118,14 @@
                             </div>
                         </div>
 
-                        <form class="cart-form " id="cart-form">
+                        <form class="cart-form" id="cart-form">
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" required />
                             <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
+                            <input type="hidden" class="product-form__price" name="total_price" value="">
+                            <input type="hidden" class="product-form__array" name="data" value="">
+                            <input type="hidden" name="car" value="{{ $car->title }} {{ $car->years }}">
+                            <input type="hidden" name="form_id" value="asdasdasdasd">
                             <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
 
                             <p class="copyright">
@@ -131,8 +138,33 @@
                 </div>
             </div>
         </section>
-
-
-
     </main>
+
+    <script>
+        const cartForm = document.getElementById('cart-form');
+
+
+
+        cartForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const response = await fetch("{{ route('request_product.store') }}", {
+                method: 'POST',
+                body: formData,
+            })
+
+            if (response.ok) {
+                form.reset();
+                MicroModal.show('modal-2');
+                setTimeout(() => {
+                    MicroModal.close('modal-2');
+                }, 3000);
+            } else {
+                throw new Error('Ошибка отправки');
+            }
+
+        });
+    </script>
 @endsection

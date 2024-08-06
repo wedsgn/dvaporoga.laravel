@@ -23,13 +23,15 @@ window.addEventListener("load", () => {
 
   // Поле из карточки
 
-  // Коризина
+  // Корзина
 
   const cartItems = document.querySelectorAll(".product-part");
 
   if (cartItems) {
     let selectedItems = [];
     const cartItemsPlace = document.querySelector(".total-form__parts");
+    const totalPriceInput = document.querySelector(".product-form__price");
+    const arrayFormInput = document.querySelector(".product-form__array");
     const clearCart = document.querySelector(".product-parts__total_clear");
     const totalPriceDiv = document.querySelector(
       ".total-form__total_value span"
@@ -50,6 +52,8 @@ window.addEventListener("load", () => {
 
     const checkSum = () => {
       totalPriceDiv.innerHTML = totalPrice;
+      totalPriceInput.value = totalPrice;
+      arrayFormInput.value = JSON.stringify(selectedItems);
     };
 
     const pushArray = () => {
@@ -63,18 +67,18 @@ window.addEventListener("load", () => {
           </div>`
         );
       });
-
-      console.log(selectedItems);
     };
 
     cartItems.forEach((item, idx) => {
-      item.addEventListener("click", () => {
+      const addBtn = item.querySelector(".btn");
+      addBtn.addEventListener("click", () => {
         const title = item.querySelector(".product-part__title").innerHTML;
+        const itemId = item.querySelector(".product-part__id").value;
         const price = item.querySelector(
           ".product-part__price_num span"
         ).innerHTML;
 
-        selectedItems.push({ id: idx, title: title, price: price });
+        selectedItems.push({ id: itemId, title: title, price: price });
         totalPrice += +price;
         checkSum();
         pushArray();
