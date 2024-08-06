@@ -19,25 +19,15 @@
                             <span>7 минут</span> и ответим на все вопросы.
                         </p>
 
-                        <form class="index-hero-form" action="{{ route('request_consultation.store', 'index-hero-form') }}" id="indexHeroForm" method="POST">
+                        <form class="index-hero-form" {{-- action="{{ route('request_consultation.store', 'index-hero-form') }}"  --}} id="indexHeroForm" method="POST">
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" required />
-                            @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
                             <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-                            @error('phone')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
                             <button class="btn lg" type="submit">Отправить</button>
 
                             <p class="copyright">
                                 Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                                <a href="" download=""> политикой конфиденциальности </a>
+                                <a href=""> политикой конфиденциальности </a>
                             </p>
                         </form>
 

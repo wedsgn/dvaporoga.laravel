@@ -21,22 +21,14 @@
                     <h2 class="modal__title" id="modal-1-title">Micromodal</h2>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
-                <main class="modal__content" id="modal-1-content">
-                  <form class="index-hero-form" action="{{ route('request_product.store', 'product-home-page-form') }}" id="indexHeroForm" method="POST">
+                <form class="index-hero-form" action="{{ route('request_product.store', 'product-home-page-form') }}"
+                    id="indexHeroForm" method="POST">
                     @csrf
                     <input type="hidden" name="product_id[]" id="productIdInput" value="" />
                     <input type="text" placeholder="Имя" class="input" name="name" required />
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-                    @error('phone')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required="">
+
+
                     <button class="btn lg" type="submit">Отправить</button>
 
                     <p class="copyright">
@@ -44,13 +36,7 @@
                         <a href="" download=""> политикой конфиденциальности </a>
                     </p>
                 </form>
-                </main>
-                <footer class="modal__footer">
-                    <button class="modal__btn modal__btn-primary">Continue</button>
-                    <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">
-                        Close
-                    </button>
-                </footer>
+
             </div>
         </div>
     </div>
