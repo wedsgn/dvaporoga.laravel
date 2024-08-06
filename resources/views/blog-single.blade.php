@@ -2,28 +2,7 @@
 
 @section('content')
     <main>
-        <section class="breadcrumbs-section">
-            <div class="container">
-                <ul class="breadcrumbs">
-                    <li><a href="/">Главная</a></li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M14 8.0013L10.6667 4.66797M14 8.0013L10.6667 11.3346M14 8.0013H2" stroke="#1E1E1E"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </li>
-                    <li><a href="/blog.html">Блог</a></li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
-                            fill="none">
-                            <path d="M14 8.0013L10.6667 4.66797M14 8.0013L10.6667 11.3346M14 8.0013H2" stroke="#1E1E1E"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </li>
-                    <li>{{ $blog->title }}</li>
-                </ul>
-            </div>
-        </section>
+        {{ Breadcrumbs::render('blog') }}
 
         <section class="blog-page-section">
             <div class="container">

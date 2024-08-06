@@ -48,5 +48,5 @@ Breadcrumbs::for('blog', function (BreadcrumbTrail $trail) {
 // Home > Blog > [Post]
 Breadcrumbs::for('blog.single', function (BreadcrumbTrail $trail, $post) {
     $trail->parent('blog');
-    $trail->push($post->title, route('blog.single', $post));
+    $trail->push($post->title, route('blog.single', $post->title));
 });

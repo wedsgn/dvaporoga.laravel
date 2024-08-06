@@ -2,20 +2,7 @@
 
 @section('content')
     <main>
-        <section class="breadcrumbs-section">
-            <div class="container">
-                <ul class="breadcrumbs">
-                    <li><a href="/">Главная</a></li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M14 8.0013L10.6667 4.66797M14 8.0013L10.6667 11.3346M14 8.0013H2" stroke="#1E1E1E"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </li>
-                    <li>Блог</li>
-                </ul>
-            </div>
-        </section>
+        {{ Breadcrumbs::render('blog') }}
 
         <section class="blog-catalog-section">
             <div class="container">
@@ -48,12 +35,14 @@
             </div>
         </section>
 
+
+
         <section class="blog-cards-catalog" id="blogCatalog">
             <div class="container">
                 <div class="blog-cards__wrap">
-                  @foreach ($blogs as $blog)
-                  <x-blog-card :item="$blog" />
-                  @endforeach
+                    @foreach ($blogs as $blog)
+                        <x-blog-card :item="$blog" />
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -81,11 +70,10 @@
             currentPage = currentPage + 1;
             const url = "{{ route('blog.add_more') }}?page=" + currentPage;
 
-            if(currentPage == pageCount) {
-              document.getElementById('loadMoreBtn').style.display = 'none';
-            }
-            else {
-              document.getElementById('loadMoreBtn').style.display = 'block';
+            if (currentPage == pageCount) {
+                document.getElementById('loadMoreBtn').style.display = 'none';
+            } else {
+                document.getElementById('loadMoreBtn').style.display = 'block';
             }
             fetch(url)
                 .then(response => response.text())
@@ -96,4 +84,3 @@
         });
     </script>
 @endsection
-

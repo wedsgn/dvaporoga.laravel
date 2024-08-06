@@ -43,14 +43,13 @@
                     консультацию
                 </h3>
 
-                <form action="{{ route('request_consultation.store', 'footer-form') }}" class="footer-form" method="POST">
+                <form class="footer-form">
                     @csrf
-                    <input type="tel" class="footer-form-input" placeholder="+7 (___) ___ __ __" name="phone" />
-                    @error('phone')
-                        <p class="form-error">{{ $message }}</p>
-                    @enderror
+                    <input type="tel" class="footer-form-input" required placeholder="+7 (___) ___ __ __"
+                        name="phone" />
 
-                    <button type="submit" class="footer-form-btn">
+
+                    <button type="submit" class="footer-form-btn footer-form-submit">
                         <img src="/images/icons/form-arrow.svg" alt="Отправить" />
                     </button>
                 </form>
@@ -84,3 +83,33 @@
         </div>
     </div>
 </footer>
+
+<script>
+    const formFooter = document.querySelector('.footer-form');
+
+    formFooter.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(formFooter);
+
+        try {
+            const response = await fetch("{{ route('request_product.store') }}", {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                formFooter.reset();
+                MicroModal.close('modal-1');
+                MicroModal.show('modal-2');
+
+                setTimeout(() => {
+                    MicroModal.close('modal-2');
+                }, 3000);
+            } else {
+                throw new Error('Ошибка отправки');
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+</script>
