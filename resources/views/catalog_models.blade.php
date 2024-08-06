@@ -20,7 +20,8 @@
                 <div class="blog-search">
                     <form action="#" method="get" id="modelSearchForm">
                         @csrf
-                        <input type="text" name="search" class="blog-search__input" id="modelSearchInput" placeholder="Поиск модели" />
+                        <input type="text" name="search" class="blog-search__input" id="modelSearchInput"
+                            placeholder="Поиск модели" />
                         <button type="submit" class="blog-search__btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                 fill="none">
@@ -56,17 +57,26 @@
 
     </main>
     <script>
-      document.getElementById('modelSearchForm').addEventListener('submit', function(event) {
-          event.preventDefault();
-          const searchInput = document.getElementById('modelSearchInput').value;
-          const url = "{{ route('car_model.search', $car_make) }}?search=" + searchInput;
-          fetch(url)
-              .then(response => response.text())
-              .then(data => {
-                  document.getElementById('modelsCatalog').innerHTML = data;
-              });
-      });
+        const search = document.getElementById('modelSearchInput')
+
+        search.addEventListener('keyup', () => {
+            const searchInput = document.getElementById('modelSearchInput').value;
+            const url = "{{ route('car_model.search', $car_make) }}?search=" + searchInput;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('modelsCatalog').innerHTML = data;
+                });
+        })
+        document.getElementById('modelSearchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchInput = document.getElementById('modelSearchInput').value;
+            const url = "{{ route('car_model.search', $car_make) }}?search=" + searchInput;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('modelsCatalog').innerHTML = data;
+                });
+        });
     </script>
 @endsection
-
-
