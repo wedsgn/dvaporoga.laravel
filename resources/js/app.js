@@ -22,4 +22,19 @@ window.addEventListener("load", () => {
   });
 
   // Поле из карточки
+
+  // Коризина
+
+  const cartItems = document.querySelectorAll(".product-part");
+
+  if (cartItems) {
+    let selectedItems = [];
+    const cartItemsPlace = document.querySelector(".total-form__parts");
+
+    cartItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        console.log(item.querySelector(".product-part__title"));
+      });
+    });
+  }
 });

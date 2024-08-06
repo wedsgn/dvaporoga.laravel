@@ -19,14 +19,23 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
   .breadcrumbs-section {
-    margin-top: 16px;
+    margin-top: 68px;
   }
+}
+
+@media screen and (max-width: 768px) {
   .breadcrumbs {
     flex-wrap: wrap;
     gap: 4px 8px;
     font-size: 14px;
     line-height: 1;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .breadcrumbs-section {
+    margin-top: 60px;
   }
 }
