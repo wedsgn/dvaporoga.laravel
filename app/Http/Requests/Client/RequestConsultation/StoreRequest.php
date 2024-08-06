@@ -23,7 +23,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['nullable', 'max:70'],
-            'phone' => ['required', 'regex:/^\+7\s*\([0-9]{3}\)\s*[0-9]{3}-[0-9]{2}-[0-9]{2}$/'],
+            'phone' => ['required'],
+            'form_id' => ['required'],
         ];
     }
 
@@ -37,9 +38,7 @@ class StoreRequest extends FormRequest
         return [
             'name.max' => 'Поле имя не может быть больше 70 символов',
             'phone.required' => 'Поле телефон не может быть пустым',
-            'phone.regex' => 'Поле телефон должно быть в формате +7 (999) 999-99-99',
             'form_id.required' => 'Поле форма не может быть пустым',
-            'form_id.integer' => 'Поле форма должно быть числом',
         ];
     }
 }

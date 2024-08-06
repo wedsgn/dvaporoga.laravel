@@ -47,6 +47,7 @@
                     @csrf
                     <input type="tel" class="footer-form-input" required placeholder="+7 (___) ___ __ __"
                         name="phone" />
+                    <input type="hidden" name="form_id" value="footer-form">
 
 
                     <button type="submit" class="footer-form-btn footer-form-submit">
@@ -92,7 +93,7 @@
         const formData = new FormData(formFooter);
 
         try {
-            const response = await fetch("{{ route('request_product.store') }}", {
+            const response = await fetch("{{ route('request_consultation.store') }}", {
                 method: 'POST',
                 body: formData
             });
