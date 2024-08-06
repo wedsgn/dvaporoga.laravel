@@ -56,7 +56,19 @@
 
     </main>
     <script>
-        document.getElementById('concernSearchForm').addEventListener('submit', function(event) {
+        const search = document.getElementById('concernSearchInput')
+
+        search.addEventListener('keyup', () => {
+            const searchInput = document.getElementById('concernSearchInput').value;
+            const url = "{{ route('catalog.search') }}?search=" + searchInput;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('concernsCatalog').innerHTML = data;
+                });
+        })
+
+        document.getElementById('concernSearchForm').addEventListener('change', function(event) {
             event.preventDefault();
             const searchInput = document.getElementById('concernSearchInput').value;
             const url = "{{ route('catalog.search') }}?search=" + searchInput;
