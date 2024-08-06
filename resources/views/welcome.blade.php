@@ -19,11 +19,11 @@
                             <span>7 минут</span> и ответим на все вопросы.
                         </p>
 
-                        <form class="index-hero-form" {{-- action="{{ route('request_consultation.store', 'index-hero-form') }}"  --}} id="indexHeroForm" method="POST">
+                        <form class="index-hero-form" id="indexHeroForm">
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" required />
                             <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-                            <button class="btn lg" type="submit">Отправить</button>
+                            <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
 
                             <p class="copyright">
                                 Нажимая кнопку “Отправить” вы соглашаетесь с нашей
@@ -31,38 +31,39 @@
                             </p>
                         </form>
 
-                        {{-- <script>
-                            const form = document.querySelector('.index-hero-form');
-
+                        <script>
+                            const form = document.querySelector('#indexHeroForm');
+                            const submitButton = document.querySelector('#indexHeroFormSubmit');
 
                             form.addEventListener('submit', async function(event) {
                                 event.preventDefault();
-
                                 const formData = new FormData(form);
+
                                 try {
-                                    const response = await fetch('/your-endpoint', {
+                                    const response = await fetch("{{ route('request_product.store') }}", {
                                         method: 'POST',
                                         body: formData
                                     });
 
-                                    if (!response.ok) {
-                                        throw new Error('Network response was not ok');
-                                    }
+                                    if (response.ok) {
+                                        form.reset();
+                                        MicroModal.close('modal-1');
+                                        MicroModal.show('modal-2');
 
-                                    const data = await response.json();
-                                    console.log(data);
-                                    // Очистка формы и удаление сообщения об ошибке
-                                    form.reset();
-                                    errorInput.classList.remove('error');
-                                    errorMessage.textContent = '';
+                                        setTimeout(() => {
+                                            MicroModal.close('modal-2');
+                                        }, 3000);
+                                    } else {
+                                        throw new Error('Ошибка отправки');
+                                    }
                                 } catch (error) {
-                                    console.error('There has been a problem with your fetch operation:', error);
-                                    // Отображение сообщения об ошибке
-                                    errorInput.classList.add('error');
-                                    errorMessage.textContent = error.message;
+                                    alert(error.message);
+                                } finally {
+                                    submitButton.disabled = false;
                                 }
                             });
-                        </script> --}}
+                        </script>
+
                     </div>
 
                     <div class="index-hero__scheme">

@@ -35,7 +35,7 @@ Route::get('/blog/search', [BlogPageController::class, 'search'])->name('blog.se
 Route::get('/blog/{slug}', [BlogPageController::class, 'show'])->name('blog.single');
 
 Route::post('/request-consultation{form}', [RequestsController::class, 'store_request_onsultation'])->name('request_consultation.store');
-Route::post('/request-product{form}', [RequestsController::class, 'store_request_product'])->name('request_product.store');
+Route::post('/request-product', [RequestsController::class, 'store_request_product'])->name('request_product.store');
 
 Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
