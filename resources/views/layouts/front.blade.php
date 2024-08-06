@@ -65,7 +65,8 @@
                 try {
                     const response = await fetch("{{ route('request_product.store') }}", {
                         method: 'POST',
-                        body: formData
+                        body: formData,
+
                     });
 
                     if (response.ok) {
