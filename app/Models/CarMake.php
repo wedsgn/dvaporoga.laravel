@@ -39,9 +39,8 @@ class CarMake extends Model
     public function scopeFilter($items, $search)
     {
         if (request('search') !== null) {
-            $items->where('id', 'ilike', "%{$search}%")
-            ->orWhere('slug', 'ilike', "%{$search}%")
-            ->orWhere('title', 'ilike', "%{$search}%");
+            $items->orWhere('title', 'ilike', "%{$search}%")
+            ->orWhere('slug', 'ilike', "%{$search}%");
         }
         return $items;
     }

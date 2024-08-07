@@ -1,5 +1,3 @@
-<section class="catalog-concern" id="catalogCatalog">
-  <div class="container">
       <div class="catalog-concern__wrap">
           @if ($car_makes->count() > 0)
               @foreach ($car_makes as $car_make)
@@ -12,5 +10,3 @@
               </div>
           @endif
       </div>
-  </div>
-</section>

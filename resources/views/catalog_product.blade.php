@@ -125,7 +125,7 @@
                             <input type="hidden" class="product-form__price" name="total_price" value="">
                             <input type="hidden" class="product-form__array" name="data" value="">
                             <input type="hidden" name="car" value="{{ $car->title }} {{ $car->years }}">
-                            <input type="hidden" name="form_id" value="asdasdasdasd">
+                            <input type="hidden" name="form_id" value="Форма каталога">
                             <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
 
                             <p class="copyright">

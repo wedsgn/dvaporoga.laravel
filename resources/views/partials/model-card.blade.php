@@ -1,6 +1,4 @@
 
-        <section id="modelsCatalog" class="catalog-models ">
-            <div class="container">
               @if ($car_models->count() > 0)
                 <h2 class="h3">Выберите модель</h2>
                 <div class="catalog-models__wrap">
@@ -10,9 +8,8 @@
                     @endforeach
                 </div>
                 @else
-                <div class="not-found-section">
+                <div class="catalog-models__wrap">
                     <p>По вашему запросу ничего не найдено</p>
                 </div>
             @endif
-            </div>
-        </section>
+

@@ -47,12 +47,22 @@
                                     <th class="ps-0" scope="row">{{ __('admin.field_name') }}:</th>
                                     <td class="text-muted">{{ $item->name }}</td>
                                 </tr>
-
                                 <tr>
-                                    <th class="ps-0" scope="row">{{ __('admin.field_phone') }}:</th>
-                                    <td class="text-muted">{{ $item->phone }}</td>
+                                  <th class="ps-0" scope="row">{{ __('admin.field_phone') }}:</th>
+                                  <td class="text-muted">{{ $item->phone }}</td>
+                              </tr>
+                                @if ($item->car)
+                                <tr>
+                                    <th class="ps-0" scope="row">{{ __('admin.field_car') }}:</th>
+                                    <td class="text-muted">{{ $item->car }}</td>
                                 </tr>
-
+                                @endif
+                                @if(!empty($item->total_price))
+                                <tr>
+                                    <th class="ps-0" scope="row">{{ __('admin.field_total_price') }}:</th>
+                                    <td class="text-muted">{{ $item->total_price }}</td>
+                                </tr>
+                                @endif
                                 <tr>
                                   <th class="ps-0" scope="row">{{ __('admin.field_created') }}:</th>
                                   <td class="text-muted">{{ $item->created_at }}</td>

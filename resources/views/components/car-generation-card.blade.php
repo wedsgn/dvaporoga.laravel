@@ -5,13 +5,12 @@
   <div class="car-generation__info">
     <div class="car-generation__years">{{ $years }}</div>
     @php $count = count($models); $i = 1; @endphp
+    @php $prev_generation = null; @endphp
     @foreach($models as $model)
-        @if ($count > 1 && $i < $count)
-            {{ $model->generation }} /
-        @else
+        @if ($prev_generation !== $model->generation)
             {{ $model->generation }}
+            @php $prev_generation = $model->generation; @endphp
         @endif
-        @php $i++; @endphp
     @endforeach
   </div>
 

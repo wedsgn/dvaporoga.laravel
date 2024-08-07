@@ -33,11 +33,11 @@ class DatabaseSeeder extends Seeder
       MainInfo::create($value);
     }
 
-    // User::factory()->create([
-    //   'name' => 'Test User',
-    //   'password' => Hash::make('aspire5745g'),
-    //   'email' => 'test@example.com',
-    // ]);
+    User::factory()->create([
+      'name' => 'Test User',
+      'password' => Hash::make('aspire5745g'),
+      'email' => 'test@example.com',
+    ]);
 
     $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
       $blog->description_short = Str::words($blog->description, 15);

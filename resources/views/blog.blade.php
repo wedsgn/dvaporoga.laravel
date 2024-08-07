@@ -37,8 +37,8 @@
 
 
 
-        <section class="blog-cards-catalog" id="blogCatalog">
-            <div class="container">
+        <section class="blog-cards-catalog">
+            <div class="container" id="blogCatalog">
                 <div class="blog-cards__wrap">
                     @foreach ($blogs as $blog)
                         <x-blog-card :item="$blog" />
@@ -56,19 +56,21 @@
     </main>
 
     <script>
+        let pageCount = Number("{{ $pageCount }}");
+        let currentPage = Number("{{ $currentPage }}");
+
         document.getElementById('blogSearchForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const searchInput = document.getElementById('blogSearchInput').value;
             const url = "{{ route('blog.search') }}?search=" + searchInput;
+            document.getElementById('loadMoreBtn').style.display = 'none';
+
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('blogCatalog').innerHTML = data;
                 });
         });
-
-        let pageCount = Number("{{ $pageCount }}");
-        let currentPage = Number("{{ $currentPage }}");
 
         document.getElementById('loadMoreBtn').addEventListener('click', function(event) {
             event.preventDefault();

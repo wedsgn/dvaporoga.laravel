@@ -41,12 +41,13 @@ class RequestProductMail extends Mailable
    */
   public function build(): self
   {
-      return $this->view('emails.request_consultation_email')
+      return $this->view('emails.request_products_email')
           ->with([
               'subject' => $this->details['subject'],
               'name' => $this->details['name'],
               'phone' => $this->details['phone'],
-              'data' => $this->details['data'],
+              'products' => $this->details['products'],
+              'car' => $this->details['car'],
               'form' => $this->details['form']
           ]);
   }

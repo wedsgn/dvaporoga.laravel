@@ -39,8 +39,8 @@
 
 
 
-        <section id="modelsCatalog" class="catalog-models ">
-            <div class="container">
+        <section class="catalog-models">
+            <div class="container"  id="modelsCatalog" >
                 <h2 class="h3">Выберите модель</h2>
                 <div class="catalog-models__wrap">
                     <!-- Card -->

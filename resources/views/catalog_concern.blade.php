@@ -38,8 +38,8 @@
             </div>
         </section>
 
-        <section class="catalog-concern" id="concernsCatalog">
-            <div class="container">
+        <section class="catalog-concern">
+            <div class="container" id="concernsCatalog">
                 <div class="catalog-concern__wrap">
                     @foreach ($car_makes as $car_make)
                         <x-concern-card :title="$car_make->title" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
@@ -56,27 +56,26 @@
 
     </main>
     <script>
-        const search = document.getElementById('concernSearchInput')
+      const search = document.getElementById('concernSearchInput')
 
-        search.addEventListener('keyup', () => {
-            const searchInput = document.getElementById('concernSearchInput').value;
-            const url = "{{ route('catalog.search') }}?search=" + searchInput;
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('concernsCatalog').innerHTML = data;
-                });
-        })
-
-        document.getElementById('concernSearchForm').addEventListener('change', function(event) {
-            event.preventDefault();
-            const searchInput = document.getElementById('concernSearchInput').value;
-            const url = "{{ route('catalog.search') }}?search=" + searchInput;
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('concernsCatalog').innerHTML = data;
-                });
-        });
-    </script>
+      search.addEventListener('keyup', () => {
+          const searchInput = document.getElementById('concernSearchInput').value;
+          const url = "{{ route('catalog.search') }}?search=" + searchInput;
+          fetch(url)
+              .then(response => response.text())
+              .then(data => {
+                  document.getElementById('concernsCatalog').innerHTML = data;
+              });
+      })
+      document.getElementById('concernSearchForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const searchInput = document.getElementById('modelSearchInput').value;
+          const url = "{{ route('catalog.search') }}?search=" + searchInput;
+          fetch(url)
+              .then(response => response.text())
+              .then(data => {
+                  document.getElementById('concernsCatalog').innerHTML = data;
+              });
+      });
+  </script>
 @endsection

@@ -47,9 +47,7 @@
                     @csrf
                     <input type="tel" class="footer-form-input" required placeholder="+7 (___) ___ __ __"
                         name="phone" />
-                    <input type="hidden" name="form_id" value="footer-form">
-
-
+                    <input type="hidden" name="form_id" value="Форма в подвале">
                     <button type="submit" class="footer-form-btn footer-form-submit">
                         <img src="/images/icons/form-arrow.svg" alt="Отправить" />
                     </button>

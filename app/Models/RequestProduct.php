@@ -12,7 +12,9 @@ class RequestProduct extends Model
       'name',
       'phone',
       'form_id',
-      'data'
+      'data',
+      'total_price',
+      'car'
   ];
   public static $request_products_routes = [
     'admin.request_products.index',

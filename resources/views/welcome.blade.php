@@ -23,7 +23,7 @@
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" required />
                             <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-                            <input type="hidden" name="form_id" value="index-hero-form">
+                            <input type="hidden" name="form_id" value="Форма на главной странице">
                             <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
 
                             <p class="copyright">

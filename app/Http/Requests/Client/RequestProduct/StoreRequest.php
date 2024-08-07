@@ -22,9 +22,12 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'max:70'],
+            'name' => ['required', 'max:70'],
             'phone' => ['required'],
             'data' => ['required'],
+            'form_id' => ['nullable', 'string'],
+            'total_price' => ['nullable', 'string'],
+            'car' => ['nullable', 'string'],
         ];
     }
 
@@ -36,11 +39,11 @@ class StoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.max' => 'Поле имя не может быть больше 70 символов',
-            'phone.required' => 'Поле телефон не может быть пустым',
-            'form_id.required' => 'Поле форма не может быть пустым',
-            'form_id.integer' => 'Поле форма должно быть числом',
-            'data.required' => 'Поле данные не может быть пустым',
+            'name.max' => 'Поле "Имя" не может быть длиннее 70 символов.',
+            'phone.required' => 'Поле "Телефон" не может быть пустым.',
+            'form_id.required' => 'Поле "Форма" не может быть пустым.',
+            'form_id.integer' => 'Поле "Форма" должно быть числом.',
+            'data.required' => 'Поле "Данные" не может быть пустым.',
         ];
     }
 }
