@@ -10,8 +10,11 @@ use App\Jobs\RequestProductMailSendJob;
 use App\Models\Product;
 use App\Models\RequestConsultation;
 use App\Models\RequestProduct;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Notifications\InvoicePaid;
+use App\Notifications\TelegramNotificationProduct;
+use App\Notifications\TelegramNotificationConsultation;
+
+use Notification;
 
 class RequestsController extends Controller
 {
@@ -21,8 +24,7 @@ class RequestsController extends Controller
     $request_consultation = new RequestConsultation();
     $request_consultation->fill($request->validated());
     $request_consultation->save();
-    $this->send_request_consultation($request_consultation->name, $request_consultation->phone, $request_consultation->form_id);
-
+    $this->send_request_consultation($request_consultation);
     return response()->json(['message' => 'Request created successfully'], 201);
   }
 
@@ -40,50 +42,38 @@ class RequestsController extends Controller
 
     $request_consultation->data = json_encode($products);
     $request_consultation->save();
-    $this->send_request_product(
-      $request_consultation->name,
-      $request_consultation->phone,
-      $request_consultation->form_id,
-      $request_consultation->data,
-      $request_consultation->total_price,
-      $request_consultation->car
-    );
+    $this->send_request_product($request_consultation);
     return response()->json(['message' => 'Request created successfully'], 201);
   }
-  protected function send_request_consultation($name, $phone, $form_id)
+  protected function send_request_consultation($request_consultation)
   {
     $details = [
-      'subject' => 'Заявка на консультацию',
-      'name' => $name,
-      'phone' => $phone,
-      'form' => $form_id
+      'subject' => 'заявка на консультацию',
+      'name' => preg_replace('/[_\*]/', ' ', $request_consultation->name),
+      'phone' => $request_consultation->phone,
+      'form' => $request_consultation->form_id
     ];
 
+    $request_consultation->notify(new TelegramNotificationConsultation($details));
     //ДЛЯ ОТПРАВКИ СООБЩЕНИЙ НУЖНО УСТАНОВИТЬ Supervisor НА СЕРВЕР ЧТОБЫ РАБОТАЛИ ОЧЕРЕДИ PasswordResetMailSendJob
     dispatch(new RequestConsultationMailSendJob($details));
   }
-  protected function send_request_product(
-    $name,
-    $phone,
-    $form_id,
-    $data,
-    $total_price,
-    $car
-  ) {
+  protected function send_request_product($request_consultation) {
     $products = [];
-    foreach (json_decode($data) as $key => $value) :
+    foreach (json_decode($request_consultation->data) as $key => $value) :
       $products[] = Product::find($value);
     endforeach;
     $details = [
-      'subject' => 'Заявка на детали',
-      'name' => $name,
-      'phone' => $phone,
+      'subject' => 'заявка на детали',
+      'name' => preg_replace('/[_\*]/', ' ', $request_consultation->name),
+      'phone' => $request_consultation->phone,
       'products' => $products,
-      'total_price' => $total_price,
-      'car' => $car,
-      'form' => $form_id,
+      'total_price' => $request_consultation->total_price,
+      'car' => $request_consultation->car,
+      'form' => $request_consultation->form_id,
     ];
 
+    $request_consultation->notify(new TelegramNotificationProduct($details));
     //ДЛЯ ОТПРАВКИ СООБЩЕНИЙ НУЖНО УСТАНОВИТЬ Supervisor НА СЕРВЕР ЧТОБЫ РАБОТАЛИ ОЧЕРЕДИ PasswordResetMailSendJob
     dispatch(new RequestProductMailSendJob($details));
   }

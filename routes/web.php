@@ -16,7 +16,6 @@ use App\Http\Controllers\Client\CatalogGenerationPageController;
 use App\Http\Controllers\Client\CatalogModelPageController;
 use App\Http\Controllers\Client\RequestsController;
 use App\Http\Controllers\Client\WelcomePageController;
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
@@ -115,3 +114,4 @@ Route::prefix('request_products')->name('request_products.')->group(function () 
     Route::get('/{id}', [RequestProductController::class, 'show'])->name('show');
 });
 });
+

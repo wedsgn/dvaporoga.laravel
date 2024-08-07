@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'telegram-bot-api' => [
+        'bot_url' => env('TELEGRAM_BOT_URL'),
+        'token' => env('TELEGRAM_BOT_TOKEN'),
+    ],
 ];
+
