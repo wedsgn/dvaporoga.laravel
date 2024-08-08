@@ -34,7 +34,7 @@ class RequestConsultationMailSendJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to('info@dvaporoga.com')
+        Mail::to(env('MAIL_TO_ADDRESS'))
             ->queue(new RequestConsultationMail($this->details));
     }
 }

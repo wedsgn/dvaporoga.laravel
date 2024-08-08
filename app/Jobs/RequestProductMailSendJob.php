@@ -35,7 +35,7 @@ class RequestProductMailSendJob implements ShouldQueue
    */
   public function handle(): void
   {
-      Mail::to('info@dvaporoga.com')
+      Mail::to(env('MAIL_TO_ADDRESS'))
           ->queue(new RequestProductMail($this->details));
   }
 }
