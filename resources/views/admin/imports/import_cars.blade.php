@@ -37,7 +37,6 @@
 
                             </div>
                             <button type="submit" class="btn btn-success waves-effect waves-light mt-5">{{__('admin.btn_save')}}</button>
-
                         </form>
                     </div>
 

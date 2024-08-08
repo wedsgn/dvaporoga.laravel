@@ -29,8 +29,6 @@ class FormatData
         foreach ($arreyIds as $keyIds => $entityIds) :
             if (isset($entityIds)) :
                 foreach ($entityIds as $key => $value) :
-                  dump($value);
-                  dump($value == 'Внутренний Santa Fe 2дорест/2рест');
                     $entity_id = DB::table($keyIds)
                         ->where('title', $value)
                         ->first()->id;

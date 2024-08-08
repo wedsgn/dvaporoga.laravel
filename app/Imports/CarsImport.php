@@ -33,7 +33,6 @@ class CarsImport implements ToCollection
 
         if (!CarModel::whereSlug(Str::slug($row[2]))->exists()) :
           if (Str::slug($row[1]) == CarMake::whereSlug(Str::slug($row[1]))->first()->slug) :
-            dump($row[2]);
             $car_model = CarModel::create([
               'title' => $row[2],
               'slug' => Str::slug($row[2]),
@@ -45,7 +44,7 @@ class CarsImport implements ToCollection
             ]);
           endif;
         endif;
-
+        $row[6] = str_replace(["\n", "\r"], '', $row[6]);
       if (!Car::whereSlug(Str::slug($row[6] . '-' . $row[7]))->exists()) :
         if (Str::slug($row[2]) == CarModel::whereSlug(Str::slug($row[2]))->first()->slug) :
           $car = Car::create([

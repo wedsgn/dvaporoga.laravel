@@ -45,7 +45,18 @@
                     <div class="product-info__item">
                         <div class="product-info__item_top">
                             <p class="product-info__item_title">Сторона:</p>
-                            <div class="product-info__item_value">{{ $side }}</div>
+                            <div class="product-info__item_value">{{ $part->side }}</div>
+                        </div>
+                    </div>
+                </li>
+            @endif
+
+            @if ($part->price_one_side)
+                <li>
+                    <div class="product-info__item">
+                        <div class="product-info__item_top">
+                            <p class="product-info__item_title">Цена:</p>
+                            <div class="product-info__item_value">{{ $part->price_one_side }} руб.</div>
                         </div>
                     </div>
                 </li>
