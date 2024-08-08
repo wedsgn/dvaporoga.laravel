@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <title>{{ __('admin.page_title') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Премиальный шаблон премиум мультифункционального админ-панели и дашборда" name="description" />
     <meta content="Themesbrand" name="author" />
     <link rel="shortcut icon" href="{{ asset('images/favicon/favicon.ico') }}">
     <link href="{{ asset('assets/admin/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />

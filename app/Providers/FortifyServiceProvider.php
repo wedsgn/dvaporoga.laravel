@@ -49,7 +49,7 @@ class FortifyServiceProvider extends ServiceProvider
           return view('auth.login');
       });
       Fortify::registerView(function(){
-          return view('auth.register');
+          return redirect()->route('login');
       });
 
       $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
@@ -69,8 +69,9 @@ class FortifyServiceProvider extends ServiceProvider
       $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
           public function toResponse($request)
           {
-              return redirect()->route('admin.index');
+              return redirect()->route('login');
           }
       });
     }
 }
+

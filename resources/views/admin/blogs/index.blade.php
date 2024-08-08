@@ -20,7 +20,7 @@
 
 
 
-                        <a href="{{ route('admin.blogs.create') }}" class="btn btn-success addMembers-modal">
+                        <a href="{{ route('admin.blogs.create') }}" class="btn btn-soft-success addMembers-modal">
                             <i class="ri-add-fill me-1 align-bottom"></i>
                             {{__('admin.btn_add')}}
                         </a>

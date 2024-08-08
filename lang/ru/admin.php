@@ -1,6 +1,7 @@
 <?php
 
 return [
+  'page_title' => 'Админ-панель',
   //Titles menu
   'menu_title' => 'Меню',
   'company_info' => 'Общая информация',
@@ -177,4 +178,12 @@ return [
   'request_product_card_title' => 'Запись заявка на продукцию',
   'request_product_card_info' => 'Информация о записи заявка на продукцию',
   'aside_title_request_products' => 'Заявки на продукцию',
+
+  //login
+  'login_title' => 'Авторизация',
+  'login_email' => 'Электронная почта',
+  'login_password' => 'Пароль',
+  'login_btn' => 'Вход',
+  'login_remember' => 'Запомнить меня',
+  'login_forgot' => 'Забыли пароль?',
 ];
