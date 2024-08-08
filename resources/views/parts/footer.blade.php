@@ -55,7 +55,7 @@
 
                 <p class="copyright footer-copyright">
                     Отправляя форму вы соглашаетесь <br />
-                    с нашей <a href="#" download>политикой конфиденциальности</a>
+                    с нашей <a href="/Политика_в_области_обработки_персональных_данных.pdf">политикой конфиденциальности</a>
                 </p>
             </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="footer-bottom">
             <div class="footer-bottom__top">
                 <div class="footer-bottom__policies">
-                    <a href="#" download target="_blank">Политика конфиденциальности</a>
+                    <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">Политика конфиденциальности</a>
                 </div>
 
                 <div class="footer-bottom__company">
