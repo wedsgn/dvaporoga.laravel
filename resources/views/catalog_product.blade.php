@@ -84,7 +84,6 @@
                                             <p class="product-part__price-price">Цена:</p>
                                             <div class="product-part__price_num"><span>{{ $part->price_one_side }}</span>
                                                 руб</div>
-
                                         </div>
 
                                         <button class="btn">Добавить в заказ</button>

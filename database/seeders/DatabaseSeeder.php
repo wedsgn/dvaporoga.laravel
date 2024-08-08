@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
     }
 
     User::factory()->create([
-      'name' => 'Test User',
-      'password' => Hash::make('aspire5745g'),
-      'email' => 'test@example.com',
+      'name' => 'Anton',
+      'password' => Hash::make('sYn7Dj0lff'),
+      'email' => 'a.rodionov14@gmail.com',
     ]);
 
     $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {

@@ -4,7 +4,7 @@ networks:
 
 services:
     nginx:
-        image: nginx:alpine
+        image: nginx:latest
         container_name: nginx
         restart: unless-stopped
         tty: true
@@ -26,11 +26,11 @@ services:
         restart: unless-stopped
         tty: true
         ports:
-            - "5961:5432"
+            - "6012:5432"
         environment:
-            - POSTGRES_DB:${DB_DATABASE}
-            - POSTGRES_USER:${DB_USERNAME}
-            - POSTGRES_PASSWORD:${DB_PASSWORD}
+            POSTGRES_DB: dvaporoga_db
+            POSTGRES_USER: anton
+            POSTGRES_PASSWORD: mL1zN9bB8feV
         networks:
             - net
 
