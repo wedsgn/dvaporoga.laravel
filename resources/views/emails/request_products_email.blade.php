@@ -43,7 +43,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>{{ $details['subject'] }}</h1>
+        <h1>Новая {{ $details['subject'] }}</h1>
         @if(isset($details['name']) && !empty($details['name']))
             <p><strong>Имя:</strong> {{ $details['name'] }}</p>
         @endif

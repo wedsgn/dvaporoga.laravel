@@ -36,11 +36,12 @@ class CarMake extends Model
         return $this->hasMany(CarModel::class);
     }
 
-    public function scopeFilter($items, $search)
+    public function scopeFilter($items)
     {
         if (request('search') !== null) {
-            $items->orWhere('title', 'ilike', "%{$search}%")
-            ->orWhere('slug', 'ilike', "%{$search}%");
+            $items->where('id', 'ilike', '%' . request('search') . '%')
+            ->orWhere('slug', 'ilike', '%' . request('search') . '%')
+            ->orWhere('title', 'ilike', '%' . request('search') . '%');
         }
         return $items;
     }
