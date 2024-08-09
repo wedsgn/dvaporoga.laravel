@@ -60,6 +60,13 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::patch('/{car_make_slug}', [CarMakeController::class, 'update'])->name('update');
     Route::delete('/{car_make_slug}', [CarMakeController::class, 'destroy'])->name('destroy');
   });
+
+  Route::name('car_makes_order.')->prefix('car_makes_order')->group(function () {
+    Route::get('/edit', [CarMakeController::class, 'order'])->name('order');
+    Route::get('/{order}', [CarMakeController::class, 'show_order'])->name('show');
+    Route::patch('/{order}', [CarMakeController::class, 'update_order'])->name('update_order');
+  });
+
   Route::name('car_models.')->prefix('car_models')->group(function () {
     Route::get('/', [CarModelController::class, 'index'])->name('index');
     Route::get('/search',  [CarModelController::class, 'search'])->name('search');

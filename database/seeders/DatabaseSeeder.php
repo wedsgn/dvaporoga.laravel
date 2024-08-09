@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Blog;
+use App\Models\CarMake;
 use App\Models\MainInfo;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -33,17 +35,23 @@ class DatabaseSeeder extends Seeder
       MainInfo::create($value);
     }
 
-    User::factory()->create([
-      'name' => 'Anton',
-      'password' => Hash::make('sYn7Dj0lff'),
-      'email' => 'a.rodionov14@gmail.com',
+
+    $order = Order::firstOrCreate([
+      'title' => 'order_car_makes_home_page'
     ]);
 
-    $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
-      $blog->description_short = Str::words($blog->description, 15);
-      $blog->description = Str::words(implode(' ', array_fill(0, 100, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, quidem.')), 100);
-      $blog->save();
-    });
+
+  //   User::factory()->create([
+  //     'name' => 'Anton',
+  //     'password' => Hash::make('sYn7Dj0lff'),
+  //     'email' => 'a.rodionov14@gmail.com',
+  //   ]);
+
+  //   $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
+  //     $blog->description_short = Str::words($blog->description, 15);
+  //     $blog->description = Str::words(implode(' ', array_fill(0, 100, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, quidem.')), 100);
+  //     $blog->save();
+  //   });
   }
 }
 

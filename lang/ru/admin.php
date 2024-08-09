@@ -2,6 +2,8 @@
 
 return [
   'page_title' => 'Админ-панель',
+  'aside_title_order' => 'Выбрать марки автомобилей на главной',
+  'aside_title_orders' => 'Порядок вывода марок автомобилей',
   //Titles menu
   'menu_title' => 'Меню',
   'company_info' => 'Общая информация',
@@ -122,6 +124,7 @@ return [
   'field_material'  => 'Материал',
   'field_side' => 'Сторона',
   'field_created_at' => 'Создано',
+  'field_order' => 'Порядок вывода карточек',
   //Btns
   'btn_menu' => 'Меню',
   'btn_logout' => 'Выйти',
@@ -144,6 +147,7 @@ return [
   'btn_edit_company_info' => 'Изменить общую информацию',
   'btn_load_cars' => 'Загрузить таблицу автомобилей',
   'btn_load_products' => 'Загрузить таблицу деталей',
+  'btn_order' => 'Выбрать марки автомобилей на главной',
 
   //Placeholders
   'placeholder_text' => 'Введите текст',
@@ -162,6 +166,7 @@ return [
   'notification_no_entries_statuses' => 'Записей не существует, создайте запись Статус.',
   'notification_no_entries_projects' => 'Записей не существует, создайте запись Проект.',
   'notification_no_entries_tags' => 'Записей не существует, создайте запись Тег',
+
   //Questions
   'question_delete' => 'Вы уверены что хотите удалить запись?',
   // Rols

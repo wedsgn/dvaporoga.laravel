@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\CarMake\StoreRequest;
 use App\Http\Requests\Admin\CarMake\UpdateRequest;
 use App\Models\CarMake;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -85,5 +86,42 @@ class CarMakeController extends BaseController
           $car_makes = CarMake::filter()->paginate(50);
       endif;
       return view('admin.car_makes.index', compact('car_makes', 'user'));
+  }
+
+  public function order(Request $request)
+  {
+      $user = Auth::user();
+      $order = Order::where('title', 'order_car_makes_home_page')->firstOrFail();
+      $car_makes = CarMake::all();
+
+      return view('admin.car_makes_order.edit', compact('order', 'user', 'car_makes'));
+  }
+
+  public function update_order(Request $request, $order)
+  {
+      $order = Order::whereId($order)->firstOrFail();
+      $data = $request->validate([
+          'car_makes' => 'required|array|max:12',
+      ], [
+          'car_makes.required' => 'Поле "Марки автомобилей в порядке отображения на главной" обязательно для заполнения.',
+          'car_makes.array' => 'Поле "Марки автомобилей в порядке отображения на главной" должно быть массивом.',
+          'car_makes.max' => 'Максимальное количество элементов в поле "Марки автомобилей в порядке отображения на главной" не может быть больше :max.',
+      ]);
+      $split_data = $this->format_data_service->cutArraysFromRequest(
+        $data,
+        [
+          'car_makes'
+        ]
+      );
+
+      $this->format_data_service->writeDataToTable($order, $split_data['arreyIds']);
+      return redirect()->route('admin.car_makes_order.show', $order)->with('status', 'item-updated');
+  }
+
+  public function show_order($order)
+  {
+      $user = Auth::user();
+      $item = Order::whereId($order)->firstOrFail();
+      return view('admin.car_makes_order.show', compact('item', 'user'));
   }
 }

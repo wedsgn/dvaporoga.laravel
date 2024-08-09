@@ -21,6 +21,10 @@
                             <i class="ri-add-fill me-1 align-bottom"></i>
                             {{__('admin.btn_add')}}
                         </a>
+                        <a href="{{ route('admin.car_makes_order.order') }}" class="btn btn-soft-primary addMembers-modal">
+                            <i class="ri-settings-4-line me-1 align-bottom"></i>
+                            {{__('admin.btn_order')}}
+                        </a>
                     </div>
                 </div>
             </div>

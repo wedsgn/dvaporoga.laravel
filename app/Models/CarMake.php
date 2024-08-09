@@ -31,6 +31,11 @@ class CarMake extends Model
         return 'slug';
     }
 
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
+
     public function car_models()
     {
         return $this->hasMany(CarModel::class);
@@ -45,6 +50,7 @@ class CarMake extends Model
         }
         return $items;
     }
+
 
     // public function delete_files($item)
     // {
