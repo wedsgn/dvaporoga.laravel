@@ -17,15 +17,15 @@
 
             <div class="header__btns">
                 <div class="header__phone">
-                    <a href="tel:8 800 560 12 12">8 800 560 12 12</a>
+                    <a href="tel:{{ $main_info->phone }}">{{ $main_info->phone }}</a>
                     <span>Беспланый звонок по РФ</span>
                 </div>
 
-                <a href="/" target="_blank" class="social-link">
+                <a href="{{ $main_info->telegram }}" target="_blank" class="social-link">
                     <img src="{{ asset('images/logos/tg.svg') }}" alt="Логотип телеграм" />
                 </a>
-                <a href="/" target="_blank" class="social-link">
-                    <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип телеграм" />
+                <a href="{{ $main_info->whatsapp }}" target="_blank" class="social-link">
+                    <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип ватсап" />
                 </a>
 
                 <button class="btn header-consultation-btn" data-micromodal-trigger="modal-1">

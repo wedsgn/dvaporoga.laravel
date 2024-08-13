@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Car;
 use App\Models\CarMake;
 use App\Models\CarModel;
+use App\Models\MainInfo;
 use App\Models\Product;
 use App\Models\RequestConsultation;
 use App\Models\RequestProduct;
@@ -35,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
             'blogs_routes' => Blog::$blogs_routes,
             'request_consultations_routes' => RequestConsultation::$request_consultations_routes,
             'request_products_routes' => RequestProduct::$request_products_routes,
+
+            //MainInfo
+            'main_info' => MainInfo::first(),
         ]);
     }
 }

@@ -41,11 +41,11 @@ class DatabaseSeeder extends Seeder
     ]);
 
 
-  //   User::factory()->create([
-  //     'name' => 'Anton',
-  //     'password' => Hash::make('sYn7Dj0lff'),
-  //     'email' => 'a.rodionov14@gmail.com',
-  //   ]);
+    User::factory()->create([
+      'name' => 'Anton',
+      'password' => Hash::make('sYn7Dj0lff'),
+      'email' => 'a.rodionov14@gmail.com',
+    ]);
 
   //   $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
   //     $blog->description_short = Str::words($blog->description, 15);
