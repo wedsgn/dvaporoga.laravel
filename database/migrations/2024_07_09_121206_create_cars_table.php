@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('generation')->nullable();
             $table->string('years')->nullable();
             $table->string('body');
+            $table->string('top')->nullable();
             $table->string('artikul')->nullable();
             $table->string('image')->nullable();
             $table->string('image_mob')->nullable();

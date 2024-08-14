@@ -28,6 +28,7 @@ class UpdateRequest extends FormRequest
             'years' => ['nullable','string'],
             'body' => ['nullable','string'],
             'artikul' => ['nullable','string'],
+            'top' => ['nullable','string'],
             'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
             'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
             'description'  => ['nullable'],
@@ -43,6 +44,7 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'top.string' => 'Поле "Верх" должно быть строкой',
             'title.required' => 'Поле "Название" обязательно для заполнения',
             'title.max' => 'Поле "Название" должно быть не более 70 символов',
             'title.unique' => 'Автомобиль с таким названием уже существует',

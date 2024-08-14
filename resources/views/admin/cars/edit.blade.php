@@ -123,6 +123,15 @@
                                         placeholder="{{ __('admin.placeholder_text') }}">
                                 </div>
                             </div>
+                            <div class="col-xxl-6 col-md-6">
+                              <div>
+                                  <label for="valueInput" class="form-label">{{ __('admin.field_top') }}
+                                      *</label>
+                                  <input type="text" value="{{ $item->top }}" class="form-control"
+                                      id="valueInput" name="top"
+                                      placeholder="{{ __('admin.placeholder_text') }}">
+                              </div>
+                          </div>
                                 <div class="col-xxl-6 col-md-6">
                                     <label for="valueInput" class="form-label">{{ __('admin.car_model_card_title') }}
                                         *</label>

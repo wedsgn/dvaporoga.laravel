@@ -70,7 +70,15 @@
                                             placeholder="{{ __('admin.placeholder_text') }}">
                                     </div>
                                 </div>
-
+                                <div class="col-xxl-6 col-md-6">
+                                  <div>
+                                      <label for="valueInput" class="form-label">{{ __('admin.field_top') }}
+                                          *</label>
+                                      <input type="text" value="{{ old('top') }}" class="form-control"
+                                          id="valueInput" name="top"
+                                          placeholder="{{ __('admin.placeholder_text') }}">
+                                  </div>
+                              </div>
                                 <div class="col-xxl-6 col-md-6">
                                     <label for="valueInput" class="form-label">{{ __('admin.car_make_card_title') }} *</label>
                                     @if (!count($car_models) == 0)

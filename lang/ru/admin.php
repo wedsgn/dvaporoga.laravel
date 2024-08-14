@@ -125,6 +125,7 @@ return [
   'field_side' => 'Сторона',
   'field_created_at' => 'Создано',
   'field_order' => 'Порядок вывода карточек',
+  'field_top' => 'Топ',
   //Btns
   'btn_menu' => 'Меню',
   'btn_logout' => 'Выйти',

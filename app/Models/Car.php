@@ -18,6 +18,7 @@ class Car extends Model
       'generation',
       'years',
       'body',
+      'top',
       'artikul',
       'car_model_id',
       'image',
