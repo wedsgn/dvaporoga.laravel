@@ -4,7 +4,7 @@
 
         <div class="mark__wrap">
             @foreach ($items as $item)
-                <x-concern-card title="{{ $item->title }}" image="{{ $item->image }}" :link="route('car_make.show', $item->slug)"
+                <x-concern-card title="{{ $item->title }}" :slug="$item->slug" image="{{ $item->image }}" :link="route('car_make.show', $item->slug)"
                     :count="$item->car_models->count()" />
             @endforeach
         </div>
