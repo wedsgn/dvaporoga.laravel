@@ -66,8 +66,11 @@
                               <p class="card-title-desc text-muted">{{ __('admin.field_current_image') }}</p>
                               <div class="live-preview">
                                   <div>
-                                      <img src="{{ asset('storage') . '/' . $item->image }}" class="img-fluid"
-                                          alt="Responsive image">
+                                    @if ($item->image === 'default')
+                                        <img src="{{ asset('images/mark/' . $item->slug . '.png') }}" alt="{{$item->slug}}" />
+                                    @else
+                                        <img src="{{ asset('storage') . '/' . $item->image }}" class="img-fluid d-block" alt="Логотип {{ $item->title }}" />
+                                    @endif
                                   </div>
                               </div>
                           </div>
