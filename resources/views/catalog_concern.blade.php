@@ -14,7 +14,8 @@
                         изготавливаем ремонтные пороги, кузовные колесные арки, пенки
                         дверей и другие элементы. Выберите нужную вам марку, деталь и
                         оформите заказ. Если вы не нашли свой автомобиль, то
-                        <a href="#">оставьте заявку онлайн</a> через форму сайта.
+                        <a href="javascript:void(0)" data-micromodal-trigger="modal-1">оставьте заявку онлайн</a> через форму
+                        сайта.
                     </p>
                 </div>
 
@@ -56,26 +57,26 @@
 
     </main>
     <script>
-      const search = document.getElementById('concernSearchInput')
+        const search = document.getElementById('concernSearchInput')
 
-      search.addEventListener('keyup', () => {
-          const searchInput = document.getElementById('concernSearchInput').value;
-          const url = "{{ route('catalog.search') }}?search=" + searchInput;
-          fetch(url)
-              .then(response => response.text())
-              .then(data => {
-                  document.getElementById('concernsCatalog').innerHTML = data;
-              });
-      })
-      document.getElementById('concernSearchForm').addEventListener('submit', function(event) {
-          event.preventDefault();
-          const searchInput = document.getElementById('modelSearchInput').value;
-          const url = "{{ route('catalog.search') }}?search=" + searchInput;
-          fetch(url)
-              .then(response => response.text())
-              .then(data => {
-                  document.getElementById('concernsCatalog').innerHTML = data;
-              });
-      });
-  </script>
+        search.addEventListener('keyup', () => {
+            const searchInput = document.getElementById('concernSearchInput').value;
+            const url = "{{ route('catalog.search') }}?search=" + searchInput;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('concernsCatalog').innerHTML = data;
+                });
+        })
+        document.getElementById('concernSearchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchInput = document.getElementById('modelSearchInput').value;
+            const url = "{{ route('catalog.search') }}?search=" + searchInput;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('concernsCatalog').innerHTML = data;
+                });
+        });
+    </script>
 @endsection
