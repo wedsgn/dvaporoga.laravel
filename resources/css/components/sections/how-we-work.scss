@@ -1,6 +1,7 @@
 .how-we-work__top {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   //   gap: 20px;
 }
 
