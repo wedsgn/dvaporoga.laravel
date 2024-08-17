@@ -22,8 +22,13 @@ class RequestProductController extends Controller
       $user = Auth::user();
       $data = json_decode($item->data, true);
       $products = [];
-      if(isset($data['id'])) {
-          $products = \App\Models\Product::whereIn('id', $data['id'])->get();
+      if(isset($data)) {
+          foreach ($data as $id) {
+              $product = \App\Models\Product::find($id);
+              if ($product) {
+                  $products[] = $product;
+              }
+          }
       }
       else {
           $products = [];

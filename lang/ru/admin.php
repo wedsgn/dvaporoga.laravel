@@ -126,6 +126,8 @@ return [
   'field_created_at' => 'Создано',
   'field_order' => 'Порядок вывода карточек',
   'field_top' => 'Топ',
+  'field_car' => 'Автомобиль',
+  'field_total_price' => 'Итоговая цена',
   //Btns
   'btn_menu' => 'Меню',
   'btn_logout' => 'Выйти',
