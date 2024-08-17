@@ -4,7 +4,7 @@
 
 .catalog-page-top {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
   gap: 16px;
 
   &.--model {
@@ -39,12 +39,19 @@
   }
 }
 
+.catalog-page-top__btn {
+  margin-top: 20px;
+}
+
 .catalog-page__title {
-  max-width: 469px;
   width: 100%;
 }
 
 .catalog-page__description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
   a {
     color: $red;
     text-decoration: underline;
@@ -534,6 +541,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .catalog-concern__wrap {
+    margin-top: 16px;
+    gap: 16px 8px;
+  }
   .product-parts__total {
     padding: 16px;
   }
