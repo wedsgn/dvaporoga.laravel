@@ -6,7 +6,7 @@
         <section class="index-hero-section section">
             <div class="container">
                 <h1 class="h1 uppercase">
-                    <span>Ремонтные <br /> пороги</span>
+                    Ремонтные <br /><span>пороги</span>
 
                     и <span>арки</span>
                 </h1>

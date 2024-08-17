@@ -9,8 +9,8 @@
                 <div class="footer__nav">
                     <h4 class="footer__nav-title">Навигация</h4>
                     <nav class="footer__nav-list">
-                        <a href="#features" class="footer__nav-link">Преимущества</a>
-                        <a href="/" class="footer__nav-link">Цены</a>
+                        <a href="{{ route('home') }}#features" class="footer__nav-link">Преимущества</a>
+                        <a href="{{ route('home') }}#prices" class="footer__nav-link">Цены</a>
                         <a href="/" class="footer__nav-link">Как мы работаем</a>
                         <a href="{{ route('blog') }}" class="footer__nav-link">Блог</a>
                     </nav>
@@ -55,7 +55,8 @@
 
                 <p class="copyright footer-copyright">
                     Отправляя форму вы соглашаетесь <br />
-                    с нашей <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">политикой конфиденциальности</a>
+                    с нашей <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">политикой
+                        конфиденциальности</a>
                 </p>
             </div>
         </div>
@@ -63,7 +64,8 @@
         <div class="footer-bottom">
             <div class="footer-bottom__top">
                 <div class="footer-bottom__policies">
-                    <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">Политика конфиденциальности</a>
+                    <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">Политика
+                        конфиденциальности</a>
                 </div>
 
                 <div class="footer-bottom__company">
@@ -72,7 +74,7 @@
             </div>
             <div class="footer-bottom__bottom">
                 <div class="footer-bottom__credits">
-                  {{ $main_info->company_details }}
+                    {{ $main_info->company_details }}
                 </div>
 
                 <div class="footer-bottom__oferta">
