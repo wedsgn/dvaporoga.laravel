@@ -6,17 +6,17 @@
         <section class="index-hero-section section">
             <div class="container">
                 <h1 class="h1 uppercase">
-                    <span>Ремонтные пороги</span>
-                    <br />
-                    и <span>арки</span> без предоплат
+                    <span>Ремонтные <br /> пороги</span>
+
+                    и <span>арки</span>
                 </h1>
-                <p class="index-hero__subtitle">И бесплатной доставкой</p>
+                <p class="index-hero__subtitle">Без предоплаты и быстрой доставкой</p>
 
                 <div class="index-hero__inner">
                     <div class="index-hero__wrap">
                         <p class="index-hero-callout">
                             Оставьте заявку, мы свяжемся с вами в течении
-                            <span>7 минут</span> и ответим на все вопросы.
+                            <span>5 минут</span> и ответим на все вопросы.
                         </p>
 
                         <form class="index-hero-form" id="indexHeroForm">
@@ -28,7 +28,8 @@
 
                             <p class="copyright">
                                 Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                                <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank"> политикой конфиденциальности </a>
+                                <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank"> политикой
+                                    конфиденциальности </a>
                             </p>
                         </form>
 

@@ -47,11 +47,11 @@ class DatabaseSeeder extends Seeder
       'email' => 'a.rodionov14@gmail.com',
     ]);
 
-  //   $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
-  //     $blog->description_short = Str::words($blog->description, 15);
-  //     $blog->description = Str::words(implode(' ', array_fill(0, 100, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, quidem.')), 100);
-  //     $blog->save();
-  //   });
+    $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
+      $blog->description_short = Str::words($blog->description, 15);
+      $blog->description = Str::words(implode(' ', array_fill(0, 100, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, quidem.')), 100);
+      $blog->save();
+    });
   }
 }
 
