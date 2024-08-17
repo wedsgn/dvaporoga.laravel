@@ -51,6 +51,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  color: rgba($black, 0.8);
   align-items: flex-start;
   a {
     color: $red;
@@ -544,6 +545,10 @@
   .catalog-concern__wrap {
     margin-top: 16px;
     gap: 16px 8px;
+  }
+
+  .catalog-page-top__btn {
+    width: 100%;
   }
   .product-parts__total {
     padding: 16px;
