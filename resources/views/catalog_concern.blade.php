@@ -54,7 +54,7 @@
             <div class="container" id="concernsCatalog">
                 <div class="catalog-concern__wrap">
                     @foreach ($car_makes as $car_make)
-                        <x-concern-card :title="$car_make->title" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
+                        <x-concern-card :title="$car_make->title" :slug="$car_make->slug" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
                             link="{{ route('car_make.show', $car_make->slug) }}" />
                     @endforeach
                 </div>

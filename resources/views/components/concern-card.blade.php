@@ -1,9 +1,8 @@
-@props(['title', 'image' => 'no image default', 'link' => 'link', 'count'])
 
 <a href="{{ $link }}" class="mark">
     <div class="mark-image">
         @if ($image === 'default')
-            <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
+            <img src="{{ asset('images/mark/' . $slug . '.png') }}" alt="{{ $slug }}" />
         @else
             <img src="{{ asset('storage') . '/' . $image }}" alt="Логотип {{ $title }}" />
         @endif

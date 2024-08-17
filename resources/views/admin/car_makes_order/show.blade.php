@@ -56,7 +56,7 @@
                                     <tr>
                                     <td>
                                       @if ($item->image === 'default')
-                                          <img src="{{ asset('images/mark/no-image.png') }}" class="img-fluid d-block" alt="Изображения нет" />
+                                          <img src="{{ asset('images/mark/' . $item->slug . '.png') }}" alt="{{$item->slug}}" />
                                       @else
                                           <img src="{{ asset('storage') . '/' . $item->image }}" class="img-fluid d-block" alt="Логотип {{ $item->title }}" />
                                       @endif
@@ -79,3 +79,4 @@
         </div>
     </div>
 @endsection
+
