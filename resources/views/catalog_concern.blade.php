@@ -62,7 +62,7 @@
         </section>
 
         <x-section.products :items="$products" />
-        <x-section.installing />
+        {{-- <x-section.installing /> --}}
         <x-section.faq />
 
 
