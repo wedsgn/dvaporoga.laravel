@@ -22,7 +22,7 @@ class CarsImport implements ToCollection
 
         if (!CarMake::whereSlug(Str::slug($row[0]))->exists()) :
           $car_make = CarMake::create([
-            'title' => $row[0] ?? rand(5, 100),
+            'title' => trim($row[0]) ?? rand(5, 100),
             'slug' => Str::slug($row[0]) ?? rand(5, 100),
             'image' => 'default',
             'image_mob' => 'default',
@@ -34,7 +34,7 @@ class CarsImport implements ToCollection
         if (!CarModel::whereSlug(Str::slug($row[1]))->exists()) :
           if (Str::slug($row[0]) == CarMake::whereSlug(Str::slug($row[0]))->first()->slug) :
             $car_model = CarModel::create([
-              'title' => $row[1],
+              'title' => trim($row[1]),
               'slug' => Str::slug($row[1]),
               'image' => 'default',
               'image_mob' => 'default',
@@ -44,10 +44,11 @@ class CarsImport implements ToCollection
             ]);
           endif;
         endif;
+
       if (!Car::whereSlug(Str::slug($row[0] . '-' . $row[1] . '-' . $row[2] . '-' . $row[7]))->exists()) :
         if (Str::slug($row[1]) == CarModel::whereSlug(Str::slug($row[1]))->first()->slug) :
           $car = Car::create([
-            'title' => $row[0] . ' ' . $row[1] . ' ' . $row[2],
+            'title' => trim($row[0] . ' ' . $row[1] . ' ' . $row[2]),
             'slug' => Str::slug($row[0] . '-' . $row[1] . '-' . $row[2] . '-' . $row[7]),
             'image' => 'default',
             'image_mob' => 'default',

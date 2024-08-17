@@ -16,7 +16,7 @@ class ProductsImport implements ToCollection
   {
     foreach ($collection as $row) :
         $product = Product::create([
-          'title' => $row[1],
+          'title' => trim($row[1]),
           'slug' => Str::slug($row[1]),
           'image' => 'default',
           'image_mob' => 'default',
