@@ -8,12 +8,19 @@
             <div class="container">
                 <div class="blog-catalog__top">
                     <h1 class="h1">Блог</h1>
-                    <p class="blog-catalog__description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-                        eius officia, illum dignissimos cupiditate ab quo harum unde
-                        labore, corporis, odio quisquam assumenda officiis consequatur rem
-                        laboriosam explicabo obcaecati error!
-                    </p>
+                    <div class="blog-catalog__description">
+                        <h2 class="h2"> Добро пожаловать в наш блог о кузовном ремонте!</h2>
+                        <br>
+                        Здесь вы найдете полезные советы по восстановлению
+                        кузова автомобиля, узнаете о новейших технологиях ремонта и актуальных трендах кузовного ремонта.
+                        <br>
+                        <br>
+                        Мы делимся экспертными рекомендациями, которые помогут вам сохранить авто в идеальном
+                        состоянии или восстановить кузов правильно.
+                        <br>
+                        <br>
+                        Следите за нашими обновлениями, чтобы быть в курсе всех новинок и лайфхаков.
+                    </div>
                 </div>
 
                 <div class="blog-search">
