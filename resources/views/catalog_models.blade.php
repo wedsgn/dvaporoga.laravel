@@ -13,9 +13,11 @@
 
                         <p class="model-count">{{ $car_models->count() }} Моделей</p>
                     </div>
-                    <p class="catalog-page__description">
-                        {{ $car_make->description }}
-                    </p>
+                    <div class="catalog-page__description">
+                        {!! $car_make->description !!}
+
+
+                    </div>
                 </div>
                 <div class="blog-search">
                     <form action="#" method="get" id="modelSearchForm">
@@ -40,7 +42,7 @@
 
 
         <section class="catalog-models">
-            <div class="container"  id="modelsCatalog" >
+            <div class="container" id="modelsCatalog">
                 <h2 class="h3">Выберите модель</h2>
                 <div class="catalog-models__wrap">
                     <!-- Card -->
