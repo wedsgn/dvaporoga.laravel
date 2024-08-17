@@ -15,8 +15,6 @@
                     </div>
                     <div class="catalog-page__description">
                         {!! $car_make->description !!}
-
-
                     </div>
                 </div>
                 <div class="blog-search">
