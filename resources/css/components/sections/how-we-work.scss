@@ -75,6 +75,17 @@
   }
 }
 
+.how-we-work__socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.how-we-work__num--mob {
+  display: none;
+}
+
 @media screen and (max-width: 1200px) {
   .how-we-work__top {
     display: flex;
@@ -111,6 +122,17 @@
     margin-top: 40px;
   }
 
+  .how-we-work__info {
+    position: relative;
+    padding-left: 56px;
+  }
+
+  .how-we-work__num--mob {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
   .how-we-work__wrap {
     flex-direction: row;
     margin-top: 40px;
@@ -118,12 +140,17 @@
 
   .how-we-work__wrap_nums {
     margin-top: 0;
+    display: none;
     flex-direction: column;
+  }
+
+  .how-we-work__num_div {
     display: none;
   }
 
   .how-we-work__wrap_info {
     display: flex;
+    gap: 32px;
     flex-direction: column;
   }
 }
