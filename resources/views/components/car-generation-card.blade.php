@@ -1,15 +1,20 @@
 @props(['generations', 'car_make', 'car_model'])
+@foreach($generations as $generation => $models)
 
-@foreach($generations as $years => $models)
 <div class="car-generation">
   <div class="car-generation__info">
-    <div class="car-generation__years">{{ $years }}</div>
+    <div class="car-generation__years">
+      @if ($models->first()->body)
+       {{ $models->first()->body }} /
+      @endif
+        {{ $generation }}
+    </div>
     @php $count = count($models); $i = 1; @endphp
-    @php $prev_generation = null; @endphp
+    @php $prev_years = null; @endphp
     @foreach($models as $model)
-        @if ($prev_generation !== $model->generation)
-            {{ $model->generation }}
-            @php $prev_generation = $model->generation; @endphp
+        @if ($prev_years !== $model->years)
+            {{ $model->years }}
+            @php $prev_years = $model->years; @endphp
         @endif
     @endforeach
   </div>
@@ -22,12 +27,12 @@
               @if ($model->image === 'default')
                 <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
               @else
-                <img src="{{ asset('storage') . '/' . $model->image }}" alt="Логотип {{ $model->title }}" />
+                <img src="{{ $model->image }}" alt="Логотип {{ $model->title }}" />
               @endif
           </div>
         </div>
 
-        <h3 class="car-generation__model_title">{{ $model->body }}</h3>
+        <h3 class="car-generation__model_title">{{ $model->title }}</h3>
       </a>
     @endforeach
   </div>

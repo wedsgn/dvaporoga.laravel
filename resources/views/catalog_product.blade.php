@@ -9,7 +9,7 @@
             <div class="container">
                 <div class="product-page-top">
                     <h1 class="h1 product-page__title">
-                        {{ $car->title }} {{ $car->years }}
+                      {{ $car_make->title }} {{ $car_model->title }} {{ $car->title }} {{ $car->generation }}
                     </h1>
                     <p class="product-page__description">
                         {{ $car->description }}

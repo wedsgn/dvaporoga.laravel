@@ -5,7 +5,7 @@
         @if ($car_model->image === 'default')
             <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
         @else
-            <img src="{{ asset('storage') . '/' . $car_model->image }}" alt="Логотип {{ $car_model->title }}" />
+            <img src="{{ $car_model->image }}" alt="Логотип {{ $car_model->title }}" />
         @endif
     </div>
 

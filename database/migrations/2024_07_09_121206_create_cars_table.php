@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('generation')->nullable();
             $table->string('years')->nullable();
-            $table->string('body');
+            $table->string('body')->nullable();
             $table->string('top')->nullable();
             $table->string('artikul')->nullable();
             $table->string('image')->nullable();

@@ -26,14 +26,14 @@
         <section class="section car-generation-section">
             <div class="container">
                 <div class="car-generation__wrap">
-                    @foreach ($generations as $years => $models)
-                        <x-car-generation-card :car_make="$car_make" :car_model="$car_model" :generations="[$years => $models]" />
+                    @foreach ($generations as $generation => $models)
+                        <x-car-generation-card :car_make="$car_make" :car_model="$car_model" :generations="[$generation => $models]" />
                     @endforeach
                 </div>
             </div>
         </section>
 
-        <x-section.car-models :models="$car_make->car_models" :concern_title="$car_make->title" />
+        <x-section.car-models :models="$car_make->car_models->whereNotIn('id', [$car_model->id])" :concern_title="$car_make->title" />
         <x-section.products :items="$products" />
         <x-section.installing />
         <x-section.faq />
