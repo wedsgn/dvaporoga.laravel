@@ -26,15 +26,11 @@
             const products = document.querySelectorAll(".product");
 
             products.forEach((product) => {
-                const form = product.querySelector(".modal-form");
+                const form = product.querySelector(".modal-form-product");
                 form.addEventListener("submit", async function(event) {
                     event.preventDefault();
                     const form = event.target;
                     const formData = new FormData(form);
-
-                    const r = "{{ route('request_product_section.store') }}";
-
-                    console.log(r);
 
                     const response = await fetch(
                         "{{ route('request_product_section.store') }}", {
