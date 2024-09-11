@@ -12,11 +12,10 @@ class WelcomePageController extends Controller
 {
   public function index()
   {
-    $products = Product::latest()->get();
+    $products = Product::latest()->take(6)->get();
     $order = Order::where('title', 'order_car_makes_home_page')->firstOrFail();
     $car_makes = $order->car_makes()->orderBy('id', 'ASC')->limit(12)->get();
     $blogs = Blog::latest()->limit(10)->get();
     return view('welcome', compact('products', 'car_makes', 'blogs'));
   }
 }
-

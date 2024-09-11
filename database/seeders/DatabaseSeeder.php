@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         'company_title' => 'Два Порога',
         'company_details' => 'Тут надо указать реквизиты компании (ИНН, ОГРН, Адрес)',
         'phone' => '8 800 560 12 12',
-        'whats_app'=> 'whats_app',
+        'whats_app' => 'whats_app',
         'telegram' => 'telegram'
       ],
     ];
@@ -54,4 +54,3 @@ class DatabaseSeeder extends Seeder
     // });
   }
 }
-
