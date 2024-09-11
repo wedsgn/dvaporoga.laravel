@@ -5,6 +5,7 @@
     <link rel="icon" href="href="{{ asset('images/favicons/icon.svg') }} type="image/svg+xml" />
     <link rel="apple-touch-icon" href="images/favicons/apple.png" />
     <title>Два порога | Главная страница</title>
+    <meta name="yandex-verification" content="d134887cc07e929d" />
     <meta name="google-site-verification" content="D-rV3CqHjnyPJfkgP5TR3xLeMlrPQ4rhlJ_J8jR07CQ" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
