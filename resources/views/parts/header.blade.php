@@ -28,7 +28,7 @@
                     <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип ватсап" />
                 </a>
 
-                <button class="btn header-consultation-btn" data-micromodal-trigger="modal-1">
+                <button class="btn header-consultation-btn" data-micromodal-trigger="modal-consultation">
                     Консультация
                 </button>
 
