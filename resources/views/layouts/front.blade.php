@@ -25,7 +25,6 @@
 
                 <form class="modal-form">
                     @csrf
-                    <input type="hidden" name="product_id" id="productIdInput" value="" />
                     <input type="text" placeholder="Имя" class="input" name="name" required />
                     <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
 
