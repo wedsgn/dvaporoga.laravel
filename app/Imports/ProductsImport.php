@@ -41,7 +41,7 @@ class ProductsImport implements ToCollection
             'slug' => Str::slug(trim($row[2])),
           ]);
         endif;
-        if(Type::whereSlug(Str::slug(trim($row[3])))->exists()):
+        if(Type::whereSlug(Str::slug(trim($row[2])))->exists()):
           $type = Type::whereSlug(Str::slug(trim($row[2])))->first();
         endif;
         if (!$product->types()->where('type_id', $type->id)->exists()) {
