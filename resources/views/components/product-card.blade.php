@@ -160,9 +160,7 @@
         const products = document.querySelectorAll('.product');
 
         products.forEach(product => {
-            const form = product.querySelector('.modal-form');
-            console.log(form);
-
+            const form = product.querySelector('form');
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
                 const form = event.target;
