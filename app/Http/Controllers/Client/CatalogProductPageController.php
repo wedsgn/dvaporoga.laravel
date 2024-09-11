@@ -19,4 +19,3 @@ class CatalogProductPageController extends Controller
     return view('catalog_products', compact('products'));
   }
 }
-

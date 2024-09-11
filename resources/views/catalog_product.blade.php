@@ -24,7 +24,8 @@
                 <div class="product-parts-section__wrap">
                     <div class="product-parts__list">
                         @foreach ($products as $part)
-                            <div class="product-part">
+                            <div class="product-part" data-prices="{{ json_encode($part->prices) }}"
+                                data-item="{{ json_encode($part) }}">
                                 <div class="product-part__image">
                                     @if ($part->image === 'default')
                                         <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
@@ -47,7 +48,8 @@
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Материал:</p>
                                                 {{-- <p class="product-part__info_item_value">{{ $part->material }}</p> --}}
-                                                <select class="form-select" name="steel_type_id" id="steel_type_id">
+                                                <select class="form-select steel-select" name="steel_type_id"
+                                                    id="steel_type_id">
                                                     @foreach ($part->steel_types as $steel_type)
                                                         <option value="{{ $steel_type->id }}"
                                                             {{ $part->steel_type_id == $steel_type->id ? 'selected' : '' }}>
@@ -62,7 +64,8 @@
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Толщина:</p>
                                                 {{-- <p class="product-part__info_item_value">{{ $part->metal_thickness }}</p> --}}
-                                                <select class="form-select" name="thickness_id" id="thickness_id">
+                                                <select class="form-select thickness_select" name="thickness_id"
+                                                    id="thickness_id">
                                                     @foreach ($part->thicknesses as $thickness)
                                                         <option value="{{ $thickness->id }}"
                                                             {{ $part->thickness_id == $thickness->id ? 'selected' : '' }}>
@@ -76,7 +79,7 @@
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Тип:</p>
                                                 {{-- <p class="product-part__info_item_value">Стандартный</p> --}}
-                                                <select class="form-select" name="type_id" id="type_id">
+                                                <select class="form-select type-selector" name="type_id" id="type_id">
                                                     @foreach ($part->types as $type)
                                                         <option value="{{ $type->id }}"
                                                             {{ $part->type_id == $type->id ? 'selected' : '' }}>
@@ -91,7 +94,7 @@
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Размер:</p>
                                                 {{-- <p class="product-part__info_item_value">{{ $part->size }} </p> --}}
-                                                <select class="form-select" name="size_id" id="size_id">
+                                                <select class="form-select size-selector" name="size_id" id="size_id">
                                                     @foreach ($part->sizes as $size)
                                                         <option value="{{ $size->id }}"
                                                             {{ $part->size_id == $size->id ? 'selected' : '' }}>
@@ -106,7 +109,7 @@
                                     <div class="product-part__bottom">
                                         <div class="product-part__price">
                                             <p class="product-part__price-price">Цена:</p>
-                                            <div class="product-part__price_num"><span>Сюда цена выводится</span>
+                                            <div class="product-part__price_num product-price"><span></span>
                                                 руб</div>
                                         </div>
 
@@ -166,8 +169,70 @@
 
     <script>
         const cartForm = document.getElementById('cart-form');
+        const products = document.querySelectorAll('.product-part');
+
+        if (products) {
+            products.forEach(product => {
+                const data = product.getAttribute("data-item");
+                const res = JSON.parse(data);
+
+                console.log(res);
 
 
+                const steelSelector = product.querySelector(".steel-select");
+                const thicknessSelector = product.querySelector(".thickness_select");
+                const typeSelector = product.querySelector(".type-selector");
+                const sizeSelector = product.querySelector(".size-selector");
+                const priceDeiv = product.querySelector(".product-price span");
+
+
+                let options = {
+                    size_id: sizeSelector.value,
+                    steel_type_id: steelSelector.value,
+                    thickness_id: thicknessSelector.value,
+                    type_id: typeSelector.value,
+                };
+
+
+                const getPrice = () => {
+                    const price = res.prices.find((item) => {
+                        return (
+                            item.size_id == options.size_id &&
+                            item.steel_type_id == options.steel_type_id &&
+                            item.thickness_id == options.thickness_id &&
+                            item.type_id == options.type_id
+                        );
+                    });
+
+                    if (price) {
+                        priceDeiv.innerHTML = price.one_side;
+                        // priceInput.value = price;
+                    }
+                };
+
+                steelSelector.addEventListener("change", function(e) {
+                    options.steel_type_id = +e.target.value;
+                    getPrice();
+                });
+
+                thicknessSelector.addEventListener("change", function(e) {
+                    options.thickness_id = +e.target.value;
+                    getPrice("thickness");
+                });
+
+                typeSelector.addEventListener("change", function(e) {
+                    options.type_id = +e.target.value;
+                    getPrice();
+                });
+                sizeSelector.addEventListener("change", function(e) {
+                    options.size_id = +e.target.value;
+                    getPrice();
+                });
+
+                priceDeiv.innerHTML = "";
+                getPrice();
+            });
+        }
 
         cartForm.addEventListener('submit', async function(event) {
             event.preventDefault();

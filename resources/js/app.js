@@ -54,8 +54,6 @@ window.addEventListener("load", () => {
         type_id: typeSelector.value,
       };
 
-      console.log(dataRes, dataRes.title);
-
       const getPrice = () => {
         const price = dataRes.prices.find((item) => {
           return (
@@ -65,6 +63,8 @@ window.addEventListener("load", () => {
             item.type_id == options.type_id
           );
         });
+
+        console.log(dataRes);
 
         if (price) {
           priceDeiv.innerHTML = price.one_side;
