@@ -65,49 +65,17 @@ class CarsImport implements ToCollection
                Ремкомплект изготавливается с учетом всех форм и изгибов оригинальных автомобилей ' . trim($row[5]) . '. Выберите свою модель и перейдите к заказу.',
             'car_model_id' => CarModel::whereSlug($slug_car_model)->first()->id
           ]);
-          // if ($row[7] == true) :
-          //   $products = Product::whereSlug('porog-standartnyi')->get();
-          //   $car->products()->attach($products);
-          // endif;
-          // if ($row[8] == true) :
-          //   $products = Product::whereSlug('porog-uvelicennyi-v-proem')->get();
-          //   $car->products()->attach($products);
-          // endif;
-          // if ($row[9] == true) :
-          //   $products = Product::whereSlug('arka-remontnaia-zadniaia')->get();
-          //   $car->products()->attach($products);
-          // endif;
-          // if ($row[10] == true) :
-          //   $products = Product::whereSlug('arka-remontnaia-peredniaia')->get();
-          //   $car->products()->attach($products);
-          // endif;
-          // if ($row[11] == true) :
-          //   $products = Product::whereSlug('arka-remontnaia-vnutrenniaia-zadniaia')->get();
-          //   $car->products()->attach($products);
-          // endif;
-          // if ($row[12] == true) :
-          //   $products = Product::whereSlug('arka-remontnaia-vnutrenniaia-peredniaia')->get();
-          //   $car->products()->attach($products);
-          // endif;
-          // if ($row[13] == true) :
-          //   $products = Product::whereSlug('remontnyi-komplekt-dverei-peredniaia-penka')->get();
-          //   $car->products()->attach($products);
-          // endif;
-          // if ($row[14] == true) :
-          //   $products = Product::whereSlug('remontnyi-komplekt-dverei-zadniaia-penka')->get();
-          //   $car->products()->attach($products);
-          // endif;
 
-          // $products = Product::whereNotIn('slug', [
-          //   'porog-standartnyi',
-          //   'porog-uvelicennyi-v-proem',
-          //   'arka-remontnaia-zadniaia',
-          //   'arka-remontnaia-vnutrenniaia-zadniaia',
-          //   'arka-remontnaia-vnutrenniaia-peredniaia',
-          //   'remontnyi-komplekt-dverei-peredniaia-penka',
-          //   'remontnyi-komplekt-dverei-zadniaia-penka'
-          // ])->get();
-          // $car->products()->attach($products);
+          $products = Product::whereIn('slug', [
+            'lonzeron',
+            'torcevaia-zagluska',
+            'usilitel-soedinitel',
+            'remontnyi-element-dnishha',
+            'remontnyi-komplekt-dverei',
+            'arka-remontnaia',
+            'porog'
+          ])->get();
+          $car->products()->attach($products);
         endif;
       endif;
     endforeach;

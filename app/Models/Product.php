@@ -15,12 +15,6 @@ class Product extends Model
   protected $fillable = [
       'title',
       'slug',
-      'price_one_side',
-      'price_set',
-      'metal_thickness',
-      'material',
-      'side',
-      'size',
       'image',
       'image_mob',
       'description'
@@ -44,6 +38,27 @@ class Product extends Model
   {
       return $this->belongsTo(CarMake::class);
   }
+  public function sizes()
+  {
+      return $this->belongsToMany(Size::class);
+  }
+  public function prices()
+  {
+      return $this->belongsToMany(Price::class, 'product_price');
+  }
+  public function thicknesses()
+  {
+      return $this->belongsToMany(Thickness::class, 'product_thickness');
+  }
+  public function steel_types()
+  {
+      return $this->belongsToMany(SteelType::class);
+  }
+  public function types()
+  {
+      return $this->belongsToMany(Type::class);
+  }
+
   public function scopeFilter($items)
   {
       if (request('search') !== null) {

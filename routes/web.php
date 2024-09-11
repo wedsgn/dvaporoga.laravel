@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\EditorImageUploadController;
 use App\Http\Controllers\Admin\ImportExelController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductFeaturesController;
 use App\Http\Controllers\Admin\RequestConsultationController;
 use App\Http\Controllers\Admin\RequestProductController;
 use App\Http\Controllers\Client\BlogPageController;
@@ -96,6 +97,41 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/{product_slug}/edit', [ProductController::class, 'edit'])->name('edit');
     Route::patch('/{product_slug}', [ProductController::class, 'update'])->name('update');
     Route::delete('/{product_slug}', [ProductController::class, 'destroy'])->name('destroy');
+    Route::name('prices.')->prefix('prices')->group(function () {
+        Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'priceCreate'])->name('priceCreate');
+        Route::post('/{product_slug}', [ProductFeaturesController::class, 'priceStore'])->name('priceStore');
+        Route::get('/{product_slug}/{price_id}/edit', [ProductFeaturesController::class, 'priceEdit'])->name('priceEdit');
+        Route::patch('/{product_slug}/{price_id}', [ProductFeaturesController::class, 'priceUpdate'])->name('priceUpdate');
+        Route::delete('/{product_slug}/{price_id}', [ProductFeaturesController::class, 'priceDestroy'])->name('priceDestroy');
+    });
+    Route::name('sizes.')->prefix('sizes')->group(function () {
+      Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'sizeCreate'])->name('sizeCreate');
+      Route::post('/{product_slug}', [ProductFeaturesController::class, 'sizeStore'])->name('sizeStore');
+      Route::get('/{product_slug}/{size_id}/edit', [ProductFeaturesController::class, 'sizeEdit'])->name('sizeEdit');
+      Route::patch('/{product_slug}/{size_id}', [ProductFeaturesController::class, 'sizeUpdate'])->name('sizeUpdate');
+      Route::delete('/{product_slug}/{size_id}', [ProductFeaturesController::class, 'sizeDestroy'])->name('sizeDestroy');
+    });
+    Route::name('steel_types.')->prefix('steel_types')->group(function () {
+      Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'steelTypeCreate'])->name('steelTypeCreate');
+      Route::post('/{product_slug}', [ProductFeaturesController::class, 'steelTypeStore'])->name('steelTypeStore');
+      Route::get('/{product_slug}/{steel_type_id}/edit', [ProductFeaturesController::class, 'steelTypeEdit'])->name('steelTypeEdit');
+      Route::patch('/{product_slug}/{steel_type_id}', [ProductFeaturesController::class, 'steelTypeUpdate'])->name('steelTypeUpdate');
+      Route::delete('/{product_slug}/{steel_type_id}', [ProductFeaturesController::class, 'steelTypeDestroy'])->name('steelTypeDestroy');
+    });
+    Route::name('thicknesses.')->prefix('thicknesses')->group(function () {
+      Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'thicknessCreate'])->name('thicknessCreate');
+      Route::post('/{product_slug}', [ProductFeaturesController::class, 'thicknessStore'])->name('thicknessStore');
+      Route::get('/{product_slug}/{thickness_id}/edit', [ProductFeaturesController::class, 'thicknessEdit'])->name('thicknessEdit');
+      Route::patch('/{product_slug}/{thickness_id}', [ProductFeaturesController::class, 'thicknessUpdate'])->name('thicknessUpdate');
+      Route::delete('/{product_slug}/{thickness_id}', [ProductFeaturesController::class, 'thicknessDestroy'])->name('thicknessDestroy');
+    });
+    Route::name('types.')->prefix('types')->group(function () {
+      Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'typeCreate'])->name('typeCreate');
+      Route::post('/{product_slug}', [ProductFeaturesController::class, 'typeStore'])->name('typeStore');
+      Route::get('/{product_slug}/{type_id}/edit', [ProductFeaturesController::class, 'typeEdit'])->name('typeEdit');
+      Route::patch('/{product_slug}/{type_id}', [ProductFeaturesController::class, 'typeUpdate'])->name('typeUpdate');
+      Route::delete('/{product_slug}/{type_id}', [ProductFeaturesController::class, 'typeDestroy'])->name('typeDestroy');
+    });
   });
 
   Route::name('blogs.')->prefix('blogs')->group(function () {

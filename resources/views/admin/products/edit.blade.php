@@ -76,60 +76,6 @@
                                         <input type="hidden"name="old_title" value="{{ $item->title }}">
                                     </div>
                                 </div>
-                                <div class="col-xxl-6 col-md-6">
-                                    <div>
-                                        <label for="valueInput"
-                                            class="form-label">{{ __('admin.field_price_one_side') }}</label>
-                                        <input type="text" value="{{ $item->price_one_side }}" class="form-control"
-                                            id="valueInput" name="price_one_side"
-                                            placeholder="{{ __('admin.placeholder_text') }}">
-                                    </div>
-                                </div>
-                                <div class="col-xxl-6 col-md-6">
-                                    <div>
-                                        <label for="valueInput"
-                                            class="form-label">{{ __('admin.field_price_set') }}</label>
-                                        <input type="text" value="{{ $item->price_set }}" class="form-control"
-                                            id="valueInput" name="price_set"
-                                            placeholder="{{ __('admin.placeholder_text') }}">
-                                    </div>
-                                </div>
-                                <div class="col-xxl-6 col-md-6">
-                                    <div>
-                                        <label for="valueInput"
-                                            class="form-label">{{ __('admin.field_metal_thickness') }}</label>
-                                        <input type="text" value="{{ $item->metal_thickness }}" class="form-control"
-                                            id="valueInput" name="metal_thickness"
-                                            placeholder="{{ __('admin.placeholder_text') }}">
-                                    </div>
-                                </div>
-                                <div class="col-xxl-6 col-md-6">
-                                  <div>
-                                      <label for="valueInput"
-                                          class="form-label">{{ __('admin.field_material') }}</label>
-                                      <input type="text" value="{{ $item->material }}" class="form-control"
-                                          id="valueInput" name="material"
-                                          placeholder="{{ __('admin.placeholder_text') }}">
-                                  </div>
-                              </div>
-                              <div class="col-xxl-6 col-md-6">
-                                <div>
-                                    <label for="valueInput"
-                                        class="form-label">{{ __('admin.field_side') }}</label>
-                                    <input type="text" value="{{ $item->side }}" class="form-control"
-                                        id="valueInput" name="side"
-                                        placeholder="{{ __('admin.placeholder_text') }}">
-                                </div>
-                            </div>
-                                <div class="col-xxl-6 col-md-6">
-                                    <div>
-                                        <label for="valueInput" class="form-label">{{ __('admin.field_size') }}
-                                            *</label>
-                                        <input type="text" value="{{ $item->size }}" class="form-control"
-                                            id="valueInput" name="size"
-                                            placeholder="{{ __('admin.placeholder_text') }}">
-                                    </div>
-                                </div>
 
                                 <div class="col-xxl-6 col-md-6">
                                   <div class="mb-3">

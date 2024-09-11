@@ -66,7 +66,7 @@
                                     @forelse ($products as $item)
                                         <tr>
                                             <td>{{ $item->id }}</td>
-                                            <td><a href="{{ route('admin.products.show', $item->slug) }}">{{ $item->title }}, {{ $item->material }}, {{ $item->metal_thickness }}</a></td>
+                                            <td><a href="{{ route('admin.products.show', $item->slug) }}">{{ $item->title }}</a></td>
                                             <td>{{ $item->slug }}</td>
                                             <td>{{ $item->updated_at->diffForHumans() }}</td>
                                             <td>

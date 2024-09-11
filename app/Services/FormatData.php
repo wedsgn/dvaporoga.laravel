@@ -24,30 +24,25 @@ class FormatData
     endif;
     return $data;
   }
-  public function writeDataToTable($item, $arreyIds)
+  public static function writeDataToTable($item, $arreyIds, $requestMethod = null)
   {
-    foreach ($arreyIds as $keyIds => $entityIds) :
-      if (isset($entityIds)) :
-        foreach ($entityIds as $key => $value) :
-          $entity_id = DB::table($keyIds)
-            ->where('title', $value)
-            ->first()->id;
-          $entityIds[$key] = $entity_id;
-        endforeach;
-        if ($keyIds == 'cars') :
-          $item->cars()->sync($entityIds);
-        endif;
-        if ($keyIds == 'car_makes') :
-          $item->car_makes()->sync($entityIds);
-        endif;
-      else :
-        if ($keyIds == 'cars') :
-          $item->cars()->sync($entityIds);
-        endif;
-        if ($keyIds == 'car_makes') :
-          $item->car_makes()->sync($entityIds);
-        endif;
-      endif;
-    endforeach;
+      foreach ($arreyIds as $keyIds => $entityIds) {
+          if (!isset($entityIds)) {
+              continue;
+          }
+          foreach ($entityIds as $key => $value) {
+              $entity = DB::table($keyIds)
+                  ->where('slug', $value)
+                  ->first();
+              if (!$entity) {
+                  continue;
+              }
+              $entityIds[$key] = $entity->id;
+          }
+          if (!method_exists($item, $keyIds)) {
+              continue;
+          }
+              $item->{$keyIds}()->sync($entityIds);
+      }
   }
 }
