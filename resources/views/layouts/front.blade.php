@@ -27,7 +27,7 @@
                     @csrf
                     <input type="text" placeholder="Имя" class="input" name="name" required />
                     <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-
+                    <input type="hidden" name="form_id" value="Форма в шапке">
 
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
 
@@ -64,7 +64,7 @@
                 event.preventDefault();
                 const formData = new FormData(form);
                 try {
-                    const response = await fetch("{{ route('request_product.store') }}", {
+                    const response = await fetch("{{ route('request_consultation.store') }}", {
                         method: 'POST',
                         body: formData,
 
