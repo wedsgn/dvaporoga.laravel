@@ -66,15 +66,7 @@ class CarsImport implements ToCollection
             'car_model_id' => CarModel::whereSlug($slug_car_model)->first()->id
           ]);
 
-          $products = Product::whereIn('slug', [
-            'lonzeron',
-            'torcevaia-zagluska',
-            'usilitel-soedinitel',
-            'remontnyi-element-dnishha',
-            'remontnyi-komplekt-dverei',
-            'arka-remontnaia',
-            'porog'
-          ])->get();
+          $products = Product::all();
           $car->products()->attach($products);
         endif;
       endif;
