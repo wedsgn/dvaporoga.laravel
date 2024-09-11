@@ -2,7 +2,40 @@
     'part' => $part,
 ])
 
+
+
 <div class="product" data-prices="{{ json_encode($part->prices) }}" data-item="{{ json_encode($part) }}">
+
+    <div class="modal micromodal-slide" id="modal-{{ $part->slug }}" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
+                    <p class="modal__description">Мы свяжемся с вами в течение 5-nb минут <br> и ответим на все вопросы
+                    </p>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+
+                <form class="modal-form">
+                    @csrf
+                    <input type="hidden" name="product_id" id="productIdInput" value="{{ $part->id }}" />
+                    <input type="hidden" name="product_price" id="productPriceInput" value="" />
+                    <input type="text" placeholder="Имя" class="input" name="name" required />
+                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
+
+
+                    <button class="btn lg submit-modal" type="submit">Отправить</button>
+
+                    <p class="copyright">
+                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+                        <a href="" download=""> политикой конфиденциальности </a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <div class="product-image">
         @if ($part->image === 'default')
             <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
@@ -115,7 +148,9 @@
             </li>
         </ul>
 
-        <button class="btn product-btn" data-micromodal-trigger="modal-1"
-            data-product-id="{{ $part->id }}">Заказать сейчас</button>
+        <button class="btn product-btn" data-micromodal-trigger="modal-{{ $part->slug }}"
+            data-product-id="{{ $part->id }}">
+            Заказать сейчас
+        </button>
     </div>
 </div>
