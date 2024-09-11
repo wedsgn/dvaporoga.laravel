@@ -51,7 +51,7 @@
                                     {{ $thickness->title }}
                                 @endforeach
                             @else
-                                <select class="form-select js-choice" name="thickness_id" id="thickness_id">
+                                <select class="form-select js-choice" single name="thickness_id" id="thickness_id">
                                     @foreach ($part->thicknesses as $thickness)
                                         <option value="{{ $thickness->id }}"
                                             {{ $part->thickness_id == $thickness->id ? 'selected' : '' }}>
