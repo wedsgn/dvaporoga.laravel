@@ -42,5 +42,6 @@ services:
         tty: true
         volumes:
             - .:/var/www/dvaporoga
+            - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
         networks:
             - net
