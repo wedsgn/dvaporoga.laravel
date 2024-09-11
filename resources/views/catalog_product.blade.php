@@ -129,7 +129,8 @@
                         <div class="total-form">
                             <div class="total-form__car">
                                 <div class="total-form__car_title">Автомобиль:</div>
-                                <div class="total-form__car_value"> {{ $car->title }} {{ $car->years }}</div>
+                                <div class="total-form__car_value"> {{ $car_make->title }} {{ $car_model->title }}
+                                    {{ $car->years }}</div>
                             </div>
 
                             <div class="total-form__parts">
@@ -171,13 +172,85 @@
         const cartForm = document.getElementById('cart-form');
         const products = document.querySelectorAll('.product-part');
 
+        const cartItemsPlace = document.querySelector(".total-form__parts");
+        const totalPriceInput = document.querySelector(".product-form__price");
+        const arrayFormInput = document.querySelector(".product-form__array");
+        const clearCart = document.querySelector(".product-parts__total_clear");
+        const totalPriceDiv = document.querySelector(".total-form__total_value span");
+
+        let selectedItems = [];
+        let totalPrice = 0;
+        let checkedProducts = []
+
+        clearCart?.addEventListener("click", () => {
+            selectedItems = [];
+            totalPrice = 0;
+            checkSum();
+            pushArray();
+            cartItemsPlace.insertAdjacentHTML(
+                "afterbegin",
+                `<div class="total-form__empty">Добавьте запчасти в заказ</div>`
+            );
+        });
+
+
+        const checkSum = () => {
+            totalPriceDiv.innerHTML = totalPrice;
+            totalPriceInput.value = totalPrice;
+            arrayFormInput.value = JSON.stringify(selectedItems);
+        };
+
+        const pushArray = () => {
+            cartItemsPlace.innerHTML = "";
+            selectedItems.forEach((item) => {
+                cartItemsPlace.insertAdjacentHTML(
+                    "afterbegin",
+                    `<div class="total-form__part">
+            <p class="total-form__part_title">${item.title}</p>
+            <p class="total-form__part_price">${item.price} р.</p>
+            <p class="total-form__part_price" style="display: none">${item}</p>
+          </div>`
+                );
+            });
+        };
+
+
+        products.forEach((item, idx) => {
+            const addBtn = item.querySelector(".btn");
+            addBtn.addEventListener("click", () => {
+                const title = item.querySelector(".product-part__title").innerHTML;
+                const itemId = item.querySelector(".product-part__id").value;
+                const price = item.querySelector(
+                    ".product-part__price_num span"
+                ).innerHTML;
+
+                const itemIndex = selectedItems.findIndex(
+                    (item) => item.id === itemId
+                );
+
+                if (itemIndex === -1) {
+                    selectedItems.push({
+                        id: itemId,
+                        data: item.getAttribute("data-item"),
+                        title: title,
+                        price: price
+                    });
+                    totalPrice += +price;
+                    addBtn.innerHTML = "Убрать из заказа";
+                } else {
+                    totalPrice -= +selectedItems[itemIndex].price;
+                    selectedItems.splice(itemIndex, 1);
+                    addBtn.innerHTML = "Добавить в заказ";
+                }
+                checkSum();
+                pushArray();
+            });
+        });
+
         if (products) {
             products.forEach(product => {
                 const data = product.getAttribute("data-item");
                 const res = JSON.parse(data);
-
-                console.log(res);
-
 
                 const steelSelector = product.querySelector(".steel-select");
                 const thicknessSelector = product.querySelector(".thickness_select");
@@ -193,7 +266,6 @@
                     type_id: typeSelector.value,
                 };
 
-
                 const getPrice = () => {
                     const price = res.prices.find((item) => {
                         return (
@@ -204,11 +276,16 @@
                         );
                     });
 
+
+
+
                     if (price) {
                         priceDeiv.innerHTML = price.one_side;
-                        // priceInput.value = price;
+
                     }
                 };
+
+
 
                 steelSelector.addEventListener("change", function(e) {
                     options.steel_type_id = +e.target.value;
