@@ -129,7 +129,7 @@
                         <div class="total-form">
                             <div class="total-form__car">
                                 <div class="total-form__car_title">Автомобиль:</div>
-                                <div class="total-form__car_value"> {{ $car_make->title }} {{ $car_model->title }}
+                                <div class="total-form__car_value">{{ $car_make->title }} {{ $car_model->title }}
                                     {{ $car->years }}</div>
                             </div>
 
@@ -151,7 +151,9 @@
                             <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
                             <input type="hidden" class="product-form__price" name="total_price" value="">
                             <input type="hidden" class="product-form__array" name="data" value="">
-                            <input type="hidden" name="car" value="{{ $car->title }} {{ $car->years }}">
+                            <input type="hidden" name="car"
+                                value="{{ $car_make->title }} {{ $car_model->title }}
+                                    {{ $car->years }}">
                             <input type="hidden" name="form_id" value="Форма каталога">
                             <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
 
