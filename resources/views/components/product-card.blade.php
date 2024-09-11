@@ -7,7 +7,7 @@
 <div class="product" data-prices="{{ json_encode($part->prices) }}" data-item="{{ json_encode($part) }}">
 
 
-    <div class="modal micromodal-slide" id="modal-prod-{{ $part->slug }}" aria-hidden="true">
+    <div class="modal micromodal-slide product-modal" id="modal-prod-{{ $part->slug }}" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
@@ -21,6 +21,7 @@
                     @csrf
                     <input type="hidden" name="product_id" id="productIdInput" value="{{ $part->id }}" />
                     <input type="hidden" name="product_price" id="productPriceInput" value="" />
+                    <input type="hidden" name="product_price" id="productPriceId" value="" />
                     <input type="text" placeholder="Имя" class="input" name="name" required />
                     <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
 
@@ -154,4 +155,33 @@
             Заказать сейчас
         </button>
     </div>
+    {{--
+    <script>
+        const products = document.querySelectorAll('.product');
+
+        // products.forEach(product => {
+        //     const form = product.querySelector('form');
+        //     form.addEventListener('submit', async function(event) {
+        //         event.preventDefault();
+        //         const form = event.target;
+        //         const formData = new FormData(form);
+
+        //         const response = await fetch("{{ route('request_product_section.store') }}", {
+        //             method: 'POST',
+        //             body: formData,
+        //         })
+
+        //         if (response.ok) {
+        //             form.reset();
+        //             MicroModal.show('modal-2');
+        //             setTimeout(() => {
+        //                 MicroModal.close('modal-2');
+        //             }, 3000);
+        //         } else {
+        //             throw new Error('Ошибка отправки');
+        //         }
+
+        //     });
+        // });
+    </script> --}}
 </div>

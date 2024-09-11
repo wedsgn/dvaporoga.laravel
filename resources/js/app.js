@@ -31,6 +31,7 @@ window.addEventListener("load", () => {
 
       const steelSelector = product.querySelector(".steel-select");
       const priceInput = product.querySelector("#productPriceInput");
+      const priceIdInput = product.querySelector("#productPriceId");
       const thicknessSelector = product.querySelector(".thickness_select");
       const typeSelector = product.querySelector(".type-selector");
       const sizeSelector = product.querySelector(".size-selector");
@@ -57,6 +58,8 @@ window.addEventListener("load", () => {
         if (price) {
           priceDeiv.innerHTML = price.one_side;
           priceInput.value = price;
+          priceIdInput.value = price.id;
+          console.log(price);
         }
       };
 
