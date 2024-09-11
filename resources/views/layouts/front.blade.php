@@ -18,7 +18,8 @@
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
                     <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
-                    <p class="modal__description">Мы свяжемся с вами в течение 7 минут <br> и ответим на все вопросы</p>
+                    <p class="modal__description">Мы свяжемся с вами в течение 5-nb минут <br> и ответим на все вопросы
+                    </p>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <form class="modal-form">
