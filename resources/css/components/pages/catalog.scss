@@ -445,8 +445,26 @@
   }
 
   .product-parts__total {
-    padding: 24px;
-    top: 70px;
+    padding: 16px;
+    // top: auto;
+    // bottom: 16px;
+    background: #fff;
+  }
+
+  .product-parts__total_title {
+    font-size: 18px;
+  }
+
+  .total-form {
+    margin-top: 16px;
+  }
+
+  .total-form__empty {
+    font-size: 16px;
+  }
+
+  .total-form__parts {
+    // margin-top: 16px;
   }
 
   .product-parts-section__wrap {
