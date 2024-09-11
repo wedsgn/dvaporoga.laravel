@@ -10,7 +10,7 @@
 
                     и <span>арки</span>
                 </h1>
-                <p class="index-hero__subtitle">Без предоплаты и быстрой доставкой</p>
+                {{-- <p class="index-hero__subtitle">Без предоплаты и быстрой доставкой</p> --}}
 
                 <div class="index-hero__inner">
                     <div class="index-hero__wrap">
