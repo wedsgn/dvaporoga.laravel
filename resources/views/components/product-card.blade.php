@@ -23,7 +23,7 @@
                     <input type="hidden" name="price_id" id="productPriceId" value="" />
                     <input type="text" placeholder="Имя" class="input" name="name" required />
                     <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-
+                    <input type="hidden" name="form_id" value="Форма с карточки товара">
 
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
 

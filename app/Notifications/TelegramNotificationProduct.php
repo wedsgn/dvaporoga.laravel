@@ -25,10 +25,7 @@ class TelegramNotificationProduct extends Notification
           $productsGrouped = collect($this->message['products'])->groupBy('id');
           foreach ($productsGrouped as $productId => $products) {
               $products_message .= "
-                  Наименование - " . $products->first()->title . "
-                  Цена - " . $products->first()->price_one_side . "руб.
-                  Количество - " . $products->count() . " шт.
-                  ";
+" . $products->first()->title . "";
           }
       }
       $message = "📣 Новая - " . $this->message['subject'] . "
