@@ -107,14 +107,7 @@ class CarMakeController extends BaseController
           'car_makes.array' => 'Поле "Марки автомобилей в порядке отображения на главной" должно быть массивом.',
           'car_makes.max' => 'Максимальное количество элементов в поле "Марки автомобилей в порядке отображения на главной" не может быть больше :max.',
       ]);
-      $split_data = $this->format_data_service->cutArraysFromRequest(
-        $data,
-        [
-          'car_makes'
-        ]
-      );
-
-      $this->format_data_service->writeDataToTable($order, $split_data['arreyIds']);
+      $this->format_data_service->writeDataToTable($order, $data);
       return redirect()->route('admin.car_makes_order.show', $order)->with('status', 'item-updated');
   }
 

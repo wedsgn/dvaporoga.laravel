@@ -478,6 +478,10 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>{{ __('admin.field_type') }}</th>
+                            <th>{{ __('admin.field_steel_type') }}</th>
+                            <th>{{ __('admin.field_thickness') }}</th>
+                            <th>{{ __('admin.field_size') }}</th>
                             <th>{{ __('admin.field_price_one_side') }}</th>
                             <th>{{ __('admin.field_price_set') }}</th>
                             <th>{{ __('admin.field_action') }}</th>
@@ -486,6 +490,10 @@
                     <tbody>
                         @forelse ($item->prices as $price)
                             <tr>
+                                <td>{{ $price->type->title }}</td>
+                                <td>{{ $price->steel_type->title }}</td>
+                                <td>{{ $price->thickness->title }}</td>
+                                <td>{{ $price->size->title }}</td>
                                 <td>{{ $price->one_side }}</td>
                                 <td>{{ $price->set }}</td>
                                 <td>

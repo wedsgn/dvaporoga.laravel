@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'title' => ['required', 'max:70', 'unique:products,title'],
+      'title' => ['required', 'max:70', Rule::unique('products')->ignore($this->old_title, 'title')],
       'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
       'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
       'description'  => ['nullable'],

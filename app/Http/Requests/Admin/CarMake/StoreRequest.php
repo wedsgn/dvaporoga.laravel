@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
             'title' => ['required', 'max:70', 'unique:car_makes,title'],
             'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
             'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
-            'description'  => ['nullable'],
+            'description'  => ['required'],
         ];
     }
 
@@ -42,6 +42,7 @@ class StoreRequest extends FormRequest
             'title.unique' => 'Марка автомобиля с таким названием уже существует',
             'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
             'image_mob.max' => 'Размер изображения не должен превышать 200 Мбайт',
+            'description.required' => 'Поле "Описание" обязательно для заполнения',
         ];
     }
 }

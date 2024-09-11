@@ -32,7 +32,7 @@ class FormatData
           }
           foreach ($entityIds as $key => $value) {
               $entity = DB::table($keyIds)
-                  ->where('slug', $value)
+                  ->where('title', $value)
                   ->first();
               if (!$entity) {
                   continue;
