@@ -37,6 +37,7 @@ return [
   'product_card_title' => 'Деталь',
   'product_card_info' => 'Информация о записи деталь',
   'aside_title_products' => 'Детали',
+  'product_characteristics' => 'Характеристики',
 
   //Titles blog
   'new_blog_card_title' => 'Новая запись блога',
@@ -45,6 +46,37 @@ return [
   'blog_card_info' => 'Информация о записи блога',
   'aside_title_blog' => 'Блог',
   'aside_title_blogs' => 'Записи блога',
+
+  //Titles sizes
+  'size_card_title' => 'Размер',
+  'aside_title_sizes' => 'Размеры',
+  'edit_size_card_title' => 'Изменить размер',
+  'new_size_card_title' => 'Новый размер',
+
+  //Titles steel_types
+  'steel_type_card_title' => 'Тип стали',
+  'aside_title_steel_types' => 'Типы стали',
+  'edit_steel_type_card_title' => 'Изменить тип стали',
+  'new_steel_type_card_title' => 'Новый тип стали',
+
+  //Titles types
+  'type_card_title' => 'Тип',
+  'aside_title_types' => 'Типы',
+  'edit_type_card_title' => 'Изменить тип',
+  'new_type_card_title' => 'Новый тип',
+
+  //Titles prices
+  'price_card_title' => 'Цена',
+  'aside_title_prices' => 'Цены',
+  'edit_price_card_title' => 'Изменить цену для товара:',
+  'new_price_card_title' => 'Новая цена для товара:',
+
+  //Titles thicknesses
+  'thickness_card_title' => 'Толщина',
+  'aside_title_thicknesses' => 'Толщины',
+  'edit_thickness_card_title' => 'Изменить толщину',
+  'new_thickness_card_title' => 'Новая толщина',
+
 
   //Fields
   'field_site_link' => 'Ссылка на сайт',
@@ -128,6 +160,16 @@ return [
   'field_top' => 'Топ',
   'field_car' => 'Автомобиль',
   'field_total_price' => 'Итоговая цена',
+  'field_price' => 'Цена',
+  'field_price_one_side' => 'Цена(за одну сторону)',
+  'field_price_set' => 'Цена(Сет)',
+  'field_metal_thickness' => 'Толщина метала',
+  'field_steel_type' => 'Тип стали',
+  'field_thickness' => 'Толщина',
+  'field_one_side' => 'Одна сторона',
+  'field_set' => 'Сет',
+  'field_title_type' => 'Тип',
+  'field_title_size' => 'Размер',
   //Btns
   'btn_menu' => 'Меню',
   'btn_logout' => 'Выйти',
@@ -151,16 +193,23 @@ return [
   'btn_load_cars' => 'Загрузить таблицу автомобилей',
   'btn_load_products' => 'Загрузить таблицу деталей',
   'btn_order' => 'Выбрать марки автомобилей на главной',
+  'btn_add_size' => 'Добавить размер',
+  'btn_add_steel_type' => 'Добавить тип стали',
+  'btn_add_thickness' => 'Добавить толщину металла',
+  'btn_add_type' => 'Добавить тип',
+  'btn_add_price' => 'Добавить цену',
 
   //Placeholders
   'placeholder_text' => 'Введите текст',
   'placeholder_search' => 'ID,Название,Слаг',
+
   //Alerts
   'alert_updated' => 'Обновлен успешно',
   'alert_created' => 'Создан успешно',
   'alert_deleted' => 'Удален успешно',
   'alert_cars_success' => 'Таблица с автомобилями загружена успешно',
   'alert_products_success' => 'Таблица с деталями загружена успешно',
+
   //Notifications
   'notification_delete' => 'После удаления записи все ее ресурсы и данные будут удалены безвозвратно!!!',
   'notification_no_entries' => 'Нет записей...',
@@ -169,9 +218,11 @@ return [
   'notification_no_entries_statuses' => 'Записей не существует, создайте запись Статус.',
   'notification_no_entries_projects' => 'Записей не существует, создайте запись Проект.',
   'notification_no_entries_tags' => 'Записей не существует, создайте запись Тег',
+  'notification_choose_param' => 'Важное: Выберите параметр для правильного формирования цены в карточке товара, в случае если параметр отсутствует выберите "Без параметра".',
 
   //Questions
   'question_delete' => 'Вы уверены что хотите удалить запись?',
+
   // Rols
   'role_admin' => 'Администратор',
 
@@ -186,7 +237,7 @@ return [
   'request_product_card_title' => 'Запись заявка на продукцию',
   'request_product_card_info' => 'Информация о записи заявка на продукцию',
   'aside_title_request_products' => 'Заявки на продукцию',
-
+  'without_param' => 'Без параметра',
   //login
   'login_title' => 'Авторизация',
   'login_email' => 'Электронная почта',
@@ -194,4 +245,8 @@ return [
   'login_btn' => 'Вход',
   'login_remember' => 'Запомнить меня',
   'login_forgot' => 'Забыли пароль?',
+
+  //modals
+  'modal_text_delete' => 'Вы уверены что хотите удалить запись?',
+  'modal_title_delete' => 'Удалить запись',
 ];

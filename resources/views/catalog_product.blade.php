@@ -9,7 +9,7 @@
             <div class="container">
                 <div class="product-page-top">
                     <h1 class="h1 product-page__title">
-                        {{ $car->title }} {{ $car->years }}
+                      {{ $car_make->title }} {{ $car_model->title }} {{ $car->title }} {{ $car->generation }}
                     </h1>
                     <p class="product-page__description">
                         {{ $car->description }}
@@ -42,47 +42,66 @@
                                     <input type="hidden" class="product-part__id" value="{{ $part->id }}">
 
                                     <div class="product-part__info_wrap">
-                                        @if ($part->material)
+                                      @if ($part->steel_types->count() > 0)
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Материал:</p>
-                                                <p class="product-part__info_item_value">{{ $part->material }}</p>
+                                                {{-- <p class="product-part__info_item_value">{{ $part->material }}</p> --}}
+                                                <select class="form-select" name="steel_type_id" id="steel_type_id">
+                                                    @foreach ($part->steel_types as $steel_type)
+                                                        <option value="{{ $steel_type->id }}" {{ $part->steel_type_id == $steel_type->id ? 'selected' : '' }}>
+                                                            {{ $steel_type->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                        @endif
+                                      @endif
 
-
+                                      @if ($part->thicknesses->count() > 0)
+                                      <div class="product-part__info_item">
+                                          <p class="product-part__info_item_title">Толщина:</p>
+                                          {{-- <p class="product-part__info_item_value">{{ $part->metal_thickness }}</p> --}}
+                                          <select class="form-select" name="thickness_id" id="thickness_id">
+                                            @foreach ($part->thicknesses as $thickness)
+                                                <option value="{{ $thickness->id }}" {{ $part->thickness_id == $thickness->id ? 'selected' : '' }}>
+                                                    {{ $thickness->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                      </div>
+                                      @endif
+                                      @if ($part->types->count() > 0)
                                         <div class="product-part__info_item">
-                                            <p class="product-part__info_item_title">Профиль:</p>
-                                            <p class="product-part__info_item_value">Стандартный</p>
+                                            <p class="product-part__info_item_title">Тип:</p>
+                                            {{-- <p class="product-part__info_item_value">Стандартный</p> --}}
+                                            <select class="form-select" name="type_id" id="type_id">
+                                              @foreach ($part->types as $type)
+                                                  <option value="{{ $type->id }}" {{ $part->type_id == $type->id ? 'selected' : '' }}>
+                                                      {{ $type->title }}
+                                                  </option>
+                                              @endforeach
+                                          </select>
                                         </div>
+                                      @endif
 
-                                        @if ($part->metal_thickness)
-                                            <div class="product-part__info_item">
-                                                <p class="product-part__info_item_title">Толщина:</p>
-                                                <p class="product-part__info_item_value">{{ $part->metal_thickness }}</p>
-                                            </div>
-                                        @endif
-
-
-
-                                        @if ($part->side)
-                                            <div class="product-part__info_item">
-                                                <p class="product-part__info_item_title">Сторона:</p>
-                                                <p class="product-part__info_item_value">{{ $part->side }}</p>
-                                            </div>
-                                        @endif
-
-                                        @if ($part->size)
+                                      @if ($part->sizes->count() > 0)
                                             <div class="product-part__info_item">
                                                 <p class="product-part__info_item_title">Размер:</p>
-                                                <p class="product-part__info_item_value">{{ $part->size }} </p>
+                                                {{-- <p class="product-part__info_item_value">{{ $part->size }} </p> --}}
+                                                <select class="form-select" name="size_id" id="size_id">
+                                                  @foreach ($part->sizes as $size)
+                                                      <option value="{{ $size->id }}" {{ $part->size_id == $size->id ? 'selected' : '' }}>
+                                                          {{ $size->title }}
+                                                      </option>
+                                                  @endforeach
+                                              </select>
                                             </div>
-                                        @endif
+                                      @endif
                                     </div>
 
                                     <div class="product-part__bottom">
                                         <div class="product-part__price">
                                             <p class="product-part__price-price">Цена:</p>
-                                            <div class="product-part__price_num"><span>{{ $part->price_one_side }}</span>
+                                            <div class="product-part__price_num"><span>Сюда цена выводится</span>
                                                 руб</div>
                                         </div>
 

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->string('image')->nullable();
-            $table->string('image_mob')->nullable();
-            $table->text('description')->nullable();
-            $table->softDeletes();
+            $table->string('one_side');
+            $table->string('set')->nullable();
+            $table->foreignId('thickness_id')->nullable();
+            $table->foreignId('steel_type_id')->nullable();
+            $table->foreignId('type_id')->nullable();
+            $table->foreignId('size_id')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('prices');
     }
 };

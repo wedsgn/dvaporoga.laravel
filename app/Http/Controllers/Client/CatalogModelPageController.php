@@ -15,7 +15,7 @@ class CatalogModelPageController extends Controller
 
     $car_model = $car_make->car_models()->where('slug', $slug)->firstOrFail();
     $generations = $car_model->cars()->orderBy('years')->get()->groupBy(function ($item, $key) {
-        return $item->years;
+        return $item->generation;
     });
     $products = Product::latest()->get();
     return view('catalog_generations', compact('generations','car_make', 'car_model','products'));
