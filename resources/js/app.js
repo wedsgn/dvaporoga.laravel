@@ -53,13 +53,10 @@ window.addEventListener("load", () => {
           );
         });
 
-        console.log(dataRes);
-
         if (price) {
           priceDeiv.innerHTML = price.one_side;
           priceInput.value = price;
           priceIdInput.value = price.id;
-          console.log(price);
         }
       };
 
