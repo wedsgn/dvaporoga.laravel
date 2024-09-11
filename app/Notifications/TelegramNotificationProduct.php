@@ -27,7 +27,6 @@ class TelegramNotificationProduct extends Notification
               $products_message .= "
                   Наименование - " . $products->first()->title . "
                   Цена - " . $products->first()->price_one_side . "руб.
-                  Количество - " . $products->count() . " шт.
                   ";
           }
       }

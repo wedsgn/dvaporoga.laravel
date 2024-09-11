@@ -9,6 +9,7 @@ use App\Http\Requests\Client\RequestProductSection\StoreRequest as RequestProduc
 
 use App\Jobs\RequestConsultationMailSendJob;
 use App\Jobs\RequestProductMailSendJob;
+use App\Models\Price;
 use App\Models\Product;
 use App\Models\RequestConsultation;
 use App\Models\RequestProduct;
@@ -42,7 +43,7 @@ class RequestsController extends Controller
         $products[] = $value['id'];
       endif;
     endforeach;
-    dd($products);
+
     $request_product->data = json_encode($products);
     $request_product->save();
     $this->send_request_product($request_product);
@@ -53,8 +54,15 @@ class RequestsController extends Controller
   {
     $request_product = new RequestProduct();
     $request_product->fill($request->validated());
-    dd($request->validated());
-
+    $products = [
+      $request->validated()['product_id']
+    ];
+    $price = Price::where('id', $request->validated()['price_id'])->first()->one_side;
+    $request_product->data = json_encode($products);
+    $request_product->total_price = $price;
+    $request_product->form_id = $request->validated()['form_id'];
+    $request_product->save();
+    $this->send_request_product($request_product);
   }
 
   protected function send_request_consultation($request_consultation)
@@ -70,22 +78,22 @@ class RequestsController extends Controller
     //ДЛЯ ОТПРАВКИ СООБЩЕНИЙ НУЖНО УСТАНОВИТЬ Supervisor НА СЕРВЕР ЧТОБЫ РАБОТАЛИ ОЧЕРЕДИ PasswordResetMailSendJob
     dispatch(new RequestConsultationMailSendJob($details));
   }
-  protected function send_request_product($request_consultation) {
+  protected function send_request_product($request_product) {
     $products = [];
-    foreach (json_decode($request_consultation->data) as $key => $value) :
+    foreach (json_decode($request_product->data) as $key => $value) :
       $products[] = Product::find($value);
     endforeach;
     $details = [
       'subject' => 'заявка на детали',
-      'name' => preg_replace('/[_\*]/', ' ', $request_consultation->name),
-      'phone' => $request_consultation->phone,
+      'name' => preg_replace('/[_\*]/', ' ', $request_product->name),
+      'phone' => $request_product->phone,
       'products' => $products,
-      'total_price' => $request_consultation->total_price,
-      'car' => $request_consultation->car,
-      'form' => $request_consultation->form_id,
+      'total_price' => $request_product->total_price,
+      'car' => $request_product->car,
+      'form' => $request_product->form_id,
     ];
 
-    $request_consultation->notify(new TelegramNotificationProduct($details));
+    $request_product->notify(new TelegramNotificationProduct($details));
     //ДЛЯ ОТПРАВКИ СООБЩЕНИЙ НУЖНО УСТАНОВИТЬ Supervisor НА СЕРВЕР ЧТОБЫ РАБОТАЛИ ОЧЕРЕДИ PasswordResetMailSendJob
     dispatch(new RequestProductMailSendJob($details));
   }
