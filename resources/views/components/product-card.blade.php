@@ -7,7 +7,7 @@
 <div class="product" data-prices="{{ json_encode($part->prices) }}" data-item="{{ json_encode($part) }}">
 
 
-    <div class="modal micromodal-slide product-modal" id="modal-prod-{{ $part->slug }}" aria-hidden="true">
+    <div class="modal micromodal-slide product-modal-card" id="modal-prod-{{ $part->slug }}" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
@@ -16,7 +16,7 @@
                     </p>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
-                <form class="modal-form">
+                <form class="modal-form-product">
                     @csrf
                     <input type="hidden" name="product_id" id="productIdInput" value="{{ $part->id }}" />
                     <input type="hidden" name="product_price" id="productPriceInput" value="" />
