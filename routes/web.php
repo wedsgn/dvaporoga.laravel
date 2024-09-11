@@ -36,6 +36,7 @@ Route::get('/blog/{slug}', [BlogPageController::class, 'show'])->name('blog.sing
 
 Route::post('/request-consultation', [RequestsController::class, 'store_request_consultation'])->name('request_consultation.store');
 Route::post('/request-product', [RequestsController::class, 'store_request_product'])->name('request_product.store');
+Route::post('/request-product-section', [RequestsController::class, 'request_product_section'])->name('request_product_section.store');
 
 Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
