@@ -17,7 +17,8 @@ class Product extends Model
       'slug',
       'image',
       'image_mob',
-      'description'
+      'description',
+      'sort'
   ];
   public static $products_routes = [
     'admin.products.index',
