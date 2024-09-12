@@ -198,7 +198,9 @@
         <x-section.how-we-work />
         <x-section.about-parts />
         <x-section.about-company />
-        <x-section.blog :items="$blogs" />
+        @if ($blogs->count())
+            <x-section.blog :items="$blogs" />
+        @endif
         <x-section.faq />
 
 
