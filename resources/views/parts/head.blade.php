@@ -4,7 +4,9 @@
     <link rel="icon" href="{{ asset('images/favicon/favicon.ico') }}" />
     <link rel="icon" href="href="{{ asset('images/favicons/icon.svg') }} type="image/svg+xml" />
     <link rel="apple-touch-icon" href="images/favicons/apple.png" />
-    <title>Два порога | Главная страница</title>
+    <title>Два порога | Производство порогов и арок для любых автомобилей с доставкой по РФ</title>
+    <meta name="description"
+        content="Производство и продажа автомобильных порогов и арок для любых марок автомобилей с доставкой по РФ.">
     <meta name="yandex-verification" content="d134887cc07e929d" />
     <meta name="google-site-verification" content="D-rV3CqHjnyPJfkgP5TR3xLeMlrPQ4rhlJ_J8jR07CQ" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
