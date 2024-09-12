@@ -85,7 +85,8 @@
 
 .car-model-card__image {
   width: 100%;
-  aspect-ratio: 5/3;
+  aspect-ratio: 6/4;
+  overflow: hidden;
   img {
     display: block;
     width: 100%;
