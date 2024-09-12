@@ -49,10 +49,11 @@ class CarsImport implements ToCollection
             ]);
           endif;
         endif;
+
       if (!Car::whereSlug(Str::slug(trim($row[5]) . ' ' . trim($row[3]) . ' ' . trim($row[4])))->exists()) :
         if ($slug_car_model == CarModel::whereSlug($slug_car_model)->first()->slug) :
           $car = Car::create([
-            'title' => $row[5],
+            'title' => trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[5]) . ' ' . trim($row[3]),
             'slug' => Str::slug(trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[5]) . ' ' . trim($row[3])),
             'image' => $row[0],
             'image_mob' => 'default',
