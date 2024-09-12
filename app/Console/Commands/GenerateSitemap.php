@@ -33,6 +33,14 @@ class GenerateSitemap extends Command
   public function handle()
   {
     $postsitmap = Sitemap::create();
+
+    $postsitmap->add(
+      Url::create('/')
+        ->setPriority(1.0)
+        ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
+        ->setLastModificationDate(now())
+    );
+
     CarMake::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
         Url::create("/katalog/{$post->slug}")
