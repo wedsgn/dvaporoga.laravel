@@ -25,8 +25,8 @@ Route::get('/katalog', [CatalogConcernPageController::class, 'index'])->name('ca
 Route::get('/katalog/{car_make_slug}/models', [CatalogConcernPageController::class, 'car_make_show'])->name('car_make.show');
 Route::get('/katalog/search', [CatalogConcernPageController::class, 'search'])->name('catalog.search');
 //Car models
-Route::get('/katalog/{slug}/{model_slug}/car_models', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
-Route::get('/katalog/{car_make_slug}/car_models/search', [CatalogModelPageController::class, 'search'])->name('car_model.search');
+Route::get('/katalog/{slug}/{model_slug}', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
+Route::get('/katalog/{car_make_slug}/search', [CatalogModelPageController::class, 'search'])->name('car_model.search');
 //Car generations
 Route::get('/katalog/{concern}/{model}/{generation}/products', [CatalogGenerationPageController::class, 'car_generation_show'])->name('car_generation.show');
 Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
@@ -99,11 +99,11 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::patch('/{product_slug}', [ProductController::class, 'update'])->name('update');
     Route::delete('/{product_slug}', [ProductController::class, 'destroy'])->name('destroy');
     Route::name('prices.')->prefix('prices')->group(function () {
-        Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'priceCreate'])->name('priceCreate');
-        Route::post('/{product_slug}', [ProductFeaturesController::class, 'priceStore'])->name('priceStore');
-        Route::get('/{product_slug}/{price_id}/edit', [ProductFeaturesController::class, 'priceEdit'])->name('priceEdit');
-        Route::patch('/{product_slug}/{price_id}', [ProductFeaturesController::class, 'priceUpdate'])->name('priceUpdate');
-        Route::delete('/{product_slug}/{price_id}', [ProductFeaturesController::class, 'priceDestroy'])->name('priceDestroy');
+      Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'priceCreate'])->name('priceCreate');
+      Route::post('/{product_slug}', [ProductFeaturesController::class, 'priceStore'])->name('priceStore');
+      Route::get('/{product_slug}/{price_id}/edit', [ProductFeaturesController::class, 'priceEdit'])->name('priceEdit');
+      Route::patch('/{product_slug}/{price_id}', [ProductFeaturesController::class, 'priceUpdate'])->name('priceUpdate');
+      Route::delete('/{product_slug}/{price_id}', [ProductFeaturesController::class, 'priceDestroy'])->name('priceDestroy');
     });
     Route::name('sizes.')->prefix('sizes')->group(function () {
       Route::get('/{product_slug}/create', [ProductFeaturesController::class, 'sizeCreate'])->name('sizeCreate');
@@ -144,18 +144,17 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/{blog_slug}/edit', [BlogController::class, 'edit'])->name('edit');
     Route::patch('/{blog_slug}', [BlogController::class, 'update'])->name('update');
     Route::delete('/{blog_slug}', [BlogController::class, 'destroy'])->name('destroy');
-});
+  });
 
-Route::prefix('request_consultations')->name('request_consultations.')->group(function () {
+  Route::prefix('request_consultations')->name('request_consultations.')->group(function () {
     Route::get('/', [RequestConsultationController::class, 'index'])->name('index');
     Route::get('/search', [RequestConsultationController::class, 'search'])->name('search');
     Route::get('/{id}', [RequestConsultationController::class, 'show'])->name('show');
-});
+  });
 
-Route::prefix('request_products')->name('request_products.')->group(function () {
+  Route::prefix('request_products')->name('request_products.')->group(function () {
     Route::get('/', [RequestProductController::class, 'index'])->name('index');
     Route::get('/search', [RequestProductController::class, 'search'])->name('search');
     Route::get('/{id}', [RequestProductController::class, 'show'])->name('show');
+  });
 });
-});
-
