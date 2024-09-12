@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('car_make_id');
             $table->unsignedBigInteger('order_id');
-            $table->timestamps();
 
             $table->foreign('car_make_id')->references('id')->on('car_makes')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+
         });
     }
 

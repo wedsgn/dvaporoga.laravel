@@ -52,7 +52,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($item->car_makes as $item)
+                                @forelse ($item->car_makes()->orderBy('car_make_order.id', 'asc')->get() as $item)
                                     <tr>
                                     <td>
                                       @if ($item->image === 'default')
