@@ -1,2 +1,11 @@
 User-agent: *
-Disallow: /
+Disallow: /admin/
+Disallow: /login/*
+Disallow: /cgi-bin
+Disallow: /search
+Disallow: */page/
+Disallow: /admin
+Disallow: /private
+Disallow: /*print=
+Allow: /public
+Sitemap: https://dvaporoga.ru/sitemap.xml
