@@ -5,7 +5,9 @@ import { burger } from "./modules/burger";
 import { tabs } from "./modules/tabs";
 import MicroModal from "micromodal";
 
-MicroModal.init({});
+MicroModal.init({
+  disableScroll: true,
+});
 window.addEventListener("load", () => {
   accordition();
   sliders();

@@ -18,7 +18,7 @@
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
                     <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
-                    <p class="modal__description">Мы свяжемся с вами в течение 5-nb минут <br> и ответим на все вопросы
+                    <p class="modal__description">Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
                     </p>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
@@ -33,7 +33,9 @@
 
                     <p class="copyright">
                         Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="" download=""> политикой конфиденциальности </a>
+                        <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank"> политикой
+                            конфиденциальности
+                        </a>
                     </p>
                 </form>
 
