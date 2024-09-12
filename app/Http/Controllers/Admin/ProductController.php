@@ -47,7 +47,6 @@ class ProductController extends BaseController
       ]
     );
     $data = $split_data['data'];
-
     foreach (['image', 'image_mob'] as $image) {
       if ($request->hasFile($image)) {
         $data[$image] = $this->upload_service->imageConvertAndStore($request, $data[$image], $data['slug']);
