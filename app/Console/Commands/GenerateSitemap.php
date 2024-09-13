@@ -36,45 +36,44 @@ class GenerateSitemap extends Command
 
     $postsitmap->add(
       Url::create('/')
-        ->setPriority(1.0)
         ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
-        ->setLastModificationDate(now())
+        ->setLastModificationDate(now()->format('Y-m-d'))
+        ->setPriority(1.0)
     );
 
     CarMake::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
         Url::create("/katalog/{$post->slug}")
-          ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
-          ->setLastModificationDate($post->updated_at)
-
+          ->setLastModificationDate($post->updated_at->format('Y-m-d'))
+          ->setPriority(0.8)
       );
     });
 
     CarModel::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
         Url::create("/katalog/{$post->car_make->slug}/{$post->slug}")
-          ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
-          ->setLastModificationDate($post->updated_at)
+          ->setLastModificationDate($post->updated_at->format('Y-m-d'))
+          ->setPriority(0.8)
       );
     });
 
     Car::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
         Url::create("/katalog/{$post->car_model->car_make->slug}/{$post->car_model->slug}/{$post->slug}")
-          ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
-          ->setLastModificationDate($post->updated_at)
+          ->setLastModificationDate($post->updated_at->format('Y-m-d'))
+          ->setPriority(0.8)
       );
     });
 
     Blog::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
         Url::create("/blog/{$post->slug}")
-          ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
-          ->setLastModificationDate($post->updated_at)
+          ->setLastModificationDate($post->updated_at->format('Y-m-d'))
+          ->setPriority(0.8)
       );
     });
 
