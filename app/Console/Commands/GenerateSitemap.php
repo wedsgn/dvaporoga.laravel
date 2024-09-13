@@ -9,7 +9,6 @@ use App\Models\CarModel;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
-use App\Models\Post;
 
 class GenerateSitemap extends Command
 {
@@ -34,6 +33,9 @@ class GenerateSitemap extends Command
   {
     $postsitmap = Sitemap::create();
 
+
+
+
     $postsitmap->add(
       Url::create('/')
         ->setPriority(1.0)
@@ -43,7 +45,7 @@ class GenerateSitemap extends Command
 
     CarMake::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
-        Url::create("/katalog/{$post->slug}")
+        Url::create("katalog/{$post->slug}")
           ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
           ->setLastModificationDate($post->updated_at)
@@ -53,7 +55,7 @@ class GenerateSitemap extends Command
 
     CarModel::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
-        Url::create("/katalog/{$post->car_make->slug}/{$post->slug}")
+        Url::create("katalog/{$post->car_make->slug}/{$post->slug}")
           ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
           ->setLastModificationDate($post->updated_at)
@@ -62,7 +64,7 @@ class GenerateSitemap extends Command
 
     Car::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
-        Url::create("/katalog/{$post->car_model->car_make->slug}/{$post->car_model->slug}/{$post->slug}")
+        Url::create("katalog/{$post->car_model->car_make->slug}/{$post->car_model->slug}/{$post->slug}")
           ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
           ->setLastModificationDate($post->updated_at)
@@ -71,7 +73,7 @@ class GenerateSitemap extends Command
 
     Blog::get()->each(function ($post) use ($postsitmap) {
       $postsitmap->add(
-        Url::create("/blog/{$post->slug}")
+        Url::create("blog/{$post->slug}")
           ->setPriority(0.9)
           ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
           ->setLastModificationDate($post->updated_at)

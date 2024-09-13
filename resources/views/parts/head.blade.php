@@ -2,8 +2,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="{{ asset('images/favicon/favicon.ico') }}" />
-    <link rel="icon" href="href="{{ asset('images/favicons/icon.svg') }} type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="images/favicons/apple.png" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="href="{{ asset('images/favicon/icon.svg') }} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="images/favicon/apple.png" />
     <title>Два порога | Производство порогов и арок для любых автомобилей с доставкой по РФ</title>
     <meta name="description"
         content="Производство и продажа автомобильных порогов и арок для любых марок автомобилей с доставкой по РФ.">
