@@ -57,7 +57,7 @@
         <div class="mobile-nav__bottom">
             <div class="mobile-nav__bottom-contacts">
                 <div class="header__phone">
-                    <a href="tel:8 800 560 12 12">8 800 560 12 12</a>
+                    <a href="tel:88001005625">8 800 100 56 25</a>
                     <span>Беспланый звонок по РФ</span>
                 </div>
                 <div class="mobile-nav__bottom-socials">
