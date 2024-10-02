@@ -21,12 +21,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
 //Concern
+
 Route::get('/katalog', [CatalogConcernPageController::class, 'index'])->name('catalog');
+Route::get('/katalog/search', [CatalogConcernPageController::class, 'search'])->name('car_make.search');
 Route::get('/katalog/{car_make_slug}', [CatalogConcernPageController::class, 'car_make_show'])->name('car_make.show');
-Route::get('/katalog/search', [CatalogConcernPageController::class, 'search'])->name('catalog.search');
 //Car models
-Route::get('/katalog/{slug}/{model_slug}', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
 Route::get('/katalog/{car_make_slug}/search', [CatalogModelPageController::class, 'search'])->name('car_model.search');
+Route::get('/katalog/{slug}/{model_slug}', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
 //Car generations
 Route::get('/katalog/{concern}/{model}/{generation}', [CatalogGenerationPageController::class, 'car_generation_show'])->name('car_generation.show');
 Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');

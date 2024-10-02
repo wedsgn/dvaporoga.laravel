@@ -24,9 +24,6 @@ class CatalogConcernPageController extends Controller
     $car_make_id = $car_make->id;
     $car_make_title = $car_make->title;
 
-    if (!$car_make) {
-      abort(404);
-    }
     return view('catalog_models', compact('car_make', 'car_models', 'car_make_id', 'car_make_title'));
   }
 
