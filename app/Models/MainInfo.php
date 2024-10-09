@@ -14,7 +14,8 @@ class MainInfo extends Model
       'company_details',
       'phone',
       'whats_app',
-      'telegram'
+      'telegram',
+      'company_image',
   ];
 
 }

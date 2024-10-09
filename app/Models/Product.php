@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Transliterator;
 
 class Product extends Model
 {
@@ -18,7 +19,13 @@ class Product extends Model
       'image',
       'image_mob',
       'description',
-      'sort'
+      'sort',
+      'meta_title',
+      'meta_description',
+      'meta_keywords',
+      'og_url',
+      'og_title',
+      'og_description'
   ];
   public static $products_routes = [
     'admin.products.index',
@@ -62,12 +69,31 @@ class Product extends Model
 
   public function scopeFilter($items)
   {
-      if (request('search') !== null) {
-          $items->where('id', 'ilike', '%' . request('search') . '%')
-          ->orWhere('slug', 'ilike', '%' . request('search') . '%')
-          ->orWhere('title', 'ilike', '%' . request('search') . '%');
-      }
-      return $items;
+    if (request('search') !== null) {
+      $search = request('search');
+      $search = mb_strtolower($search); // convert to lowercase
+
+      // Create a transliterator instance
+      $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', Transliterator::FORWARD);
+
+      // Transliterate Russian characters to Latin
+      $search = $transliterator->transliterate($search);
+
+      // Remove accents and special characters
+      $search = preg_replace('/[^\w\s]/', '', $search);
+
+      // Split search query into individual words
+      $words = explode(' ', $search);
+
+      // Search for each word in the database
+      $items->where(function ($query) use ($words) {
+          foreach ($words as $word) {
+              $query->orWhere('title', 'LIKE', '%' . $word . '%')
+                    ->orWhere('slug', 'LIKE', '%' . $word . '%');
+          }
+      });
+  }
+  return $items;
   }
   // public function delete_files($item)
   // {

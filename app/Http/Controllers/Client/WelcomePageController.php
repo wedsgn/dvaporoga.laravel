@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\CarMake;
 use App\Models\Order;
+use App\Models\Page;
 use App\Models\Product;
 
 class WelcomePageController extends Controller
@@ -16,6 +17,7 @@ class WelcomePageController extends Controller
     $order = Order::where('title', 'order_car_makes_home_page')->firstOrFail();
     $car_makes = $order->car_makes()->orderBy('car_make_order.id', 'asc')->limit(12)->get();
     $blogs = Blog::latest()->limit(10)->get();
-    return view('welcome', compact('products', 'car_makes', 'blogs'));
+    $page = Page::whereSlug('home')->firstOrFail();
+    return view('welcome', compact('products', 'car_makes', 'blogs', 'page'));
   }
 }

@@ -26,7 +26,24 @@
                 </div>
             @endif
         </div>
-
+        <div class="row">
+          @if (!empty($item->company_image))
+              <div class="col-xxl-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <p class="card-title-desc text-muted">{{ __('admin.field_current_company_image') }}</p>
+                          <div class="live-preview">
+                              <div>
+                                <img src="{{ asset('storage') . '/' . $item->company_image }}" class="img-fluid"
+                                alt="Responsive image">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          @else
+          @endif
+        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -79,6 +96,12 @@
                                             placeholder="{{ __('admin.placeholder_text') }}">
                                     </div>
                                 </div>
+                                <div class="col-xxl-6 col-md-6">
+                                  <div>
+                                      <label for="formFile" class="form-label">{{ __('admin.field_company_image') }}</label>
+                                      <input class="form-control" type="file" id="formFile" name="company_image">
+                                  </div>
+                              </div>
                             </div>
                             <button type="submit"
                                 class="btn btn-soft-success waves-effect waves-light mt-5 float-end">{{ __('admin.btn_save') }}</button>

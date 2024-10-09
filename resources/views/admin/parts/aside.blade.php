@@ -23,6 +23,15 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">{{ __('admin.btn_menu') }}</span></li>
+
+                <li class="nav-item">
+                  <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $pages_routes)) active @endif"
+                      href="{{ route('admin.pages.index') }}" aria-expanded="false"
+                      aria-controls="sidebarLayouts">
+                      <i class="mdi mdi-book-open-page-variant"></i> <span
+                          data-key="t-layouts">{{ __('admin.aside_title_pages') }}</span>
+                  </a>
+              </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link  @if (in_array(Route::current()->getName(), $car_makes_routes)) active @endif"
                         href="{{ route('admin.car_makes.index') }}" aria-expanded="false"

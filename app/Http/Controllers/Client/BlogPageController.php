@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\CarMake;
+use App\Models\Page;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class BlogPageController extends Controller
     $blogs = Blog::latest()->paginate(8, ['*'], 'page', $request->page);
     $pageCount = $blogs->lastPage();
     $currentPage = $blogs->currentPage();
-    return view('blog', compact('blogs', 'products', 'pageCount', 'currentPage'));
+    $page = Page::whereSlug('blog')->firstOrFail();
+
+    return view('blog', compact('blogs', 'products', 'pageCount', 'currentPage', 'page'));
   }
 
   public function show($slug)

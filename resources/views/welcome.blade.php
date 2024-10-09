@@ -6,9 +6,7 @@
         <section class="index-hero-section section">
             <div class="container">
                 <h1 class="h1 uppercase">
-                    Ремонтные <br /><span>пороги</span>
-
-                    и <span>арки</span>
+                  {!! $page->title !!}
                 </h1>
                 {{-- <p class="index-hero__subtitle">Без предоплаты и быстрой доставкой</p> --}}
 

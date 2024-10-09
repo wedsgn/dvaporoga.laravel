@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\CarMake;
 use App\Models\CarModel;
+use App\Models\Page;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class CatalogConcernPageController extends Controller
   {
     $products = Product::latest()->get();
     $car_makes = CarMake::all();
-    return view('catalog_concern', compact('car_makes', 'products'));
+    $page = Page::whereSlug('katalog')->firstOrFail();
+
+    return view('catalog_concern', compact('car_makes', 'products', 'page'));
   }
 
   public function car_make_show($slug)

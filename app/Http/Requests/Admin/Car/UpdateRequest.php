@@ -33,6 +33,12 @@ class UpdateRequest extends FormRequest
             'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
             'description'  => ['nullable'],
             'car_model_id' => 'required',
+            'meta_title' => ['nullable', 'max:70'],
+            'meta_description' => ['nullable', 'max:160'],
+            'meta_keywords' => ['nullable', 'max:160'],
+            'og_title' => ['nullable', 'max:70'],
+            'og_description' => ['nullable', 'max:160'],
+            'og_url' => ['nullable', 'max:160']
         ];
     }
 
@@ -51,6 +57,12 @@ class UpdateRequest extends FormRequest
             'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
             'image_mob.max' => 'Размер изображения не должен превышать 200 Мбайт',
             'car_model_id.required' => 'Поле "Марка" обязательно для заполнения',
+            'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
+            'meta_description.max' => 'Поле meta_description не может быть больше 160 символов',
+            'meta_keywords.max' => 'Поле meta_keywords не может быть больше 160 символов',
+            'og_title.max' => 'Поле og_title не может быть больше 70 символов',
+            'og_description.max' => 'Поле og_description не может быть больше 160 символов',
+            'og_url.max' => 'Поле og_url не может быть больше 160 символов'
         ];
     }
 }

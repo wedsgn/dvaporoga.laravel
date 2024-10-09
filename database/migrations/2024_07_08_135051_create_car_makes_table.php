@@ -18,6 +18,15 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('image_mob')->nullable();
             $table->text('description');
+
+            $table->string('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->text('meta_keywords')->nullable();
+
+            $table->string('og_url')->nullable();
+            $table->string('og_title')->nullable();
+            $table->text('og_description')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

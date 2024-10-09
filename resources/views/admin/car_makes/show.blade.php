@@ -160,6 +160,48 @@
                     </div>
                 </div><!-- end card body -->
             </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-header align-items-center d-flex">{{ __('admin.title_seo') }}</h5>
+                <div class="table-responsive">
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+
+                            <tr>
+                                <th class="ps-0" scope="row">{{ __('admin.field_meta_title') }}:</th>
+                                <td class="text-muted">{{ $item->meta_title }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="ps-0" scope="row">{{ __('admin.field_meta_description') }}:</th>
+                                <td class="text-muted">{{ $item->meta_description }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="ps-0" scope="row">{{ __('admin.field_meta_keywords') }}:</th>
+                                <td class="text-muted">{{ $item->meta_keywords }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="ps-0" scope="row">{{ __('admin.field_og_title') }}:</th>
+                                <td class="text-muted">{{ $item->og_title }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="ps-0" scope="row">{{ __('admin.field_og_description') }}:</th>
+                                <td class="text-muted">{{ $item->og_description }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="ps-0" scope="row">{{ __('admin.field_og_url') }}:</th>
+                                <td class="text-muted">{{ $item->og_url }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- end card body -->
+        </div>
         </div>
     </div>
 @endsection

@@ -50,7 +50,7 @@
             <a href="{{ route('catalog') }}" class="header__link">Каталог</a>
             <a href="{{ route('blog') }}" class="header__link">Блог</a>
             <a href="{{ route('home') }}#about" class="header__link">О нас</a>
-            <a href="{{ route('home') }}#reviews" class="header__link">Отзывы</a>
+            {{-- <a href="{{ route('home') }}#reviews" class="header__link">Отзывы</a> --}}
         </nav>
 
 

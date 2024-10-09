@@ -4,21 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Transliterator;
 
-class CarMake extends Model
+class Page extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'title',
-        'slug',
-        'image',
-        'image_mob',
         'description',
+        'slug',
         'meta_title',
         'meta_description',
         'meta_keywords',
@@ -26,28 +21,19 @@ class CarMake extends Model
         'og_title',
         'og_description'
     ];
-    public static $car_makes_routes = [
-      'admin.car_makes.index',
-      'admin.car_makes.search',
-      'admin.car_makes.show',
-      'admin.car_makes.edit',
-      'admin.car_makes.create'
+
+    public static $pages_routes = [
+      'admin.pages.index',
+      'admin.pages.search',
+      'admin.pages.show',
+      'admin.pages.edit',
+      'admin.pages.create'
     ];
+
     public function getRouteKeyName()
     {
         return 'slug';
     }
-
-    public function orders()
-    {
-        return $this->belongsToMany(Order::class);
-    }
-
-    public function car_models()
-    {
-        return $this->hasMany(CarModel::class);
-    }
-
     public function scopeFilter($items)
     {
       if (request('search') !== null) {
@@ -76,17 +62,4 @@ class CarMake extends Model
     }
     return $items;
     }
-
-
-    // public function delete_files($item)
-    // {
-    //     if( $item->image):
-    //         $path_to_file = Str::remove(env('APP_URL') . '/storage', $item->image);
-    //         Storage::disk('public')->delete($path_to_file);
-    //     endif;
-    //     if( $item->image_mob):
-    //         $path_to_file = Str::remove(env('APP_URL') . '/storage', $item->image_mob);
-    //         Storage::disk('public')->delete($path_to_file);
-    //     endif;
-    // }
 }

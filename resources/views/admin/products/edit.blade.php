@@ -117,6 +117,52 @@
                                         placeholder="{{ __('admin.placeholder_text') }}" style="height: 234px;">{{ $item->description }}</textarea>
                                 </div>
                             </div>
+
+                            {{-- <div class="row gy-4">
+
+                              <div class="card-header align-items-center d-flex">
+                              </div>
+                                  <div class="col-xxl-6 col-md-6">
+                                    <h4 class="card-title mb-0 flex-grow-1">{{ __('admin.title_seo') }}</h4>
+                                      <div>
+                                          <label for="valueInput" class="form-label">{{ __('admin.field_meta_title') }}</label>
+                                          <input type="text" value="{{ $item->meta_title }}" class="form-control"
+                                              id="valueInput" name="meta_title"
+                                              placeholder="{{ __('admin.placeholder_text') }}">
+                                      </div>
+                                      <div>
+                                          <label for="valueInput" class="form-label">{{ __('admin.field_meta_keywords') }}</label>
+                                          <input type="text" value="{{ $item->meta_keywords }}" class="form-control"
+                                              id="valueInput" name="meta_keywords"
+                                              placeholder="{{ __('admin.placeholder_text') }}">
+                                      </div>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label class="form-label">{{ __('admin.field_meta_description') }}</label>
+                                      <textarea id="editor" class="form-control" name="meta_description" placeholder="{{ __('admin.placeholder_text') }}"
+                                          style="height: 234px;">{{ $item->meta_description }}</textarea>
+                                  </div>
+                                  <div class="col-xxl-6 col-md-6">
+                                      <div>
+                                          <label for="valueInput" class="form-label">{{ __('admin.field_og_url') }}</label>
+                                          <input type="text" value="{{ $item->og_url }}" class="form-control"
+                                              id="valueInput" name="og_url"
+                                              placeholder="{{ __('admin.placeholder_text') }}">
+                                      </div>
+                                      <div>
+                                          <label for="valueInput" class="form-label">{{ __('admin.field_og_title') }}/label>
+                                          <input type="text" value="{{ $item->og_title }}" class="form-control"
+                                              id="valueInput" name="og_title"
+                                              placeholder="{{ __('admin.placeholder_text') }}">
+                                      </div>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label class="form-label">{{ __('admin.field_og_description') }}</label>
+                                      <textarea id="editor" class="form-control" name="og_description"
+                                          placeholder="{{ __('admin.placeholder_text') }}" style="height: 234px;">{{ $item->og_description }}</textarea>
+                                  </div>
+                              </div> --}}
+
                             <button type="submit"
                                 class="btn btn-soft-success waves-effect waves-light mt-5 float-end">{{ __('admin.btn_save') }}</button>
                         </form>

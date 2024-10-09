@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CarModelController;
 use App\Http\Controllers\Admin\EditorImageUploadController;
 use App\Http\Controllers\Admin\ImportExelController;
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductFeaturesController;
 use App\Http\Controllers\Admin\RequestConsultationController;
@@ -52,6 +53,14 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
   Route::get('/import_products', [ImportExelController::class, 'import_products'])->name('import_products');
   Route::post('/import_cars_excel_file', [ImportExelController::class, 'store_cars'])->name('store_cars');
   Route::post('/import_products_excel_file', [ImportExelController::class, 'store_products'])->name('store_products');
+
+  Route::name('pages.')->prefix('pages')->group(function () {
+    Route::get('/', [PageController::class, 'index'])->name('index');
+    Route::get('/search',  [PageController::class, 'search'])->name('search');
+    Route::get('/{page_slug}', [PageController::class, 'show'])->name('show');
+    Route::get('/{page_slug}/edit', [PageController::class, 'edit'])->name('edit');
+    Route::patch('/{page_slug}', [PageController::class, 'update'])->name('update');
+  });
 
   Route::name('car_makes.')->prefix('car_makes')->group(function () {
     Route::get('/', [CarMakeController::class, 'index'])->name('index');

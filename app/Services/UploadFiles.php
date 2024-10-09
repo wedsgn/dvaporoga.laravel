@@ -26,6 +26,9 @@ class UploadFiles
     if ($request->is('*/blogs/*')) {
       $directory = 'uploads/blogs/' . $id_or_slug . '/images/';
     }
+    if ($request->is('*/update_info*')) {
+      $directory = 'uploads/main_infos/' . $id_or_slug . '/images/';
+    }
 
     $defaultImage = Image::read($data);
     $filename = Str::ulid() . '.webp';

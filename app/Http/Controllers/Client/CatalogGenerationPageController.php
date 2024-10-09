@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\CarMake;
+use App\Models\Page;
 use App\Models\Product;
 use Illuminate\Http\Request;
 

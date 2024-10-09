@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MainInfo\UpdateRequest;
 use App\Models\MainInfo;
 use Illuminate\Support\Facades\Auth;
 
-class MainController extends Controller
+class MainController extends BaseController
 {
     public function index()
     {
@@ -26,6 +25,9 @@ class MainController extends Controller
     {
         $main_info = MainInfo::whereId($main_info_id)->first();
         $data = $request->validated();
+        if ($request->hasFile('company_image')) {
+            $data['company_image'] = $this->upload_service->imageConvertAndStore($request, $data['company_image'], 'company_images');
+        }
 
         $main_info->update($data);
         return redirect()->route('admin.index')->with('status', 'main_info-updated');

@@ -4,6 +4,14 @@ return [
   'page_title' => 'Админ-панель',
   'aside_title_order' => 'Выбрать марки автомобилей на главной',
   'aside_title_orders' => 'Порядок вывода марок автомобилей',
+
+  //Titles Page
+  'new_page_card_title' => 'Новая страница',
+  'edit_page_card_title' => 'Изменить страницу',
+  'page_card_title' => 'Страница',
+  'page_card_info' => 'Информация о странице',
+  'aside_title_pages' => 'Страницы',
+
   //Titles menu
   'menu_title' => 'Меню',
   'company_info' => 'Общая информация',
@@ -170,6 +178,15 @@ return [
   'field_set' => 'Сет',
   'field_title_type' => 'Тип',
   'field_title_size' => 'Размер',
+  'field_company_image' => 'Изображение компании',
+  'field_current_company_image' => 'Текущее изображение компании',
+  'title_seo' => 'SEO',
+  'field_meta_title' => 'Заголовок(meta)',
+  'field_meta_description' => 'Описание(meta)',
+  'field_meta_keywords' => 'Ключевые слова(meta)',
+  'field_og_title' => 'Заголовок(OG)',
+  'field_og_description' => 'Описание(OG)',
+  'field_og_url' => 'URL(OG)',
   //Btns
   'btn_menu' => 'Меню',
   'btn_logout' => 'Выйти',

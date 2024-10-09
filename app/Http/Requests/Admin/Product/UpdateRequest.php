@@ -28,7 +28,13 @@ class UpdateRequest extends FormRequest
       'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
       'description'  => ['nullable'],
       'cars' => 'nullable|array',
-      'cars.*' => 'nullable|string|exists:cars,title'
+      'cars.*' => 'nullable|string|exists:cars,title',
+      // 'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
+      // 'meta_description.max' => 'Поле meta_description не может быть больше 160 символов',
+      // 'meta_keywords.max' => 'Поле meta_keywords не может быть больше 160 символов',
+      // 'og_title.max' => 'Поле og_title не может быть больше 70 символов',
+      // 'og_description.max' => 'Поле og_description не может быть больше 160 символов',
+      // 'og_url.max' => 'Поле og_url не может быть больше 160 символов'
     ];
   }
 
@@ -46,6 +52,12 @@ class UpdateRequest extends FormRequest
       'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
       'image_mob.max' => 'Размер изображения (мобильная) не должен превышать 200 Мбайт',
       'cars.*.exists' => 'Машина с таким названием не существует',
+      // 'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
+      // 'meta_description.max' => 'Поле meta_description не может быть больше 160 символов',
+      // 'meta_keywords.max' => 'Поле meta_keywords не может быть больше 160 символов',
+      // 'og_title.max' => 'Поле og_title не может быть больше 70 символов',
+      // 'og_description.max' => 'Поле og_description не может быть больше 160 символов',
+      // 'og_url.max' => 'Поле og_url не может быть больше 160 символов'
     ];
   }
 }

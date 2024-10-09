@@ -27,6 +27,12 @@ class StoreRequest extends FormRequest
             'description_short'  => ['required'],
             'image' => ['nullable', 'image', 'max:200000', 'mimes:jpeg,png,jpg,gif,svg'],
             'image_mob' => ['nullable', 'image', 'max:200000', 'mimes:jpeg,png,jpg,gif,svg'],
+            'meta_title' => ['nullable', 'max:70'],
+            'meta_description' => ['nullable', 'max:160'],
+            'meta_keywords' => ['nullable', 'max:160'],
+            'og_title' => ['nullable', 'max:70'],
+            'og_description' => ['nullable', 'max:160'],
+            'og_url' => ['nullable', 'max:160']
         ];
     }
 
@@ -49,6 +55,12 @@ class StoreRequest extends FormRequest
             'image_mob.image' => 'Изображение (мобильная) должно быть файлом изображения',
             'image.mimes' => 'Формат изображения не поддерживается',
             'image_mob.mimes' => 'Формат изображения (мобильная) не поддерживается',
+            'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
+            'meta_description.max' => 'Поле meta_description не может быть больше 160 символов',
+            'meta_keywords.max' => 'Поле meta_keywords не может быть больше 160 символов',
+            'og_title.max' => 'Поле og_title не может быть больше 70 символов',
+            'og_description.max' => 'Поле og_description не может быть больше 160 символов',
+            'og_url.max' => 'Поле og_url не может быть больше 160 символов'
         ];
     }
 }

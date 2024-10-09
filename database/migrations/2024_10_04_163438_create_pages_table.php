@@ -11,19 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+
+            $table->string('title_admin');
             $table->string('slug');
-            $table->string('generation')->nullable();
-            $table->string('years')->nullable();
-            $table->string('body')->nullable();
-            $table->string('top')->nullable();
-            $table->string('artikul')->nullable();
-            $table->string('image')->nullable();
-            $table->string('image_mob')->nullable();
+            $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignId('car_model_id')->constrained('car_models')->cascadeOnDelete();
 
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
@@ -33,7 +27,6 @@ return new class extends Migration
             $table->string('og_title')->nullable();
             $table->text('og_description')->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -43,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('pages');
     }
 };
