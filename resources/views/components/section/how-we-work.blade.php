@@ -38,7 +38,7 @@
                         <a href="{{ $main_info->telegram }}" target="_blank">
                             <img src="{{ asset('images/logos/tg.svg') }}" alt="Телеграм логотип" />
                         </a>
-                        <a href="{{ $main_info->whatsapp }}" target="_blank">
+                        <a href="{{ $main_info->whats_app }}" target="_blank">
                             <img src="{{ asset('images/logos/wa.svg') }}" alt="Whatsapp логотип" />
                         </a>
 

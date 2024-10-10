@@ -24,7 +24,7 @@
                 <a href="{{ $main_info->telegram }}" target="_blank" class="social-link">
                     <img src="{{ asset('images/logos/tg.svg') }}" alt="Логотип телеграм" />
                 </a>
-                <a href="{{ $main_info->whatsapp }}" target="_blank" class="social-link">
+                <a href="{{ $main_info->whats_app }}" target="_blank" class="social-link">
                     <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип ватсап" />
                 </a>
 
@@ -61,11 +61,11 @@
                     <span>Беспланый звонок по РФ</span>
                 </div>
                 <div class="mobile-nav__bottom-socials">
-                    <a href="/" target="_blank" class="social-link">
+                    <a href="{{ $main_info->telegram }}" target="_blank" class="social-link">
                         <img src="{{ asset('images/logos/tg.svg') }}" alt="Логотип телеграм" />
                     </a>
-                    <a href="/" target="_blank" class="social-link">
-                        <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип телеграм" />
+                    <a href="{{ $main_info->whats_app }}" target="_blank" class="social-link">
+                        <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип ватсап" />
                     </a>
                 </div>
             </div>
