@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\CarMake;
 use App\Models\CarModel;
+use App\Models\MainInfo;
 use App\Models\Page;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -26,8 +27,8 @@ class CatalogConcernPageController extends Controller
     $car_models = $car_make->car_models;
     $car_make_id = $car_make->id;
     $car_make_title = $car_make->title;
-
-    return view('catalog_models', compact('car_make', 'car_models', 'car_make_id', 'car_make_title'));
+    $page = $car_make;
+    return view('catalog_models', compact('car_make', 'car_models', 'car_make_id', 'car_make_title', 'page'));
   }
 
   public function search(Request $request)

@@ -4,15 +4,15 @@
     <link rel="icon" href="{{ asset('images/favicon/favicon.ico') }}" type="image/x-icon" />
     <link rel="icon" href="href="{{ asset('images/favicon/icon.svg') }} type="image/svg+xml" />
     <link rel="apple-touch-icon" href="{{ asset('images/favicon/apple.png') }}" />
-    {{-- <title>{{$meta_title}}</title>
-    <meta name="description" content="{{$meta_description}}">
+    <title>{{$page->meta_title}}</title>
+    <meta name="description" content="{{$page->meta_description}}">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="{{$og_title}}">
-    <meta property="og:description" content="{{$og_description}}">
-    <meta property="og:url" content="{{$og_url}}">
-    <meta property="og:site_name" content="{{$company_title}}">
-    <meta property="og:image" content="{{$company_image}}"> --}}
+    <meta property="og:title" content="{{$page->og_title}}">
+    <meta property="og:description" content="{{$page->og_description}}">
+    <meta property="og:url" content="{{$page->og_url}}">
+    <meta property="og:site_name" content="{{$main_info->company_title}}">
+    <meta property="og:image" content="{{$main_info->company_image}}">
     <meta name="yandex-verification" content="d134887cc07e929d" />
     <meta name="google-site-verification" content="D-rV3CqHjnyPJfkgP5TR3xLeMlrPQ4rhlJ_J8jR07CQ" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

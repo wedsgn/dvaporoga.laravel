@@ -14,7 +14,7 @@ class CatalogProductPageController extends Controller
     $car_make = CarMake::where('slug', $car_make_slug)->firstOrFail();
     $car_model = $car_make->car_models()->where('slug', $model_slug)->firstOrFail();
     $cars = $car_model->cars()->where('slug', $slug)->firstOrFail();
-
+    $page = $cars;
     $products = $cars->products;
     return view('catalog_products', compact('products'));
   }
