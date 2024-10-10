@@ -34,7 +34,7 @@
                         нами любым удобным способом.
                     </p>
 
-                    <div class="how-we-work__socials">8 800 100 56 25
+                    <div class="how-we-work__socials">
                         <a href="{{ $main_info->telegram }}" target="_blank">
                             <img src="{{ asset('images/logos/tg.svg') }}" alt="Телеграм логотип" />
                         </a>
