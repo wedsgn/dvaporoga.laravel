@@ -26,10 +26,10 @@ class DatabaseSeeder extends Seeder
     $main_info = [
       [
         'company_title' => 'Два Порога',
-        'company_details' => 'Тут надо указать реквизиты компании (ИНН, ОГРН, Адрес)',
-        'phone' => '8 800 560 12 12',
-        'whats_app' => 'whats_app',
-        'telegram' => 'telegram'
+        'company_details' => 'ООО "АРТ ГРУПП" 192082, Россия, г. Санкт-Петербург, ул.Туристская, д.23 к.2 ИНН 7814593546 ОГРН/ОГРНИП 1137847459936',
+        'phone' => '8 800 100 56 25',
+        'whats_app' => 'https://wa.me/qr/Z7QXMOM35J45E1',
+        'telegram' => 'https://t.me/dvaporoga'
       ],
     ];
 
