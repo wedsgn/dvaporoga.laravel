@@ -57,7 +57,7 @@
         <div class="mobile-nav__bottom">
             <div class="mobile-nav__bottom-contacts">
                 <div class="header__phone">
-                    <a href="tel:88001005625">8 800 100 56 25</a>
+                    <a href="tel:{{ $main_info->phone }}">{{ $main_info->phone }}</a>
                     <span>Беспланый звонок по РФ</span>
                 </div>
                 <div class="mobile-nav__bottom-socials">
