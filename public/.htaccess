@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # Redirect www.dvaporoga.ru to dvaporoga.ru
+    RewriteCond %{HTTP_HOST} ^www\.dvaporoga\.ru [NC]
+    RewriteRule ^(.*)$ https://dvaporoga.ru/$1 [R=301,L]
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

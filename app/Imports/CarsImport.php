@@ -74,14 +74,14 @@ class CarsImport implements ToCollection
             'body' => (preg_match('/\((.+)\)/', $row[2], $match) ? trim($match[1]) : null),
             'top' => null,
             'artikul' => null,
-            'description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова автомобиля ' . trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[5]) . '.
+            'description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова автомобиля ' . trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[5]) . ' ' . trim($row[3]) . '.
                В данном разделе Вы можете ознакомится с колесными арками, внутренними элементами арок для сварки новых элементов, кузовными порогами и усилителями к ним.',
             'car_model_id' => CarModel::whereSlug($slug_car_model)->first()->id,
-            'meta_title' => 'Купить ремонтные детали для ' . trim($row[1]) . ' ' . $title_car_model . '.',
-            'meta_description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова ' . trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[5]) . '.',
+            'meta_title' => 'Купить ремонтные детали для ' . trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[3]) . '.',
+            'meta_description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова ' . trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[5]) . ' ' . trim($row[3]) . '.',
             'meta_keywords' => '',
-            'og_title' => 'Купить ремонтные детали для ' . trim($row[1]) . ' ' . $title_car_model . '.',
-            'og_description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова ' . trim($row[1]) . ' ' . $title_car_model . '.',
+            'og_title' => 'Купить ремонтные детали для ' . trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[3]) . '.',
+            'og_description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова ' . trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[3]) . '.',
             'og_url' => 'https://dvaporoga.ru/katalog/'. Str::slug(trim($row[1])) . '/' . $slug_car_model . '/' . Str::slug(trim($row[1]) . ' ' . $title_car_model . ' ' . trim($row[5]) . ' ' . trim($row[3])),
           ]);
 
