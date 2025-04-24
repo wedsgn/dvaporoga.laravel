@@ -2,7 +2,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="{{ asset('images/favicon/favicon.ico') }}" type="image/x-icon" />
-    <link rel="icon" href="href="{{ asset('images/favicon/icon.svg') }} type="image/svg+xml" />
+    <link rel="icon" href="{{ asset('images/favicon/mstile-144x144.png') }}" type="image/png" />
     <link rel="apple-touch-icon" href="{{ asset('images/favicon/apple.png') }}" />
     @if (!isset($page))
         <title>404 - Page not found</title>
@@ -10,6 +10,7 @@
     @else
         <title>{{$page->meta_title}}</title>
         <meta name="description" content="{{$page->meta_description}}">
+        <meta name="keywords" content="{{$page->meta_keywords}}">
         <meta property="og:locale" content="ru_RU">
         <meta property="og:type" content="article">
         <meta property="og:title" content="{{$page->og_title}}">
@@ -22,7 +23,7 @@
     <meta name="google-site-verification" content="D-rV3CqHjnyPJfkgP5TR3xLeMlrPQ4rhlJ_J8jR07CQ" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
+    <link rel="canonical" href="{{ url()->current() }}" />
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m, e, t, r, i, k, a) {

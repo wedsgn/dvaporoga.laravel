@@ -60,13 +60,13 @@
                     <a href="{{ route('admin.edit_info', $main_info->id) }}" class="btn btn-soft-success addMembers-modal">
                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>{{ __('admin.btn_edit_company_info') }}
                     </a>
-                    <a href="{{ route('admin.import_cars') }}"class="btn btn-primary btn-label right">
+                    <!-- <a href="{{ route('admin.import_cars') }}"class="btn btn-primary btn-label right">
                         <i class="ri-roadster-fill label-icon align-middle fs-16 ms-2"></i> {{ __('admin.btn_load_cars') }}
                     </a>
                     <a href="{{ route('admin.import_products') }}" class="btn btn-primary btn-label right">
                         <i class="ri-hammer-line label-icon align-middle fs-16 ms-2"></i>
                         {{ __('admin.btn_load_products') }}
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>

@@ -20,14 +20,17 @@
                     <a href="tel:{{ $main_info->phone }}">{{ $main_info->phone }}</a>
                     <span>Беспланый звонок по РФ</span>
                 </div>
-
+                @if (!empty($main_info->telegram))
                 <a href="{{ $main_info->telegram }}" target="_blank" class="social-link">
                     <img src="{{ asset('images/logos/tg.svg') }}" alt="Логотип телеграм" />
                 </a>
+                @endif
+
+                @if (!empty($main_info->whats_app))
                 <a href="{{ $main_info->whats_app }}" target="_blank" class="social-link">
                     <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип ватсап" />
                 </a>
-
+                @endif
                 <button class="btn header-consultation-btn" data-micromodal-trigger="modal-1">
                     Консультация
                 </button>
@@ -61,12 +64,17 @@
                     <span>Беспланый звонок по РФ</span>
                 </div>
                 <div class="mobile-nav__bottom-socials">
+                @if (!empty($main_info->telegram))
                     <a href="{{ $main_info->telegram }}" target="_blank" class="social-link">
                         <img src="{{ asset('images/logos/tg.svg') }}" alt="Логотип телеграм" />
                     </a>
+                @endif
+
+                @if (!empty($main_info->whats_app))
                     <a href="{{ $main_info->whats_app }}" target="_blank" class="social-link">
                         <img src="{{ asset('images/logos/wa.svg') }}" alt="Логотип ватсап" />
                     </a>
+                @endif
                 </div>
             </div>
 

@@ -16,13 +16,17 @@
                     </nav>
 
                     <div class="footer-socials">
+                    @if (!empty($main_info->telegram))
                         <a href="{{ $main_info->telegram }}" class="footer-social" target="_blank">
                             <img src="/images/logos/tg.svg" alt="" />
                         </a>
+                    @endif
 
-                        <a href="{{ $main_info->whatsapp }}" class="footer-social" target="_blank">
+                    @if (!empty($main_info->whats_app))
+                        <a href="{{ $main_info->whats_app }}" class="footer-social" target="_blank">
                             <img src="/images/logos/wa.svg" alt="" />
                         </a>
+                    @endif
                         <a href="tel:{{ $main_info->phone }}" class="footer-phone">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 stroke="#1E1E1E" fill="none">
@@ -54,7 +58,7 @@
 
                 <p class="copyright footer-copyright">
                     Отправляя форму вы соглашаетесь <br />
-                    с нашей <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">политикой
+                    с нашей <a href="/policy.pdf" target="_blank">политикой
                         конфиденциальности</a>
                 </p>
             </div>
@@ -63,7 +67,7 @@
         <div class="footer-bottom">
             <div class="footer-bottom__top">
                 <div class="footer-bottom__policies">
-                    <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">Политика
+                    <a href="/policy.pdf" target="_blank">Политика
                         конфиденциальности</a>
                 </div>
 

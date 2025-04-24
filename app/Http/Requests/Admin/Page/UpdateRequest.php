@@ -23,14 +23,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'max:70', Rule::unique('pages')->ignore($this->old_title, 'title')],
+            'title' => ['required', 'max:140', Rule::unique('pages')->ignore($this->old_title, 'title')],
             'description'  => ['nullable'],
-            'meta_title' => ['nullable', 'max:70'],
-            'meta_description' => ['nullable', 'max:160'],
-            'meta_keywords' => ['nullable', 'max:160'],
-            'og_title' => ['nullable', 'max:70'],
-            'og_description' => ['nullable', 'max:160'],
-            'og_url' => ['nullable', 'max:160']
+            'meta_title' => ['nullable', 'max:140'],
+            'meta_description' => ['nullable', 'max:280'],
+            'meta_keywords' => ['nullable'],
+            'og_title' => ['nullable', 'max:140'],
+            'og_description' => ['nullable', 'max:280'],
+            'og_url' => ['nullable', 'max:280']
         ];
     }
 
@@ -43,15 +43,14 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title.required' => 'Поле заголовок не может быть пустым',
-            'title.max' => 'Поле заголовок не может быть больше 70 символов',
+            'title.max' => 'Поле заголовок не может быть больше 140 символов',
             'title.unique' => 'Поле заголовок должно быть уникальным',
             'description.required' => 'Поле описание не может быть пустым',
-            'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
-            'meta_description.max' => 'Поле meta_description не может быть больше 160 символов',
-            'meta_keywords.max' => 'Поле meta_keywords не может быть больше 160 символов',
-            'og_title.max' => 'Поле og_title не может быть больше 70 символов',
-            'og_description.max' => 'Поле og_description не может быть больше 160 символов',
-            'og_url.max' => 'Поле og_url не может быть больше 160 символов'
+            'meta_title.max' => 'Поле meta_title не может быть больше 140 символов',
+            'meta_description.max' => 'Поле meta_description не может быть больше 280 символов',
+            'og_title.max' => 'Поле og_title не может быть больше 140 символов',
+            'og_description.max' => 'Поле og_description не может быть больше 280 символов',
+            'og_url.max' => 'Поле og_url не может быть больше 280 символов'
         ];
     }
 }

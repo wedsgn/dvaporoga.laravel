@@ -12,7 +12,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use App\Models\CarModel;
 class DatabaseSeeder extends Seeder
 {
   /**
@@ -100,29 +100,53 @@ class DatabaseSeeder extends Seeder
     // ]);
 
 
-    // User::factory()->create([
-    //   'name' => 'Anton',
-    //   'password' => Hash::make('sYn7Dj0lff'),
-    //   'email' => 'a.rodionov14@gmail.com',
-    // ]);
+    User::factory()->create([
+      'name' => 'Admin',
+      'password' => Hash::make('Sp67edFAhum92qq34'),
+      'email' => 'info@avtoporogi.ru',
+    ]);
 
     // $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
     //   $blog->description_short = Str::words($blog->description, 15);
     //   $blog->description = Str::words(implode(' ', array_fill(0, 100, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, quidem.')), 100);
     //   $blog->save();
     // });
-    Car::all()->chunk(1413)->each(function ($cars) {
-      foreach ($cars as $car) {
-        dd('Купить ремонтные детали для ' . trim($car->title) . '.');
-        $car->update([
-          'meta_title' => 'КупитьF ремонтные детали для ' . trim($car->title) . '.',
-          'meta_description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова ' . trim($car->title) . '.',
-          'meta_keywords' => 'кузовные детали, интернет-магазин, купить, заказать, цены, каталог, ' . trim($car->title),
-          'og_title' => 'Купить ремонтные детали для ' . trim($car->title) . '.',
-          'og_description' => 'Ремкомплекты для осуществления необходимого ремонта в поврежденных коррозией или авариями частей кузова ' . trim($car->title) . '.',
-          'og_url' => 'https://dvaporoga.ru/katalog/'. Str::slug(trim($car->car_model->car_make->title)) . '/' . $car->car_model->slug . '/' . Str::slug(trim($car->title)),
-        ]);
-      }
-    });
+    // Car::all()->chunk(1413)->each(function ($cars) {
+    //   foreach ($cars as $car) {
+    //     $car->update([
+    //       'meta_title' => 'Каталог запчастей для кузовного ремонта ' . trim($car->title) . ' | Два порога',
+    //       'meta_description' => 'Кузовные запчасти для автомобиля ' . trim($car->title) . ': ремонтные арки, пороги, лонжероны, усилители и другие детали. Высокое качество, низкие цены, доставка по России.',
+    //       'meta_keywords' => 'запчасти для автомобилей ' . $car->car_model->car_make->title . ', арки ' . $car->car_model->car_make->title . ' ' . $car->car_model->title . ', пороги ' . $car->car_model->car_make->title . ' ' . $car->car_model->title . ', лонжероны ' . $car->car_model->car_make->title . ' ' . $car->car_model->title . ', усилители порогов ' . $car->car_model->car_make->title . ' ' . $car->car_model->title . ', детали кузова ' . $car->car_model->car_make->title . ' ' . $car->car_model->title . ', автозапчасти ' . $car->car_model->car_make->title . ' ' . $car->car_model->title . ', пороги для ' . $car->car_model->car_make->title . ', арки для ' . $car->car_model->car_make->title . ', автозапчасти с доставкой по России, запчасти для кузова ' . $car->car_model->car_make->title . ', автомобильные детали ' . $car->car_model->car_make->title . '',
+    //       'og_title' => 'Каталог запчастей для кузовного ремонта ' . trim($car->title) . ' | Два порога',
+    //       'og_description' => 'Кузовные запчасти для автомобиля ' . trim($car->title) . ': арки, пороги, лонжероны, усилители и другие детали. Высокое качество, низкие цены, доставка по России.',
+    //       'og_url' => 'https://dvaporoga.ru/katalog/'. Str::slug(trim($car->car_model->car_make->title)) . '/' . $car->car_model->slug . '/' . Str::slug(trim($car->title)),
+    //     ]);
+    //   }
+    // });
+    // CarMake::all()->chunk(62)->each(function ($car_makes) {
+    //   foreach ($car_makes as $car_make) {
+    //     $car_make->update([
+    //       'meta_title' => 'Каталог запчастей для кузовного ремонта ' . trim($car_make->title) . ' | Два порога',
+    //       'meta_description' => 'Кузовные запчасти для автомобилей ' . trim($car_make->title) . ': ремонтные арки, пороги, лонжероны и другие кузовные детали. Высокое качество, доступные цены, доставка по всей России.',
+    //       'meta_keywords' => 'кузовные запчасти для автомобилей ' . trim($car_make->title) . ', ремонтные арки для ' . trim($car_make->title) . ', пороги для ' . trim($car_make->title) . ', лонжероны для ' . trim($car_make->title) . ', кузовные детали для ' . trim($car_make->title) . ', автозапчасти для кузова ' . trim($car_make->title) . ', кузовной ремонт ' . trim($car_make->title) . ', кузовные запчасти с доставкой, ремонт кузова автомобиля ' . trim($car_make->title) . ', арки для автомобиля, пороги для автомобиля, лонжероны для автомобиля, авто детали кузова, запчасти для кузова с доставкой по России, кузовные арки и пороги, кузовной ремонт арки и пороги',
+    //       'og_title' => 'Каталог запчастей для кузовного ремонта ' . trim($car_make->title) . ' | Два порога',
+    //       'og_description' => 'Кузовные запчасти для автомобилей ' . trim($car_make->title) . ': арки, пороги, лонжероны и другие кузовные детали. Высокое качество, доступные цены, доставка по всей России.',
+    //       'og_url' => 'https://dvaporoga.ru/katalog/' . $car_make->slug,
+    //     ]);
+    //   }
+    // });
+    
+    // CarModel::all()->chunk(611)->each(function ($car_models) {
+    //   foreach ($car_models as $car_model) {
+    //     $car_model->update([
+    //       'meta_title' => 'Каталог запчастей для кузовного ремонта ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ' | Два порога',
+    //       'meta_description' => 'Кузовные запчасти для автомобилей ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ': ремонтные арки, пороги, лонжероны и другие кузовные детали. Высокое качество, доступные цены, доставка по всей России.',
+    //       'meta_keywords' => 'кузовные запчасти для автомобилей ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', ремонтные арки для ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', пороги для ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', лонжероны для ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', кузовные детали для ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', автозапчасти для кузова ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', кузовной ремонт ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', кузовные запчасти с доставкой, ремонт кузова автомобиля ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ', арки для автомобиля, пороги для автомобиля, лонжероны для автомобиля, авто детали кузова, запчасти для кузова с доставкой по России, кузовные арки и пороги, кузовной ремонт арки и пороги',
+    //       'og_title' => 'Каталог запчастей для кузовного ремонта ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ' | Два порога',
+    //       'og_description' => 'Кузовные запчасти для автомобилей ' . trim($car_model->car_make->title) . ' ' . trim($car_model->title) . ': арки, пороги, лонжероны и другие кузовные детали. Высокое качество, доступные цены, доставка по всей России.',
+    //       'og_url' => 'https://dvaporoga.ru/katalog/' . $car_model->car_make->slug . '/' . $car_model->slug,
+    //     ]);
+    //   }
+    // });
   }
 }

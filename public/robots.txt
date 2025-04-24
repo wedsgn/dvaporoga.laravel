@@ -7,5 +7,9 @@ Disallow: */page/
 Disallow: /admin
 Disallow: /private
 Disallow: /*print=
+Disallow: /katalog/*/telegram
 Allow: /public
 Sitemap: https://dvaporoga.ru/sitemap.xml
+
+User-agent: YandexBot
+Clean-param: utm_source&utm_medium&utm_campaign&etext&yadiscount

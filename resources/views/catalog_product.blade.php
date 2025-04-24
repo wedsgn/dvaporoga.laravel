@@ -9,7 +9,7 @@
             <div class="container">
                 <div class="product-page-top">
                     <h1 class="h1 product-page__title">
-                        Ремонтные пороги и арки для <br>{{ $car->title }}
+                        Каталог кузовных запчастей для автомобилей <br>{{ $car->title }}
                     </h1>
                     <p class="product-page__description">
                         {{ $car->description }}
