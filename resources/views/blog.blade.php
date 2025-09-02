@@ -32,8 +32,6 @@
             </div>
         </section>
 
-
-
         <section class="blog-cards-catalog">
             <div class="container" id="blogCatalog">
                 <div class="blog-cards__wrap">
