@@ -38,5 +38,11 @@ return [
         'bot_url' => env('TELEGRAM_BOT_URL'),
         'token' => env('TELEGRAM_BOT_TOKEN'),
     ],
+
+    'bitrix24' => [
+        'webhook' => env('BITRIX24_WEBHOOK'),
+        'source_id' => env('BITRIX24_SOURCE_ID'),
+        'responsible_id' => env('BITRIX24_RESPONSIBLE_ID'),
+    ],
 ];
 

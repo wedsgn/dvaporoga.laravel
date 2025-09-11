@@ -17,12 +17,13 @@
                             <span>5 минут</span> и ответим на все вопросы.
                         </p>
 
-                        <form class="index-hero-form" id="indexHeroForm">
+                        <form class="index-hero-form" data-action="{{ route('request_consultation.store') }}">
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" required />
                             <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
                             <input type="hidden" name="form_id" value="Форма на главной странице">
-                            <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
+
+                            <button class="btn lg index-hero-form-submit" type="submit">Отправить</button>
 
                             <p class="copyright">
                                 Нажимая кнопку “Отправить” вы соглашаетесь с нашей
@@ -30,39 +31,6 @@
                                     конфиденциальности </a>
                             </p>
                         </form>
-
-                        <script>
-                            const form = document.querySelector('#indexHeroForm');
-                            const submitButton = document.querySelector('#indexHeroFormSubmit');
-
-                            form.addEventListener('submit', async function(event) {
-                                event.preventDefault();
-                                const formData = new FormData(form);
-
-                                try {
-                                    const response = await fetch("{{ route('request_consultation.store') }}", {
-                                        method: 'POST',
-                                        body: formData
-                                    });
-
-                                    if (response.ok) {
-                                        form.reset();
-                                        MicroModal.close('modal-1');
-                                        MicroModal.show('modal-2');
-
-                                        setTimeout(() => {
-                                            MicroModal.close('modal-2');
-                                        }, 3000);
-                                    } else {
-                                        throw new Error('Ошибка отправки');
-                                    }
-                                } catch (error) {
-                                    alert(error.message);
-                                } finally {
-                                    submitButton.disabled = false;
-                                }
-                            });
-                        </script>
 
                     </div>
 

@@ -46,15 +46,15 @@
                     консультацию
                 </h3>
 
-                <form class="footer-form">
+                <form class="footer-form" data-action="{{ route('request_consultation.store') }}">
                     @csrf
-                    <input type="tel" class="footer-form-input" required placeholder="+7 (___) ___ __ __"
-                        name="phone" />
+                    <input type="tel" class="footer-form-input" required placeholder="+7 (___) ___ __ __" name="phone" />
                     <input type="hidden" name="form_id" value="Форма в подвале">
                     <button type="submit" class="footer-form-btn footer-form-submit">
                         <img src="/images/icons/form-arrow.svg" alt="Отправить" />
                     </button>
                 </form>
+
 
                 <p class="copyright footer-copyright">
                     Отправляя форму вы соглашаетесь <br />
@@ -85,7 +85,7 @@
                 </div>
 
 
-                <div class="">
+                {{-- <div class="">
                     <a href="https://kometa.team/?utm_source=maked-sites&utm_medium=banner&utm_campaign=dva-poroga&utm_content={ad_id}&utm_term={keyword}"
                         target="_blank">
                         <svg width="152" height="13" viewBox="0 0 152 13" fill="none"
@@ -141,38 +141,9 @@
                                 fill="#DA4D4D" />
                         </svg>
                     </a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
 </footer>
 
-<script>
-    const formFooter = document.querySelector('.footer-form');
-
-    formFooter.addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const formData = new FormData(formFooter);
-
-        try {
-            const response = await fetch("{{ route('request_consultation.store') }}", {
-                method: 'POST',
-                body: formData
-            });
-
-            if (response.ok) {
-                formFooter.reset();
-                MicroModal.close('modal-1');
-                MicroModal.show('modal-2');
-
-                setTimeout(() => {
-                    MicroModal.close('modal-2');
-                }, 3000);
-            } else {
-                throw new Error('Ошибка отправки');
-            }
-        } catch (error) {
-            alert(error.message);
-        }
-    });
-</script>

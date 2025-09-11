@@ -13,95 +13,53 @@
     @include('parts.footer')
 
 
-    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
-                    <p class="modal__description">Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
+<!-- МОДАЛКА ФОРМЫ -->
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+  <div class="modal__overlay" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true"
+         aria-labelledby="modal-1-title" aria-describedby="modal-1-desc" tabindex="-1">
+      <header class="modal__header">
+        <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
+        <p class="modal__description" id="modal-1-desc">
+          Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
+        </p>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
 
-                <form class="modal-form">
-                    @csrf
-                    <input type="text" placeholder="Имя" class="input" name="name" required />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-                    <input type="hidden" name="form_id" value="Форма в шапке">
-
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank"> политикой
-                            конфиденциальности
-                        </a>
-                    </p>
-                </form>
-
-            </div>
-        </div>
+      <form class="modal-form" data-action="{{ route('request_consultation.store') }}">
+        @csrf
+        <input type="text" placeholder="Имя" class="input" name="name" required />
+        <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
+        <input type="hidden" name="form_id" value="Форма в шапке">
+        <button class="btn lg submit-modal" type="submit">Отправить</button>
+        <p class="copyright">
+          Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+          <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">политикой конфиденциальности</a>
+        </p>
+      </form>
     </div>
+  </div>
+</div>
 
-    <div class="modal modal-success micromodal-slide" id="modal-2" aria-hidden="true">
-        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-1-title">Заявка успешно отправлена</h2>
-                    <p class="modal__description">Мы свяжемся с вами в течение 7 минут <br> и ответим на все вопросы</p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
-            </div>
-        </div>
+<!-- МОДАЛКА "СПАСИБО" -->
+<div class="modal modal-success micromodal-slide" id="modal-2" aria-hidden="true">
+  <div class="modal__overlay" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true"
+         aria-labelledby="modal-2-title" aria-describedby="modal-2-desc" tabindex="-1">
+      <header class="modal__header">
+        <h2 class="modal__title" id="modal-2-title">Заявка успешно отправлена</h2>
+        <p class="modal__description" id="modal-2-desc">
+          Мы свяжемся с вами в течение 7 минут <br> и ответим на все вопросы
+        </p>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
     </div>
+  </div>
+</div>
 
-    <script>
-        const forms = document.querySelectorAll('.modal-form');
-
-
-        forms.forEach(form => {
-            const submitButton = form.querySelector('.submit-modal');
-
-            form.addEventListener('submit', async function(event) {
-                event.preventDefault();
-                const formData = new FormData(form);
-                try {
-                    const response = await fetch("{{ route('request_consultation.store') }}", {
-                        method: 'POST',
-                        body: formData,
-
-                    });
-
-                    if (response.ok) {
-                        form.reset();
-                        MicroModal.close('modal-1');
-                        MicroModal.show('modal-2');
-
-                        setTimeout(() => {
-                            MicroModal.close('modal-2');
-                        }, 3000);
-                    } else {
-                        throw new Error('Ошибка отправки');
-                    }
-                } catch (error) {
-                    alert(error.message);
-                } finally {
-                    submitButton.disabled = false;
-                }
-            });
-        })
-    </script>
-    {{--
-    <script>
-        document.querySelectorAll('.product-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const productId = button.getAttribute('data-product-id');
-                document.getElementById('productIdInput').value = productId;
-                microModal.show('modal-1');
-            });
-        });
-    </script> --}}
 
 </body>
-
+<script src="{{ asset('/js/forms-ajax.js') }}"></script>
+<script defer src="{{ asset('js/products-section.js') }}"></script>
+<script src="{{ asset('/js/product_calc.js') }}"></script>
 </html>

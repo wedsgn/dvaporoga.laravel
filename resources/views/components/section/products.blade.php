@@ -21,35 +21,5 @@
             @endforeach
         </div>
 
-
-        <script>
-            const products = document.querySelectorAll(".product");
-
-            products.forEach((product) => {
-                const form = product.querySelector(".modal-form-product");
-                form.addEventListener("submit", async function(event) {
-                    event.preventDefault();
-                    const form = event.target;
-                    const formData = new FormData(form);
-
-                    const response = await fetch(
-                        "{{ route('request_product_section.store') }}", {
-                            method: "POST",
-                            body: formData,
-                        }
-                    );
-
-                    if (response.ok) {
-                        form.reset();
-                        MicroModal.show("modal-2");
-                        setTimeout(() => {
-                            MicroModal.close("modal-2");
-                        }, 3000);
-                    } else {
-                        throw new Error("Ошибка отправки");
-                    }
-                });
-            });
-        </script>
     </div>
 </section>

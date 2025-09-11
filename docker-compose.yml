@@ -3,9 +3,9 @@ networks:
           driver: bridge
 
 services:
-    nginx:
+    nginxV1:
         image: nginx:latest
-        container_name: nginx
+        container_name: nginxV1
         restart: unless-stopped
         tty: true
         ports:
@@ -13,7 +13,7 @@ services:
             - "443:443"
         volumes:
             - .:/var/www/dvaporoga
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./nginx/localhost.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - dvaporoga
             - postgres_dvaporoga

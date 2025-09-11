@@ -12,26 +12,26 @@
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
                     <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
-                    <p class="modal__description">Мы свяжемся с вами в течение 5-nb минут <br> и ответим на все вопросы
+                    <p class="modal__description">Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
                     </p>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
-                <form class="modal-form-product">
-                    @csrf
-                    <input type="hidden" name="product_id" id="productIdInput" value="{{ $part->id }}" />
-                    <input type="hidden" name="product_price" id="productPriceInput" value="" />
-                    <input type="hidden" name="price_id" id="productPriceId" value="" />
-                    <input type="text" placeholder="Имя" class="input" name="name" required />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-                    <input type="hidden" name="form_id" value="Форма с карточки товара">
-
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="" download=""> политикой конфиденциальности </a>
-                    </p>
-                </form>
+<form class="modal-form-product"
+      action="{{ route('request_product_section.store') }}"
+      method="POST">
+    @csrf
+    <input type="hidden" name="product_id" id="productIdInput" value="{{ $part->id }}" />
+    <input type="hidden" name="product_price" id="productPriceInput" value="" />
+    <input type="hidden" name="price_id" id="productPriceId" value="" />
+    <input type="text" placeholder="Имя" class="input" name="name" required />
+    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
+    <input type="hidden" name="form_id" value="Форма с карточки товара">
+    <button class="btn lg submit-modal" type="submit">Отправить</button>
+    <p class="copyright">
+        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+        <a href="" download="">политикой конфиденциальности</a>
+    </p>
+</form>
 
             </div>
         </div>

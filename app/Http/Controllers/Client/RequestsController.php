@@ -63,6 +63,7 @@ class RequestsController extends Controller
     $request_product->form_id = $request->validated()['form_id'];
     $request_product->save();
     $this->send_request_product($request_product);
+    return response()->json(['message' => 'Request created successfully'], 201);
   }
 
   protected function send_request_consultation($request_consultation)
@@ -73,10 +74,9 @@ class RequestsController extends Controller
       'phone' => $request_consultation->phone,
       'form' => $request_consultation->form_id
     ];
-
     $request_consultation->notify(new TelegramNotificationConsultation($details));
-    //ДЛЯ ОТПРАВКИ СООБЩЕНИЙ НУЖНО УСТАНОВИТЬ Supervisor НА СЕРВЕР ЧТОБЫ РАБОТАЛИ ОЧЕРЕДИ PasswordResetMailSendJob
-    dispatch(new RequestConsultationMailSendJob($details));
+    // //ДЛЯ ОТПРАВКИ СООБЩЕНИЙ НУЖНО УСТАНОВИТЬ Supervisor НА СЕРВЕР ЧТОБЫ РАБОТАЛИ ОЧЕРЕДИ PasswordResetMailSendJob
+    // dispatch(new RequestConsultationMailSendJob($details));
   }
   protected function send_request_product($request_product) {
     $products = [];
@@ -95,6 +95,6 @@ class RequestsController extends Controller
 
     $request_product->notify(new TelegramNotificationProduct($details));
     //ДЛЯ ОТПРАВКИ СООБЩЕНИЙ НУЖНО УСТАНОВИТЬ Supervisor НА СЕРВЕР ЧТОБЫ РАБОТАЛИ ОЧЕРЕДИ PasswordResetMailSendJob
-    dispatch(new RequestProductMailSendJob($details));
+    // dispatch(new RequestProductMailSendJob($details));
   }
 }
