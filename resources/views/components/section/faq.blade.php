@@ -10,12 +10,12 @@
             <div class="faq-left">
                 <p class="faq-description">
                     Если не нашли ответ на нужный вопрос
-                    <a href="javascript:void(0)" data-micromodal-trigger="modal-1">оставьте заявку</a> или свяжитесь с
+                    <a href="javascript:void(0)" data-micromodal-trigger="modal-faq">оставьте заявку</a> или свяжитесь с
                     нами. Мы с
                     удовольствием расскажем все подробнее и проконсультируем вас.
                 </p>
 
-                <button class="btn" data-micromodal-trigger="modal-1">Получить консультацию</button>
+                <button class="btn" data-micromodal-trigger="modal-faq">Получить консультацию</button>
             </div>
 
             <!-- Right -->

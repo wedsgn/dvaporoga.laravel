@@ -153,7 +153,7 @@
                             <input type="hidden" class="product-form__array" name="data" value="">
                             <input type="hidden" name="car"
                                 value="{{ $car_make->title }} {{ $car_model->title }} {{ $car->years }}">
-                            <input type="hidden" name="form_id" value="Форма каталога">
+                            <input type="hidden" name="form_id" value="cart-form-catalog-product">
 
                             <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
 

@@ -19,9 +19,9 @@
 
                         <form class="index-hero-form" data-action="{{ route('request_consultation.store') }}">
                             @csrf
-                            <input type="text" placeholder="Имя" class="input" name="name" required />
-                            <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-                            <input type="hidden" name="form_id" value="Форма на главной странице">
+                            <input type="text" placeholder="Имя" class="input" name="name" />
+                            <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone"/>
+                            <input type="hidden" name="form_id" value="index-hero-form">
 
                             <button class="btn lg index-hero-form-submit" type="submit">Отправить</button>
 

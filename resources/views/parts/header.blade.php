@@ -61,7 +61,7 @@
             <div class="mobile-nav__bottom-contacts">
                 <div class="header__phone">
                     <a href="tel:{{ $main_info->phone }}">{{ $main_info->phone }}</a>
-                    <span>Беспланый звонок по РФ</span>
+                    <span>Бесплатный звонок по РФ</span>
                 </div>
                 <div class="mobile-nav__bottom-socials">
                 @if (!empty($main_info->telegram))

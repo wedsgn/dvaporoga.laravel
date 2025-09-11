@@ -1,7 +1,10 @@
 (() => {
   'use strict';
 
-  // --- helpers ---
+  // ===== helpers =====
+  const q  = (sel, root=document) => root.querySelector(sel);
+  const qa = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
   const getUrl = (form) =>
     (form.getAttribute('data-action') || form.getAttribute('action') || '').trim();
 
@@ -22,14 +25,17 @@
     if (!had) tgt.removeAttribute('tabindex');
   };
 
-  // синхронизация маски одного input
+  const unlockScrollIfStuck = () => {
+    document.body.classList.remove('micromodal-open', 'modal-open', 'is-open');
+    document.body.style.removeProperty('overflow');
+    document.documentElement.style.removeProperty('overflow');
+  };
+
   const syncMaskInput = (input) => {
     if (!input) return;
-    // iMask
     if (input._imask && typeof input._imask.updateValue === 'function') {
       try { input._imask.updateValue(); return; } catch {}
     }
-    // Inputmask
     if (input.inputmask) {
       try {
         if (typeof input.inputmask.refreshValue === 'function') input.inputmask.refreshValue();
@@ -39,16 +45,13 @@
     }
   };
 
-  // синхронизация масок всех полей формы (после reset/автозаполнения)
   const syncMasks = (form) => {
-    form.querySelectorAll('input[type="tel"], [data-mask], .js-mask').forEach((inp) => {
+    qa('input[type="tel"], [data-mask], .js-mask', form).forEach((inp) => {
       syncMaskInput(inp);
-      // на крайний случай дёрнем событие
       inp.dispatchEvent(new Event('input', { bubbles: true }));
     });
   };
 
-  // закрыть модал, в котором находится форма
   const closeFormModalIfAny = (form) => {
     const modal = form.closest('.modal');
     if (!modal) return;
@@ -58,18 +61,10 @@
     else modal.setAttribute('aria-hidden', 'true');
   };
 
-  // разблокировать скролл, если библиотека вдруг оставила блокировку
-  const unlockScrollIfStuck = () => {
-    document.body.classList.remove('micromodal-open', 'modal-open', 'is-open');
-    document.body.style.removeProperty('overflow');
-    document.documentElement.style.removeProperty('overflow');
-  };
-
   let thanksTimer = null;
   const openThanks = () => {
     if (window.MicroModal?.show) {
       try { MicroModal.show('modal-2'); } catch {}
-      // автозакрытие через 5 секунд
       if (thanksTimer) clearTimeout(thanksTimer);
       thanksTimer = setTimeout(() => {
         const m2 = document.getElementById('modal-2');
@@ -81,7 +76,82 @@
     }
   };
 
-  // --- отправка формы карточки товара ---
+  // ===== ошибки формы =====
+  const ensureErrorBox = (input) => {
+    let box = input.nextElementSibling;
+    if (!(box && box.classList && box.classList.contains('field-error'))) {
+      box = document.createElement('div');
+      box.className = 'field-error';
+      input.insertAdjacentElement('afterend', box);
+    }
+    if (!box.id) {
+      const base = input.id || input.name || 'field';
+      box.id = `${base}-error`;
+    }
+    return box;
+  };
+
+  const clearErrors = (form) => {
+    qa('.field-error', form).forEach(n => { n.textContent = ''; });
+    qa('.input.is-invalid, input.is-invalid, select.is-invalid, textarea.is-invalid', form)
+      .forEach(el => { el.classList.remove('is-invalid'); el.removeAttribute('aria-invalid'); });
+    qa('[data-added-describedby]', form).forEach(el => {
+      const orig = el.getAttribute('data-added-describedby');
+      if (orig) el.setAttribute('aria-describedby', orig);
+      else el.removeAttribute('aria-describedby');
+      el.removeAttribute('data-added-describedby');
+    });
+  };
+
+  const showFieldError = (form, field, message) => {
+    const input = q(`[name="${CSS.escape(field)}"]`, form);
+    if (!input) return false;
+    input.classList.add('is-invalid');
+    input.setAttribute('aria-invalid', 'true');
+    const box = ensureErrorBox(input);
+    box.textContent = message || 'Поле заполнено некорректно';
+    const prev = input.getAttribute('aria-describedby');
+    if (prev) input.setAttribute('data-added-describedby', prev);
+    input.setAttribute('aria-describedby', box.id);
+    return true;
+  };
+
+  const focusFirstInvalid = (form) => {
+    const invalid = q('.is-invalid', form);
+    if (invalid) { try { invalid.focus({ preventScroll: false }); } catch {} }
+  };
+
+  // ===== отправка =====
+  const setSubmitting = (form, on) => {
+    const btn = q('button[type="submit"], .submit-modal', form);
+    if (btn) {
+      btn.disabled = !!on;
+      btn.classList.toggle('is-loading', !!on);
+      if (on) btn.setAttribute('aria-busy', 'true'); else btn.removeAttribute('aria-busy');
+    }
+    form.dataset.submitting = on ? '1' : '';
+  };
+
+  const handleResponseErrors = async (form, res) => {
+    let payload = null;
+    try { payload = await res.clone().json(); } catch {}
+    if (res.status === 422 && payload && payload.errors && typeof payload.errors === 'object') {
+      clearErrors(form);
+      Object.keys(payload.errors).forEach((field) => {
+        const msg = Array.isArray(payload.errors[field]) ? payload.errors[field][0] : (payload.errors[field] || '');
+        showFieldError(form, field, msg);
+      });
+      focusFirstInvalid(form);
+      return;
+    }
+    if (res.status === 419 || res.status === 401) {
+      alert('Сессия истекла. Обновите страницу и попробуйте снова.');
+      return;
+    }
+    const msg = (payload && (payload.message || payload.error)) || `Ошибка (${res.status})`;
+    alert(msg);
+  };
+
   const onSubmit = async (e) => {
     const form = e.target instanceof HTMLFormElement ? e.target : null;
     if (!form || !form.matches('.modal-form-product')) return;
@@ -89,11 +159,16 @@
     e.preventDefault();
     e.stopPropagation();
 
+    if (form.dataset.submitting === '1') return;
+
     const url  = getUrl(form);
-    if (!url) { console.error('[product-forms] Нет action/data-action'); return; }
+    if (!url) return;
 
     const fd   = new FormData(form);
     const csrf = getCsrf(form);
+
+    clearErrors(form);
+    setSubmitting(form, true);
 
     try {
       const res = await fetch(url, {
@@ -108,33 +183,22 @@
       });
 
       if (res.ok) {
-        // сбросить поля и синхронизировать маски
         form.reset();
         syncMasks(form);
-
-        // закрыть модал с формой
         closeFormModalIfAny(form);
-
-        // безопасно перевести фокус и показать «спасибо»
         moveFocusToPage();
         setTimeout(openThanks, 0);
       } else {
-        let msg = 'Ошибка отправки';
-        try { msg = (await res.json())?.message || msg; } catch {}
-        alert(msg);
+        await handleResponseErrors(form, res);
       }
     } catch (err) {
-      console.error('[product-forms] network error:', err);
       alert('Сеть недоступна или сервер не ответил.');
+    } finally {
+      setSubmitting(form, false);
     }
   };
 
-  // делегированный перехват submit (в capture, чтобы не ушёл обычный сабмит)
-  const attachSubmit = () => {
-    document.addEventListener('submit', onSubmit, true);
-  };
-
-  // синхронизируем маску при автозаполнении/фокусе/клике
+  // ===== улучшатели =====
   const attachMaskGuards = () => {
     const handler = (e) => {
       const t = e.target;
@@ -148,7 +212,6 @@
     document.addEventListener('keydown', handler, true);
   };
 
-  // когда пользователь закрывает модал по крестику/оверлею — снять фокус, разблокировать скролл
   const attachModalCloseFix = () => {
     document.addEventListener('click', (e) => {
       const t = e.target;
@@ -156,7 +219,6 @@
       if (t.hasAttribute('data-micromodal-close')) {
         const modal = t.closest('.modal');
         if (modal) blurIfInside(modal);
-        // если это «спасибо», подчистим блокировки
         if (modal && modal.id === 'modal-2') {
           setTimeout(unlockScrollIfStuck, 0);
         }
@@ -164,16 +226,16 @@
     }, true);
   };
 
-  // init
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      attachSubmit();
-      attachMaskGuards();
-      attachModalCloseFix();
-    }, { once: true });
-  } else {
-    attachSubmit();
+  // ===== init =====
+  const init = () => {
+    document.addEventListener('submit', onSubmit, true);
     attachMaskGuards();
     attachModalCloseFix();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
   }
 })();
