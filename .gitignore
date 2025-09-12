@@ -19,3 +19,8 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# local dumps
+*.dump
+dvaporoga_*.dump
+.local/
