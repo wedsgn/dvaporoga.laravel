@@ -50,6 +50,11 @@
                     @csrf
                     <input type="tel" class="footer-form-input" placeholder="+7 (___) ___ __ __" name="phone" />
                     <input type="hidden" name="form_id" value="footer-form" />
+                    <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+                    <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+                    <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+                    <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+                    <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
                     <button type="submit" class="footer-form-btn footer-form-submit">
                         <img src="/images/icons/form-arrow.svg" alt="Отправить" />
                     </button>

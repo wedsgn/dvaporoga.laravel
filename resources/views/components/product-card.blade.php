@@ -24,6 +24,11 @@
                     <input type="text" placeholder="Имя" class="input" name="name" />
                     <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
                     <input type="hidden" name="form_id" value="modal-form-product {{ $part->slug }}">
+                    <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+                    <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+                    <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+                    <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+                    <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
                     <p class="copyright">
                         Нажимая кнопку “Отправить” вы соглашаетесь с нашей

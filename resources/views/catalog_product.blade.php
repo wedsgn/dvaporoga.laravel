@@ -154,7 +154,11 @@
                             <input type="hidden" name="car"
                                 value="{{ $car_make->title }} {{ $car_model->title }} {{ $car->years }}">
                             <input type="hidden" name="form_id" value="cart-form-catalog-product">
-
+                            <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+                            <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+                            <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+                            <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+                            <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
                             <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
 
                             <p class="copyright">

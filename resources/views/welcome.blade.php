@@ -16,13 +16,16 @@
                             Оставьте заявку, мы свяжемся с вами в течении
                             <span>5 минут</span> и ответим на все вопросы.
                         </p>
-
                         <form class="index-hero-form" data-action="{{ route('request_consultation.store') }}">
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" />
                             <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone"/>
                             <input type="hidden" name="form_id" value="index-hero-form">
-
+                            <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+                            <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+                            <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+                            <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+                            <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
                             <button class="btn lg index-hero-form-submit" type="submit">Отправить</button>
 
                             <p class="copyright">

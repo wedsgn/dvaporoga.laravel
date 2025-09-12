@@ -5,6 +5,7 @@ namespace App\Http\Requests\Client\RequestConsultation;
 use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Validation\Rule;
+
 class StoreRequest extends FormRequest
 {
   public function authorize(): bool
@@ -52,12 +53,17 @@ class StoreRequest extends FormRequest
         'string',
         'min:2',
         'max:70',
-        Rule::requiredIf(fn () => $this->input('form_id') !== 'footer-form'),
+        Rule::requiredIf(fn() => $this->input('form_id') !== 'footer-form'),
 
       ],
 
       'phone'   => ['bail', 'required', 'string', 'regex:/^\+7\d{10}$/'],
       'form_id' => ['required', 'string', 'max:100'],
+      'utm_source'   => ['nullable', 'string', 'max:100'],
+      'utm_medium'   => ['nullable', 'string', 'max:100'],
+      'utm_campaign' => ['nullable', 'string', 'max:100'],
+      'utm_term'     => ['nullable', 'string', 'max:100'],
+      'utm_content'  => ['nullable', 'string', 'max:100'],
     ];
   }
 
