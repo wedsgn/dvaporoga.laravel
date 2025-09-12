@@ -203,7 +203,7 @@ class RequestsController extends Controller
       'form'    => $rc->form_id,
     ];
     $rc->notify(new TelegramNotificationConsultation($details));
-    // dispatch(new RequestConsultationMailSendJob($details));
+    dispatch(new RequestConsultationMailSendJob($details));
   }
 
   protected function send_request_product($rp)
@@ -222,7 +222,7 @@ class RequestsController extends Controller
       'form'        => $rp->form_id,
     ];
     $rp->notify(new TelegramNotificationProduct($details));
-    // dispatch(new RequestProductMailSendJob($details));
+    dispatch(new RequestProductMailSendJob($details));
   }
 
   /** Разные заголовки лида по form_id */
