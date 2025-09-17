@@ -12,29 +12,34 @@ use Illuminate\Support\Facades\Mail;
 
 class RequestConsultationMailSendJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+  use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var array
-     */
-    protected $details;
+  /**
+   * @var array
+   */
+  protected $details;
 
-    /**
-     * Create a new job instance.
-     *
-     * @param array $details
-     */
-    public function __construct(array $details)
-    {
-        $this->details = $details;
+  /**
+   * Create a new job instance.
+   *
+   * @param array $details
+   */
+  public function __construct(array $details)
+  {
+    $this->details = $details;
+  }
+
+  /**
+   * Execute the job.
+   */
+  public function handle(): void
+  {
+    $to = config('mail.to.address');
+    if (empty($to)) {
+      \Log::error('MAIL_TO_ADDRESS is empty in config.');
+      return;
     }
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
-    {
-        Mail::to(env('MAIL_TO_ADDRESS'))
-            ->queue(new RequestConsultationMail($this->details));
-    }
+    Mail::to($to)->queue(new RequestConsultationMail($this->details));
+  }
 }

@@ -27,7 +27,7 @@ class RequestProductMailSendJob implements ShouldQueue
    */
   public function __construct(array $details)
   {
-      $this->details = $details;
+    $this->details = $details;
   }
 
   /**
@@ -35,7 +35,12 @@ class RequestProductMailSendJob implements ShouldQueue
    */
   public function handle(): void
   {
-      Mail::to(env('MAIL_TO_ADDRESS'))
-          ->queue(new RequestProductMail($this->details));
+    $to = config('mail.to.address');
+    if (empty($to)) {
+      \Log::error('MAIL_TO_ADDRESS is empty in config.');
+      return;
+    }
+
+    Mail::to($to)->queue(new RequestProductMail($this->details));
   }
 }
