@@ -39,8 +39,8 @@ class AppServiceProvider extends ServiceProvider
             'request_products_routes' => RequestProduct::$request_products_routes,
             'pages_routes' => Page::$pages_routes,
 
-            //MainInfo
+           // MainInfo
             'main_info' => MainInfo::first(),
-        ]);
+     ]);
     }
 }
