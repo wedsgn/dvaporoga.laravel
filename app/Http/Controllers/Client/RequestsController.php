@@ -202,8 +202,8 @@ class RequestsController extends Controller
       'phone'   => $rc->phone,
       'form'    => $rc->form_id,
     ];
-    $rc->notify(new TelegramNotificationConsultation($details));
-    dispatch(new RequestConsultationMailSendJob($details));
+    // $rc->notify(new TelegramNotificationConsultation($details));
+    // dispatch(new RequestConsultationMailSendJob($details));
   }
 
   protected function send_request_product($rp)
@@ -221,8 +221,8 @@ class RequestsController extends Controller
       'car'         => $rp->car,
       'form'        => $rp->form_id,
     ];
-    $rp->notify(new TelegramNotificationProduct($details));
-    dispatch(new RequestProductMailSendJob($details));
+    // $rp->notify(new TelegramNotificationProduct($details));
+    // dispatch(new RequestProductMailSendJob($details));
   }
 
   /** Разные заголовки лида по form_id */
@@ -272,7 +272,7 @@ class RequestsController extends Controller
 
     $ref = (string) $request->headers->get('referer', '');
     if ($ref === '') {
-      $utm['utm_source'] = 'direct';
+      $utm['utm_source'] = 'none';
       $utm['utm_medium'] = 'none';
       return $utm;
     }
@@ -289,11 +289,11 @@ class RequestsController extends Controller
         $utm['utm_source'] = 'bing';
         $utm['utm_medium'] = 'organic';
       } else {
-        $utm['utm_source'] = $host ?: 'direct';
-        $utm['utm_medium'] = $host ? 'referral' : 'none';
+        $utm['utm_source'] = 'none';
+        $utm['utm_medium'] = 'none';
       }
     } catch (\Throwable $e) {
-      $utm['utm_source'] = 'direct';
+      $utm['utm_source'] = 'none';
       $utm['utm_medium'] = 'none';
     }
 

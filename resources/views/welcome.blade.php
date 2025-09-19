@@ -16,6 +16,7 @@
                             Оставьте заявку, мы свяжемся с вами в течении
                             <span>5 минут</span> и ответим на все вопросы.
                         </p>
+
                         <form class="index-hero-form" data-action="{{ route('request_consultation.store') }}">
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" />

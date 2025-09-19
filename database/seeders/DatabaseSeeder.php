@@ -135,7 +135,7 @@ class DatabaseSeeder extends Seeder
     //     ]);
     //   }
     // });
-    
+
     // CarModel::all()->chunk(611)->each(function ($car_models) {
     //   foreach ($car_models as $car_model) {
     //     $car_model->update([
