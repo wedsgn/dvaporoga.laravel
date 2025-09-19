@@ -35,7 +35,7 @@ class RequestsController extends Controller
     // → Bitrix24
     try {
       $utm = $this->resolveUtm($request);
-      $title = $this->titleByFormId($rc->form_id, 'Заявка на консультацию');
+      $title = $this->titleByFormId($rc->form_id, 'Заявка на консультацию dvaporoga.ru');
 
       $res = $b24->addLead([
         'TITLE'   => $title,
@@ -96,7 +96,7 @@ class RequestsController extends Controller
         if ($p = Product::find($pid)) $items[] = "#{$p->id} {$p->title}";
       }
 
-      $title = $this->titleByFormId($rp->form_id, 'Заявка на детали');
+      $title = $this->titleByFormId($rp->form_id, 'Заявка на детали dvaporoga.ru');
 
       $res = $b24->addLead([
         'TITLE'   => $title,
@@ -156,7 +156,7 @@ class RequestsController extends Controller
       $utm = $this->resolveUtm($request);
 
       $p = Product::find($ids[0] ?? null);
-      $title = $this->titleByFormId($rp->form_id, 'Заявка из секции товара(Главная)');
+      $title = $this->titleByFormId($rp->form_id, 'Заявка из секции товара(Главная) dvaporoga.ru');
 
       $res = $b24->addLead([
         'TITLE'   => $title,
@@ -202,8 +202,8 @@ class RequestsController extends Controller
       'phone'   => $rc->phone,
       'form'    => $rc->form_id,
     ];
-    // $rc->notify(new TelegramNotificationConsultation($details));
-    // dispatch(new RequestConsultationMailSendJob($details));
+    $rc->notify(new TelegramNotificationConsultation($details));
+    dispatch(new RequestConsultationMailSendJob($details));
   }
 
   protected function send_request_product($rp)
@@ -221,8 +221,8 @@ class RequestsController extends Controller
       'car'         => $rp->car,
       'form'        => $rp->form_id,
     ];
-    // $rp->notify(new TelegramNotificationProduct($details));
-    // dispatch(new RequestProductMailSendJob($details));
+    $rp->notify(new TelegramNotificationProduct($details));
+    dispatch(new RequestProductMailSendJob($details));
   }
 
   /** Разные заголовки лида по form_id */
@@ -289,8 +289,6 @@ class RequestsController extends Controller
         $utm['utm_source'] = 'bing';
         $utm['utm_medium'] = 'organic';
       } else {
-        $utm['utm_source'] = 'none';
-        $utm['utm_medium'] = 'none';
       }
     } catch (\Throwable $e) {
       $utm['utm_source'] = 'none';
