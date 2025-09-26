@@ -161,7 +161,7 @@
         </section>
 
         <x-section.features />
-        <x-section.marks :items="$car_makes" />
+        {{-- <x-section.marks :items="$car_makes" /> --}}
         <x-section.products :items="$products" />
         {{-- <x-section.installing /> --}}
         <x-section.how-we-work />
