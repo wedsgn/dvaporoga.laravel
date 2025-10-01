@@ -38,39 +38,39 @@ class RequestsController extends Controller
 
         $this->send_request_consultation($rc, $title);
 
-        // try {
-        //     $utm = $this->resolveUtm($request);
+        try {
+            $utm = $this->resolveUtm($request);
 
-        //     $res = $b24->addLead([
-        //         'TITLE'   => $title,
-        //         'NAME'    => preg_replace('/[_\*]/', ' ', $rc->name),
-        //         'PHONE'   => $rc->phone,
-        //         'EMAIL'   => $rc->email ?? null,
-        //         'COMMENTS' => $this->comments([
-        //             'form_id'     => $rc->form_id,
-        //             'form_ru'     => $this->formLabelRu($rc->form_id),
-        //             'current_url' => $request->input('current_url'),
-        //             'ip'          => $request->ip(),
-        //         ]),
-        //         'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
+            $res = $b24->addLead([
+                'TITLE'   => $title,
+                'NAME'    => preg_replace('/[_\*]/', ' ', $rc->name),
+                'PHONE'   => $rc->phone,
+                'EMAIL'   => $rc->email ?? null,
+                'COMMENTS' => $this->comments([
+                    'form_id'     => $rc->form_id,
+                    'form_ru'     => $this->formLabelRu($rc->form_id),
+                    'current_url' => $request->input('current_url'),
+                    'ip'          => $request->ip(),
+                ]),
+                'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
 
-        //         'UTM_SOURCE'   => $utm['utm_source'],
-        //         'UTM_MEDIUM'   => $utm['utm_medium'],
-        //         'UTM_CAMPAIGN' => $utm['utm_campaign'],
-        //         'UTM_TERM'     => $utm['utm_term'],
-        //         'UTM_CONTENT'  => $utm['utm_content'],
-        //     ]);
+                'UTM_SOURCE'   => $utm['utm_source'],
+                'UTM_MEDIUM'   => $utm['utm_medium'],
+                'UTM_CAMPAIGN' => $utm['utm_campaign'],
+                'UTM_TERM'     => $utm['utm_term'],
+                'UTM_CONTENT'  => $utm['utm_content'],
+            ]);
 
-        //     Log::info('B24 response (consultation)', [
-        //         'status' => $res['status'] ?? null,
-        //         'body'   => $res['response'] ?? null,
-        //     ]);
-        //     if (!($res['ok'] ?? false)) {
-        //         Log::warning('B24 lead add failed (consultation)', $res);
-        //     }
-        // } catch (\Throwable $e) {
-        //     Log::error('B24 consult exception: ' . $e->getMessage());
-        // }
+            Log::info('B24 response (consultation)', [
+                'status' => $res['status'] ?? null,
+                'body'   => $res['response'] ?? null,
+            ]);
+            if (!($res['ok'] ?? false)) {
+                Log::warning('B24 lead add failed (consultation)', $res);
+            }
+        } catch (\Throwable $e) {
+            Log::error('B24 consult exception: ' . $e->getMessage());
+        }
 
         return response()->json(['message' => 'Request created successfully'], 201);
     }
@@ -95,49 +95,49 @@ class RequestsController extends Controller
 
         $this->send_request_product($rp, $title);
 
-        // try {
-        //     $utm = $this->resolveUtm($request);
+        try {
+            $utm = $this->resolveUtm($request);
 
-        //     $items = [];
-        //     foreach ($ids as $pid) {
-        //         if ($p = Product::find($pid)) $items[] = "#{$p->id} {$p->title}";
-        //     }
+            $items = [];
+            foreach ($ids as $pid) {
+                if ($p = Product::find($pid)) $items[] = "#{$p->id} {$p->title}";
+            }
 
-        //     $res = $b24->addLead([
-        //         'TITLE'   => $title,
-        //         'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
-        //         'PHONE'   => $rp->phone,
-        //         'EMAIL'   => $rp->email ?? null,
-        //         'COMMENTS' => $this->comments([
-        //             'form_id'     => $rp->form_id,
-        //             'form_ru'     => $this->formLabelRu($rp->form_id),
-        //             'current_url' => $request->input('current_url'),
-        //             'ip'          => $request->ip(),
-        //             'extra'       => [
-        //                 'Авто'   => $rp->car,
-        //                 'Итого'  => $rp->total_price,
-        //                 'Товары' => $items ? implode("\n", $items) : '—',
-        //             ],
-        //         ]),
-        //         'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
+            $res = $b24->addLead([
+                'TITLE'   => $title,
+                'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
+                'PHONE'   => $rp->phone,
+                'EMAIL'   => $rp->email ?? null,
+                'COMMENTS' => $this->comments([
+                    'form_id'     => $rp->form_id,
+                    'form_ru'     => $this->formLabelRu($rp->form_id),
+                    'current_url' => $request->input('current_url'),
+                    'ip'          => $request->ip(),
+                    'extra'       => [
+                        'Авто'   => $rp->car,
+                        'Итого'  => $rp->total_price,
+                        'Товары' => $items ? implode("\n", $items) : '—',
+                    ],
+                ]),
+                'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
 
-        //         'UTM_SOURCE'   => $utm['utm_source'],
-        //         'UTM_MEDIUM'   => $utm['utm_medium'],
-        //         'UTM_CAMPAIGN' => $utm['utm_campaign'],
-        //         'UTM_TERM'     => $utm['utm_term'],
-        //         'UTM_CONTENT'  => $utm['utm_content'],
-        //     ]);
+                'UTM_SOURCE'   => $utm['utm_source'],
+                'UTM_MEDIUM'   => $utm['utm_medium'],
+                'UTM_CAMPAIGN' => $utm['utm_campaign'],
+                'UTM_TERM'     => $utm['utm_term'],
+                'UTM_CONTENT'  => $utm['utm_content'],
+            ]);
 
-        //     Log::info('B24 response (product)', [
-        //         'status' => $res['status'] ?? null,
-        //         'body'   => $res['response'] ?? null,
-        //     ]);
-        //     if (!($res['ok'] ?? false)) {
-        //         Log::warning('B24 lead add failed (product)', $res);
-        //     }
-        // } catch (\Throwable $e) {
-        //     Log::error('B24 product exception: ' . $e->getMessage());
-        // }
+            Log::info('B24 response (product)', [
+                'status' => $res['status'] ?? null,
+                'body'   => $res['response'] ?? null,
+            ]);
+            if (!($res['ok'] ?? false)) {
+                Log::warning('B24 lead add failed (product)', $res);
+            }
+        } catch (\Throwable $e) {
+            Log::error('B24 product exception: ' . $e->getMessage());
+        }
 
         return response()->json(['message' => 'Request created successfully'], 201);
     }
@@ -162,47 +162,47 @@ class RequestsController extends Controller
 
         $this->send_request_product($rp, $title);
 
-        // try {
-        //     $utm = $this->resolveUtm($request);
+        try {
+            $utm = $this->resolveUtm($request);
 
-        //     $p = Product::find($ids[0] ?? null);
-        //     $prodLabel = $p ? ("#{$p->id} " . $this->shorten($p->title, 60)) : null;
+            $p = Product::find($ids[0] ?? null);
+            $prodLabel = $p ? ("#{$p->id} " . $this->shorten($p->title, 60)) : null;
 
-        //     $res = $b24->addLead([
-        //         'TITLE'   => $title,
-        //         'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
-        //         'PHONE'   => $rp->phone,
-        //         'EMAIL'   => $rp->email ?? null,
-        //         'COMMENTS' => $this->comments([
-        //             'form_id'     => $rp->form_id,
-        //             'form_ru'     => $this->formLabelRu($rp->form_id),
-        //             'current_url' => $request->input('current_url'),
-        //             'ip'          => $request->ip(),
-        //             'extra'       => [
-        //                 'Товар' => $p ? "#{$p->id} {$p->title}" : '—',
-        //                 'Цена'  => $rp->total_price,
-        //                 'Метка карточки' => $prodLabel,
-        //             ],
-        //         ]),
-        //         'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
+            $res = $b24->addLead([
+                'TITLE'   => $title,
+                'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
+                'PHONE'   => $rp->phone,
+                'EMAIL'   => $rp->email ?? null,
+                'COMMENTS' => $this->comments([
+                    'form_id'     => $rp->form_id,
+                    'form_ru'     => $this->formLabelRu($rp->form_id),
+                    'current_url' => $request->input('current_url'),
+                    'ip'          => $request->ip(),
+                    'extra'       => [
+                        'Товар' => $p ? "#{$p->id} {$p->title}" : '—',
+                        'Цена'  => $rp->total_price,
+                        'Метка карточки' => $prodLabel,
+                    ],
+                ]),
+                'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
 
-        //         'UTM_SOURCE'   => $utm['utm_source'],
-        //         'UTM_MEDIUM'   => $utm['utm_medium'],
-        //         'UTM_CAMPAIGN' => $utm['utm_campaign'],
-        //         'UTM_TERM'     => $utm['utm_term'],
-        //         'UTM_CONTENT'  => $utm['utm_content'],
-        //     ]);
+                'UTM_SOURCE'   => $utm['utm_source'],
+                'UTM_MEDIUM'   => $utm['utm_medium'],
+                'UTM_CAMPAIGN' => $utm['utm_campaign'],
+                'UTM_TERM'     => $utm['utm_term'],
+                'UTM_CONTENT'  => $utm['utm_content'],
+            ]);
 
-        //     Log::info('B24 response (section)', [
-        //         'status' => $res['status'] ?? null,
-        //         'body'   => $res['response'] ?? null,
-        //     ]);
-        //     if (!($res['ok'] ?? false)) {
-        //         Log::warning('B24 lead add failed (section)', $res);
-        //     }
-        // } catch (\Throwable $e) {
-        //     Log::error('B24 section exception: ' . $e->getMessage());
-        // }
+            Log::info('B24 response (section)', [
+                'status' => $res['status'] ?? null,
+                'body'   => $res['response'] ?? null,
+            ]);
+            if (!($res['ok'] ?? false)) {
+                Log::warning('B24 lead add failed (section)', $res);
+            }
+        } catch (\Throwable $e) {
+            Log::error('B24 section exception: ' . $e->getMessage());
+        }
 
         return response()->json(['message' => 'Request created successfully'], 201);
     }
