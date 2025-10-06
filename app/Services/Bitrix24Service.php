@@ -16,7 +16,7 @@ public function addLead(array $fields): array
             'NAME'               => $fields['NAME'] ?? null,
             'LAST_NAME'          => $fields['LAST_NAME'] ?? null,
             'COMMENTS'           => $fields['COMMENTS'] ?? null,
-            'SOURCE_ID'          => $fields['SOURCE_ID'] ?? (config('services.bitrix24.source_id') ?: 'WEB'),
+            'SOURCE_ID'          => $fields['SOURCE_ID'] ?? (config('services.bitrix24.source_id') ?: '26'),
             'SOURCE_DESCRIPTION' => $fields['SOURCE_DESCRIPTION'] ?? null,
             'ASSIGNED_BY_ID'     => $fields['ASSIGNED_BY_ID'] ?? config('services.bitrix24.responsible_id'),
             'PHONE'              => empty($fields['PHONE']) ? [] : [[ 'VALUE'=>$fields['PHONE'], 'VALUE_TYPE'=>'WORK' ]],

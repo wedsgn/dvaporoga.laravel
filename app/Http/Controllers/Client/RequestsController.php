@@ -46,13 +46,11 @@ class RequestsController extends Controller
                 'NAME'    => preg_replace('/[_\*]/', ' ', $rc->name),
                 'PHONE'   => $rc->phone,
                 'EMAIL'   => $rc->email ?? null,
-                'COMMENTS' => $this->comments([
+                'SOURCE_DESCRIPTION' => $this->comments([
                     'form_id'     => $rc->form_id,
                     'form_ru'     => $this->formLabelRu($rc->form_id),
                     'current_url' => $request->input('current_url'),
-                    'ip'          => $request->ip(),
                 ]),
-                'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
 
                 'UTM_SOURCE'   => $utm['utm_source'],
                 'UTM_MEDIUM'   => $utm['utm_medium'],
@@ -108,18 +106,16 @@ class RequestsController extends Controller
                 'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
                 'PHONE'   => $rp->phone,
                 'EMAIL'   => $rp->email ?? null,
-                'COMMENTS' => $this->comments([
+                'SOURCE_DESCRIPTION' => $this->comments([
                     'form_id'     => $rp->form_id,
                     'form_ru'     => $this->formLabelRu($rp->form_id),
                     'current_url' => $request->input('current_url'),
-                    'ip'          => $request->ip(),
                     'extra'       => [
                         'Авто'   => $rp->car,
                         'Итого'  => $rp->total_price,
                         'Товары' => $items ? implode("\n", $items) : '—',
                     ],
                 ]),
-                'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
 
                 'UTM_SOURCE'   => $utm['utm_source'],
                 'UTM_MEDIUM'   => $utm['utm_medium'],
@@ -173,18 +169,16 @@ class RequestsController extends Controller
                 'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
                 'PHONE'   => $rp->phone,
                 'EMAIL'   => $rp->email ?? null,
-                'COMMENTS' => $this->comments([
+                'SOURCE_DESCRIPTION' => $this->comments([
                     'form_id'     => $rp->form_id,
                     'form_ru'     => $this->formLabelRu($rp->form_id),
                     'current_url' => $request->input('current_url'),
-                    'ip'          => $request->ip(),
                     'extra'       => [
                         'Товар' => $p ? "#{$p->id} {$p->title}" : '—',
                         'Цена'  => $rp->total_price,
                         'Метка карточки' => $prodLabel,
                     ],
                 ]),
-                'SOURCE_DESCRIPTION' => $request->headers->get('referer'),
 
                 'UTM_SOURCE'   => $utm['utm_source'],
                 'UTM_MEDIUM'   => $utm['utm_medium'],
@@ -221,7 +215,7 @@ class RequestsController extends Controller
         // Telegram
         $rc->notify(new TelegramNotificationConsultation($details));
 
-        // // Mail (queue)
+         // Mail (queue)
         dispatch(new RequestConsultationMailSendJob($details));
     }
 
@@ -242,10 +236,10 @@ class RequestsController extends Controller
             'form'        => $this->formLabelRu($rp->form_id),
         ];
 
-        // Telegram
+        // // Telegram
         $rp->notify(new TelegramNotificationProduct($details));
 
-        // // Mail (queue)
+        // Mail (queue)
         dispatch(new RequestProductMailSendJob($details));
     }
 
