@@ -52,6 +52,9 @@
         <div><img src="https://mc.yandex.ru/watch/98296066" style="position:absolute; left:-9999px;" alt="" />
         </div>
     </noscript>
+    <!-- UIS -->
+    <script type="text/javascript" async src="https://app.uiscom.ru/static/cs.min.js?k=82NGqqgGe6LoP1GRRGMot38MQC4Sx2QW"></script>
+    <!-- UIS -->
     <!-- /Yandex.Metrika counter -->
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
