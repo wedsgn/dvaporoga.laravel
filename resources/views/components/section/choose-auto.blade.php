@@ -47,7 +47,14 @@
         </div>
 
         <button type="submit" class="btn black lg">Отправить заявку</button>
-        <div class="form-status" aria-live="polite"></div>
+        <div class="form-policy">
+          <input type="checkbox" id="choose-pol" checked required>
+          <label for="choose-pol">
+            Я соглашаюсь с <a href="{{ asset('policy.pdf') }}" target="_blank">политикой конфиденциальности</a> и даю
+            согласие на обработку
+            персональных
+            данных</label>
+        </div>
       </form>
 
     </div>
