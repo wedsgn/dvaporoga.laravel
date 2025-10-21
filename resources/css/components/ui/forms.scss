@@ -136,8 +136,6 @@
 @media screen and (max-width: 768px) {
   .input {
     border-radius: 8px;
-    border: none;
-    border: 1px solid $grayLight;
     margin: 0;
     padding: 12px 19px;
 
@@ -145,5 +143,9 @@
     &:focus {
       border: 1px solid $black;
     }
+  }
+
+  .modal__container .copyright {
+    text-align: left;
   }
 }

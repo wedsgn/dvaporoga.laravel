@@ -16,6 +16,11 @@ console.log(Swiper);
 MicroModal.init({
   disableScroll: true,
 });
+
+setTimeout(() => {
+  MicroModal.show("modal-3");
+}, 60000);
+
 window.addEventListener("load", () => {
   const selects = document.querySelectorAll(".js-choice");
   selects.forEach((item) => {

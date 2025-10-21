@@ -12,7 +12,7 @@
         удовольствием расскажем все подробнее и проконсультируем вас.
       </p>
 
-      <button class="btn" data-micromodal-trigger="modal-faq">Получить консультацию</button>
+      <button class="btn lg" data-micromodal-trigger="modal-faq">Получить консультацию</button>
     </div>
     <div class="faq-wrap">
       <!--  -->

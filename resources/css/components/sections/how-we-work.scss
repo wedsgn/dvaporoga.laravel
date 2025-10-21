@@ -239,6 +239,12 @@
 
   .how-we-work__top {
     gap: 8px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .how-we-work__title {
+    text-align: left;
   }
 
   .how-we-work__wrap {

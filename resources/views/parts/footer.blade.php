@@ -17,10 +17,15 @@
         <div class="footer-top__right">
           <div class="footer-socials">
 
-            <a href="#" target="_blank" class="footer-social"></a>
-            <a href="#" target="_blank" class="footer-social"></a>
-            <a href="#" target="_blank" class="footer-social"></a>
-            <a href="#" target="_blank" class="footer-social"></a>
+            <a href="https://t.me/+79812086415" target="_blank" class="footer-social">
+              <img src="{{ asset('images/socials/wa.svg') }}" alt="dvaporoga whatssup">
+            </a>
+            <a href="https://t.me/+79812086415" target="_blank" class="footer-social">
+              <img src="{{ asset('images/socials/tg.svg') }}" alt="dvaporoga telegram">
+            </a>
+            <a href="https://vk.com/avtoporogiru" target="_blank" class="footer-social">
+              <img src="{{ asset('images/socials/vk.svg') }}" alt="dvaporoga vk">
+            </a>
           </div>
           <div class="header__phone --footer">
             <div class="header__phone_top">

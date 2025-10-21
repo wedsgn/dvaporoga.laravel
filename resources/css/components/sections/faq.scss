@@ -85,7 +85,7 @@
 
   .faq-section {
     .h2 {
-      text-align: center;
+      text-align: left;
     }
   }
 
@@ -98,11 +98,12 @@
   }
 
   .faq-description {
-    text-align: center;
+    text-align: left;
+    max-width: none;
   }
   .faq-section__top {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
   }
 }
@@ -118,6 +119,12 @@
     margin-top: 16px;
     flex-direction: column;
     gap: 64px;
+  }
+
+  .faq-section__top {
+    .btn {
+      width: 100%;
+    }
   }
 
   .faq-description {
