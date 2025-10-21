@@ -8,16 +8,17 @@
     "devDependencies": {
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0",
+        "sass": "^1.93.2",
         "vite": "^5.0",
         "vite-plugin-sass-glob-import": "^3.0.2"
     },
     "dependencies": {
-        "choices.js": "^11.0.2",
+        "@fancyapps/ui": "^6.0.34",
+        "choices.js": "^11.1.0",
         "imask": "^7.6.1",
         "micromodal": "^0.4.10",
         "normalize.css": "^8.0.1",
         "sas": "^3.0.4",
-        "sass": "^1.77.6",
-        "swiper": "^11.1.4"
+        "swiper": "^11.2.10"
     }
 }

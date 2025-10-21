@@ -4,15 +4,39 @@ import { sliders } from "./modules/sliders";
 import { burger } from "./modules/burger";
 import { tabs } from "./modules/tabs";
 import MicroModal from "micromodal";
+// import Swiper bundle with all modules installed
+import Swiper from "swiper/bundle";
+import { Fancybox } from "@fancyapps/ui";
+import Choices from "choices.js";
+
+// import styles bundle
+
+console.log(Swiper);
 
 MicroModal.init({
   disableScroll: true,
 });
 window.addEventListener("load", () => {
+  const selects = document.querySelectorAll(".js-choice");
+  selects.forEach((item) => {
+    const choices = new Choices(item, {
+      loadingText: "Загрузка...",
+      noResultsText: "Ничего не найдено",
+      noChoicesText: "No choices to choose from",
+      itemSelectText: "",
+      uniqueItemText: "Only unique values can be added",
+      customAddItemText:
+        "Only values matching specific conditions can be added",
+    });
+  });
   accordition();
   sliders();
   burger();
   tabs();
+
+  Fancybox.bind("[data-fancybox]", {
+    // Your custom options
+  });
 
   var phones = document.querySelectorAll('input[type="tel"]');
   var maskOptions = {
@@ -86,4 +110,27 @@ window.addEventListener("load", () => {
     });
   }
   // Корзина
+
+  const swiper = new Swiper(".swiper", {
+    // Optional parameters
+    loop: true,
+    speed: 300,
+    spaceBetween: 32,
+
+    // If we need pagination
+    pagination: {
+      el: ".swiper-pagination",
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+      el: ".swiper-scrollbar",
+    },
+  });
 });

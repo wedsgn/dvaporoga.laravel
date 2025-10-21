@@ -15,11 +15,11 @@ class CatalogModelPageController extends Controller
 
     $car_model = $car_make->car_models()->where('slug', $slug)->firstOrFail();
     $generations = $car_model->cars()->orderBy('years')->get()->groupBy(function ($item, $key) {
-        return $item->generation;
+      return $item->generation;
     });
     $page = $car_model;
     $products = Product::latest()->get();
-    return view('catalog_generations', compact('generations','car_make', 'car_model','products', 'page'));
+    return view('catalog_generations', compact('generations', 'car_make', 'car_model', 'products', 'page'));
   }
 
   /**

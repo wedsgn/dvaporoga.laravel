@@ -16,7 +16,7 @@ body {
   font-size: 16px;
   height: 100%;
   line-height: 140%;
-  font-family: "Inter", sans-serif;
+  font-family: "Golos", sans-serif;
   font-weight: 400;
   position: relative;
   overflow-x: hidden;
@@ -76,7 +76,7 @@ button {
 }
 
 .section {
-  padding-top: 200px;
+  margin-top: 120px;
 }
 
 .slider-arrow {
@@ -104,18 +104,18 @@ button {
 
 @media screen and (max-width: 1440px) {
   .section {
-    padding-top: 140px;
+    margin-top: 100px;
   }
 }
 
 @media screen and (max-width: 1200px) {
   .section {
-    padding-top: 100px;
+    margin-top: 100px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .section {
-    padding-top: 80px;
+    margin-top: 80px;
   }
 }

@@ -1,0 +1,42 @@
+.choose-section {
+  margin-top: 40px;
+}
+
+.choose-section__descr {
+  margin-top: 8px;
+}
+
+select {
+}
+
+.choose-section__form {
+  margin-top: 24px;
+
+  button {
+    margin-top: 16px;
+    width: 100%;
+  }
+}
+.choose-section__form_row {
+  display: flex;
+  gap: 16px;
+
+  input,
+  select {
+    display: inline-block;
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid $gray;
+    line-height: 100%;
+    border-radius: 8px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .choose-section__form_row {
+    gap: 8px;
+  }
+  .choose-section__form_row {
+    flex-direction: column;
+  }
+}

@@ -1,7 +1,8 @@
 .h1 {
-  font-size: 52px;
-  font-weight: 900;
-  line-height: 110%;
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 100%;
+  font-family: "Gilroy", sans-serif;
 
   span {
     color: $red;
@@ -9,9 +10,11 @@
 }
 
 .h2 {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
   line-height: 110%;
+  font-family: "Gilroy", sans-serif;
+
   span {
     color: $red;
   }
@@ -35,6 +38,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .h1 {
+    font-size: 28px;
+  }
   .h2 {
     font-size: 24px;
   }
@@ -45,6 +51,6 @@
     br {
       display: none;
     }
-    font-size: 28px;
+    // font-size: 32px;вернул
   }
 }

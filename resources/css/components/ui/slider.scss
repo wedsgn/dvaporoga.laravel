@@ -1,0 +1,42 @@
+.slider-arrow {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid #e1e1e1;
+  background: #f9fbfa;
+  transition: all 0.3s ease-in-out;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    transition: all 0.3s ease-in-out;
+  }
+
+  &::after {
+    display: none;
+  }
+
+  &:hover {
+    background: $red;
+    color: #fff;
+    border: 1px solid $red;
+  }
+
+  svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: none !important;
+  }
+}
+
+.slider-arrow-prev {
+}
+.slider-arrow-next {
+}
+
+.swiper-pagination-bullet-active {
+  background: $red;
+}
