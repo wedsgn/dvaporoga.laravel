@@ -22,7 +22,7 @@
     </section>
 
 
-    <x-section.choose-auto :makes="$concern" />
+    <x-section.choose-auto :makes="$makesForForm" />
     <x-section.marquee />
     {{-- <x-section.features /> --}}
     <x-section.about-parts />

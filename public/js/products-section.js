@@ -1,241 +1,182 @@
-(() => {
-  'use strict';
+/* ===== 1) Марка → Модель (AJAX) ===== */
+(function chooseCarInit(){
+  var makeEl  = document.getElementById('choose-make');
+  var modelEl = document.getElementById('choose-model');
+  if (!makeEl || !modelEl) return;
 
-  // ===== helpers =====
-  const q  = (sel, root=document) => root.querySelector(sel);
-  const qa = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  var route = modelEl.dataset.modelsUrl; // из data-models-url
+  if (!route) { console.warn('[choose-car] route empty'); return; }
 
-  const getUrl = (form) =>
-    (form.getAttribute('data-action') || form.getAttribute('action') || '').trim();
+  function ensureChoices(el){
+    if (!window.Choices) return null;
+    if (el.choices && typeof el.choices.setChoices === 'function') return el.choices;
+    return new Choices(el, { shouldSort:false, searchEnabled:true, placeholder:true, itemSelectText:'' });
+  }
 
-  const getCsrf = (form) =>
-    form.querySelector('input[name="_token"]')?.value ||
-    document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+  function destroyModelChoices(){
+    try { if (modelEl.choices && typeof modelEl.choices.destroy === 'function') modelEl.choices.destroy(); } catch(e){}
+    var wrap = modelEl.nextElementSibling;
+    if (wrap && wrap.classList && wrap.classList.contains('choices')) wrap.remove();
+    modelEl.disabled = false;
+    modelEl.removeAttribute('aria-disabled');
+    modelEl.classList.remove('is-disabled');
+  }
 
-  const blurIfInside = (root) => {
-    const ae = document.activeElement;
-    if (ae && root && root.contains(ae)) { try { ae.blur(); } catch {} }
-  };
+  function setModelPlaceholder(text){
+    destroyModelChoices();
+    modelEl.innerHTML = '';
+    var o = document.createElement('option');
+    o.value = ''; o.textContent = text || 'Модель';
+    o.disabled = true; o.selected = true;
+    modelEl.appendChild(o);
+    modelEl.disabled = true;
+  }
+  function setModelLoading(){ setModelPlaceholder('Загрузка…'); }
+  function setModelError(){ setModelPlaceholder('Ошибка загрузки'); }
 
-  const moveFocusToPage = () => {
-    const tgt = document.querySelector('main,[role="main"]') || document.body;
-    const had = tgt.hasAttribute('tabindex');
-    if (!had) tgt.setAttribute('tabindex', '-1');
-    try { tgt.focus({ preventScroll: true }); } catch {}
-    if (!had) tgt.removeAttribute('tabindex');
-  };
+  function buildModelOptions(list, preselect){
+    destroyModelChoices();
+    modelEl.innerHTML = '';
+    var ph = document.createElement('option');
+    ph.value=''; ph.textContent='Модель'; ph.disabled=true; ph.selected=true;
+    modelEl.appendChild(ph);
 
-  const unlockScrollIfStuck = () => {
-    document.body.classList.remove('micromodal-open', 'modal-open', 'is-open');
-    document.body.style.removeProperty('overflow');
-    document.documentElement.style.removeProperty('overflow');
-  };
-
-  const syncMaskInput = (input) => {
-    if (!input) return;
-    if (input._imask && typeof input._imask.updateValue === 'function') {
-      try { input._imask.updateValue(); return; } catch {}
-    }
-    if (input.inputmask) {
-      try {
-        if (typeof input.inputmask.refreshValue === 'function') input.inputmask.refreshValue();
-        else if (typeof input.inputmask.setValue === 'function') input.inputmask.setValue(input.value || '');
-        return;
-      } catch {}
-    }
-  };
-
-  const syncMasks = (form) => {
-    qa('input[type="tel"], [data-mask], .js-mask', form).forEach((inp) => {
-      syncMaskInput(inp);
-      inp.dispatchEvent(new Event('input', { bubbles: true }));
+    (list||[]).forEach(function(m){
+      var opt = document.createElement('option');
+      opt.value = String(m.id);
+      opt.textContent = m.title;
+      if (preselect && String(preselect)===String(m.id)) opt.selected = true;
+      modelEl.appendChild(opt);
     });
-  };
 
-  const closeFormModalIfAny = (form) => {
-    const modal = form.closest('.modal');
-    if (!modal) return;
-    blurIfInside(modal);
-    const id = modal.id;
-    if (id && window.MicroModal?.close) { try { MicroModal.close(id); } catch {} }
-    else modal.setAttribute('aria-hidden', 'true');
-  };
+    var inst = ensureChoices(modelEl);
+    if (inst && preselect) inst.setChoiceByValue(String(preselect));
+    modelEl.disabled = false;
 
-  let thanksTimer = null;
-  const openThanks = () => {
-    if (window.MicroModal?.show) {
-      try { MicroModal.show('modal-2'); } catch {}
-      if (thanksTimer) clearTimeout(thanksTimer);
-      thanksTimer = setTimeout(() => {
-        const m2 = document.getElementById('modal-2');
-        if (m2) { blurIfInside(m2); try { MicroModal.close('modal-2'); } catch {} }
-        unlockScrollIfStuck();
-      }, 5000);
-    } else {
-      alert('Заявка успешно отправлена');
-    }
-  };
+    var wrap = modelEl.closest('.choices');
+    if (wrap){ wrap.classList.remove('is-disabled'); wrap.removeAttribute('aria-disabled'); }
+  }
 
-  // ===== ошибки формы =====
-  const ensureErrorBox = (input) => {
-    let box = input.nextElementSibling;
-    if (!(box && box.classList && box.classList.contains('field-error'))) {
-      box = document.createElement('div');
-      box.className = 'field-error';
-      input.insertAdjacentElement('afterend', box);
-    }
-    if (!box.id) {
-      const base = input.id || input.name || 'field';
-      box.id = `${base}-error`;
-    }
-    return box;
-  };
-
-  const clearErrors = (form) => {
-    qa('.field-error', form).forEach(n => { n.textContent = ''; });
-    qa('.input.is-invalid, input.is-invalid, select.is-invalid, textarea.is-invalid', form)
-      .forEach(el => { el.classList.remove('is-invalid'); el.removeAttribute('aria-invalid'); });
-    qa('[data-added-describedby]', form).forEach(el => {
-      const orig = el.getAttribute('data-added-describedby');
-      if (orig) el.setAttribute('aria-describedby', orig);
-      else el.removeAttribute('aria-describedby');
-      el.removeAttribute('data-added-describedby');
-    });
-  };
-
-  const showFieldError = (form, field, message) => {
-    const input = q(`[name="${CSS.escape(field)}"]`, form);
-    if (!input) return false;
-    input.classList.add('is-invalid');
-    input.setAttribute('aria-invalid', 'true');
-    const box = ensureErrorBox(input);
-    box.textContent = message || 'Поле заполнено некорректно';
-    const prev = input.getAttribute('aria-describedby');
-    if (prev) input.setAttribute('data-added-describedby', prev);
-    input.setAttribute('aria-describedby', box.id);
-    return true;
-  };
-
-  const focusFirstInvalid = (form) => {
-    const invalid = q('.is-invalid', form);
-    if (invalid) { try { invalid.focus({ preventScroll: false }); } catch {} }
-  };
-
-  // ===== отправка =====
-  const setSubmitting = (form, on) => {
-    const btn = q('button[type="submit"], .submit-modal', form);
-    if (btn) {
-      btn.disabled = !!on;
-      btn.classList.toggle('is-loading', !!on);
-      if (on) btn.setAttribute('aria-busy', 'true'); else btn.removeAttribute('aria-busy');
-    }
-    form.dataset.submitting = on ? '1' : '';
-  };
-
-  const handleResponseErrors = async (form, res) => {
-    let payload = null;
-    try { payload = await res.clone().json(); } catch {}
-    if (res.status === 422 && payload && payload.errors && typeof payload.errors === 'object') {
-      clearErrors(form);
-      Object.keys(payload.errors).forEach((field) => {
-        const msg = Array.isArray(payload.errors[field]) ? payload.errors[field][0] : (payload.errors[field] || '');
-        showFieldError(form, field, msg);
+  async function loadModels(makeId, preselect){
+    try{
+      setModelLoading();
+      var res = await fetch(route + '?make_id=' + encodeURIComponent(makeId), {
+        headers:{ 'Accept':'application/json' }, cache:'no-store', credentials:'same-origin'
       });
-      focusFirstInvalid(form);
-      return;
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var data = await res.json();
+      buildModelOptions(data, preselect || null);
+    }catch(e){
+      console.error('[choose-car] loadModels failed:', e);
+      setModelError();
     }
-    if (res.status === 419 || res.status === 401) {
-      alert('Сессия истекла. Обновите страницу и попробуйте снова.');
-      return;
+  }
+
+  function onMakeChange(preselect){
+    var id = makeEl.value;
+    if (!id){ setModelPlaceholder('Модель'); return; }
+    loadModels(id, preselect || null);
+  }
+
+  // Инициализируем Choices у МАРКИ при необходимости
+  ensureChoices(makeEl);
+
+  // Слушаем смену марки
+  makeEl.addEventListener('change', function(){ onMakeChange(null); });
+
+  // Первичный рендер
+  if (makeEl.value) onMakeChange(null);
+  else setModelPlaceholder('Сначала выберите марку');
+})();
+
+/* ===== 2) Сабмит формы (AJAX + показ ошибок) ===== */
+(function setupChooseCarSubmit(){
+  const form = document.getElementById('choose-car-form');
+  if (!form) return;
+
+  const statusEl  = form.querySelector('.form-status');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  function setStatus(msg, ok=false){
+    if (!statusEl) return;
+    statusEl.textContent = msg || '';
+    statusEl.style.color = ok ? '#0a7b28' : '#d00';
+  }
+  function clearErrors(){
+    form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+    form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    form.querySelectorAll('.choices.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+  }
+  function showFieldError(name, message){
+    const holder = form.querySelector(`.field-error[data-error-for="${name}"]`);
+    if (holder) holder.textContent = message;
+    const field = form.querySelector(`[name="${name}"]`);
+    if (field){
+      field.classList.add('is-invalid');
+      const next = field.nextElementSibling;
+      const wrap = (next && next.classList && next.classList.contains('choices')) ? next : field.closest('.choices');
+      if (wrap && wrap.classList) wrap.classList.add('is-invalid');
     }
-    const msg = (payload && (payload.message || payload.error)) || `Ошибка (${res.status})`;
-    alert(msg);
-  };
+  }
 
-  const onSubmit = async (e) => {
-    const form = e.target instanceof HTMLFormElement ? e.target : null;
-    if (!form || !form.matches('.modal-form-product')) return;
-
+  form.addEventListener('submit', async function(e){
     e.preventDefault();
-    e.stopPropagation();
+    clearErrors(); setStatus(''); submitBtn.disabled = true;
 
-    if (form.dataset.submitting === '1') return;
-
-    const url  = getUrl(form);
-    if (!url) return;
-
-    const fd   = new FormData(form);
-    const csrf = getCsrf(form);
-
-    clearErrors(form);
-    setSubmitting(form, true);
-
-    try {
-      const res = await fetch(url, {
-        method: form.getAttribute('method') || 'POST',
+    try{
+      const fd = new FormData(form);
+      const res = await fetch(form.action, {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'X-Requested-With': 'XMLHttpRequest',
-          ...(csrf ? { 'X-CSRF-TOKEN': csrf } : {})
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
         },
-        body: fd,
-        credentials: 'same-origin'
+        body: fd, credentials: 'same-origin', cache: 'no-store'
       });
 
-      if (res.ok) {
+      if (res.status === 201 || res.ok){
+        setStatus('Заявка отправлена. Спасибо!', true);
         form.reset();
-        syncMasks(form);
-        closeFormModalIfAny(form);
-        moveFocusToPage();
-        setTimeout(openThanks, 0);
-      } else {
-        await handleResponseErrors(form, res);
-      }
-    } catch (err) {
-      alert('Сеть недоступна или сервер не ответил.');
-    } finally {
-      setSubmitting(form, false);
-    }
-  };
 
-  // ===== улучшатели =====
-  const attachMaskGuards = () => {
-    const handler = (e) => {
-      const t = e.target;
-      if (!(t instanceof HTMLInputElement)) return;
-      if (t.matches('input[type="tel"], [data-mask], .js-mask')) syncMaskInput(t);
-    };
-    document.addEventListener('focusin', handler, true);
-    document.addEventListener('input', handler, true);
-    document.addEventListener('change', handler, true);
-    document.addEventListener('click', handler, true);
-    document.addEventListener('keydown', handler, true);
-  };
-
-  const attachModalCloseFix = () => {
-    document.addEventListener('click', (e) => {
-      const t = e.target;
-      if (!(t instanceof Element)) return;
-      if (t.hasAttribute('data-micromodal-close')) {
-        const modal = t.closest('.modal');
-        if (modal) blurIfInside(modal);
-        if (modal && modal.id === 'modal-2') {
-          setTimeout(unlockScrollIfStuck, 0);
+        // сброс марки (Choices)
+        const makeEl = document.getElementById('choose-make');
+        if (makeEl?.choices){
+          makeEl.choices.removeActiveItems();
+          makeEl.choices.setChoiceByValue('');
+        } else if (makeEl){
+          makeEl.value = '';
         }
+
+        // вернуть модель к плейсхолдеру
+        const modelEl = document.getElementById('choose-model');
+        if (modelEl){
+          try { modelEl.choices?.destroy?.(); } catch(e){}
+          const wrap = modelEl.nextElementSibling;
+          if (wrap && wrap.classList?.contains('choices')) wrap.remove();
+          modelEl.innerHTML = '<option value="" disabled selected>Сначала выберите марку</option>';
+          modelEl.disabled = true;
+        }
+        return;
       }
-    }, true);
-  };
 
-  // ===== init =====
-  const init = () => {
-    document.addEventListener('submit', onSubmit, true);
-    attachMaskGuards();
-    attachModalCloseFix();
-  };
+      if (res.status === 422){
+        const data = await res.json();
+        const errors = data.errors || {};
+        Object.keys(errors).forEach(name => {
+          const msg = Array.isArray(errors[name]) ? errors[name][0] : String(errors[name]);
+          showFieldError(name, msg);
+        });
+        setStatus('Исправьте ошибки в форме.');
+        return;
+      }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
+      setStatus('Ошибка при отправке. Попробуйте позже.');
+    } catch(err){
+      console.error('[choose-car] submit failed:', err);
+      setStatus('Сетевая ошибка. Проверьте соединение.');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
 })();

@@ -1,47 +1,55 @@
-@props(['makes'])
+@props(['makes']) {{-- передай сюда $makesForForm = CarMake::orderBy('title','asc')->get(['id','title']) --}}
 
 <section class="choose-section" id="features">
-  <div class="container">
+    <div class="container">
+        <h2 class="h2">Выберите свой автомобиль</h2>
+        <p class="choose-section__descr">Оставьте заявку, мы сообщим о наличии запчастей и их стоимость</p>
 
-    <h2 class="h2">Выберите свой автомобиль</h2>
-    <p class="choose-section__descr">Оставьте заявку, мы сообщим о наличии запчастей и их стоимость </p>
+        <div class="choose-section__form">
+            <form id="choose-car-form" method="post" action="{{ route('lead.store_car') }}" novalidate>
+                @csrf
+                <input type="hidden" name="form_id" value="index-choose-car">
+                <input type="hidden" name="current_url"
+                    value="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">
 
+                {{-- UTM --}}
+                <input type="hidden" name="utm_source" value="{{ request('utm_source') }}">
+                <input type="hidden" name="utm_medium" value="{{ request('utm_medium') }}">
+                <input type="hidden" name="utm_campaign" value="{{ request('utm_campaign') }}">
+                <input type="hidden" name="utm_term" value="{{ request('utm_term') }}">
+                <input type="hidden" name="utm_content" value="{{ request('utm_content') }}">
 
-    <div class="choose-section__form">
-      <form action="">
-        <div class="choose-section__form_row">
-          <select name="asd" id="" class="js-choice" data-placeholder="Марка" required>
+                <div class="choose-section__form_row">
+                    {{-- Марка --}}
+                    <select name="make_id" id="choose-make" class="js-choice" data-placeholder="Марка" required>
+                        <option value="" disabled {{ old('make_id') ? '' : 'selected' }}>Марка</option>
+                        @foreach ($makes as $make)
+                            <option value="{{ $make->id }}" @selected(old('make_id') == $make->id)>{{ $make->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="field-error" data-error-for="make_id"></div>
 
+                    <select name="model_id" id="choose-model" data-placeholder="Модель"
+                        data-models-url="{{ route('ajax.car-models') }}" required
+                        {{ old('make_id') ? '' : 'disabled' }}>
+                        @if (old('make_id') && old('model_id'))
+                            <option value="" disabled>Модель</option>
+                            <option value="{{ old('model_id') }}" selected>Загрузка…</option>
+                        @else
+                            <option value="" selected disabled>Сначала выберите марку</option>
+                        @endif
+                    </select>
+                    <div class="field-error" data-error-for="model_id"></div>
 
-            @foreach ($makes as $item)
-              <option value="{{ $item['title'] }}">{{ $item['title'] }}</option>
-            @endforeach
-          </select>
+                    <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="Телефон" required>
+                    <div class="field-error" data-error-for="phone"></div>
+                </div>
 
-          <select name="asd" id="" class="js-choice" data-placeholder="Модель" required>
-            @foreach ($makes as $item)
-              <option value="{{ $item['title'] }}">{{ $item['title'] }}</option>
-            @endforeach
-          </select>
+                <button type="submit" class="btn black lg">Отправить заявку</button>
+                <div class="form-status" aria-live="polite"></div>
+            </form>
 
-          <input type="tel" placeholder="Телефон" required>
         </div>
-
-        <button type="submit" class="btn black lg">
-          Отправить заявку
-        </button>
-
-        <div class="form-policy-item">
-          <div class="form-policy">
-            <input type="checkbox" id="choose-check" checked required>
-            <label for="choose-check">Я соглашаюсь с <a href="{{ asset('policy.pdf') }}" target="_blank">политикой
-                конфиденциальности</a> и даю согласие
-              на обработку
-              персонаяльных данных
-            </label>
-          </div>
-        </div>
-      </form>
     </div>
-  </div>
 </section>

@@ -3,20 +3,24 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Client\RequestConsultation\StoreRequest as RequestConsultationStoreRequest;
 use App\Http\Requests\Client\RequestProduct\StoreRequest as RequestProductStoreRequest;
-use App\Http\Requests\Client\RequestProductSection\StoreRequest as RequestProductSectionStoreRequest;
+use App\Http\Requests\Client\RequestCar\StoreRequest as RequestCarStoreRequest;
 
 use App\Jobs\RequestConsultationMailSendJob;
 use App\Jobs\RequestProductMailSendJob;
+use App\Jobs\RequestCarMailSendJob;
 
-use App\Models\Price;
 use App\Models\Product;
 use App\Models\RequestConsultation;
 use App\Models\RequestProduct;
+use App\Models\CarMake;
+use App\Models\CarModel;
 
-use App\Notifications\TelegramNotificationProduct;
 use App\Notifications\TelegramNotificationConsultation;
+use App\Notifications\TelegramNotificationProduct;
+use App\Notifications\TelegramNotificationCar;
 
 use App\Services\Bitrix24Service;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +38,8 @@ class RequestsController extends Controller
         $rc->save();
 
         $site  = $this->siteTag($request);
-        $title = $this->titleRu('Заявка на консультацию', $rc->form_id, $site);
+        // ВАЖНО: titleRu($context, $formId, $site)
+        $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
 
         $this->send_request_consultation($rc, $title);
 
@@ -46,10 +51,15 @@ class RequestsController extends Controller
                 'NAME'    => preg_replace('/[_\*]/', ' ', $rc->name),
                 'PHONE'   => $rc->phone,
                 'EMAIL'   => $rc->email ?? null,
+
                 'SOURCE_DESCRIPTION' => $this->comments([
-                    'form_id'     => $rc->form_id,
+                    'form_id'     => $rc->form_id,               // id формы
                     'form_ru'     => $this->formLabelRu($rc->form_id),
                     'current_url' => $request->input('current_url'),
+                    'extra'       => [
+                        'Имя'     => $rc->name,
+                        'Телефон' => $rc->phone,
+                    ],
                 ]),
 
                 'UTM_SOURCE'   => $utm['utm_source'],
@@ -89,7 +99,7 @@ class RequestsController extends Controller
         $rp->save();
 
         $site  = $this->siteTag($request);
-        $title = $this->titleRu('Заявка на подбор деталей', $rp->form_id, $site);
+        $title = $this->titleRu('Заявка с сайта', $rp->form_id, $site);
 
         $this->send_request_product($rp, $title);
 
@@ -106,6 +116,7 @@ class RequestsController extends Controller
                 'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
                 'PHONE'   => $rp->phone,
                 'EMAIL'   => $rp->email ?? null,
+
                 'SOURCE_DESCRIPTION' => $this->comments([
                     'form_id'     => $rp->form_id,
                     'form_ru'     => $this->formLabelRu($rp->form_id),
@@ -138,45 +149,63 @@ class RequestsController extends Controller
         return response()->json(['message' => 'Request created successfully'], 201);
     }
 
-    public function request_product_section(
-        RequestProductSectionStoreRequest $request,
+    public function store_request_car(
+        RequestCarStoreRequest $request,
         Bitrix24Service $b24
     ) {
-        $rp = new RequestProduct();
-        $rp->fill($request->validated());
-
-        $ids   = [(int) $request->validated()['product_id']];
-        $price = optional(Price::find($request->validated()['price_id']))->one_side;
-
-        $rp->data        = json_encode($ids);
-        $rp->total_price = $price;
-        $rp->form_id     = $request->validated()['form_id'];
-        $rp->save();
+        // сохраняем как Consultation (единая таблица у тебя)
+        $rc = new RequestConsultation();
+        $rc->fill([
+            'name'    => $request->input('name'),
+            'phone'   => $request->input('phone'),
+            'form_id' => $request->input('form_id', 'index-choose-car'),
+        ]);
+        $rc->save();
 
         $site  = $this->siteTag($request);
-        $title = $this->titleRu('Заявка из секции товара', $rp->form_id, $site);
+        $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
 
-        $this->send_request_product($rp, $title);
+        // Человекочитаемая марка/модель
+        $make        = CarMake::find($request->integer('make_id'));
+        $model       = CarModel::find($request->integer('model_id'));
+        $makeTitle   = $make?->title ?? '';
+        $modelTitle  = $model?->title ?? '';
+        $carHuman    = trim($makeTitle . ($modelTitle ? (' / ' . $modelTitle) : ''));
 
+        // Детали для всех каналов
+        $details = [
+            'subject'     => $title,
+            'name'        => preg_replace('/[_\*]/', ' ', (string)$rc->name),
+            'phone'       => $rc->phone,
+            'make'        => $makeTitle,
+            'model'       => $modelTitle,
+            'car'         => $carHuman,
+            'form'        => $this->formLabelRu($rc->form_id),
+            'current_url' => $request->input('current_url'),
+        ];
+
+        // Telegram + Mail
+        $rc->notify(new TelegramNotificationCar($details));
+        dispatch(new RequestCarMailSendJob($details));
+
+        // Bitrix24
         try {
             $utm = $this->resolveUtm($request);
 
-            $p = Product::find($ids[0] ?? null);
-            $prodLabel = $p ? ("#{$p->id} " . $this->shorten($p->title, 60)) : null;
-
             $res = $b24->addLead([
                 'TITLE'   => $title,
-                'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
-                'PHONE'   => $rp->phone,
-                'EMAIL'   => $rp->email ?? null,
+                'NAME'    => $details['name'] ?: null,
+                'PHONE'   => $details['phone'],
+                'EMAIL'   => null,
+
                 'SOURCE_DESCRIPTION' => $this->comments([
-                    'form_id'     => $rp->form_id,
-                    'form_ru'     => $this->formLabelRu($rp->form_id),
-                    'current_url' => $request->input('current_url'),
+                    'form_id'     => $rc->form_id,
+                    'form_ru'     => $details['form'],
+                    'current_url' => $details['current_url'],
                     'extra'       => [
-                        'Товар' => $p ? "#{$p->id} {$p->title}" : '—',
-                        'Цена'  => $rp->total_price,
-                        'Метка карточки' => $prodLabel,
+                        'Марка'   => $makeTitle ?: '—',
+                        'Модель'  => $modelTitle ?: '—',
+                        'Телефон' => $rc->phone,
                     ],
                 ]),
 
@@ -187,15 +216,15 @@ class RequestsController extends Controller
                 'UTM_CONTENT'  => $utm['utm_content'],
             ]);
 
-            Log::info('B24 response (section)', [
+            Log::info('B24 response (choose-car)', [
                 'status' => $res['status'] ?? null,
                 'body'   => $res['response'] ?? null,
             ]);
             if (!($res['ok'] ?? false)) {
-                Log::warning('B24 lead add failed (section)', $res);
+                Log::warning('B24 lead add failed (choose-car)', $res);
             }
         } catch (\Throwable $e) {
-            Log::error('B24 section exception: ' . $e->getMessage());
+            Log::error('B24 choose-car exception: ' . $e->getMessage());
         }
 
         return response()->json(['message' => 'Request created successfully'], 201);
@@ -215,7 +244,7 @@ class RequestsController extends Controller
         // Telegram
         $rc->notify(new TelegramNotificationConsultation($details));
 
-         // Mail (queue)
+        // Mail (queue)
         dispatch(new RequestConsultationMailSendJob($details));
     }
 
@@ -236,7 +265,7 @@ class RequestsController extends Controller
             'form'        => $this->formLabelRu($rp->form_id),
         ];
 
-        // // Telegram
+        // Telegram
         $rp->notify(new TelegramNotificationProduct($details));
 
         // Mail (queue)
@@ -250,19 +279,25 @@ class RequestsController extends Controller
     {
         $map = [
             // модалки
-            'modal-form-header' => 'Шапка',
-            'modal-form-faq'    => 'FAQ',
+            'modal-form-header'   => 'Шапка',
+            'modal-form-faq'      => 'FAQ',
+            'modal-form-about'    => 'О нас',
+            'modal-form-delivery' => 'Доставка',
+            'modal-form-hero'     => 'Слайдер',
+
             // формы на страницах
             'index-hero-form'   => 'Главная',
             'catalog-form'      => 'Каталог',
             'product-section'   => 'Секция товара',
+            'index-choose-car'  => 'Подбор',
         ];
         return $map[$formId] ?? ($formId ?: 'Без идентификатора');
     }
 
     private function titleRu(string $context, ?string $formId, string $site): string
     {
-        return $context . '(' . $this->formLabelRu($formId) . ') ' . $site;
+        // context + (рус. ярлык формы) + домен
+        return $context . ' (' . $this->formLabelRu($formId) . ') ' . $site;
     }
 
     private function siteTag(\Illuminate\Http\Request $request): string
@@ -275,8 +310,8 @@ class RequestsController extends Controller
     {
         $lines = [];
         if (!empty($ctx['form_id'])) {
-            $lines[] = 'Форма: ' . $ctx['form_id'] .
-                ' (' . ($ctx['form_ru'] ?? $this->formLabelRu($ctx['form_id'])) . ')';
+            $lines[] = 'Форма: ' . $ctx['form_id']
+                . ' (' . ($ctx['form_ru'] ?? $this->formLabelRu($ctx['form_id'])) . ')';
         }
         if (!empty($ctx['current_url'])) $lines[] = 'URL: ' . $ctx['current_url'];
         if (!empty($ctx['ip']))          $lines[] = 'IP: ' . $ctx['ip'];

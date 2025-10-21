@@ -46,6 +46,108 @@
       </div>
     </div>
   </div>
+
+  <div class="modal micromodal-slide" id="modal-hero" aria-hidden="true">
+    <div class="modal__overlay" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-hero-title"
+        aria-describedby="modal-hero-desc" tabindex="-hero">
+        <header class="modal__header">
+          <h2 class="modal__title" id="modal-hero-title">Заполните форму</h2>
+          <p class="modal__description" id="modal-hero-desc">
+            Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
+          </p>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}">
+          @csrf
+          <input type="text" placeholder="Имя" class="input" name="name" />
+          <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
+          <input type="hidden" name="form_id" value="modal-form-hero">
+          <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+          <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+          <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+          <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+          <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
+          <button class="btn lg submit-modal" type="submit">Отправить</button>
+          <p class="copyright">
+            Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+            <a href="{{ asset('policy.pdf') }}" target="_blank">политикой
+              конфиденциальности</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal micromodal-slide" id="modal-about" aria-hidden="true">
+    <div class="modal__overlay" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-about-title"
+        aria-describedby="modal-about-desc" tabindex="-about">
+        <header class="modal__header">
+          <h2 class="modal__title" id="modal-about-title">Заполните форму</h2>
+          <p class="modal__description" id="modal-about-desc">
+            Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
+          </p>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}">
+          @csrf
+          <input type="text" placeholder="Имя" class="input" name="name" />
+          <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
+          <input type="hidden" name="form_id" value="modal-form-about">
+          <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+          <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+          <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+          <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+          <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
+          <button class="btn lg submit-modal" type="submit">Отправить</button>
+          <p class="copyright">
+            Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+            <a href="{{ asset('policy.pdf') }}" target="_blank">политикой
+              конфиденциальности</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal micromodal-slide" id="modal-delivery" aria-hidden="true">
+    <div class="modal__overlay" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-delivery-title"
+        aria-describedby="modal-delivery-desc" tabindex="-delivery">
+        <header class="modal__header">
+          <h2 class="modal__title" id="modal-delivery-title">Заполните форму</h2>
+          <p class="modal__description" id="modal-delivery-desc">
+            Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
+          </p>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}">
+          @csrf
+          <input type="text" placeholder="Имя" class="input" name="name" />
+          <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
+          <input type="hidden" name="form_id" value="modal-form-delivery">
+          <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+          <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+          <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+          <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+          <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
+          <button class="btn lg submit-modal" type="submit">Отправить</button>
+          <p class="copyright">
+            Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+            <a href="{{ asset('policy.pdf') }}" target="_blank">политикой
+              конфиденциальности</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <div class="modal micromodal-slide" id="modal-faq" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-faq-title"

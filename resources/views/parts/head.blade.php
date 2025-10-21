@@ -8,19 +8,17 @@
         <title>404 - Page not found</title>
         <meta name="description" content="Page not found">
     @else
-        <title>{{ $page->meta_title }}</title>
-        <meta name="description" content="{{ $page->meta_description }}">
-        <meta name="keywords" content="{{ $page->meta_keywords }}">
+        <title>{{$page->meta_title}}</title>
+        <meta name="description" content="{{$page->meta_description}}">
+        <meta name="keywords" content="{{$page->meta_keywords}}">
         <meta property="og:locale" content="ru_RU">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="{{ $page->og_title }}">
-        <meta property="og:description" content="{{ $page->og_description }}">
-        <meta property="og:url" content="{{ $page->og_url }}">
-        <meta property="og:site_name" content="{{ $main_info->company_title }}">
-        <meta property="og:image" content="{{ $main_info->company_image }}">
+        <meta property="og:title" content="{{$page->og_title}}">
+        <meta property="og:description" content="{{$page->og_description}}">
+        <meta property="og:url" content="{{$page->og_url}}">
+        <meta property="og:site_name" content="{{$main_info->company_title}}">
+        <meta property="og:image" content="{{$main_info->company_image}}">
     @endif
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.0/dist/fancybox/fancybox.css" />
     <meta name="yandex-verification" content="d134887cc07e929d" />
     <meta name="google-site-verification" content="D-rV3CqHjnyPJfkgP5TR3xLeMlrPQ4rhlJ_J8jR07CQ" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

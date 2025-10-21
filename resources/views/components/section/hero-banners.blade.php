@@ -24,7 +24,7 @@
                </div>
 
                <div class="index-hero__slide_btns">
-                 <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
+                 <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-hero">
                    Заказать
                  </button>
                </div>
@@ -61,7 +61,7 @@
              </div>
 
              <div class="index-hero__slide_btns --mob">
-               <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
+               <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-hero">
                  Заказать
                </button>
              </div>
@@ -93,7 +93,7 @@
                </div>
 
                <div class="index-hero__slide_btns">
-                 <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
+                 <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-hero">
                    Заказать
                  </button>
                </div>
@@ -127,7 +127,7 @@
              </div>
 
              <div class="index-hero__slide_btns --mob">
-               <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
+               <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-hero">
                  Заказать
                </button>
              </div>

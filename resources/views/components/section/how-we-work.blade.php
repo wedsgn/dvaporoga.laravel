@@ -61,7 +61,7 @@
 
           <h4 class="how-we-work__info_title">
             <span class="num">4</span>
-            <span>Доставка</span>
+            <span>Получение</span>
           </h4>
           <p class="how-we-work__info_description">
             После проверки, <br>
@@ -72,7 +72,7 @@
     </div>
 
     <div class="how-we-work__bottom">
-      <button class="btn how-we-work__btn lg " data-micromodal-trigger="modal-1">
+      <button class="btn how-we-work__btn lg " data-micromodal-trigger="modal-delivery">
         Оставить заявку
       </button>
     </div>

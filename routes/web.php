@@ -18,6 +18,7 @@ use App\Http\Controllers\Client\CatalogGenerationPageController;
 use App\Http\Controllers\Client\CatalogModelPageController;
 use App\Http\Controllers\Client\RequestsController;
 use App\Http\Controllers\Client\WelcomePageController;
+use App\Http\Controllers\Client\CarAjaxController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
@@ -29,6 +30,8 @@ Route::get('/katalog/{car_make_slug}', [CatalogConcernPageController::class, 'ca
 //Car models
 Route::get('/katalog/{car_make_slug}/search', [CatalogModelPageController::class, 'search'])->name('car_model.search');
 Route::get('/katalog/{slug}/{model_slug}', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
+Route::get('/ajax/car-models', [CarAjaxController::class, 'models'])->name('ajax.car-models')->middleware('throttle:60,1');
+Route::post('/lead/store-car', [RequestsController::class, 'store_request_car'])->name('lead.store_car');
 //Car generations
 Route::get('/katalog/{concern}/{model}/{generation}', [CatalogGenerationPageController::class, 'car_generation_show'])->name('car_generation.show');
 Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
