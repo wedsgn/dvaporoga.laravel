@@ -23,7 +23,7 @@
           {{-- Марка --}}
           <div class="select-item">
             <select name="make_id" id="choose-make" class="js-choice" data-placeholder="Марка" required>
-              <option value="" disabled {{ old('make_id') ? '' : 'selected' }}>Марка</option>
+              {{-- <option value="" disabled {{ old('make_id') ? '' : 'selected' }}>Марка</option> --}}
               @foreach ($makes as $make)
                 <option value="{{ $make->id }}" @selected(old('make_id') == $make->id)>{{ $make->title }}
                 </option>
@@ -33,10 +33,9 @@
           </div>
 
           <div class="select-item">
-            <select name="model_id" id="choose-model js-choice" data-placeholder="Модель"
+            <select name="model_id" id="choose-model" class="js-choice" data-placeholder="Модель"
               data-models-url="{{ route('ajax.car-models') }}" required {{ old('make_id') ? '' : 'disabled' }}>
               @if (old('make_id') && old('model_id'))
-                <option value="" disabled>Модель</option>
                 <option value="{{ old('model_id') }}" selected>Загрузка…</option>
               @else
                 <option value="" selected disabled>Сначала выберите марку</option>
