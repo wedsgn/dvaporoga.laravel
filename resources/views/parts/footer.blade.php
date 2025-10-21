@@ -17,7 +17,7 @@
         <div class="footer-top__right">
           <div class="footer-socials">
 
-            <a href="https://t.me/+79812086415" target="_blank" class="footer-social">
+            <a href="https://api.whatsapp.com/send?phone=79812086415" target="_blank" class="footer-social">
               <img src="{{ asset('images/socials/wa.svg') }}" alt="dvaporoga whatssup">
             </a>
             <a href="https://t.me/+79812086415" target="_blank" class="footer-social">
