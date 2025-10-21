@@ -1,21 +1,31 @@
 (() => {
   "use strict";
 
-  const SEL  = "form.index-hero-form, form.footer-form, form.modal-form";
+  const SEL = "form.index-hero-form, form.footer-form, form.modal-form";
   const BUSY = new WeakSet();
 
   // --- helpers ---
   const urlOf = (form) =>
-    (form.getAttribute("data-action") || form.getAttribute("action") || "").trim();
+    (
+      form.getAttribute("data-action") ||
+      form.getAttribute("action") ||
+      ""
+    ).trim();
 
   const csrfOf = (form) =>
     form.querySelector('input[name="_token"]')?.value ||
-    document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
+    document
+      .querySelector('meta[name="csrf-token"]')
+      ?.getAttribute("content") ||
     "";
 
   const blurInside = (node) => {
     const ae = document.activeElement;
-    if (ae && node?.contains(ae)) { try { ae.blur(); } catch {} }
+    if (ae && node?.contains(ae)) {
+      try {
+        ae.blur();
+      } catch {}
+    }
   };
 
   const closeParentModalIfAny = (form) => {
@@ -23,8 +33,11 @@
     if (!m) return;
     blurInside(m);
     const id = m.id;
-    if (id && window.MicroModal?.close) { try { MicroModal.close(id); } catch {} }
-    else m.setAttribute("aria-hidden", "true");
+    if (id && window.MicroModal?.close) {
+      try {
+        MicroModal.close(id);
+      } catch {}
+    } else m.setAttribute("aria-hidden", "true");
   };
 
   const unlockScroll = () => {
@@ -35,11 +48,15 @@
 
   const openThanks = () => {
     if (window.MicroModal?.show) {
-      try { MicroModal.show("modal-2"); } catch {}
+      try {
+        MicroModal.show("modal-2");
+      } catch {}
       setTimeout(() => {
         const m2 = document.getElementById("modal-2");
         if (m2) blurInside(m2);
-        try { MicroModal.close("modal-2"); } catch {}
+        try {
+          MicroModal.close("modal-2");
+        } catch {}
         unlockScroll();
       }, 5000);
     } else {
@@ -83,7 +100,9 @@
     input.classList.add("is-invalid");
     input.setAttribute("aria-invalid", "true");
     const box = ensureErrorBox(input);
-    box.textContent = Array.isArray(message) ? message[0] : (message || "Некорректное значение");
+    box.textContent = Array.isArray(message)
+      ? message[0]
+      : message || "Некорректное значение";
     const prev = input.getAttribute("aria-describedby");
     if (prev) input.setAttribute("data-added-describedby", prev);
     input.setAttribute("aria-describedby", box.id);
@@ -92,9 +111,15 @@
   const showErrors = (form, errors) => {
     form.classList.add("has-errors");
     if (errors && typeof errors === "object") {
-      Object.entries(errors).forEach(([field, msg]) => showFieldError(form, field, msg));
+      Object.entries(errors).forEach(([field, msg]) =>
+        showFieldError(form, field, msg)
+      );
       const firstInvalid = form.querySelector(".is-invalid");
-      if (firstInvalid) { try { firstInvalid.focus({ preventScroll: false }); } catch {} }
+      if (firstInvalid) {
+        try {
+          firstInvalid.focus({ preventScroll: false });
+        } catch {}
+      }
     }
   };
 
@@ -131,7 +156,7 @@
       return;
     }
 
-    const fd   = new FormData(form);
+    const fd = new FormData(form);
     const csrf = csrfOf(form);
 
     setLoading(form, true);
@@ -139,7 +164,7 @@
       const res = await fetch(url, {
         method: form.getAttribute("method") || "POST",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "X-Requested-With": "XMLHttpRequest",
           ...(csrf ? { "X-CSRF-TOKEN": csrf } : {}),
         },
@@ -148,7 +173,9 @@
       });
 
       let data = null;
-      try { data = await res.clone().json(); } catch {}
+      try {
+        data = await res.clone().json();
+      } catch {}
 
       if (res.ok) {
         form.reset();
@@ -161,7 +188,9 @@
       } else if (res.status === 419 || res.status === 401) {
         alert("Сессия истекла. Обновите страницу и попробуйте снова.");
       } else {
-        const msg = (data && (data.message || data.error)) || `Ошибка (${res.status}). Попробуйте позже.`;
+        const msg =
+          (data && (data.message || data.error)) ||
+          `Ошибка (${res.status}). Попробуйте позже.`;
         alert(msg);
       }
     } catch (_) {
@@ -180,7 +209,8 @@
       if (f.dataset._ajaxBound) return;
       f.addEventListener("submit", handle, { capture: true });
       f.dataset._ajaxBound = "1";
-      if (!f.hasAttribute("action") && !f.hasAttribute("data-action")) f.setAttribute("action", "#");
+      if (!f.hasAttribute("action") && !f.hasAttribute("data-action"))
+        f.setAttribute("action", "#");
       f.setAttribute("novalidate", "novalidate");
     });
   };
@@ -192,13 +222,17 @@
   }
 
   // чистим фокус/скролл при ручном закрытии «спасибо»
-  document.addEventListener("click", (e) => {
-    const t = e.target;
-    if (!(t instanceof Element)) return;
-    if (t.hasAttribute("data-micromodal-close")) {
-      const m = t.closest(".modal");
-      if (m) blurInside(m);
-      if (m && m.id === "modal-2") setTimeout(unlockScroll, 0);
-    }
-  }, true);
+  document.addEventListener(
+    "click",
+    (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      if (t.hasAttribute("data-micromodal-close")) {
+        const m = t.closest(".modal");
+        if (m) blurInside(m);
+        if (m && m.id === "modal-2") setTimeout(unlockScroll, 0);
+      }
+    },
+    true
+  );
 })();

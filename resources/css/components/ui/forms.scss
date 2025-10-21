@@ -20,6 +20,12 @@
   color: $red;
 }
 
+.select-item {
+  width: 100%;
+}
+.input-item {
+  width: 100%;
+}
 .copyright {
   // font-weight: 300;
   font-size: 14px;
@@ -103,6 +109,7 @@
   border-radius: 8px;
   font-size: 16px;
   background: none;
+  min-height: 56px;
 }
 
 .choices__list--dropdown,
@@ -126,6 +133,10 @@
 
 .choices__placeholder {
   opacity: 1;
+}
+
+.choices__list--single .choices__item {
+  line-height: 130%;
 }
 
 @media screen and (max-width: 1024px) {
