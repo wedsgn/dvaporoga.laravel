@@ -39,7 +39,7 @@
           <button class="btn lg submit-modal" type="submit">Отправить</button>
           <p class="copyright">
             Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-            <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">политикой
+            <a href="{{ asset('policy.pdf') }}" target="_blank">политикой
               конфиденциальности</a>
           </p>
         </form>
@@ -71,7 +71,7 @@
           <button class="btn lg submit-modal" type="submit">Отправить</button>
           <p class="copyright">
             Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-            <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">политикой
+            <a href="{{ asset('policy.pdf') }}" target="_blank">политикой
               конфиденциальности</a>
           </p>
         </form>
@@ -121,7 +121,7 @@
           <button class="btn lg submit-modal" type="submit">Отправить</button>
           <p class="copyright">
             Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-            <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank">политикой
+            <a href="{{ asset('policy.pdf') }}" target="_blank">политикой
               конфиденциальности</a>
           </p>
         </form>

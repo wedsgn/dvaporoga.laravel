@@ -1,4 +1,4 @@
-<section class="how-we-work-section section" id="how-we-work">
+<section class="how-we-work-section section" id="delivery">
   <div class="container">
     <!-- Top -->
     <div class="how-we-work__top">

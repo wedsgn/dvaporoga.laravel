@@ -1,6 +1,6 @@
 @props(['makes'])
 
-<section class="choose-section">
+<section class="choose-section" id="features">
   <div class="container">
 
     <h2 class="h2">Выберите свой автомобиль</h2>

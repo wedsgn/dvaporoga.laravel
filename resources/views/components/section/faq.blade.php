@@ -1,4 +1,4 @@
-<section class="faq-section section">
+<section class="faq-section section" id="faq">
   <div class="container">
     <h2 class="h2">
       Часто задаваемые вопросы

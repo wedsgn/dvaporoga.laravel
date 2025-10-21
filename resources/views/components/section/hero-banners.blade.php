@@ -144,7 +144,7 @@
 
    </div>
 
-   <div class="swiper-pagination banners-pagination"></div>
+   <div class="banners-pagination hero-pag swiper-pagination"></div>
 
    <div class="swiper-button-prev slider-arrow slider-arrow-prev hero-banner-arrow-prev gallery-arrow-prev">
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

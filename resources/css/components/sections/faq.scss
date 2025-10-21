@@ -104,7 +104,7 @@
   .faq-section__top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 20px;
   }
 }
 
@@ -122,14 +122,10 @@
   }
 
   .faq-section__top {
+    margin-top: 8px;
     .btn {
       width: 100%;
     }
-  }
-
-  .faq-description {
-    font-size: 14px;
-    line-height: 120%;
   }
 
   .faq-left {
@@ -141,9 +137,7 @@
     gap: 8px;
   }
   .faq-item .faq-item__head {
-    font-size: 16px;
-    p {
-    }
+    font-size: 18px;
   }
 
   .faq-item__content {

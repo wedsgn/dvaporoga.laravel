@@ -1,4 +1,4 @@
-<section class="about-parts-section section">
+<section class="about-parts-section section" id="about">
   <div class="container">
 
     <div class="about-parts-section__wrap">

@@ -9,19 +9,15 @@ import Swiper from "swiper/bundle";
 import { Fancybox } from "@fancyapps/ui";
 import Choices from "choices.js";
 
-// import styles bundle
-
-console.log(Swiper);
-
-MicroModal.init({
-  disableScroll: true,
-});
-
-setTimeout(() => {
-  MicroModal.show("modal-3");
-}, 60000);
-
 window.addEventListener("load", () => {
+  MicroModal.init({
+    disableScroll: true,
+  });
+
+  setTimeout(() => {
+    MicroModal.show("modal-3");
+  }, 60000);
+
   const selects = document.querySelectorAll(".js-choice");
   selects.forEach((item) => {
     const choices = new Choices(item, {
@@ -59,7 +55,6 @@ window.addEventListener("load", () => {
       const priceDeiv = product.querySelector(".product-price span");
       const data = product.getAttribute("data-item");
       const dataRes = JSON.parse(data);
-
       const steelSelector = product.querySelector(".steel-select");
       const priceInput = product.querySelector("#productPriceInput");
       const priceIdInput = product.querySelector("#productPriceId");
@@ -117,14 +112,11 @@ window.addEventListener("load", () => {
   // Корзина
 
   const swiper = new Swiper(".swiper-banner", {
-    // Optional parameters
-    loop: true,
-    speed: 300,
+    // loop: true,
+    slidesPerView: 1,
     spaceBetween: 32,
-
-    // If we need pagination
     pagination: {
-      el: ".banners-pagination",
+      el: ".hero-pag",
       type: "fraction",
       renderFraction: function (currentClass, totalClass) {
         return (
@@ -139,10 +131,9 @@ window.addEventListener("load", () => {
       },
     },
 
-    // Navigation arrows
     navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
+      nextEl: ".hero-banner-arrow-next",
+      prevEl: ".hero-banner-arrow-prev",
     },
   });
 
