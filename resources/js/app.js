@@ -4,15 +4,40 @@ import { sliders } from "./modules/sliders";
 import { burger } from "./modules/burger";
 import { tabs } from "./modules/tabs";
 import MicroModal from "micromodal";
+// import Swiper bundle with all modules installed
+import Swiper from "swiper/bundle";
+import { Fancybox } from "@fancyapps/ui";
+import Choices from "choices.js";
 
-MicroModal.init({
-  disableScroll: true,
-});
 window.addEventListener("load", () => {
+  MicroModal.init({
+    disableScroll: true,
+  });
+
+  setTimeout(() => {
+    MicroModal.show("modal-3");
+  }, 60000);
+
+  const selects = document.querySelectorAll(".js-choice");
+  selects.forEach((item) => {
+    const choices = new Choices(item, {
+      loadingText: "Загрузка...",
+      noResultsText: "Ничего не найдено",
+      noChoicesText: "No choices to choose from",
+      itemSelectText: "",
+      uniqueItemText: "Only unique values can be added",
+      customAddItemText:
+        "Only values matching specific conditions can be added",
+    });
+  });
   accordition();
   sliders();
   burger();
   tabs();
+
+  Fancybox.bind("[data-fancybox]", {
+    // Your custom options
+  });
 
   var phones = document.querySelectorAll('input[type="tel"]');
   var maskOptions = {
@@ -30,7 +55,6 @@ window.addEventListener("load", () => {
       const priceDeiv = product.querySelector(".product-price span");
       const data = product.getAttribute("data-item");
       const dataRes = JSON.parse(data);
-
       const steelSelector = product.querySelector(".steel-select");
       const priceInput = product.querySelector("#productPriceInput");
       const priceIdInput = product.querySelector("#productPriceId");
@@ -86,4 +110,55 @@ window.addEventListener("load", () => {
     });
   }
   // Корзина
+
+  const swiper = new Swiper(".swiper-banner", {
+    // loop: true,
+    slidesPerView: 1,
+    spaceBetween: 32,
+    pagination: {
+      el: ".hero-pag",
+      type: "fraction",
+      renderFraction: function (currentClass, totalClass) {
+        return (
+          '<span class="' +
+          currentClass +
+          '"></span>' +
+          "/" +
+          '<span class="' +
+          totalClass +
+          '"></span>'
+        );
+      },
+    },
+
+    navigation: {
+      nextEl: ".hero-banner-arrow-next",
+      prevEl: ".hero-banner-arrow-prev",
+    },
+  });
+
+  const swiperGallery = new Swiper(".gallery-swiper", {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    loop: true,
+    pagination: {
+      el: ".gallery-pagination",
+      type: "fraction",
+      renderFraction: function (currentClass, totalClass) {
+        return (
+          '<span class="' +
+          currentClass +
+          '"></span>' +
+          "/" +
+          '<span class="' +
+          totalClass +
+          '"></span>'
+        );
+      },
+    },
+    navigation: {
+      nextEl: ".gallery-arrow-next",
+      prevEl: ".gallery-arrow-prev",
+    },
+  });
 });

@@ -1,12 +1,22 @@
 // @import "choices.js/src/styles/choices";
 
+@import "choices.js/src/styles/choices";
+
 @import "./base/vars";
 @import "./grid.scss";
 @import "./mixins";
 @import "./base/base";
-@import "./base/fonts";
+@import "./base/fonts.scss";
 @import "./components/**/*";
 
+@import "./components/index-hero-slider.scss";
+
+@import "./components/header.scss";
+
+@import "./components/ui/slider.scss";
+@import "./components/ui/forms.scss";
+
+@import "./components/sections/marquee.scss";
 .not-found-section {
   margin-top: 64px;
   font-weight: 600;

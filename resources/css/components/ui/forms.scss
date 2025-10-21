@@ -1,7 +1,7 @@
 .input {
   border-radius: 8px;
   border: none;
-  border: 1px solid $grayLight;
+  border: 1px solid $gray;
   margin: 0;
   padding: 15px 19px;
 
@@ -9,6 +9,15 @@
   &:focus {
     border: 1px solid $black;
   }
+
+  &.is-invalid {
+    border: 1px solid $red;
+  }
+}
+
+.field-error {
+  font-size: 14px;
+  color: $red;
 }
 
 .copyright {
@@ -27,11 +36,106 @@
   }
 }
 
+.form-policy {
+  display: flex;
+  margin-top: 8px;
+
+  a {
+    color: $red;
+    text-decoration: underline;
+  }
+}
+.form-policy label {
+  position: relative;
+}
+
+.form-policy input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.form-policy label:before {
+  content: "";
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 1px solid $red;
+  top: 6px;
+  display: inline-block;
+  border-radius: 2px;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.form-policy input:checked + label:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 4px;
+
+  background: $red;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.choices {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.is-open .choices__inner {
+  border-radius: 8px !important;
+}
+.choices__inner {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid #c1c1c1;
+  line-height: 100%;
+  border-radius: 8px;
+  font-size: 16px;
+  background: none;
+}
+
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+  padding: 8px;
+}
+
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+  border-radius: 8px;
+  top: 60px;
+}
+
+.choices__list--dropdown .choices__list,
+.choices__list[aria-expanded] .choices__list {
+  margin-top: 16px;
+}
+.choices__list--single {
+  padding: 0;
+}
+
+.choices__placeholder {
+  opacity: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  .choices__inner {
+    height: 56px;
+  }
+}
 @media screen and (max-width: 768px) {
   .input {
     border-radius: 8px;
-    border: none;
-    border: 1px solid $grayLight;
     margin: 0;
     padding: 12px 19px;
 
@@ -39,5 +143,9 @@
     &:focus {
       border: 1px solid $black;
     }
+  }
+
+  .modal__container .copyright {
+    text-align: left;
   }
 }

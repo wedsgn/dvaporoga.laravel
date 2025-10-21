@@ -1,10 +1,9 @@
 .header {
-  padding: 10px 0;
-  background: $black;
-  color: $white;
+  padding: 16px 0;
   position: fixed;
   width: 100%;
   top: 0;
+  background: $white;
   z-index: 20;
 }
 
@@ -27,8 +26,13 @@
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-left: 56px;
+  gap: 16px;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
 .header__btns {
@@ -36,7 +40,7 @@
   display: flex;
 
   align-items: center;
-  gap: 16px;
+  gap: 24px;
   a {
     display: block;
     svg {
@@ -48,25 +52,34 @@
   }
 }
 
+.header-div {
+  width: 1px;
+  height: 16px;
+  background: $stroke;
+}
+
 .header__phone {
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
   gap: 4px;
-  font-weight: 500;
 
   a {
     font-style: normal;
-    font-weight: 900;
     line-height: 100%;
+    font-size: 18px;
   }
   span {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 100%;
     font-weight: 300;
-    color: $gray;
   }
+}
+
+.header__phone_top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .header__link {
@@ -84,99 +97,114 @@
   display: none;
 }
 @media screen and (max-width: 1440px) {
-  .mobile-nav {
-    display: block;
-    position: fixed;
-    z-index: 10;
-    color: $white;
-    height: 100vh;
-    top: 0;
-    right: -380px;
-    background: $black;
-    max-width: 380px;
-    width: 100%;
-    transition: all 0.3s ease-in-out;
-
-    &.active {
-      right: 0;
+  @media screen and (max-width: 1200px) {
+    .header-consultation-btn {
+      display: none;
     }
-  }
 
-  .mobile-nav__wrap {
-    padding: 100px 16px 32px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+    .header__phone {
+      gap: 2px;
+    }
 
-  .mobile-nav__nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    font-weight: 500;
-  }
-
-  .burger {
-    width: 22px;
-    height: 22px;
-    display: block;
-    position: relative;
-    flex-shrink: 0;
-
-    span {
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      border-radius: 2px;
+    .mobile-nav {
+      display: block;
+      position: fixed;
+      z-index: 10;
+      color: $black;
+      height: 100vh;
+      top: 0;
+      right: -100%;
       background: $white;
-      pointer-events: none;
-      border-radius: 2px;
-      left: 0;
-      transition: all 0.2s ease-in-out;
+      width: 100%;
+      transition: all 0.3s ease-in-out;
 
-      &:nth-child(1) {
-        top: 3px;
-      }
-      &:nth-child(2) {
-        top: 10px;
-      }
-      &:nth-child(3) {
-        bottom: 3px;
+      &.active {
+        right: 0;
       }
     }
 
-    &.active {
+    .mobile-nav__wrap {
+      padding: 100px 16px 32px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-nav__nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      font-weight: 500;
+    }
+
+    .burger {
+      background: $red;
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+      display: block;
+      position: relative;
+      flex-shrink: 0;
+
       span {
+        position: absolute;
+        width: 18px;
+        height: 2px;
+        border-radius: 2px;
+        background: $white;
+        pointer-events: none;
+        border-radius: 2px;
+        left: 7px;
+        transition: all 0.2s ease-in-out;
+
         &:nth-child(1) {
           top: 10px;
-          transform: rotate(225deg);
         }
         &:nth-child(2) {
-          opacity: 0;
+          top: 15px;
         }
         &:nth-child(3) {
           bottom: 10px;
-          transform: rotate(-225deg);
+        }
+      }
+
+      &.active {
+        span {
+          &:nth-child(1) {
+            top: 15px;
+            transform: rotate(225deg);
+          }
+          &:nth-child(2) {
+            opacity: 0;
+          }
+          &:nth-child(3) {
+            bottom: 15px;
+            transform: rotate(-225deg);
+          }
         }
       }
     }
+
+    .header__nav {
+      position: absolute;
+      // transform: translateY(-100%);
+      display: none;
+    }
   }
 
-  .header__nav {
-    position: absolute;
-    // transform: translateY(-100%);
+  .header-div {
     display: none;
   }
-}
 
-@media screen and (max-width: 1200px) {
-  .header-consultation-btn {
-    display: none;
-  }
+  .header__phone_top {
+    svg {
+      display: none;
+    }
 
-  .header__phone {
-    gap: 2px;
+    a {
+      font-weight: 700;
+    }
   }
 }
 
@@ -185,22 +213,26 @@
     display: none !important;
   }
 
-  .header__phone {
-    display: none;
-  }
-
   .header__logo {
     img {
       height: 24px;
     }
   }
 
+  .header__left {
+    display: none;
+  }
+
+  .header__btns {
+    justify-content: space-between;
+    width: 100%;
+  }
+
   .mobile-nav {
-    max-width: 290px;
   }
 
   .mobile-nav__wrap {
-    padding: 80px 16px 32px;
+    padding: 100px 16px 120px;
   }
 
   .mobile-nav__bottom-contacts {

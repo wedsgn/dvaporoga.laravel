@@ -1,24 +1,79 @@
 .footer {
-  // margin-top: 240px;
+  color: #fff;
+  padding-top: 32px;
+  background: #1b1b1b;
 }
 
-.footer__wrap {
-  display: grid;
+.footer-top {
+  padding-bottom: 32px;
+  border-bottom: 1px solid #323232;
+}
+
+.footer-top__wrap {
+  display: flex;
   align-items: center;
-  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
 }
 
-.footer-left {
-  //   padding-top: 64px;
+.footer-top__right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.footer-bottom__descr {
+  &.--mob {
+    display: none;
+  }
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-social {
+  border-radius: 100%;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.footer-copy {
+  background: #000;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.footer-copy__wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-bottom__wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-bottom__nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 16px;
 }
 
 .footer-right {
   color: $white;
-  padding: 80px 0 80px 150px;
-  background: $black;
   position: relative;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     height: 100%;
     width: 100%;
@@ -52,12 +107,6 @@
   &:hover {
     color: $red;
   }
-}
-
-.footer-socials {
-  margin-top: 32px;
-  display: flex;
-  gap: 16px;
 }
 
 .footer-phone {
@@ -156,128 +205,66 @@
 }
 
 @media screen and (max-width: 1440px) {
-  .footer-form__title {
-    font-size: 24px;
-  }
-
-  .footer-right {
-    padding: 48px 64px;
-  }
-
-  .footer-form-input {
-    padding: 12px 0;
-  }
-  .footer-copyright {
-    font-weight: 300;
-  }
-
-  .footer__nav {
-    margin-top: 32px;
-  }
-
-  .footer-form {
-    margin-top: 20px;
-  }
-
-  .footer-form-btn {
-    width: 18px;
-    height: 18px;
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .footer__nav-list {
-    max-width: 80%;
-  }
 }
 
 @media screen and (max-width: 1024px) {
-  .footer__nav-list {
-    max-width: none;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .footer__wrap {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: flex-start;
-  }
-
-  .footer-right {
-    width: 100%;
-    padding: 56px 0;
-    display: flex;
-    justify-content: center;
+  .footer-top__wrap {
     flex-direction: column;
-    &:before {
-      left: -20px;
-      width: 200%;
+    gap: 20px;
+  }
+
+  .header__phone {
+    &.--footer {
+      margin-top: 16px;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+  .footer-top__left {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-bottom__descr {
+    display: none;
+    &.--mob {
+      display: block;
+      text-align: center;
     }
   }
 
-  .footer-left {
-    width: 100%;
-    margin-top: 32px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .footer-socials {
-    justify-content: center;
-  }
-  .footer__nav-title {
-    font-size: 16px;
-  }
-
-  .footer-right {
-    padding: 40px 0;
-  }
-
-  .footer-bottom__top {
+  .footer-top__right {
     flex-direction: column;
     gap: 16px;
   }
 
-  .footer-bottom__bottom {
+  .footer-bottom__wrap {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer-bottom__nav {
+    flex-direction: column;
+  }
+
+  .footer-copy__wrap {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
   }
 
-  .footer-bottom__policies {
-    flex-direction: column;
-  }
-
-  .footer-bottom__credits {
+  .footer-copy {
     text-align: center;
+    padding: 16px 0;
   }
 }
 
+@media screen and (max-width: 900px) {
+}
+
+@media screen and (max-width: 768px) {
+}
+
 @media screen and (max-width: 550px) {
-  .footer-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-  }
-  .footer__nav-list {
-    grid-template-columns: 1fr;
-  }
-
-  .footer__nav-title {
-    text-align: center;
-  }
-
-  .footer__nav-link {
-    text-align: center;
-  }
-
-  .footer-right {
-    align-items: center;
-    text-align: center;
-  }
 }
