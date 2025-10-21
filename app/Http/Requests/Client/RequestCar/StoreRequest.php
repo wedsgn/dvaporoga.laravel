@@ -43,44 +43,49 @@ class StoreRequest extends FormRequest
         }
     }
 
-    public function rules(): array
-    {
-        return [
-            'name'     => ['nullable','string','min:2','max:70'],
-            'phone'    => ['bail','required','string','regex:/^\+7\d{10}$/'],
-            'form_id'  => ['nullable','string','max:100'],
+public function rules(): array
+{
+    return [
+        'name'     => ['nullable','string','min:2','max:70'],
+        'phone'    => ['bail','required','string','regex:/^\+7\d{10}$/'],
+        'form_id'  => ['nullable','string','max:100'],
 
-            'make_id'  => ['bail','required','integer','exists:car_makes,id'],
-            'model_id' => [
-                'bail','required','integer',
-                function($attr, $value, $fail){
-                    $makeId = (int) request('make_id');
-                    $ok = CarModel::where('id', (int)$value)
-                          ->where('car_make_id', $makeId)
-                          ->exists();
-                    if (!$ok) $fail('Модель не относится к выбранной марке.');
-                }
-            ],
-        ];
-    }
+        'make_id'  => ['bail','required','integer','exists:car_makes,id'],
+        'model_id' => [
+            'bail','required','integer',
+            function($attr, $value, $fail){
+                $makeId = (int) request('make_id');
+                $ok = \App\Models\CarModel::where('id', (int)$value)
+                    ->where('car_make_id', $makeId)
+                    ->exists();
+                if (!$ok) $fail('Модель не относится к выбранной марке.');
+            }
+        ],
 
-    public function messages(): array
-    {
-        return [
-            'phone.required' => 'Поле телефон не может быть пустым.',
-            'phone.regex'    => 'Телефон должен быть в формате +7XXXXXXXXXX.',
-            'make_id.required'  => 'Выберите марку.',
-            'model_id.required' => 'Выберите модель.',
-        ];
-    }
+        'policy'   => ['accepted'],
+    ];
+}
 
-    public function attributes(): array
-    {
-        return [
-            'name'     => 'Имя',
-            'phone'    => 'Телефон',
-            'make_id'  => 'Марка',
-            'model_id' => 'Модель',
-        ];
-    }
+public function messages(): array
+{
+    return [
+        'phone.required' => 'Поле телефон не может быть пустым.',
+        'phone.regex'    => 'Телефон должен быть в формате +7XXXXXXXXXX.',
+        'make_id.required'  => 'Выберите марку.',
+        'model_id.required' => 'Выберите модель.',
+
+        'policy.accepted'   => 'Необходимо согласиться с политикой конфиденциальности.',
+    ];
+}
+
+public function attributes(): array
+{
+    return [
+        'name'     => 'Имя',
+        'phone'    => 'Телефон',
+        'make_id'  => 'Марка',
+        'model_id' => 'Модель',
+        'policy'   => 'Политика конфиденциальности',
+    ];
+}
 }
