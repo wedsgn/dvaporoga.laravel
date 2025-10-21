@@ -153,6 +153,9 @@ window.addEventListener("load", () => {
         if (res.status === 422) {
           const data = await res.json();
           const errors = data.errors || {};
+
+          console.log(errors);
+
           Object.keys(errors).forEach((name) => {
             const msg = Array.isArray(errors[name])
               ? errors[name][0]

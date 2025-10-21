@@ -49,8 +49,7 @@
         <button type="submit" class="btn black lg">Отправить заявку</button>
         <div class="form-policy-item">
           <div class="form-policy">
-            <input type="checkbox" id="choose-check" name="policy" value="1" {{ old('policy') ? 'checked' : '' }}
-              required>
+            <input type="checkbox" id="choose-check" name="policy" value="1" checked required>
             <label for="choose-check">
               Я соглашаюсь с
               <a href="{{ asset('policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
