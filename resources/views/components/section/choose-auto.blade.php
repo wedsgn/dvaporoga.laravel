@@ -33,13 +33,9 @@
           </div>
 
           <div class="select-item">
-            <select name="model_id" id="choose-model" class="js-choice" data-placeholder="Модель"
-              data-models-url="{{ route('ajax.car-models') }}" required {{ old('make_id') ? '' : 'disabled' }}>
-              @if (old('make_id') && old('model_id'))
-                <option value="{{ old('model_id') }}" selected>Загрузка…</option>
-              @else
-                <option value="" selected disabled>Сначала выберите марку</option>
-              @endif
+            <select name="model_id" id="choose-model" class="js-choice" data-placeholder="Выберите марку"
+              data-models-url="{{ route('ajax.car-models') }}" required>
+
             </select>
             <div class="field-error" data-error-for="model_id"></div>
           </div>

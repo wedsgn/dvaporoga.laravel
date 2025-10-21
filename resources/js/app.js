@@ -4,12 +4,176 @@ import { sliders } from "./modules/sliders";
 import { burger } from "./modules/burger";
 import { tabs } from "./modules/tabs";
 import MicroModal from "micromodal";
-// import Swiper bundle with all modules installed
 import Swiper from "swiper/bundle";
 import { Fancybox } from "@fancyapps/ui";
 import Choices from "choices.js";
 
 window.addEventListener("load", () => {
+  const markSelect = new Choices("#choose-make");
+  const modelSelect = new Choices("#choose-model");
+  var route = modelSelect.passedElement.element.dataset.modelsUrl;
+  modelSelect.disable();
+
+  async function loadModels(makeId, preselect) {
+    var res = await fetch(route + "?make_id=" + encodeURIComponent(makeId), {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+      credentials: "same-origin",
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    var data = await res.json();
+
+    modelSelect.clearChoices();
+    modelSelect.setChoices(
+      data.map((item) => ({ value: item.id, label: item.title }))
+    );
+
+    modelSelect.enable();
+    modelSelect.setChoiceByValue(data[0].id);
+  }
+
+  markSelect.passedElement.element.addEventListener("choice", (e) => {
+    loadModels(e.detail.value);
+  });
+
+  const form = document.getElementById("choose-car-form");
+  const statusEl = form.querySelector(".form-status");
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  function showFieldError(name, message) {
+    const holder = form.querySelector(`.field-error[data-error-for="${name}"]`);
+    if (holder) holder.textContent = message;
+    const field = form.querySelector(`[name="${name}"]`);
+    if (field) {
+      field.classList.add("is-invalid");
+      const next = field.nextElementSibling;
+      const wrap =
+        next && next.classList && next.classList.contains("choices")
+          ? next
+          : field.closest(".choices");
+      if (wrap && wrap.classList) wrap.classList.add("is-invalid");
+    }
+  }
+
+  function setStatus(msg, ok = false) {
+    if (!statusEl) return;
+    statusEl.textContent = msg || "";
+    statusEl.style.color = ok ? "#0a7b28" : "#d00";
+  }
+
+  function clearErrors() {
+    form
+      .querySelectorAll(".field-error")
+      .forEach((el) => (el.textContent = ""));
+    form
+      .querySelectorAll(".is-invalid")
+      .forEach((el) => el.classList.remove("is-invalid"));
+    form
+      .querySelectorAll(".choices.is-invalid")
+      .forEach((el) => el.classList.remove("is-invalid"));
+  }
+
+  if (form) {
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      clearErrors();
+      setStatus("");
+      submitBtn.disabled = true;
+
+      // Затемнение формы
+      let overlay = form.querySelector(".form-overlay-submit");
+      if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "form-overlay-submit";
+        // простейший dimming стиль, можно вынести в CSS
+        overlay.style.position = "absolute";
+        overlay.style.top = 0;
+        overlay.style.left = 0;
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.background = "rgba(255,255,255,0.65)";
+        overlay.style.zIndex = 101;
+        overlay.style.pointerEvents = "all";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.innerHTML =
+          '<div class="form-spinner" style="border: 3px solid #CCC;border-top: 3px solid #888;border-radius: 50%;width: 32px;height: 32px;animation: spin 1s linear infinite;"></div>';
+        // Добавить спиннер анимацию инлайном
+        let style = document.createElement("style");
+        style.innerHTML = `@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}`;
+        overlay.appendChild(style);
+        form.style.position = "relative";
+        form.appendChild(overlay);
+      } else {
+        overlay.style.display = "flex";
+      }
+
+      try {
+        const fd = new FormData(form);
+        const res = await fetch(form.action, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN":
+              document
+                .querySelector('meta[name="csrf-token"]')
+                ?.getAttribute("content") || "",
+          },
+          body: fd,
+          credentials: "same-origin",
+          cache: "no-store",
+        });
+
+        if (res.status === 201 || res.ok) {
+          MicroModal.show("modal-2");
+
+          form.reset();
+
+          // markSelect.clearChoices();
+          modelSelect.clearChoices();
+          modelSelect.disable();
+
+          // вернуть модель к плейсхолдеру
+          const modelEl = document.getElementById("choose-model");
+          if (modelEl) {
+            try {
+              modelEl.choices?.destroy?.();
+            } catch (e) {}
+            const wrap = modelEl.nextElementSibling;
+            if (wrap && wrap.classList?.contains("choices")) wrap.remove();
+            modelEl.innerHTML =
+              '<option value="" disabled selected>Сначала выберите марку</option>';
+            modelEl.disabled = true;
+          }
+          return;
+        }
+
+        if (res.status === 422) {
+          const data = await res.json();
+          const errors = data.errors || {};
+          Object.keys(errors).forEach((name) => {
+            const msg = Array.isArray(errors[name])
+              ? errors[name][0]
+              : String(errors[name]);
+            showFieldError(name, msg);
+          });
+          return;
+        }
+
+        setStatus("Ошибка при отправке. Попробуйте позже.");
+      } catch (err) {
+        console.error("[choose-car] submit failed:", err);
+        setStatus("Сетевая ошибка. Проверьте соединение.");
+      } finally {
+        submitBtn.disabled = false;
+        // Убрать затемнение
+        if (overlay) overlay.style.display = "none";
+      }
+    });
+  }
+
   MicroModal.init({
     disableScroll: true,
   });
@@ -18,18 +182,6 @@ window.addEventListener("load", () => {
     MicroModal.show("modal-3");
   }, 60000);
 
-  const selects = document.querySelectorAll(".js-choice");
-  selects.forEach((item) => {
-    const choices = new Choices(item, {
-      loadingText: "Загрузка...",
-      noResultsText: "Ничего не найдено",
-      noChoicesText: "No choices to choose from",
-      itemSelectText: "",
-      uniqueItemText: "Only unique values can be added",
-      customAddItemText:
-        "Only values matching specific conditions can be added",
-    });
-  });
   accordition();
   sliders();
   burger();

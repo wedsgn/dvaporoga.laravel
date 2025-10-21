@@ -233,7 +233,7 @@
 
 </body>
 <script src="{{ asset('/js/forms-ajax.js') }}"></script>
-<script defer src="{{ asset('js/products-section.js') }}"></script>
+{{-- <script defer src="{{ asset('js/products-section.js') }}"></script> --}}
 <script src="{{ asset('/js/product_calc.js') }}"></script>
 
 </html>

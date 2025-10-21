@@ -26,6 +26,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.0/dist/fancybox/fancybox.css" />
+
+
   <link rel="canonical" href="{{ url()->current() }}" />
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
