@@ -54,10 +54,10 @@
     bottom: -54px !important;
     display: block;
     font-weight: 500;
-    font-family: "Golos" sans-serif;
+    font-family: "Golos", sans-serif;
     font-size: 18px;
   }
-  .hero-banner-arrow-next {
+  .slider-arrow-next {
     right: 0 !important;
     top: auto !important;
     bottom: -70px;
@@ -68,7 +68,7 @@
     font-size: 16px;
   }
 
-  .hero-banner-arrow-prev {
+  .slider-arrow-prev {
     left: 0px !important;
     top: auto !important;
     bottom: -70px;
@@ -92,11 +92,11 @@
     bottom: -42px !important;
   }
 
-  .hero-banner-arrow-next {
-    bottom: -50px;
+  .slider-arrow-next {
+    bottom: -50px !important;
   }
 
-  .hero-banner-arrow-prev {
-    bottom: -50px;
+  .slider-arrow-prev {
+    bottom: -50px !important;
   }
 }

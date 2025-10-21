@@ -255,6 +255,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .how-we-work-section.section {
+    margin-top: 120px;
+  }
   .how-we-work__wrap_info {
     grid-template-columns: repeat(1, 1fr);
   }

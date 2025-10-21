@@ -111,7 +111,7 @@ window.addEventListener("load", () => {
   }
   // Корзина
 
-  const swiper = new Swiper(".swiper", {
+  const swiper = new Swiper(".swiper-banner", {
     // Optional parameters
     loop: true,
     speed: 300,
@@ -119,7 +119,7 @@ window.addEventListener("load", () => {
 
     // If we need pagination
     pagination: {
-      el: ".swiper-pagination",
+      el: ".banners-pagination",
       type: "fraction",
       renderFraction: function (currentClass, totalClass) {
         return (
@@ -139,10 +139,30 @@ window.addEventListener("load", () => {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
+  });
 
-    // And if we need scrollbar
-    scrollbar: {
-      el: ".swiper-scrollbar",
+  const swiperGallery = new Swiper(".gallery-swiper", {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    loop: true,
+    pagination: {
+      el: ".gallery-pagination",
+      type: "fraction",
+      renderFraction: function (currentClass, totalClass) {
+        return (
+          '<span class="' +
+          currentClass +
+          '"></span>' +
+          "/" +
+          '<span class="' +
+          totalClass +
+          '"></span>'
+        );
+      },
+    },
+    navigation: {
+      nextEl: ".gallery-arrow-next",
+      prevEl: ".gallery-arrow-prev",
     },
   });
 });

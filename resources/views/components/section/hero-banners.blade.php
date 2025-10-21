@@ -1,5 +1,5 @@
  <div class="index-hero__banners">
-   <div class="swiper">
+   <div class="swiper swiper-banner">
      <div class="swiper-wrapper">
        {{-- Arka --}}
        <div class="swiper-slide">
@@ -118,7 +118,7 @@
 
    <div class="swiper-pagination banners-pagination"></div>
 
-   <div class="swiper-button-prev slider-arrow slider-arrow-prev hero-banner-arrow-prev">
+   <div class="swiper-button-prev slider-arrow slider-arrow-prev hero-banner-arrow-prev gallery-arrow-prev">
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
        class="lucide lucide-arrow-left-icon lucide-arrow-left">
@@ -128,7 +128,7 @@
    </div>
 
 
-   <div class="swiper-button-next slider-arrow slider-arrow-next hero-banner-arrow-next">
+   <div class="swiper-button-next slider-arrow slider-arrow-next hero-banner-arrow-next gallery-arrow-next">
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
        class="lucide lucide-arrow-right-icon lucide-arrow-right">
