@@ -32,11 +32,22 @@ select {
   }
 }
 
+@media screen and (max-width: 1440px) {
+  .choose-section {
+    margin-top: 140px;
+  }
+}
 @media screen and (max-width: 1024px) {
   .choose-section__form_row {
     gap: 8px;
   }
   .choose-section__form_row {
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .choose-section {
+    margin-top: 100px;
   }
 }

@@ -120,6 +120,18 @@ window.addEventListener("load", () => {
     // If we need pagination
     pagination: {
       el: ".swiper-pagination",
+      type: "fraction",
+      renderFraction: function (currentClass, totalClass) {
+        return (
+          '<span class="' +
+          currentClass +
+          '"></span>' +
+          "/" +
+          '<span class="' +
+          totalClass +
+          '"></span>'
+        );
+      },
     },
 
     // Navigation arrows
