@@ -24,8 +24,7 @@
                </div>
 
                <div class="index-hero__slide_btns">
-                 <button class="btn  lg index-hero__slide_btn header-consultation-btn"
-                   data-micromodal-trigger="modal-1">
+                 <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
                    Заказать
                  </button>
                </div>
@@ -50,6 +49,21 @@
                  <p>На переднию и заднюю часть авто</p>
                  <div class="dot"></div>
                </div>
+             </div>
+
+             <div class="index-hero__slide_prices --mob">
+               <div class="index-hero__slide_price">
+                 от 1 690 руб
+               </div>
+               <div class="index-hero__slide_oldprice">
+                 2 500 руб
+               </div>
+             </div>
+
+             <div class="index-hero__slide_btns --mob">
+               <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
+                 Заказать
+               </button>
              </div>
            </div>
            <div class="index-hero__slide-fx --left"></div>
@@ -79,8 +93,7 @@
                </div>
 
                <div class="index-hero__slide_btns">
-                 <button class="btn  lg index-hero__slide_btn header-consultation-btn"
-                   data-micromodal-trigger="modal-1">
+                 <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
                    Заказать
                  </button>
                </div>
@@ -102,6 +115,21 @@
                  <div class="dot"></div>
                </div>
 
+             </div>
+
+             <div class="index-hero__slide_prices --mob">
+               <div class="index-hero__slide_price">
+                 от 1 690 руб
+               </div>
+               <div class="index-hero__slide_oldprice">
+                 2 500 руб
+               </div>
+             </div>
+
+             <div class="index-hero__slide_btns --mob">
+               <button class="btn  lg index-hero__slide_btn " data-micromodal-trigger="modal-1">
+                 Заказать
+               </button>
              </div>
            </div>
            <div class="index-hero__slide-fx --left"></div>

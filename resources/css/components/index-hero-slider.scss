@@ -169,6 +169,9 @@
   align-items: flex-end;
   gap: 16px;
   margin-top: 24px;
+  &.--mob {
+    display: none;
+  }
 }
 
 .index-hero__slide_price {
@@ -194,6 +197,10 @@
 
 .index-hero__slide_btns {
   margin-top: 24px;
+
+  &.--mob {
+    display: none;
+  }
 }
 .index-hero__slide_btn {
   max-width: 300px;
@@ -272,6 +279,7 @@
   }
 
   .index-hero__slide_image {
+    margin-top: 20px;
     margin-bottom: 16px;
     width: 100%;
 
@@ -331,10 +339,37 @@
     align-items: center;
     gap: 8px;
     display: none;
+    &.--mob {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-left: auto;
+      align-items: flex-end;
+    }
   }
 
   .index-hero__slide_price {
     font-size: 18px;
+  }
+
+  .index-hero__slide_oldprice {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .index-hero__slide_btns {
+    display: none;
+    &.--mob {
+      margin-top: 0;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .index-hero__slide_btn {
+    width: 100%;
+    max-width: none;
   }
 }
 

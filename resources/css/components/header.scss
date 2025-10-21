@@ -110,12 +110,11 @@
       display: block;
       position: fixed;
       z-index: 10;
-      color: $white;
+      color: $black;
       height: 100vh;
       top: 0;
-      right: -380px;
-      background: $black;
-      max-width: 380px;
+      right: -100%;
+      background: $white;
       width: 100%;
       transition: all 0.3s ease-in-out;
 
@@ -140,45 +139,47 @@
     }
 
     .burger {
-      width: 22px;
-      height: 22px;
+      background: $red;
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
       display: block;
       position: relative;
       flex-shrink: 0;
 
       span {
         position: absolute;
-        width: 100%;
+        width: 18px;
         height: 2px;
         border-radius: 2px;
-        background: $black;
+        background: $white;
         pointer-events: none;
         border-radius: 2px;
-        left: 0;
+        left: 7px;
         transition: all 0.2s ease-in-out;
 
         &:nth-child(1) {
-          top: 3px;
-        }
-        &:nth-child(2) {
           top: 10px;
         }
+        &:nth-child(2) {
+          top: 15px;
+        }
         &:nth-child(3) {
-          bottom: 3px;
+          bottom: 10px;
         }
       }
 
       &.active {
         span {
           &:nth-child(1) {
-            top: 10px;
+            top: 15px;
             transform: rotate(225deg);
           }
           &:nth-child(2) {
             opacity: 0;
           }
           &:nth-child(3) {
-            bottom: 10px;
+            bottom: 15px;
             transform: rotate(-225deg);
           }
         }

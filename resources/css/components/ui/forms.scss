@@ -1,7 +1,7 @@
 .input {
   border-radius: 8px;
   border: none;
-  border: 1px solid $grayLight;
+  border: 1px solid $gray;
   margin: 0;
   padding: 15px 19px;
 
@@ -9,6 +9,15 @@
   &:focus {
     border: 1px solid $black;
   }
+
+  &.is-invalid {
+    border: 1px solid $red;
+  }
+}
+
+.field-error {
+  font-size: 14px;
+  color: $red;
 }
 
 .copyright {
