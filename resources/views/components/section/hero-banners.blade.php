@@ -111,7 +111,7 @@
                  <div class="dot"></div>
                </div>
                <div class="index-hero__slide_tag">
-                 <p>Повторение оригинальных изгибов <br> и контуров крыльев.</p>
+                 <p>Полное повторение оригиналов</p>
                  <div class="dot"></div>
                </div>
 

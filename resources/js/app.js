@@ -267,7 +267,10 @@ window.addEventListener("load", () => {
   // Корзина
 
   const swiper = new Swiper(".swiper-banner", {
-    // loop: true,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+    },
     slidesPerView: 1,
     spaceBetween: 32,
     pagination: {

@@ -9,8 +9,8 @@
         <div class="header-div"></div>
         <nav class="header__nav">
           <a href="{{ route('home') }}#features" class="header__link">Преимуществa</a>
-
-          <a href="{{ route('catalog') }}" class="header__link">Каталог</a>
+          {{-- 
+          <a href="{{ route('catalog') }}" class="header__link">Каталог</a> --}}
           {{-- <a href="{{ route('blog') }}" class="header__link">Блог</a> --}}
           <a href="{{ route('home') }}#delivery" class="header__link">Доставка</a>
 
@@ -49,7 +49,7 @@
         @endif
         <div class="header-div"></div>
         <button class="btn header-consultation-btn" data-micromodal-trigger="modal-1">
-          Консультация
+          Обратный звонок
         </button>
 
 
@@ -68,7 +68,7 @@
   <div class="mobile-nav__wrap">
     <nav class="mobile-nav__nav">
       <a href="{{ route('home') }}#features" class="header__link">Преимущества</a>
-      <a href="{{ route('catalog') }}" class="header__link">Каталог</a>
+      {{-- <a href="{{ route('catalog') }}" class="header__link">Каталог</a> --}}
       <a href="{{ route('blog') }}" class="header__link">Блог</a>
       <a href="{{ route('home') }}#about" class="header__link">О нас</a>
       <a href="{{ route('home') }}#delivery" class="header__link">Доставка</a>
@@ -99,7 +99,7 @@
       </div>
 
       <button class="btn header-consultation-btn" data-micromodal-trigger="modal-1">
-        Консультация
+        Обратный звонок
       </button>
     </div>
   </div>
