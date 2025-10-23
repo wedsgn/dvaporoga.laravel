@@ -34,7 +34,7 @@
 
 
     <x-section.how-we-work />
-    {{-- <x-section.about-company /> --}}
+    <x-section.about-company />
     @if ($blogs->count())
       <x-section.blog :items="$blogs" />
     @endif

@@ -14,7 +14,7 @@
 
 .about-section__info_wrap {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 48px;
 }
 
@@ -38,7 +38,30 @@
   flex-shrink: 0;
   img {
     width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
     display: block;
+  }
+}
+
+.about-section__info_item_ul {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  li {
+    position: relative;
+    padding-left: 16px;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 0px;
+      border-radius: 100%;
+      width: 8px;
+      height: 8px;
+      background: $red;
+    }
   }
 }
 
