@@ -34,7 +34,7 @@
             </svg>
             <a href="tel:{{ $main_info->phone }}">{{ $main_info->phone }}</a>
           </div>
-          <span>Беспланый звонок по РФ</span>
+          <span>Бесплатный звонок по РФ</span>
         </div>
         @if (!empty($main_info->telegram))
           <a href="{{ $main_info->telegram }}" target="_blank" class="social-link">
