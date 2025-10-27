@@ -41,22 +41,24 @@
           return;
         }
       }
-      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(
-        k, a)
-    })
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=104319970', 'ym');
 
-    ym(98296066, "init", {
+    ym(104319970, 'init', {
+      ssr: true,
+      webvisor: true,
       clickmap: true,
-      trackLinks: true,
+      ecommerce: "dataLayer",
       accurateTrackBounce: true,
-      webvisor: true
+      trackLinks: true
     });
   </script>
   <noscript>
-    <div><img src="https://mc.yandex.ru/watch/98296066" style="position:absolute; left:-9999px;" alt="" />
+    <div><img src="https://mc.yandex.ru/watch/104319970" style="position:absolute; left:-9999px;" alt="" />
     </div>
   </noscript>
+  <!-- /Yandex.Metrika counter -->
+
   <!-- UIS -->
   <script type="text/javascript" async src="https://app.uiscom.ru/static/cs.min.js?k=82NGqqgGe6LoP1GRRGMot38MQC4Sx2QW">
   </script>
