@@ -16,7 +16,7 @@
 
                <div class="index-hero__slide_prices">
                  <div class="index-hero__slide_price">
-                   от 1 690 руб
+                   от 1 900 руб
                  </div>
                  <div class="index-hero__slide_oldprice">
                    2 500 руб
@@ -53,7 +53,7 @@
 
              <div class="index-hero__slide_prices --mob">
                <div class="index-hero__slide_price">
-                 от 1 690 руб
+                 от 1 900 руб
                </div>
                <div class="index-hero__slide_oldprice">
                  2 500 руб
