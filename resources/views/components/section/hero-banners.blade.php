@@ -7,7 +7,7 @@
            <div class="index-hero__slide_wrap">
              <div class="index-hero__slide_info">
                <h2 class="index-hero__slide_title">
-                 Кузовной ремонтный порог
+                 Кузовная ремонтная арка
                </h2>
 
                <p class="index-hero__slide_descr">
