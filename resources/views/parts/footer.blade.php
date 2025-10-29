@@ -79,84 +79,34 @@
 </footer>
 <script>
 (function (w, d) {
-  var YM_ID = 104319970, GOAL = 'lead';
+  // Ставим один раз
+  if (w.__ymFormsGoalInstalled) return;
+  w.__ymFormsGoalInstalled = true;
 
-  function ymSafe(meta){
-    if (typeof w.ym === 'function') {
-      try { w.ym(YM_ID, 'reachGoal', GOAL, meta || {}); } catch(e){}
-    }
-  }
+  var YM_ID = 104319970;
+  var ATTR  = 'data-ym-goal';
 
-  var lastTs = 0;
-  try { lastTs = parseInt(w.sessionStorage.getItem('ym_lead_last') || '0', 10) || 0; } catch(e){}
-  function recently(ms){ return (Date.now() - lastTs) < ms; }
-  function mark(){ lastTs = Date.now(); try { w.sessionStorage.setItem('ym_lead_last', String(lastTs)); } catch(e){} }
+  d.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f || !f.hasAttribute(ATTR)) return;
 
-  function metaFor(form){
-    var fid = (form.querySelector('[name="form_id"]') || {}).value || form.id || '';
-    var act = form.getAttribute('action') || form.dataset.action || '';
-    return {
-      page: w.location.pathname + w.location.search,
-      form_id: fid,
-      action: act
-    };
-  }
-
-  async function handleModalSubmit(e){
-    var form = e.target;
-    if (!form.matches('.modal-form')) return;
-
-    e.preventDefault();
-
-    var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
-
-    var url = form.dataset.action;
-    var fd  = new FormData(form);
+    // Антидубль от дабл-клика/повторного submit
+    if (f.__ymGoalFired) return;
+    f.__ymGoalFired = true;
+    setTimeout(function(){ f.__ymGoalFired = false; }, 3000);
 
     try {
-      var res = await fetch(url, {
-        method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-        credentials: 'same-origin',
-        cache: 'no-store'
-      });
-
-      if (res.ok && !recently(2000)) {
-        mark();
-        ymSafe(metaFor(form));
+      if (typeof w.ym === 'function') {
+        var goal = f.getAttribute(ATTR) || 'lead';
+        var fid  = (f.querySelector('[name="form_id"]') || {}).value || f.id || '';
+        var act  = f.getAttribute('action') || (f.dataset ? f.dataset.action : '') || '';
+        w.ym(YM_ID, 'reachGoal', goal, {
+          form_id: fid,
+          action: act,
+          page: w.location.pathname + w.location.search
+        });
       }
-    } catch (err) {
-    } finally {
-      if (submitBtn) submitBtn.disabled = false;
-    }
-  }
-
-  function handleCartSubmit(e){
-    var form = e.target;
-    if (!form.matches('#cart-form')) return;
-
-    if (!recently(2000)) {
-      mark();
-      ymSafe(metaFor(form));
-    }
-    var btn = form.querySelector('button[type="submit"], input[type="submit"]');
-    if (btn) btn.disabled = true;
-    setTimeout(function(){ if (btn) btn.disabled = false; }, 4000);
-  }
-
-  function bind(){
-    document.addEventListener('submit', handleModalSubmit, true);
-    var cart = document.querySelector('#cart-form');
-    if (cart && !cart.__boundYmCart) {
-      cart.addEventListener('submit', handleCartSubmit, true);
-      cart.__boundYmCart = true;
-    }
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
-  else bind();
-
+    } catch (err) { /* no-op */ }
+  }, true); // capture, чтобы поймать submit до любых stopPropagation
 })(window, document);
 </script>

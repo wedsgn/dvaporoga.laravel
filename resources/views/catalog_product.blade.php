@@ -144,7 +144,7 @@
                             </div>
                         </div>
 
-                        <form class="cart-form" id="cart-form" action="{{ route('request_product.store') }}"
+                        <form class="cart-form" id="cart-form" action="{{ route('request_product.store') }}" data-ym-goal="cart-lead"
                             method="POST">
                             @csrf
                             <input type="text" placeholder="Имя" class="input" name="name" required />
