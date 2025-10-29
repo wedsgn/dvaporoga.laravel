@@ -7,7 +7,7 @@
            <div class="index-hero__slide_wrap">
              <div class="index-hero__slide_info">
                <h2 class="index-hero__slide_title">
-                 Кузовной ремонтный порог
+                 Кузовная ремонтная арка
                </h2>
 
                <p class="index-hero__slide_descr">
@@ -16,7 +16,7 @@
 
                <div class="index-hero__slide_prices">
                  <div class="index-hero__slide_price">
-                   от 1 690 руб
+                   от 1 900 руб
                  </div>
                  <div class="index-hero__slide_oldprice">
                    2 500 руб
@@ -53,7 +53,7 @@
 
              <div class="index-hero__slide_prices --mob">
                <div class="index-hero__slide_price">
-                 от 1 690 руб
+                 от 1 900 руб
                </div>
                <div class="index-hero__slide_oldprice">
                  2 500 руб
