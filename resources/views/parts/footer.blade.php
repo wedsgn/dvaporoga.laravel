@@ -79,34 +79,49 @@
 </footer>
 <script>
 (function (w, d) {
-  // Ставим один раз
   if (w.__ymFormsGoalInstalled) return;
   w.__ymFormsGoalInstalled = true;
 
   var YM_ID = 104319970;
   var ATTR  = 'data-ym-goal';
 
+  var lastTs = 0;
+  try { lastTs = parseInt(sessionStorage.getItem('ym_lead_last') || '0', 10) || 0; } catch(e){}
+  function recently(ms){ return (Date.now() - lastTs) < ms; }
+  function mark(){ lastTs = Date.now(); try{ sessionStorage.setItem('ym_lead_last', String(lastTs)); }catch(e){} }
+
+  function fireLeadByForm(form){
+    if (!form) return;
+    if (recently(3000)) return;
+    if (typeof w.ym !== 'function') return;
+
+    var label = form.getAttribute(ATTR) || 'unknown';
+    var fidEl = form.querySelector('[name="form_id"]');
+    var fid   = fidEl ? fidEl.value : (form.id || '');
+    var act   = form.getAttribute('action') || (form.dataset ? form.dataset.action || '' : '');
+    var page  = w.location.pathname + w.location.search;
+
+    w.ym(YM_ID, 'reachGoal', 'lead', {
+      label: label,
+      form_id: fid,
+      action: act,
+      page: page
+    });
+    mark();
+  }
+
   d.addEventListener('submit', function (e) {
     var f = e.target;
     if (!f || !f.hasAttribute(ATTR)) return;
+    fireLeadByForm(f);
+  }, true);
 
-    // Антидубль от дабл-клика/повторного submit
-    if (f.__ymGoalFired) return;
-    f.__ymGoalFired = true;
-    setTimeout(function(){ f.__ymGoalFired = false; }, 3000);
-
-    try {
-      if (typeof w.ym === 'function') {
-        var goal = f.getAttribute(ATTR) || 'lead';
-        var fid  = (f.querySelector('[name="form_id"]') || {}).value || f.id || '';
-        var act  = f.getAttribute('action') || (f.dataset ? f.dataset.action : '') || '';
-        w.ym(YM_ID, 'reachGoal', goal, {
-          form_id: fid,
-          action: act,
-          page: w.location.pathname + w.location.search
-        });
-      }
-    } catch (err) { /* no-op */ }
-  }, true); // capture, чтобы поймать submit до любых stopPropagation
+  d.addEventListener('click', function (e) {
+    var btn = e.target;
+    if (!btn || btn.type !== 'submit') return;
+    var form = btn.form;
+    if (!form || !form.hasAttribute(ATTR)) return;
+    setTimeout(function(){ fireLeadByForm(form); }, 0);
+  }, true);
 })(window, document);
 </script>
