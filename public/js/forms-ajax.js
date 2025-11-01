@@ -181,6 +181,7 @@
         form.reset();
         closeParentModalIfAny(form);
         openThanks();
+        document.dispatchEvent(new CustomEvent('form:success', { detail: { form } }));
       } else if (res.status === 422) {
         // используем только серверные сообщения валидации
         const errs = (data && (data.errors || data)) || {};

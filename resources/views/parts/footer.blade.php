@@ -82,46 +82,29 @@
   if (w.__ymFormsGoalInstalled) return;
   w.__ymFormsGoalInstalled = true;
 
-  var YM_ID = 104319970;
-  var ATTR  = 'data-ym-goal';
+  var YM_ID = 104319970, ATTR = 'data-ym-goal';
+  var perFormTs = new WeakMap();
 
-  var lastTs = 0;
-  try { lastTs = parseInt(sessionStorage.getItem('ym_lead_last') || '0', 10) || 0; } catch(e){}
-  function recently(ms){ return (Date.now() - lastTs) < ms; }
-  function mark(){ lastTs = Date.now(); try{ sessionStorage.setItem('ym_lead_last', String(lastTs)); }catch(e){} }
+  function fire(form, extra) {
+    if (!form || typeof w.ym !== 'function') return;
+    var last = perFormTs.get(form) || 0;
+    if (Date.now() - last < 4000) return; // антидубль 4с
+    perFormTs.set(form, Date.now());
 
-  function fireLeadByForm(form){
-    if (!form) return;
-    if (recently(3000)) return;
-    if (typeof w.ym !== 'function') return;
-
-    var label = form.getAttribute(ATTR) || 'unknown';
     var fidEl = form.querySelector('[name="form_id"]');
-    var fid   = fidEl ? fidEl.value : (form.id || '');
-    var act   = form.getAttribute('action') || (form.dataset ? form.dataset.action || '' : '');
-    var page  = w.location.pathname + w.location.search;
-
-    w.ym(YM_ID, 'reachGoal', 'lead', {
-      label: label,
-      form_id: fid,
-      action: act,
-      page: page
-    });
-    mark();
+    w.ym(YM_ID, 'reachGoal', 'lead', Object.assign({
+      label: form.getAttribute(ATTR) || 'unknown',
+      form_id: fidEl ? fidEl.value : (form.id || ''),
+      action: form.getAttribute('action') || (form.dataset ? form.dataset.action || '' : ''),
+      page: w.location.pathname + w.location.search
+    }, extra || {}));
   }
 
+  // Фолбэк для НЕ-AJAX (у тебя не сработает, т.к. сабмит перехватывается)
   d.addEventListener('submit', function (e) {
     var f = e.target;
-    if (!f || !f.hasAttribute(ATTR)) return;
-    fireLeadByForm(f);
+    if (f && f.hasAttribute(ATTR)) fire(f, { trigger: 'submit' });
   }, true);
 
-  d.addEventListener('click', function (e) {
-    var btn = e.target;
-    if (!btn || btn.type !== 'submit') return;
-    var form = btn.form;
-    if (!form || !form.hasAttribute(ATTR)) return;
-    setTimeout(function(){ fireLeadByForm(form); }, 0);
-  }, true);
 })(window, document);
 </script>
