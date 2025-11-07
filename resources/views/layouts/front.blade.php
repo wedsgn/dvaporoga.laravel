@@ -127,7 +127,8 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="modal-delivery">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}"
+          data-ym-goal="modal-delivery">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -188,7 +189,9 @@
         <header class="modal__header">
           <h2 class="modal__title" id="modal-2-title">Заявка успешно отправлена</h2>
           <p class="modal__description" id="modal-2-desc">
-            Мы свяжемся с вами в течение 7 минут <br> и ответим на все вопросы
+            Менеджер свяжется в течении 5 минут.
+            <br>
+            Время работы с 9:00 до 21:00 по Мск
           </p>
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
@@ -230,9 +233,9 @@
       </div>
     </div>
   </div>
-<script src="{{ asset('/js/forms-ajax.js') }}"></script>
-{{-- <script defer src="{{ asset('js/products-section.js') }}"></script> --}}
-<script src="{{ asset('/js/product_calc.js') }}"></script>
+  <script src="{{ asset('/js/forms-ajax.js') }}"></script>
+  {{-- <script defer src="{{ asset('js/products-section.js') }}"></script> --}}
+  <script src="{{ asset('/js/product_calc.js') }}"></script>
 </body>
 
 
