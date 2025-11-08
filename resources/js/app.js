@@ -197,9 +197,14 @@ window.addEventListener("load", () => {
   var phones = document.querySelectorAll('input[type="tel"]');
   var maskOptions = {
     mask: "+7 (000) 000 00 00",
+    lazy: false, // +7 (___) ___ __ __ всегда видно, не скрывается
   };
 
   phones.forEach((element) => {
+    // Установить +7 по дефолту, если поле пусто
+    if (!element.value || !element.value.startsWith("+7")) {
+      element.value = "+7 ";
+    }
     var mask = new IMask(element, maskOptions);
   });
 
