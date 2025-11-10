@@ -9,7 +9,30 @@ import { Fancybox } from "@fancyapps/ui";
 import Choices from "choices.js";
 
 window.addEventListener("load", () => {
-  const markSelect = new Choices("#choose-make");
+  const markSelect = new Choices("#choose-make", {
+    shouldSort: true,
+    sorter: (a, b) => {
+      const labelA = a.label || a.value;
+      const labelB = b.label || b.value;
+
+      const isLatin = (s) => /^[A-Za-z]/.test(s);
+      const isCyrillic = (s) => /^[А-Яа-яЁё]/.test(s);
+
+      const aLatin = isLatin(labelA);
+      const bLatin = isLatin(labelB);
+      const aCyr = isCyrillic(labelA);
+      const bCyr = isCyrillic(labelB);
+
+      if (aLatin && !bLatin) {
+        return -1; // A (латиница) выше B (не латиница)
+      }
+      if (!aLatin && bLatin) {
+        return 1; // B (латиница) выше A
+      }
+      // оба латиница или оба не латиница — тогда обычное сравнение
+      return labelA.localeCompare(labelB, undefined, { sensitivity: "base" });
+    },
+  });
   const modelSelect = new Choices("#choose-model");
   var route = modelSelect.passedElement.element.dataset.modelsUrl;
   modelSelect.disable();
