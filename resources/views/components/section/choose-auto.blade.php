@@ -6,7 +6,7 @@
     <p class="choose-section__descr">Оставьте заявку, мы сообщим о наличии запчастей и их стоимость</p>
 
     <div class="choose-section__form">
-      <form id="choose-car-form" method="post" action="{{ route('lead.store_car') }}"  data-ym-goal="choose-car" novalidate>
+      <form id="choose-car-form" method="post" action="{{ route('lead.store_car') }}"  data-ym-goal="calculator" novalidate>
         @csrf
         <input type="hidden" name="form_id" value="index-choose-car">
         <input type="hidden" name="current_url"

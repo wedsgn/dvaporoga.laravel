@@ -6,7 +6,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">{{ __('admin.edit_car_make_card_title') }} {{ $item->title }}</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">{{ __('admin.edit_car_make_card_title') }} {{ $item->title }}
+                    </h4>
                 </div>
 
 
@@ -26,43 +27,45 @@
             @endif
         </div>
         <div class="row">
-          @if (!empty($item->image))
-              <div class="col-xxl-6">
-                  <div class="card">
-                      <div class="card-body">
-                          <p class="card-title-desc text-muted">{{ __('admin.field_current_image') }}</p>
-                          <div class="live-preview">
-                              <div>
-                                @if ($item->image === 'default')
-                                    <img src="{{ asset('images/mark/' . $item->slug . '.png') }}" alt="{{$item->slug}}" />
-                                @else
-                                    <img src="{{ asset('storage') . '/' . $item->image }}" class="img-fluid d-block" alt="Логотип {{ $item->title }}" />
-                                @endif
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          @else
-          @endif
+            @if (!empty($item->image))
+                <div class="col-xxl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title-desc text-muted">{{ __('admin.field_current_image') }}</p>
+                            <div class="live-preview">
+                                <div>
+                                    @if ($item->image === 'default')
+                                        <img src="{{ asset('images/mark/' . $item->slug . '.png') }}"
+                                            alt="{{ $item->slug }}" />
+                                    @else
+                                        <img src="{{ asset('storage') . '/' . $item->image }}" class="img-fluid d-block"
+                                            alt="Логотип {{ $item->title }}" />
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+            @endif
 
-          @if (!empty($item->image_mob))
-              <div class="col-xxl-6">
-                  <div class="card">
-                      <div class="card-body">
-                          <p class="card-title-desc text-muted">{{ __('admin.field_current_image_mob') }}</p>
-                          <div class="live-preview">
-                              <div>
-                                  <img src="{{ asset('storage') . '/' . $item->image_mob }}" class="img-fluid"
-                                      alt="Responsive image">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          @else
-          @endif
-      </div>
+            @if (!empty($item->image_mob))
+                <div class="col-xxl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title-desc text-muted">{{ __('admin.field_current_image_mob') }}</p>
+                            <div class="live-preview">
+                                <div>
+                                    <img src="{{ asset('storage') . '/' . $item->image_mob }}" class="img-fluid"
+                                        alt="Responsive image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+            @endif
+        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -79,23 +82,23 @@
                                         <input type="text" value="{{ $item->title }}" class="form-control"
                                             id="valueInput" name="title"
                                             placeholder="{{ __('admin.placeholder_text') }}">
-                                            <input type="hidden"name="old_title" value="{{ $item->title }}">
+                                        <input type="hidden"name="old_title" value="{{ $item->title }}">
                                     </div>
                                 </div>
 
                                 <div class="col-xxl-6 col-md-6">
-                                  <div>
-                                      <label for="formFile" class="form-label">{{ __('admin.field_image_mob') }}</label>
-                                      <input class="form-control" type="file" id="formFile" name="image_mob">
-                                  </div>
-                              </div>
-                              <div class="col-xxl-6 col-md-6">
+                                    <div>
+                                        <label for="formFile" class="form-label">{{ __('admin.field_image_mob') }}</label>
+                                        <input class="form-control" type="file" id="formFile" name="image_mob">
+                                    </div>
+                                </div>
+                                <div class="col-xxl-6 col-md-6">
 
-                                  <div>
-                                      <label for="formFile" class="form-label">{{ __('admin.field_image') }}</label>
-                                      <input class="form-control" type="file" id="formFile" name="image">
-                                  </div>
-                              </div>
+                                    <div>
+                                        <label for="formFile" class="form-label">{{ __('admin.field_image') }}</label>
+                                        <input class="form-control" type="file" id="formFile" name="image">
+                                    </div>
+                                </div>
 
                                 <div class="mb-3">
                                     <label class="form-label"
@@ -107,48 +110,61 @@
 
                             <div class="row gy-4">
 
-                              <div class="card-header align-items-center d-flex">
-                              </div>
-                                  <div class="col-xxl-6 col-md-6">
+                                <div class="card-header align-items-center d-flex">
+                                </div>
+                                <div class="col-xxl-6 col-md-6">
                                     <h4 class="card-title mb-0 flex-grow-1">{{ __('admin.title_seo') }}</h4>
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_meta_title') }}</label>
-                                          <input type="text" value="{{ $item->meta_title }}" class="form-control"
-                                              id="valueInput" name="meta_title"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_meta_keywords') }}</label>
-                                          <input type="text" value="{{ $item->meta_keywords }}" class="form-control"
-                                              id="valueInput" name="meta_keywords"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                  </div>
-                                  <div class="mb-3">
-                                      <label class="form-label">{{ __('admin.field_meta_description') }}</label>
-                                      <textarea id="editor" class="form-control" name="meta_description" placeholder="{{ __('admin.placeholder_text') }}"
-                                          style="height: 234px;">{{ $item->meta_description }}</textarea>
-                                  </div>
-                                  <div class="col-xxl-6 col-md-6">
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_og_url') }}</label>
-                                          <input type="text" value="{{ $item->og_url }}" class="form-control"
-                                              id="valueInput" name="og_url"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_og_title') }}</label>
-                                          <input type="text" value="{{ $item->og_title }}" class="form-control"
-                                              id="valueInput" name="og_title"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                  </div>
-                                  <div class="mb-3">
-                                      <label class="form-label">{{ __('admin.field_og_description') }}</label>
-                                      <textarea id="editor" class="form-control" name="og_description"
-                                          placeholder="{{ __('admin.placeholder_text') }}" style="height: 234px;">{{ $item->og_description }}</textarea>
-                                  </div>
-                              </div>
+                                    <div>
+                                        <label for="valueInput"
+                                            class="form-label">{{ __('admin.field_meta_title') }}</label>
+                                        <input type="text" value="{{ $item->meta_title }}" class="form-control"
+                                            id="valueInput" name="meta_title"
+                                            placeholder="{{ __('admin.placeholder_text') }}">
+                                    </div>
+                                    <div>
+                                        <label for="valueInput"
+                                            class="form-label">{{ __('admin.field_meta_keywords') }}</label>
+                                        <input type="text" value="{{ $item->meta_keywords }}" class="form-control"
+                                            id="valueInput" name="meta_keywords"
+                                            placeholder="{{ __('admin.placeholder_text') }}">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('admin.field_meta_description') }}</label>
+                                    <textarea id="editor" class="form-control" name="meta_description" placeholder="{{ __('admin.placeholder_text') }}"
+                                        style="height: 234px;">{{ $item->meta_description }}</textarea>
+                                </div>
+                                <div class="col-xxl-6 col-md-6">
+                                    <div>
+                                        <label for="valueInput" class="form-label">{{ __('admin.field_og_url') }}</label>
+                                        <input type="text" value="{{ $item->og_url }}" class="form-control"
+                                            id="valueInput" name="og_url"
+                                            placeholder="{{ __('admin.placeholder_text') }}">
+                                    </div>
+                                    <div>
+                                        <label for="valueInput"
+                                            class="form-label">{{ __('admin.field_og_title') }}</label>
+                                        <input type="text" value="{{ $item->og_title }}" class="form-control"
+                                            id="valueInput" name="og_title"
+                                            placeholder="{{ __('admin.placeholder_text') }}">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('admin.field_og_description') }}</label>
+                                    <textarea id="editor" class="form-control" name="og_description"
+                                        placeholder="{{ __('admin.placeholder_text') }}" style="height: 234px;">{{ $item->og_description }}</textarea>
+                                </div>
+                                <div class="col-xxl-6 col-md-6">
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input" type="checkbox" id="isHidden" name="is_hidden"
+                                            value="1"
+                                            {{ old('is_hidden', $item->is_hidden ?? false) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="isHidden">
+                                            Отключить показ марки на сайте
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
                             <button type="submit"
                                 class="btn btn-soft-success waves-effect waves-light mt-5 float-end">{{ __('admin.btn_save') }}</button>

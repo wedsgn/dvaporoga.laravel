@@ -36,7 +36,7 @@ class CarMakeController extends BaseController
   {
       $data = $request->validated();
       $data['slug'] = Str::slug($data['title']);
-
+      $data['is_hidden'] = (bool) $request->boolean('is_hidden');
       foreach (['image', 'image_mob'] as $image) {
         if ($request->hasFile($image)) {
             $data[$image] = $this->upload_service->imageConvertAndStore($request, $data[$image], $data['slug']);
@@ -58,7 +58,7 @@ class CarMakeController extends BaseController
       $car_make = CarMake::whereSlug($car_make_slug)->firstOrFail();
       $data = $request->validated();
       $data['slug'] = Str::slug($data['title']);
-
+      $data['is_hidden'] = (bool) $request->boolean('is_hidden');
       foreach (['image', 'image_mob'] as $image) {
         if ($request->hasFile($image)) {
             $data[$image] = $this->upload_service->imageConvertAndStore($request, $data[$image], $data['slug']);

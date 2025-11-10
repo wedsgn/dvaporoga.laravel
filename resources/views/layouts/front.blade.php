@@ -13,7 +13,7 @@
   @include('parts.footer')
 
 
-  <!-- МОДАЛКА ФОРМЫ -->
+  <!-- МОДАЛКА ШАПКА -->
   <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title"
@@ -26,7 +26,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="modal-1">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="lead">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -46,7 +46,7 @@
       </div>
     </div>
   </div>
-
+  <!-- МОДАЛКА БАНЕРА -->
   <div class="modal micromodal-slide" id="modal-hero" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-hero-title"
@@ -59,7 +59,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="modal-hero">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -80,7 +80,7 @@
     </div>
   </div>
 
-
+  <!-- МОДАЛКА О НАС -->
   <div class="modal micromodal-slide" id="modal-about" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-about-title"
@@ -93,7 +93,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="modal-about">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="company">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -114,7 +114,7 @@
     </div>
   </div>
 
-
+  <!-- МОДАЛКА ДОСТАВКА -->
   <div class="modal micromodal-slide" id="modal-delivery" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-delivery-title"
@@ -128,7 +128,7 @@
         </header>
 
         <form class="modal-form" data-action="{{ route('request_consultation.store') }}"
-          data-ym-goal="modal-delivery">
+          data-ym-goal="delivery">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -148,7 +148,7 @@
       </div>
     </div>
   </div>
-
+  <!-- МОДАЛКА ФАК -->
   <div class="modal micromodal-slide" id="modal-faq" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-faq-title"
@@ -161,7 +161,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="modal-faq">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="faq">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -213,7 +213,7 @@
         </header>
 
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="modal-3">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="automatic">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />

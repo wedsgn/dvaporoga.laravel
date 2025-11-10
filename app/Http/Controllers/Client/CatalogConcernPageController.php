@@ -15,7 +15,7 @@ class CatalogConcernPageController extends Controller
   public function index()
   {
     $products = Product::latest()->get();
-    $car_makes = CarMake::all();
+    $car_makes = CarMake::visible()->orderBy('title')->get();
     $page = Page::whereSlug('katalog')->firstOrFail();
 
     return view('catalog_concern', compact('car_makes', 'products', 'page'));
@@ -34,7 +34,7 @@ class CatalogConcernPageController extends Controller
   public function search(Request $request)
   {
     $search = $request->input('search');
-    $car_makes = CarMake::filter($search)->get();
+    $car_makes = CarMake::visible()->filter($search)->get();
     return view('partials.concern-card', compact('car_makes'));
   }
 }

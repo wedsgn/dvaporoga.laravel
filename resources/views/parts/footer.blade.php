@@ -82,25 +82,51 @@
   if (w.__ymFormsGoalInstalled) return;
   w.__ymFormsGoalInstalled = true;
 
-  var YM_ID = 104319970, ATTR = 'data-ym-goal';
+  var YM_ID = 104319970;
+  var ATTR  = 'data-ym-goal';
+
+  var GOAL_MAP = {
+    'cart-lead': 'lead',
+    'calculator': 'calculator',
+    'banner':     'banner',
+    'faq':        'faq',
+    'company':    'company',
+    'delivery':   'delivery',
+    'automatic':  'automatic',
+    'lead':       'lead'
+  };
+
   var perFormTs = new WeakMap();
+
+  function resolveGoal(raw) {
+    if (!raw) return 'lead';
+    raw = String(raw).trim().toLowerCase();
+    return GOAL_MAP[raw] || raw;
+  }
 
   function fire(form, extra) {
     if (!form || typeof w.ym !== 'function') return;
+
     var last = perFormTs.get(form) || 0;
-    if (Date.now() - last < 4000) return; // антидубль 4с
+    if (Date.now() - last < 4000) return;
     perFormTs.set(form, Date.now());
 
-    var fidEl = form.querySelector('[name="form_id"]');
-    w.ym(YM_ID, 'reachGoal', 'lead', Object.assign({
-      label: form.getAttribute(ATTR) || 'unknown',
+    var fidEl   = form.querySelector('[name="form_id"]');
+    var rawGoal = form.getAttribute(ATTR);
+    var goal    = resolveGoal(rawGoal);
+
+    w.ym(YM_ID, 'reachGoal', goal, Object.assign({
+      label: rawGoal || 'unknown',
       form_id: fidEl ? fidEl.value : (form.id || ''),
       action: form.getAttribute('action') || (form.dataset ? form.dataset.action || '' : ''),
       page: w.location.pathname + w.location.search
     }, extra || {}));
   }
 
-  // Фолбэк для НЕ-AJAX (у тебя не сработает, т.к. сабмит перехватывается)
+  // Экспортируем хелпер, чтобы дергать из AJAX-успеха:
+  //   YMGoals.fire(form, {trigger: 'ajax-success'})
+  w.YMGoals = w.YMGoals || { fire };
+
   d.addEventListener('submit', function (e) {
     var f = e.target;
     if (f && f.hasAttribute(ATTR)) fire(f, { trigger: 'submit' });

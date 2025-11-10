@@ -16,7 +16,7 @@ class WelcomePageController extends Controller
     $products = Product::orderBy('sort', 'asc')->take(6)->get();
     $order = Order::where('title', 'order_car_makes_home_page')->firstOrFail();
     $car_makes = $order->car_makes()->orderBy('car_make_order.id', 'asc')->limit(12)->get();
-    $makesForForm = CarMake::orderBy('title','asc')->get(['id','title']);
+    $makesForForm = CarMake::visible()->orderBy('title','asc')->get(['id','title']);
     $blogs = Blog::latest()->limit(10)->get();
     $page = Page::whereSlug('home')->firstOrFail();
     return view('welcome', compact('products', 'car_makes', 'blogs', 'page', 'makesForForm'));

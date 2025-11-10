@@ -31,7 +31,8 @@ class StoreRequest extends FormRequest
             'meta_keywords' => ['nullable', 'max:160'],
             'og_title' => ['nullable', 'max:70'],
             'og_description' => ['nullable', 'max:160'],
-            'og_url' => ['nullable', 'max:160']
+            'og_url' => ['nullable', 'max:160'],
+            'is_hidden'        => ['nullable','boolean']
         ];
     }
 
