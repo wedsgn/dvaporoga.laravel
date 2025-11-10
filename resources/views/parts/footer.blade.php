@@ -104,6 +104,11 @@
     return GOAL_MAP[raw] || raw;
   }
 
+  function getAction(form) {
+    return form.getAttribute('action') ||
+           (form.dataset ? (form.dataset.action || '') : '');
+  }
+
   function fire(form, extra) {
     if (!form || typeof w.ym !== 'function') return;
 
@@ -111,20 +116,26 @@
     if (Date.now() - last < 4000) return;
     perFormTs.set(form, Date.now());
 
-    var fidEl   = form.querySelector('[name="form_id"]');
     var rawGoal = form.getAttribute(ATTR);
     var goal    = resolveGoal(rawGoal);
+    var fidEl   = form.querySelector('[name="form_id"]');
+    var action  = getAction(form);
 
-    w.ym(YM_ID, 'reachGoal', goal, Object.assign({
+    var params = Object.assign({
+      goal_name: goal,
       label: rawGoal || 'unknown',
       form_id: fidEl ? fidEl.value : (form.id || ''),
-      action: form.getAttribute('action') || (form.dataset ? form.dataset.action || '' : ''),
-      page: w.location.pathname + w.location.search
-    }, extra || {}));
+      action: action || null,
+      page: w.location.origin + w.location.pathname
+    }, extra || {});
+
+    // if (w.console && console.info) {
+    //   console.info('YM GOAL:', goal, '->', params);
+    // }
+
+    w.ym(YM_ID, 'reachGoal', goal, params);
   }
 
-  // Экспортируем хелпер, чтобы дергать из AJAX-успеха:
-  //   YMGoals.fire(form, {trigger: 'ajax-success'})
   w.YMGoals = w.YMGoals || { fire };
 
   d.addEventListener('submit', function (e) {
