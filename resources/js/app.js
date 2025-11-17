@@ -150,6 +150,17 @@ window.addEventListener("load", () => {
         });
 
         if (res.status === 201 || res.ok) {
+
+           if (window.YMGoals && typeof window.YMGoals.fire === "function") {
+          window.YMGoals.fire(form, { trigger: "success" });
+        } else {
+          console.log(
+            "[YMGoals] fire skipped: YMGoals или ym не доступны",
+            window.YMGoals,
+            typeof window.ym
+          );
+        }
+
           MicroModal.show("modal-2");
 
           form.reset();
