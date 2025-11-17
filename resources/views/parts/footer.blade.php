@@ -86,7 +86,7 @@
   var ATTR  = 'data-ym-goal';
   var MODE_ATTR = 'data-ym-mode'; // auto | manual
 
-  var DEV = true; // <-- включить/выключить лог
+  var DEV = false; // <-- включить/выключить лог
 
   var GOAL_MAP = {
     'cart-lead': 'lead',
