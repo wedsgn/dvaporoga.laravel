@@ -26,14 +26,9 @@
     {{-- <x-section.features /> --}}
     <x-section.about-parts />
     <x-section.marks :items="$car_makes" />
-
     <x-section.gallery />
-
-
     {{-- <x-section.products :items="$products" /> --}}
     {{-- <x-section.installing /> --}}
-
-
     <x-section.how-we-work />
     <x-section.about-company />
     @if ($blogs->count())
