@@ -22,7 +22,7 @@
 
 
     <x-section.choose-auto :makes="$makesForForm" />
-    <x-section.marquee />
+    {{-- <x-section.marquee /> --}}
     {{-- <x-section.features /> --}}
     <x-section.about-parts />
     <x-section.gallery />
