@@ -78,98 +78,102 @@
   </div>
 </footer>
 <script>
-(function (w, d) {
-  if (w.__ymFormsGoalInstalled) return;
-  w.__ymFormsGoalInstalled = true;
+  (function(w, d) {
+    if (w.__ymFormsGoalInstalled) return;
+    w.__ymFormsGoalInstalled = true;
 
-  var YM_ID = 104319970;
-  var ATTR  = 'data-ym-goal';
-  var MODE_ATTR = 'data-ym-mode'; // auto | manual
+    var YM_ID = 104319970;
+    var ATTR = 'data-ym-goal';
+    var MODE_ATTR = 'data-ym-mode'; // auto | manual
 
-  var DEV = false; // <-- включить/выключить лог
+    var DEV = false; // <-- включить/выключить лог
 
-  var GOAL_MAP = {
-    'cart-lead': 'lead',
-    'calculator': 'calculator',
-    'banner':     'banner',
-    'faq':        'faq',
-    'company':    'company',
-    'delivery':   'delivery',
-    'automatic':  'automatic',
-    'lead':       'lead'
-  };
+    var GOAL_MAP = {
+      'cart-lead': 'lead',
+      'calculator': 'calculator',
+      'banner': 'banner',
+      'faq': 'faq',
+      'company': 'company',
+      'delivery': 'delivery',
+      'automatic': 'automatic',
+      'lead': 'lead'
+    };
 
-  var perFormTs = new WeakMap();
+    var perFormTs = new WeakMap();
 
-  function resolveGoal(raw) {
-    if (!raw) return 'lead';
-    raw = String(raw).trim().toLowerCase();
-    return GOAL_MAP[raw] || raw;
-  }
-
-  function getAction(form) {
-    return form.getAttribute('action') ||
-           (form.dataset ? (form.dataset.action || '') : '');
-  }
-
-  function devLog() {
-    if (!DEV) return;
-    if (console && console.log) {
-      console.log.apply(console, ['%c[YMGoals]', 'color:#32a852;font-weight:bold;', ...arguments]);
-    }
-  }
-
-  function fire(form, extra) {
-    if (!form || typeof w.ym !== 'function') return;
-
-    var last = perFormTs.get(form) || 0;
-    if (Date.now() - last < 4000) {
-      devLog('SKIP duplicate fire:', form);
-      return;
-    }
-    perFormTs.set(form, Date.now());
-
-    var rawGoal = form.getAttribute(ATTR);
-    var goal    = resolveGoal(rawGoal);
-    var fidEl   = form.querySelector('[name="form_id"]');
-    var action  = getAction(form);
-    var mode    = (form.getAttribute(MODE_ATTR) || 'auto').toLowerCase();
-
-    var params = Object.assign({
-      goal_name: goal,
-      label: rawGoal || 'unknown',
-      form_id: fidEl ? fidEl.value : (form.id || ''),
-      action: action || null,
-      page: w.location.origin + w.location.pathname,
-      mode: mode
-    }, extra || {});
-
-    devLog('FIRE', {
-      goal: goal,
-      rawGoal: rawGoal,
-      form: form,
-      params: params
-    });
-
-    w.ym(YM_ID, 'reachGoal', goal, params);
-  }
-
-  w.YMGoals = w.YMGoals || { fire };
-
-  // AUTO режим — только для data-ym-mode!="manual"
-  d.addEventListener('submit', function (e) {
-    var f = e.target;
-    if (!f || !f.hasAttribute(ATTR)) return;
-
-    var mode = (f.getAttribute(MODE_ATTR) || 'auto').toLowerCase();
-    if (mode === 'manual') {
-      devLog('AUTO-SKIP (manual mode):', f);
-      return;
+    function resolveGoal(raw) {
+      if (!raw) return 'lead';
+      raw = String(raw).trim().toLowerCase();
+      return GOAL_MAP[raw] || raw;
     }
 
-    devLog('AUTO-FIRE ON SUBMIT:', f);
-    fire(f, { trigger: 'submit' });
-  }, true);
+    function getAction(form) {
+      return form.getAttribute('action') ||
+        (form.dataset ? (form.dataset.action || '') : '');
+    }
 
-})(window, document);
+    function devLog() {
+      if (!DEV) return;
+      if (console && console.log) {
+        console.log.apply(console, ['%c[YMGoals]', 'color:#32a852;font-weight:bold;', ...arguments]);
+      }
+    }
+
+    function fire(form, extra) {
+      if (!form || typeof w.ym !== 'function') return;
+
+      var last = perFormTs.get(form) || 0;
+      if (Date.now() - last < 4000) {
+        devLog('SKIP duplicate fire:', form);
+        return;
+      }
+      perFormTs.set(form, Date.now());
+
+      var rawGoal = form.getAttribute(ATTR);
+      var goal = resolveGoal(rawGoal);
+      var fidEl = form.querySelector('[name="form_id"]');
+      var action = getAction(form);
+      var mode = (form.getAttribute(MODE_ATTR) || 'auto').toLowerCase();
+
+      var params = Object.assign({
+        goal_name: goal,
+        label: rawGoal || 'unknown',
+        form_id: fidEl ? fidEl.value : (form.id || ''),
+        action: action || null,
+        page: w.location.origin + w.location.pathname,
+        mode: mode
+      }, extra || {});
+
+      devLog('FIRE', {
+        goal: goal,
+        rawGoal: rawGoal,
+        form: form,
+        params: params
+      });
+
+      w.ym(YM_ID, 'reachGoal', goal, params);
+    }
+
+    w.YMGoals = w.YMGoals || {
+      fire
+    };
+
+    // AUTO режим — только для data-ym-mode!="manual"
+    d.addEventListener('submit', function(e) {
+      var f = e.target;
+      if (!f || !f.hasAttribute(ATTR)) return;
+
+      var mode = (f.getAttribute(MODE_ATTR) || 'auto').toLowerCase();
+      if (mode === 'manual') {
+        devLog('AUTO-SKIP (manual mode):', f);
+        return;
+      }
+
+      devLog('AUTO-FIRE ON SUBMIT:', f);
+      fire(f, {
+        trigger: 'submit'
+      });
+    }, true);
+
+  })(window, document);
 </script>

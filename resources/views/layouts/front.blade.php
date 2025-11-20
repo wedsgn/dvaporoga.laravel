@@ -81,7 +81,7 @@
   </div>
 
   <!-- МОДАЛКА О НАС -->
-  <div class="modal micromodal-slide" id="modal-about" aria-hidden="true">
+  <div class="modal micromodal-slide" id="modal-about" aria-hidden="true" onsubmit="console.log(123123)">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-about-title"
         aria-describedby="modal-about-desc" tabindex="-about">
@@ -127,8 +127,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}"
-          data-ym-goal="delivery">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="delivery">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
