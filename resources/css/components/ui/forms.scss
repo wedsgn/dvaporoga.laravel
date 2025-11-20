@@ -116,6 +116,7 @@
 .choices__list--dropdown,
 .choices__list[aria-expanded] {
   padding: 8px;
+  z-index: 10;
 }
 
 .choices__list--dropdown,
