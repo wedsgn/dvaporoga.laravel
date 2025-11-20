@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <x-section.hero-banners />
+        <x-section.hero-banners :page="$page" />
       </div>
     </section>
 

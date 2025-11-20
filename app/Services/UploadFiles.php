@@ -29,7 +29,9 @@ class UploadFiles
     if ($request->is('*/update_info*')) {
       $directory = 'uploads/main_infos/' . $id_or_slug . '/images/';
     }
-
+    if ($request->is('*/page-banners/*')) {
+      $directory = 'uploads/page_banners/' . $id_or_slug . '/images/';
+    }
     $defaultImage = Image::read($data);
     $filename = Str::ulid() . '.webp';
     $path = $directory . $filename;

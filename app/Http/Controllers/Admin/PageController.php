@@ -21,7 +21,9 @@ class PageController extends Controller
   public function show($page_slug)
   {
     $user = Auth::user();
-    $item = Page::whereSlug($page_slug)->firstOrFail();
+    $item = Page::whereSlug($page_slug)
+        ->with('banners')
+        ->firstOrFail();
     return view('admin.pages.show', compact('item', 'user'));
   }
 

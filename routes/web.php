@@ -20,6 +20,7 @@ use App\Http\Controllers\Client\RequestsController;
 use App\Http\Controllers\Client\WelcomePageController;
 use App\Http\Controllers\Client\CarAjaxController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PageBannerController;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
 //Concern
@@ -64,6 +65,15 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/{page_slug}/edit', [PageController::class, 'edit'])->name('edit');
     Route::patch('/{page_slug}', [PageController::class, 'update'])->name('update');
   });
+
+  Route::post('page-banners/{page}', [PageBannerController::class, 'store'])
+    ->name('page-banners.store');
+  Route::get('page-banners/{banner}/edit', [PageBannerController::class, 'edit'])
+    ->name('page-banners.edit');
+  Route::patch('page-banners/{banner}', [PageBannerController::class, 'update'])
+    ->name('page-banners.update');
+  Route::delete('page-banners/{banner}', [PageBannerController::class, 'destroy'])
+    ->name('page-banners.destroy');
 
   Route::name('car_makes.')->prefix('car_makes')->group(function () {
     Route::get('/', [CarMakeController::class, 'index'])->name('index');
