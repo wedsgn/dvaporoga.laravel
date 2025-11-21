@@ -1,6 +1,6 @@
 .about-parts-section {
-  // background: #1b1b1b;
-  // color: $white;
+  background: #1b1b1b;
+  color: $white;
   padding: 64px 0;
 }
 
@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   flex-direction: column;
-  gap: 24px;
+  gap: 32px 24px;
 }
 
 .about-parts-btn {
