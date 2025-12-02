@@ -30,3 +30,16 @@
     font-size: 16px;
   }
 }
+/* Десктоп: показываем только desktop-версію */
+@media (min-width: 769px) {
+  .swiper-banner-mobile {
+    display: none;
+  }
+}
+
+/* Мобильный: показываем только mobile-версію */
+@media (max-width: 768px) {
+  .swiper-banner-desktop {
+    display: none;
+  }
+}

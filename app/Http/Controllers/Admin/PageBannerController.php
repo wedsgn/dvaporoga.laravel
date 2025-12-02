@@ -21,8 +21,8 @@ class PageBannerController extends Controller
       'title'         => ['nullable', 'string', 'max:255'],
       'sort_order'    => ['nullable', 'integer'],
       'is_active'     => ['nullable', 'boolean'],
-      'image_desktop' => ['required', 'image', 'max:5120'],
-      'image_mobile'  => ['required', 'image', 'max:5120'],
+      'image_desktop' => ['nullable', 'image', 'max:5120'],
+      'image_mobile'  => ['nullable', 'image', 'max:5120'],
     ]);
 
     $data['page_id']   = $page->id;

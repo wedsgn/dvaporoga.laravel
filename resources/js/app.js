@@ -299,23 +299,49 @@ window.addEventListener("load", () => {
   }
   // Корзина
 
-  const swiper = new Swiper(".swiper-banner", {
-    loop: true,
-    autoplay: {
-      delay: 5000,
-    },
-    slidesPerView: 1,
-    spaceBetween: 32,
-    pagination: {
-      el: ".hero-pag",
-    },
+ // hero – десктопный слайдер
+  const desktopSwiperEl = document.querySelector(".swiper-banner-desktop");
+  if (desktopSwiperEl) {
+    new Swiper(desktopSwiperEl, {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+      },
+      slidesPerView: 1,
+      spaceBetween: 32,
+      pagination: {
+        el: ".hero-pag-desktop",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".hero-banner-arrow-next-desktop",
+        prevEl: ".hero-banner-arrow-prev-desktop",
+      },
+    });
+  }
 
-    navigation: {
-      nextEl: ".hero-banner-arrow-next",
-      prevEl: ".hero-banner-arrow-prev",
-    },
-  });
+  // hero – мобильный слайдер
+  const mobileSwiperEl = document.querySelector(".swiper-banner-mobile");
+  if (mobileSwiperEl) {
+    new Swiper(mobileSwiperEl, {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+      },
+      slidesPerView: 1,
+      spaceBetween: 32,
+      pagination: {
+        el: ".hero-pag-mobile",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".hero-banner-arrow-next-mobile",
+        prevEl: ".hero-banner-arrow-prev-mobile",
+      },
+    });
+  }
 
+  // галерея оставляем как было
   const swiperGallery = new Swiper(".gallery-swiper", {
     slidesPerView: 1,
     spaceBetween: 16,

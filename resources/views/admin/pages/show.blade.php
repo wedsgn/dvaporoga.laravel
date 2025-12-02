@@ -196,14 +196,14 @@
 
                             <div class="col-md-6">
                                 <label class="form-label">Desktop изображение <span class="text-danger"
-                                        id="desktopRequiredMark">*</span></label>
+                                        id="desktopRequiredMark"></span></label>
                                 <input type="file" name="image_desktop" id="banner_image_desktop"
                                     class="form-control" accept="image/*">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Mobile изображение <span class="text-danger"
-                                        id="mobileRequiredMark">*</span></label>
+                                        id="mobileRequiredMark"></span></label>
                                 <input type="file" name="image_mobile" id="banner_image_mobile" class="form-control"
                                     accept="image/*">
                             </div>
@@ -245,9 +245,7 @@
                     return;
                 }
 
-                /**
-                 * Режим СОЗДАНИЯ
-                 */
+
                 function openCreateMode() {
                     form.dataset.mode = 'create';
                     modeInput.value = 'create';
@@ -257,23 +255,19 @@
 
                     form.action = "{{ route('admin.page-banners.store', $item->slug) }}";
 
-                    // сброс формы и ошибок
                     form.reset();
                     errorsBox.classList.add('d-none');
                     errorsBox.innerHTML = '';
 
-                    // файлы обязательны
-                    desktopInput.required = true;
-                    mobileInput.required = true;
+                    desktopInput.required = false;
+                    mobileInput.required = false;
                     desktopReqMark.classList.remove('d-none');
                     mobileReqMark.classList.remove('d-none');
 
                     if (modal) modal.show();
                 }
 
-                /**
-                 * Режим РЕДАКТИРОВАНИЯ
-                 */
+
                 function openEditMode(button) {
                     const id = button.dataset.id;
                     const title = button.dataset.title || '';
@@ -289,16 +283,13 @@
 
                     form.action = updateUrl;
 
-                    // заполняем поля
                     form.querySelector('input[name="title"]').value = title;
                     form.querySelector('input[name="sort_order"]').value = sort;
                     form.querySelector('input[name="is_active"]').checked = isActive;
 
-                    // очищаем file-инпуты
                     desktopInput.value = '';
                     mobileInput.value = '';
 
-                    // файлы НЕ обязательны при редактировании
                     desktopInput.required = false;
                     mobileInput.required = false;
                     desktopReqMark.classList.add('d-none');
@@ -310,16 +301,13 @@
                     if (modal) modal.show();
                 }
 
-                // Кнопка "Добавить баннер"
                 if (btnAddBanner) {
                     btnAddBanner.addEventListener('click', function(e) {
-                        // bootstrap сам откроет модалку по data-bs-target,
-                        // мы просто переключаем режим перед этим
+
                         openCreateMode();
                     });
                 }
 
-                // Делегирование клика по .js-edit-banner
                 if (bannersGrid) {
                     bannersGrid.addEventListener('click', function(e) {
 
@@ -374,7 +362,6 @@
                 }
 
 
-                // Общий submit для create + edit
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
 
@@ -385,7 +372,6 @@
 
                     const formData = new FormData(form);
 
-                    // для PATCH добавляем _method
                     if (mode === 'edit') {
                         formData.append('_method', 'PATCH');
                     }
@@ -394,29 +380,46 @@
                     submitBtn.innerText = 'Сохраняю...';
 
                     fetch(form.action, {
-                            method: 'POST', // и для create, и для edit (через _method)
+                            method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                                 'Accept': 'application/json'
                             },
                             body: formData,
                         })
-                        .then(async response => {
-                            const data = await response.json();
+                        .then(async (response) => {
+                            let data;
+                            const contentType = response.headers.get('content-type') || '';
 
-                            if (!response.ok || data.status !== 'ok') {
-                                throw data;
+                            if (contentType.includes('application/json')) {
+                                data = await response.json();
+
+                                if (!response.ok || data.status !== 'ok') {
+                                    throw data;
+                                }
+                            } else {
+                                const text = await response.text();
+
+                                if (response.status === 413) {
+                                    throw {
+                                        status: 413,
+                                        message: 'Файл слишком большой. Максимум 5 МБ. Сожми изображение и попробуй ещё раз.',
+                                    };
+                                }
+
+                                throw {
+                                    status: response.status,
+                                    message: 'Сервер вернул неожиданный ответ. Попробуй ещё раз позже.',
+                                };
                             }
 
                             if (mode === 'create') {
-                                // добавляем новую плитку
                                 const wrapper = document.createElement('div');
                                 wrapper.innerHTML = data.html;
                                 const card = wrapper.firstElementChild;
                                 bannersGrid.appendChild(card);
                                 form.reset();
                             } else {
-                                // заменяем существующую плитку
                                 const card = document.querySelector('.banner-card[data-id="' + data.id +
                                     '"]');
                                 if (card) {
@@ -430,7 +433,7 @@
                                 modal.hide();
                             }
                         })
-                        .catch(err => {
+                        .catch((err) => {
                             let messages = [];
 
                             if (err && err.errors) {
@@ -452,6 +455,7 @@
                             submitBtn.disabled = false;
                             submitBtn.innerText = 'Сохранить';
                         });
+
                 });
             });
         </script>
