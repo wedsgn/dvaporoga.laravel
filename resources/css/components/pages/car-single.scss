@@ -1,0 +1,304 @@
+.car-single__hero-section {
+  margin-top: 92px;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 70px;
+  }
+}
+
+.car-single__title {
+  text-transform: uppercase;
+  font-size: 48px;
+  line-height: 100%;
+
+  span {
+    color: $red;
+  }
+
+  @media screen and (max-width: 1200px) {
+    font-size: 36px;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 28px;
+    line-height: 110%;
+  }
+
+  @media screen and (max-width: 390px) {
+    font-size: 24px;
+  }
+}
+
+.car-single-hero__wrap {
+  display: grid;
+  height: 16px;
+  align-items: center;
+  height: auto;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.car-single-hero__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.car-single-hero__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 560px;
+
+  @media screen and (max-width: 1200px) {
+    max-width: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    gap: 4px;
+  }
+}
+
+.car-single-hero__feature {
+  border-radius: 1000px;
+  border: 1px solid $red;
+  background: rgba($red, 0.1);
+  padding: 8px 16px;
+  @media screen and (max-width: 1024px) {
+    padding: 8px 12px;
+    line-height: 100%;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 6px 12px;
+    line-height: 100%;
+  }
+}
+
+.car-single-hero__image {
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  background: $gray;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.car-single-hero__promo-wrap {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+
+  @media screen and (max-width: 550px) {
+    flex-direction: column;
+  }
+}
+
+.car-single-hero__promo {
+  background: $gray;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  background: #f7f7f7;
+  border: 1px solid rgba(#000, 0.1);
+
+  @media screen and (max-width: 768px) {
+    padding: 8px;
+  }
+}
+
+.car-single-hero__promo-item-title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.car-single-hero__promo-item-price-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  gap: 16px;
+
+  @media screen and (max-width: 550px) {
+    justify-content: space-between;
+  }
+}
+
+.car-single-hero__promo-item-price {
+  padding: 8px 12px;
+  line-height: 100%;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #fff;
+  background: $red;
+}
+
+.car-single-hero__promo-item-price-old {
+  color: rgba(#000, 0.8);
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 2px;
+    border-radius: 2px;
+    background: $red;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+    &::before {
+      width: 110%;
+    }
+  }
+}
+
+.car-single-form-section {
+  margin-top: 56px;
+  background: $black;
+  color: #fff;
+  padding: 32px 0;
+}
+
+.car-single-form-section__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.car-single-form-section__label {
+  background: $red;
+  border-radius: 100px;
+  display: inline-flex;
+  padding: 4px 12px;
+  gap: 4px;
+  img {
+    display: block;
+  }
+}
+
+.car-single-form-section__descr {
+  margin-top: 8px;
+}
+
+.car-single-form {
+  margin-top: 16px;
+  // display: flex;
+  align-items: center;
+  gap: 8px;
+
+  * {
+    width: 100%;
+  }
+}
+
+.car-single-form-btn {
+  padding: 16px;
+}
+
+.car-single-parts-section {
+  margin-top: 120px;
+  @media screen and (max-width: 1024px) {
+    margin-top: 80px;
+  }
+}
+
+.car-single-parts {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 16px;
+
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 640px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.car-single-part {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.car-single-part__image {
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  background: #f9fbfa;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.car-single-part__label {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: $red;
+  color: #fff;
+  border-radius: 4px;
+  padding: 4px 8px;
+  line-height: 100%;
+}
+
+.car-single-part__bottom {
+  display: flex;
+}
+
+.car-single-part__price-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.car-single-part__price {
+  font-weight: 700;
+}
+
+.car-single-part__price-old {
+  color: $gray;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 110%;
+    height: 2px;
+    left: 50%;
+    top: 50%;
+    background: $red;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.car-single-part__btn {
+  margin-left: auto;
+}
+
+.car-single-part__btn button {
+  font-weight: 600;
+  margin-left: auto;
+  color: $red;
+  font-weight: 700;
+}

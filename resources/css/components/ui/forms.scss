@@ -13,6 +13,15 @@
   &.is-invalid {
     border: 1px solid $red;
   }
+
+  &.black {
+    background: #252525;
+    border: 1px solid #252525;
+    color: #fff;
+    &::placeholder {
+      color: #fff;
+    }
+  }
 }
 
 .field-error {

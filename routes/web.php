@@ -60,7 +60,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
   Route::name('pages.')->prefix('pages')->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('index');
-    Route::get('/search',  [PageController::class, 'search'])->name('search');
+    Route::get('/search', [PageController::class, 'search'])->name('search');
     Route::get('/{page_slug}', [PageController::class, 'show'])->name('show');
     Route::get('/{page_slug}/edit', [PageController::class, 'edit'])->name('edit');
     Route::patch('/{page_slug}', [PageController::class, 'update'])->name('update');
@@ -77,7 +77,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
   Route::name('car_makes.')->prefix('car_makes')->group(function () {
     Route::get('/', [CarMakeController::class, 'index'])->name('index');
-    Route::get('/search',  [CarMakeController::class, 'search'])->name('search');
+    Route::get('/search', [CarMakeController::class, 'search'])->name('search');
     Route::get('/create', [CarMakeController::class, 'create'])->name('create');
     Route::post('/store', [CarMakeController::class, 'store'])->name('store');
     Route::get('/{car_make_slug}', [CarMakeController::class, 'show'])->name('show');
@@ -94,7 +94,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
   Route::name('car_models.')->prefix('car_models')->group(function () {
     Route::get('/', [CarModelController::class, 'index'])->name('index');
-    Route::get('/search',  [CarModelController::class, 'search'])->name('search');
+    Route::get('/search', [CarModelController::class, 'search'])->name('search');
     Route::get('/create', [CarModelController::class, 'create'])->name('create');
     Route::post('/store', [CarModelController::class, 'store'])->name('store');
     Route::get('/{car_model_slug}', [CarModelController::class, 'show'])->name('show');
@@ -104,7 +104,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
   });
   Route::name('cars.')->prefix('cars')->group(function () {
     Route::get('/', [CarController::class, 'index'])->name('index');
-    Route::get('/search',  [CarController::class, 'search'])->name('search');
+    Route::get('/search', [CarController::class, 'search'])->name('search');
     Route::get('/create', [CarController::class, 'create'])->name('create');
     Route::post('/store', [CarController::class, 'store'])->name('store');
     Route::get('/{car_slug}', [CarController::class, 'show'])->name('show');
@@ -114,7 +114,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
   });
   Route::name('products.')->prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
-    Route::get('/search',  [ProductController::class, 'search'])->name('search');
+    Route::get('/search', [ProductController::class, 'search'])->name('search');
     Route::get('/create', [ProductController::class, 'create'])->name('create');
     Route::post('/store', [ProductController::class, 'store'])->name('store');
     Route::get('/{product_slug}', [ProductController::class, 'show'])->name('show');
@@ -160,7 +160,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
   Route::name('blogs.')->prefix('blogs')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');
-    Route::get('/search',  [BlogController::class, 'search'])->name('search');
+    Route::get('/search', [BlogController::class, 'search'])->name('search');
     Route::get('/create', [BlogController::class, 'create'])->name('create');
     Route::post('/store', [BlogController::class, 'store'])->name('store');
     Route::get('/{blog_slug}', [BlogController::class, 'show'])->name('show');
@@ -180,4 +180,9 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/search', [RequestProductController::class, 'search'])->name('search');
     Route::get('/{id}', [RequestProductController::class, 'show'])->name('show');
   });
+});
+
+
+Route::get('single-car', function () {
+  return view('car-sigle');
 });
