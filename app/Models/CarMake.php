@@ -101,4 +101,17 @@ class CarMake extends Model
   //         Storage::disk('public')->delete($path_to_file);
   //     endif;
   // }
+  public function getImageUrlAttribute(): ?string
+{
+    $img = $this->image ?? null;
+    if (!$img) return null;
+
+    if (preg_match('~^https?://~i', $img)) return $img;
+
+    // если у тебя "default" как строка — можно вернуть null или оставить как есть
+    if ($img === 'default') return $img;
+
+    return asset('storage/' . ltrim($img, '/'));
 }
+}
+

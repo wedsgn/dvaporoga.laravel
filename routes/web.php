@@ -21,6 +21,7 @@ use App\Http\Controllers\Client\WelcomePageController;
 use App\Http\Controllers\Client\CarAjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PageBannerController;
+use App\Http\Controllers\Admin\CatalogImportController;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
 //Concern
@@ -52,6 +53,9 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
 
   Route::post('/editor-uploads', EditorImageUploadController::class)->name('image_upload');
+
+  Route::get('/import_catalog', [CatalogImportController::class, 'index'])->name('import.catalog');
+  Route::post('/import_catalog', [CatalogImportController::class, 'store'])->name('import.catalog.store');
 
   Route::get('/import_cars', [ImportExelController::class, 'import_cars'])->name('import_cars');
   Route::get('/import_products', [ImportExelController::class, 'import_products'])->name('import_products');

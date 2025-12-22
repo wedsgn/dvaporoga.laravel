@@ -67,6 +67,11 @@
                         <i class="ri-hammer-line label-icon align-middle fs-16 ms-2"></i>
                         {{ __('admin.btn_load_products') }}
                     </a> -->
+
+    <a href="{{ route('admin.import.catalog') }}"
+       class="nav-link {{ request()->routeIs('admin.import.catalog*') ? 'active' : '' }}">
+        Импорт каталога
+    </a>
                 </div>
             </div>
         </div>
