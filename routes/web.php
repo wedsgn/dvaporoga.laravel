@@ -54,13 +54,15 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
   Route::post('/editor-uploads', EditorImageUploadController::class)->name('image_upload');
 
-  Route::get('/import_catalog', [CatalogImportController::class, 'index'])->name('import.catalog');
-  Route::post('/import_catalog', [CatalogImportController::class, 'store'])->name('import.catalog.store');
+Route::get('/import_catalog', [CatalogImportController::class, 'index'])->name('import.catalog');
 
-  Route::get('/import_cars', [ImportExelController::class, 'import_cars'])->name('import_cars');
-  Route::get('/import_products', [ImportExelController::class, 'import_products'])->name('import_products');
-  Route::post('/import_cars_excel_file', [ImportExelController::class, 'store_cars'])->name('store_cars');
-  Route::post('/import_products_excel_file', [ImportExelController::class, 'store_products'])->name('store_products');
+Route::post('/import_catalog/upload', [CatalogImportController::class, 'upload'])->name('import.catalog.upload');
+Route::post('/import_catalog/{run}/start', [CatalogImportController::class, 'start'])->name('import.catalog.start');
+Route::post('/import_catalog/{run}/pause', [CatalogImportController::class, 'pause'])->name('import.catalog.pause');
+Route::post('/import_catalog/{run}/resume', [CatalogImportController::class, 'resume'])->name('import.catalog.resume');
+Route::get('/import_catalog/{run}/status', [CatalogImportController::class, 'status'])->name('import.catalog.status');
+Route::delete('/import_catalog/{run}/logs', [CatalogImportController::class, 'clearLogs'])->name('import.catalog.logs.clear');
+Route::post('/import_catalog/{run}/restart', [CatalogImportController::class, 'restart'])->name('import.catalog.restart');
 
   Route::name('pages.')->prefix('pages')->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('index');
