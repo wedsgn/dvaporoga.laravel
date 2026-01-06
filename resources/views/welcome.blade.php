@@ -37,11 +37,11 @@
             value="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">
 
           {{-- UTM метки --}}
-          <input type="hidden" name="utm_source" value="{{ request('utm_source') }}">
-          <input type="hidden" name="utm_medium" value="{{ request('utm_medium') }}">
-          <input type="hidden" name="utm_campaign" value="{{ request('utm_campaign') }}">
-          <input type="hidden" name="utm_term" value="{{ request('utm_term') }}">
-          <input type="hidden" name="utm_content" value="{{ request('utm_content') }}">
+          <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+          <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+          <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+          <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+          <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
 
           <div class="choose-section__form_row">
             <div class="input-item">
