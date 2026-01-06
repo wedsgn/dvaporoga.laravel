@@ -21,13 +21,10 @@
     </section>
 
 
-    <section class="car-single-form-section">
+    <section class="car-single-form-section --white">
       <div class="container">
         <div class="car-single-form-section__top">
-          <div class="car-single-form-section__label">
-            <img src="{{ asset('images/icons/fire.svg') }}" alt="">
-            <p>Акция</p>
-          </div>
+
           <h2 class="car-single-form-section__title">Оставьте заявку</h2>
         </div>
 
