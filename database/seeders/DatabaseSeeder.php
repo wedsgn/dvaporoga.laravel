@@ -100,11 +100,13 @@ class DatabaseSeeder extends Seeder
     // ]);
 
 
-    User::factory()->create([
-      'name' => 'Admin',
-      'password' => Hash::make('Sp67edFAhum92qq34'),
-      'email' => 'info@avtoporogi.ru',
-    ]);
+    User::firstOrCreate(
+      ['email' => 'info@avtoporogi.ru'],
+      [
+        'name' => 'Admin',
+        'password' => Hash::make('Sp67edFAhum92qq34'),
+      ]
+    );
 
     // $blogs = Blog::factory()->count(50)->make()->each(function ($blog) {
     //   $blog->description_short = Str::words($blog->description, 15);

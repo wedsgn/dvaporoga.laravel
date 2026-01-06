@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const SEL = "form.index-hero-form, form.footer-form, form.modal-form";
+  const SEL = "form.index-hero-form, form.footer-form, form.modal-form, form.car-single-form";
   const BUSY = new WeakSet();
 
   // --- helpers ---
