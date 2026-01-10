@@ -25,7 +25,9 @@ class CarModel extends Model
       'meta_keywords',
       'og_url',
       'og_title',
-      'og_description'
+      'og_description',
+      'norm_key',
+      'last_import_run_id'
   ];
   public static $car_models_routes = [
     'admin.car_models.index',
@@ -48,34 +50,85 @@ class CarModel extends Model
       return $this->belongsTo(CarMake::class);
   }
 
-  public function scopeFilter($items)
-  {
-    if (request('search') !== null) {
-      $search = request('search');
-      $search = mb_strtolower($search); // convert to lowercase
+public function scopeSmartFilter($query, ?string $search)
+{
+    $search = trim((string)$search);
+    if ($search === '') return $query;
 
-      // Create a transliterator instance
-      $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', Transliterator::FORWARD);
+    $norm = mb_strtolower($search);
+    $norm = str_replace(["–", "—", "-"], "-", $norm);
+    $norm = preg_replace('/\s+/', ' ', $norm);
 
-      // Transliterate Russian characters to Latin
-      $search = $transliterator->transliterate($search);
+    $latin = $norm;
+    try {
+        $tr = Transliterator::createFromRules(
+            ':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;',
+            Transliterator::FORWARD
+        );
+        if ($tr) $latin = mb_strtolower($tr->transliterate($norm));
+    } catch (\Throwable $e) {}
 
-      // Remove accents and special characters
-      $search = preg_replace('/[^\w\s]/', '', $search);
+    $tokensNorm  = preg_split('/\s+/u', $norm, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $tokensLatin = preg_split('/\s+/u', $latin, -1, PREG_SPLIT_NO_EMPTY) ?: [];
 
-      // Split search query into individual words
-      $words = explode(' ', $search);
+    $tokens = array_values(array_unique(array_merge($tokensNorm, $tokensLatin)));
+    $tokens = array_values(array_filter($tokens, fn($t) => trim($t) !== '' && mb_strlen($t) >= 2));
 
-      // Search for each word in the database
-      $items->where(function ($query) use ($words) {
-          foreach ($words as $word) {
-              $query->orWhere('title', 'LIKE', '%' . $word . '%')
-                    ->orWhere('slug', 'LIKE', '%' . $word . '%');
-          }
-      });
-  }
-  return $items;
-  }
+    $query->select('*')->selectRaw("
+        CASE
+            WHEN LOWER(title) = ? THEN 300
+            WHEN LOWER(title) LIKE ? THEN 220
+            WHEN LOWER(title) = ? THEN 290
+            WHEN LOWER(title) LIKE ? THEN 210
+
+            WHEN LOWER(slug) = ? THEN 180
+            WHEN LOWER(slug) LIKE ? THEN 140
+            WHEN LOWER(slug) = ? THEN 170
+            WHEN LOWER(slug) LIKE ? THEN 130
+            ELSE 0
+        END AS relevance
+    ", [
+        $norm,  $norm.'%',
+        $latin, $latin.'%',
+        $norm,  $norm.'%',
+        $latin, $latin.'%',
+    ]);
+
+    $query->where(function ($q) use ($norm, $latin) {
+        foreach (array_unique([$norm, $latin]) as $needle) {
+            $needle = trim((string)$needle);
+            if ($needle === '') continue;
+
+            $q->orWhereRaw('LOWER(title) LIKE ?', ['%' . $needle . '%'])
+              ->orWhereRaw('LOWER(slug)  LIKE ?', ['%' . mb_strtolower(Str::slug($needle)) . '%']);
+        }
+    });
+
+    $query->orWhere(function ($q) use ($tokens) {
+        foreach ($tokens as $t) {
+            $t = mb_strtolower(trim($t));
+            $q->where(function ($qq) use ($t) {
+                $qq->whereRaw('LOWER(title) LIKE ?', ['%' . $t . '%'])
+                   ->orWhereRaw('LOWER(slug)  LIKE ?', ['%' . $t . '%']);
+            });
+        }
+    });
+
+    $query->orWhereHas('car_make', function ($qm) use ($norm, $latin, $tokens) {
+        foreach (array_unique([$norm, $latin]) as $needle) {
+            $needle = trim((string)$needle);
+            if ($needle === '') continue;
+            $qm->orWhereRaw('LOWER(title) LIKE ?', ['%' . $needle . '%']);
+        }
+
+        foreach ($tokens as $t) {
+            $t = mb_strtolower(trim($t));
+            $qm->orWhereRaw('LOWER(title) LIKE ?', ['%' . $t . '%']);
+        }
+    });
+
+    return $query->orderByDesc('relevance')->orderByDesc('id');
+}
   public function getGenerationsCount() {
     return $this->cars()->count();
   }
@@ -86,17 +139,6 @@ class CarModel extends Model
     return substr($this->cars()->max('years'), -4);
   }
 
-  // public function delete_files($item)
-  // {
-  //     if( $item->image):
-  //         $path_to_file = Str::remove(env('APP_URL') . '/storage', $item->image);
-  //         Storage::disk('public')->delete($path_to_file);
-  //     endif;
-  //     if( $item->image_mob):
-  //         $path_to_file = Str::remove(env('APP_URL') . '/storage', $item->image_mob);
-  //         Storage::disk('public')->delete($path_to_file);
-  //     endif;
-  // }
   public function getImageUrlAttribute(): ?string
 {
     $img = $this->image ?? null;

@@ -17,7 +17,7 @@ use App\Models\RequestConsultation;
 use App\Models\RequestProduct;
 use App\Models\CarMake;
 use App\Models\CarModel;
-
+use App\Models\Car;
 use App\Notifications\TelegramNotificationConsultation;
 use App\Notifications\TelegramNotificationProduct;
 use App\Notifications\TelegramNotificationCar;
@@ -149,86 +149,99 @@ class RequestsController extends Controller
     return response()->json(['message' => 'Request created successfully'], 201);
   }
 
-  public function store_request_car(
-    RequestCarStoreRequest $request,
-    Bitrix24Service $b24
-  ) {
-    // сохраняем как Consultation (единая таблица у тебя)
-    $rc = new RequestConsultation();
-    $rc->fill([
-      'name'    => $request->input('name'),
-      'phone'   => $request->input('phone'),
-      'form_id' => $request->input('form_id', 'index-choose-car'),
-    ]);
-    $rc->save();
+public function store_request_car(
+  RequestCarStoreRequest $request,
+  Bitrix24Service $b24
+) {
+  // сохраняем как Consultation (единая таблица у тебя)
+  $rc = new RequestConsultation();
+  $rc->fill([
+    'name'    => $request->input('name'),
+    'phone'   => $request->input('phone'),
+    'form_id' => $request->input('form_id', 'car-page-form'),
+  ]);
+  $rc->save();
 
-    $site  = $this->siteTag($request);
-    $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
+  $site  = $this->siteTag($request);
+  $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
 
-    // Человекочитаемая марка/модель
-    $make        = CarMake::find($request->integer('make_id'));
-    $model       = CarModel::find($request->integer('model_id'));
-    $makeTitle   = $make?->title ?? '';
-    $modelTitle  = $model?->title ?? '';
-    $carHuman    = trim($makeTitle . ($modelTitle ? (' / ' . $modelTitle) : ''));
+  // ТЕПЕРЬ: получаем конкретное авто по car_id
+  $car = Car::with(['car_model'])->find($request->integer('car_id'));
 
-    // Детали для всех каналов
-    $details = [
-      'subject'     => $title,
-      'name'        => preg_replace('/[_\*]/', ' ', (string)$rc->name),
-      'phone'       => $rc->phone,
-      'make'        => $makeTitle,
-      'model'       => $modelTitle,
-      'car'         => $carHuman,
-      'form'        => $this->formLabelRu($rc->form_id),
-      'current_url' => $request->input('current_url'),
-    ];
+  // Человеческое название авто
+  $carHuman = $car?->title ?: '—';
 
-    // Telegram + Mail
-    $rc->notify(new TelegramNotificationCar($details));
-    dispatch(new RequestCarMailSendJob($details));
+  // Попытаемся достать марку/модель (если связи есть)
+  $modelTitle = $car?->car_model?->title ?? null;
 
-    // Bitrix24
-    try {
-      $utm = $this->resolveUtm($request);
-
-      $res = $b24->addLead([
-        'TITLE'   => $title,
-        'NAME'    => $details['name'] ?: null,
-        'PHONE'   => $details['phone'],
-        'EMAIL'   => null,
-
-        'SOURCE_DESCRIPTION' => $this->comments([
-          'form_id'     => $rc->form_id,
-          'form_ru'     => $details['form'],
-          'current_url' => $details['current_url'],
-          'extra'       => [
-            'Марка'   => $makeTitle ?: '—',
-            'Модель'  => $modelTitle ?: '—',
-            'Телефон' => $rc->phone,
-          ],
-        ], $request),
-
-        'UTM_SOURCE'   => $utm['utm_source'],
-        'UTM_MEDIUM'   => $utm['utm_medium'],
-        'UTM_CAMPAIGN' => $utm['utm_campaign'],
-        'UTM_TERM'     => $utm['utm_term'],
-        'UTM_CONTENT'  => $utm['utm_content'],
-      ]);
-
-      Log::info('B24 response (choose-car)', [
-        'status' => $res['status'] ?? null,
-        'body'   => $res['response'] ?? null,
-      ]);
-      if (!($res['ok'] ?? false)) {
-        Log::warning('B24 lead add failed (choose-car)', $res);
-      }
-    } catch (\Throwable $e) {
-      Log::error('B24 choose-car exception: ' . $e->getMessage());
-    }
-
-    return response()->json(['message' => 'Request created successfully'], 201);
+  $makeTitle = null;
+  // если в CarModel есть связь car_make()
+  if ($car?->car_model && method_exists($car->car_model, 'car_make')) {
+    $makeTitle = $car->car_model->car_make?->title ?? null;
   }
+
+  // Детали для всех каналов
+  $details = [
+    'subject'     => $title,
+    'name'        => preg_replace('/[_\*]/', ' ', (string)$rc->name),
+    'phone'       => $rc->phone,
+
+    'car_id'      => $car?->id,
+    'car'         => $carHuman,
+    'make'        => $makeTitle,
+    'model'       => $modelTitle,
+
+    'form'        => $this->formLabelRu($rc->form_id),
+    'current_url' => $request->input('current_url'),
+  ];
+
+  // Telegram + Mail
+  $rc->notify(new TelegramNotificationCar($details));
+  dispatch(new RequestCarMailSendJob($details));
+
+  // Bitrix24
+  try {
+    $utm = $this->resolveUtm($request);
+
+    $res = $b24->addLead([
+      'TITLE'   => $title,
+      'NAME'    => $details['name'] ?: null,
+      'PHONE'   => $details['phone'],
+      'EMAIL'   => null,
+
+      'SOURCE_DESCRIPTION' => $this->comments([
+        'form_id'     => $rc->form_id,
+        'form_ru'     => $details['form'],
+        'current_url' => $details['current_url'],
+        'extra'       => [
+          'Авто'    => $carHuman,
+          'Car ID'  => $details['car_id'] ?: '—',
+          'Марка'   => $makeTitle ?: '—',
+          'Модель'  => $modelTitle ?: '—',
+          'Телефон' => $rc->phone,
+        ],
+      ], $request),
+
+      'UTM_SOURCE'   => $utm['utm_source'],
+      'UTM_MEDIUM'   => $utm['utm_medium'],
+      'UTM_CAMPAIGN' => $utm['utm_campaign'],
+      'UTM_TERM'     => $utm['utm_term'],
+      'UTM_CONTENT'  => $utm['utm_content'],
+    ]);
+
+    Log::info('B24 response (car-page)', [
+      'status' => $res['status'] ?? null,
+      'body'   => $res['response'] ?? null,
+    ]);
+    if (!($res['ok'] ?? false)) {
+      Log::warning('B24 lead add failed (car-page)', $res);
+    }
+  } catch (\Throwable $e) {
+    Log::error('B24 car-page exception: ' . $e->getMessage());
+  }
+
+  return response()->json(['message' => 'Request created successfully'], 201);
+}
 
   /* ===================== NOTIFICATIONS ===================== */
 
@@ -289,7 +302,7 @@ class RequestsController extends Controller
       'index-hero-form'   => 'Главная',
       'catalog-form'      => 'Каталог',
       'product-section'   => 'Секция товара',
-      'index-choose-car'  => 'Подбор',
+      'car-page-form'     => 'Страница авто',
     ];
     return $map[$formId] ?? ($formId ?: 'Без идентификатора');
   }

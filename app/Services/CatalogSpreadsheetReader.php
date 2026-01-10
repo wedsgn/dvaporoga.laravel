@@ -3,70 +3,107 @@
 namespace App\Services;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class CatalogSpreadsheetReader
 {
-    // В файле 2 строки заголовков, данные начинаются с 3-й строки (1-based)
+    /**
+     * В файле:
+     * 1 строка — группы (Пороги / Арки / Пенки)
+     * 2 строка — подтипы (Передние / Задние / ...)
+     * Данные начинаются с 3 строки (1-based)
+     */
     public int $headerRows = 2;
 
+    /**
+     * Количество строк с данными (без заголовков)
+     */
     public function countDataRows(string $absolutePath): int
     {
         $spreadsheet = IOFactory::load($absolutePath);
         $sheet = $spreadsheet->getActiveSheet();
 
-        $highestRow = (int)$sheet->getHighestRow(); // 1-based
-        $dataRows = max(0, $highestRow - $this->headerRows);
+        $highestRow = $sheet->getHighestDataRow();
 
-        // освобождаем память
         $spreadsheet->disconnectWorksheets();
         unset($spreadsheet);
 
-        return $dataRows;
+        // минус строки заголовков
+        return max(0, $highestRow - $this->headerRows);
     }
 
     /**
-     * Читает кусок строк данных.
-     * $offsetDataRow: 0-based индекс по данным (0 = первая строка данных)
-     * Возвращает массив строк, где каждая строка — массив по колонкам (0-based).
+     * Первая строка заголовков (группы: Пороги / Арки / Пенки)
      */
-    public function readChunk(string $absolutePath, int $offsetDataRow, int $limit): array
+    public function readFirstHeaderRow(string $absolutePath): array
     {
-        $spreadsheet = IOFactory::load($absolutePath);
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $startRow = $this->headerRows + 1 + $offsetDataRow; // переводим в 1-based row excel
-        $endRow = $startRow + $limit - 1;
-
-        $result = [];
-        for ($r = $startRow; $r <= $endRow; $r++) {
-            $rowArray = $sheet->rangeToArray(
-                "A{$r}:" . $sheet->getHighestColumn() . "{$r}",
-                null,
-                true,
-                false
-            );
-            $values = $rowArray[0] ?? [];
-            // если строка пустая — всё равно отдаём, решать будет процессор
-            $result[] = $values;
-        }
-
-        $spreadsheet->disconnectWorksheets();
-        unset($spreadsheet);
-
-        return $result;
+        return $this->readHeaderRow($absolutePath, 1);
     }
 
     /**
-     * Вторая строка заголовков (индекс 2 в Excel, 1-based).
+     * Вторая строка заголовков (подтипы)
      */
     public function readSecondHeaderRow(string $absolutePath): array
     {
+        return $this->readHeaderRow($absolutePath, 2);
+    }
+
+    /**
+     * Чтение чанка данных
+     *
+     * @param string $absolutePath
+     * @param int    $offset  0-based offset по данным (НЕ Excel row)
+     * @param int    $limit
+     *
+     * @return array<int, array>
+     */
+    public function readChunk(string $absolutePath, int $offset, int $limit): array
+    {
         $spreadsheet = IOFactory::load($absolutePath);
         $sheet = $spreadsheet->getActiveSheet();
 
-        $r = 2;
+        // Excel строка, с которой начинаем читать
+        // +1 потому что Excel 1-based
+        // +headerRows потому что пропускаем заголовки
+        $startRow = $this->headerRows + 1 + $offset;
+        $endRow   = $startRow + $limit - 1;
+
+        $highestRow = $sheet->getHighestDataRow();
+        if ($startRow > $highestRow) {
+            $spreadsheet->disconnectWorksheets();
+            unset($spreadsheet);
+            return [];
+        }
+
+        $endRow = min($endRow, $highestRow);
+
+        $range = "A{$startRow}:" . $sheet->getHighestColumn() . "{$endRow}";
+
+        $rows = $sheet->rangeToArray(
+            $range,
+            null,
+            true,
+            false
+        );
+
+        $spreadsheet->disconnectWorksheets();
+        unset($spreadsheet);
+
+        return $rows;
+    }
+
+    /**
+     * Универсальное чтение строки заголовка
+     */
+    private function readHeaderRow(string $absolutePath, int $rowNumber): array
+    {
+        $spreadsheet = IOFactory::load($absolutePath);
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $range = "A{$rowNumber}:" . $sheet->getHighestColumn() . "{$rowNumber}";
+
         $rowArray = $sheet->rangeToArray(
-            "A{$r}:" . $sheet->getHighestColumn() . "{$r}",
+            $range,
             null,
             true,
             false

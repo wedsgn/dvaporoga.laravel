@@ -34,7 +34,7 @@ class CatalogConcernPageController extends Controller
   public function search(Request $request)
   {
     $search = $request->input('search');
-    $car_makes = CarMake::visible()->filter($search)->get();
+    $car_makes = CarMake::visible()->smartFilter($search)->get();
     return view('partials.concern-card', compact('car_makes'));
   }
 }

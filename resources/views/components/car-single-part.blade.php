@@ -1,8 +1,9 @@
 @props([
+    'id' => null,
     'image' => '',
-    'label' => '',
+    'discount_percentage' => '',
     'title' => '',
-    'descr' => '',
+    'description' => '',
     'price' => '',
     'priceOld' => '',
     'link' => '',
@@ -10,8 +11,8 @@
 ])
 
 <div class="car-single-part">
-    @if (!empty($label))
-        <div class="car-single-part__label">{{ $label }}</div>
+    @if (!empty($discount_percentage))
+        <div class="car-single-part__label">{{ $discount_percentage }}</div>
     @endif
 
     <div class="car-single-part__image">
@@ -23,7 +24,7 @@
     </h3>
 
     <p class="car-single-part__descr">
-        {{ $descr }}
+        {{ $description }}
     </p>
 
     <div class="car-single-part__bottom">
@@ -36,7 +37,11 @@
         </div>
 
         <div class="car-single-part__btn">
-            <button data-micromodal-trigger="modal-1">Заказать</button>
+            <button type="button" data-micromodal-trigger="modal-product" data-product-id="{{ $id ?? '' }}"
+                data-product-title="{{ $title }}" data-product-price="{{ $price }}"
+                data-product-price-old="{{ $priceOld }}">
+                Заказать
+            </button>
         </div>
     </div>
 </div>

@@ -1,170 +1,293 @@
 @extends('layouts.front')
 
 @section('content')
-  <main>
+    <main>
 
-    {{ Breadcrumbs::render('car_generation.show', $car_make, $car_model, $car) }}
+        {{-- HERO --}}
+        <section class="car-single__hero-section">
+            <div class="container">
+                <div class="car-single-hero__wrap">
 
-    <section class="catalog-page-section">
-      <div class="container">
-        <div class="product-page-top">
-          <h1 class="h1 product-page__title">
-            Каталог кузовных запчастей для автомобилей <br>{{ $car->title }}
-          </h1>
-          {{-- <p class="product-page__description">
-                        {{ $car->description }}
-                    </p> --}}
-        </div>
-      </div>
-    </section>
+                    {{-- left --}}
+                    <div class="car-single-hero__info">
 
-    <section class="product-parts-section">
-      <div class="container">
-        <div class="product-parts-section__wrap">
-          <div class="product-parts__list">
-            @foreach ($products as $part)
-              <div class="product-part" data-prices="{{ json_encode($part->prices) }}" data-item="{{ json_encode($part) }}">
-                <div class="product-part__image">
-                  @if ($part->image === 'default')
-                    <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
-                  @else
-                    <img src="{{ asset('storage') . '/' . $part->image }}" alt="Фото {{ $part->title }}" />
-                  @endif
-                </div>
+                        <h1 class="car-single__title">
+                            КУЗОВНЫЕ ЭЛЕМЕНТЫ
+                            <br>
+                            ДЛЯ <span>{{ mb_strtoupper($car->title) }}</span>
+                        </h1>
 
-                <div class="product-part__info">
-                  <h3 class="product-part__title">
-                    {{ $part->title }}
-                  </h3>
+                        {{-- FEATURES = tags --}}
+                        @if (($car->tags ?? collect())->isNotEmpty())
+                            <div class="car-single-hero__features">
+                                @foreach ($car->tags as $tag)
+                                    <div class="car-single-hero__feature">
+                                        {{ $tag->title }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
 
+                        {{-- PROMO = offers --}}
+                        @php
+                            $offers = ($car->offers ?? collect())
+                                ->filter(fn($o) => (bool) ($o->is_active ?? true))
+                                ->values();
+                        @endphp
 
-                  <input type="hidden" class="product-part__id" value="{{ $part->id }}">
+                        @if ($offers->isNotEmpty())
+                            <div class="car-single-hero__promo-wrap">
+                                @foreach ($offers as $offer)
+                                    <div class="car-single-hero__promo">
+                                        <div class="car-single-hero__promo-item">
 
-                  <div class="product-part__info_wrap">
-                    @if ($part->steel_types->count() > 0)
-                      <div class="product-part__info_item">
-                        <p class="product-part__info_item_title">Материал:</p>
-                        {{-- <p class="product-part__info_item_value">{{ $part->material }}</p> --}}
-                        <select class="form-select steel-select" name="steel_type_id" id="steel_type_id">
-                          @foreach ($part->steel_types as $steel_type)
-                            <option value="{{ $steel_type->id }}"
-                              {{ $part->steel_type_id == $steel_type->id ? 'selected' : '' }}>
-                              {{ $steel_type->title }}
-                            </option>
-                          @endforeach
-                        </select>
-                      </div>
-                    @endif
+                                            <div class="car-single-hero__promo-item-title">
+                                                {{ $offer->title }}
+                                            </div>
 
-                    @if ($part->thicknesses->count() > 0)
-                      <div class="product-part__info_item">
-                        <p class="product-part__info_item_title">Толщина:</p>
-                        {{-- <p class="product-part__info_item_value">{{ $part->metal_thickness }}</p> --}}
-                        <select class="form-select thickness_select" name="thickness_id" id="thickness_id">
-                          @foreach ($part->thicknesses as $thickness)
-                            <option value="{{ $thickness->id }}"
-                              {{ $part->thickness_id == $thickness->id ? 'selected' : '' }}>
-                              {{ $thickness->title }}
-                            </option>
-                          @endforeach
-                        </select>
-                      </div>
-                    @endif
-                    @if ($part->types->count() > 0)
-                      <div class="product-part__info_item">
-                        <p class="product-part__info_item_title">Тип:</p>
-                        {{-- <p class="product-part__info_item_value">Стандартный</p> --}}
-                        <select class="form-select type-selector" name="type_id" id="type_id">
-                          @foreach ($part->types as $type)
-                            <option value="{{ $type->id }}" {{ $part->type_id == $type->id ? 'selected' : '' }}>
-                              {{ $type->title }}
-                            </option>
-                          @endforeach
-                        </select>
-                      </div>
-                    @endif
+                                            <div class="car-single-hero__promo-item-price-wrap">
+                                                @if (!is_null($offer->price_from))
+                                                    <div class="car-single-hero__promo-item-price">
+                                                        от {{ number_format((int) $offer->price_from, 0, '.', ' ') }}
+                                                        {{ $offer->currency ?? '₽' }}
+                                                    </div>
+                                                @endif
 
-                    @if ($part->sizes->count() > 0)
-                      <div class="product-part__info_item">
-                        <p class="product-part__info_item_title">Размер:</p>
-                        {{-- <p class="product-part__info_item_value">{{ $part->size }} </p> --}}
-                        <select class="form-select size-selector" name="size_id" id="size_id">
-                          @foreach ($part->sizes as $size)
-                            <option value="{{ $size->id }}" {{ $part->size_id == $size->id ? 'selected' : '' }}>
-                              {{ $size->title }}
-                            </option>
-                          @endforeach
-                        </select>
-                      </div>
-                    @endif
-                  </div>
+                                                @if (!is_null($offer->price_old))
+                                                    <div class="car-single-hero__promo-item-price-old">
+                                                        {{ number_format((int) $offer->price_old, 0, '.', ' ') }}
+                                                        {{ $offer->currency ?? '₽' }}
+                                                    </div>
+                                                @endif
+                                            </div>
 
-                  <div class="product-part__bottom">
-                    <div class="product-part__price">
-                      <p class="product-part__price-price">Цена:</p>
-                      <div class="product-part__price_num product-price"><span></span>
-                        руб</div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </div>
 
-                    <button class="btn">Добавить в заказ</button>
-                  </div>
+                    {{-- right --}}
+                    <div class="car-single-hero__image">
+                        @php
+                            $img = null;
+
+                            // если у тебя хранится "default" как строка — учитываем
+                            if (!empty($car->image) && $car->image !== 'default') {
+                                $img = asset('storage/' . $car->image);
+                            } elseif (!empty($car->image_mob) && $car->image_mob !== 'default') {
+                                $img = asset('storage/' . $car->image_mob);
+                            } else {
+                                // запасной вариант
+                                $img = asset('images/cars/merc.png');
+                            }
+                        @endphp
+
+                        <img src="{{ $img }}" alt="{{ $car->title }}">
+                    </div>
+
                 </div>
-              </div>
-            @endforeach
-          </div>
-          <div class="product-parts__total">
-            <div class="product-parts__total_head">
-              <h4 class="product-parts__total_title">Ваш заказ</h4>
-
-              <button class="product-parts__total_clear">Очистить</button>
             </div>
+        </section>
 
-            <div class="total-form">
-              <div class="total-form__car">
-                <div class="total-form__car_title">Автомобиль:</div>
-                <div class="total-form__car_value">{{ $car_make->title }} {{ $car_model->title }}
-                  {{ $car->years }}</div>
-              </div>
+        <section class="car-single-form-section">
+            <div class="container">
+                <div class="car-single-form-section__top">
+                    @php
+                        $hasOffers = ($car->offers ?? collect())
+                            ->filter(fn($o) => (bool) ($o->is_active ?? true))
+                            ->isNotEmpty();
+                    @endphp
 
-              <div class="total-form__parts">
-                <div class="total-form__empty">
-                  Добавьте запчасти в заказ
+                    @if ($hasOffers)
+                        <div class="car-single-form-section__label">
+                            <img src="{{ asset('images/icons/fire.svg') }}" alt="">
+                            <p>Акция</p>
+                        </div>
+                    @endif
+                    <h2 class="car-single-form-section__title">Оставьте заявку</h2>
                 </div>
-              </div>
 
-              <div class="total-form__total">
-                <div class="total-form__total_title">Итого:</div>
-                <div class="total-form__total_value"><span>0</span> руб.</div>
-              </div>
+                <p class="car-single-form-section__descr">И мы перезвоним вам в течении минуты и ответим на все вопросы</p>
+
+                <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form">
+                    @csrf
+
+                    <input type="hidden" name="form_id" value="car-page-form">
+                    <input type="hidden" name="car_id" value="{{ $car->id }}">
+                    <input type="hidden" name="current_url" value="{{ request()->fullUrl() }}">
+
+                    {{-- если у тебя UTM тянутся по фронту — можно также пробросить --}}
+                    <input type="hidden" name="utm_source" value="{{ request('utm_source') }}">
+                    <input type="hidden" name="utm_medium" value="{{ request('utm_medium') }}">
+                    <input type="hidden" name="utm_campaign" value="{{ request('utm_campaign') }}">
+                    <input type="hidden" name="utm_term" value="{{ request('utm_term') }}">
+                    <input type="hidden" name="utm_content" value="{{ request('utm_content') }}">
+
+                    <div class="choose-section__form_row">
+                        <div class="input-item">
+                            <input class="input black" type="text" name="name" placeholder="Имя" required>
+                        </div>
+
+                        <div class="input-item">
+                            <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __"
+                                required>
+                        </div>
+
+                        <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
+                    </div>
+
+                    <div class="form-policy">
+                        <input type="checkbox" id="choose-check" name="policy" value="1" checked required>
+                        <label for="choose-check">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
+                </form>
             </div>
+        </section>
 
-            <form class="cart-form" id="cart-form" action="{{ route('request_product.store') }}" data-ym-goal="lead"
-              method="POST">
-              @csrf
-              <input type="text" placeholder="Имя" class="input" name="name" required />
-              <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-              <input type="hidden" class="product-form__price" name="total_price" value="">
-              <input type="hidden" class="product-form__array" name="data" value="">
-              <input type="hidden" name="car"
-                value="{{ $car_make->title }} {{ $car_model->title }} {{ $car->years }}">
-              <input type="hidden" name="form_id" value="cart-form-catalog-product">
-              <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
-              <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
-              <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
-              <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
-              <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
-              <button class="btn lg" type="submit" id="indexHeroFormSubmit">Отправить</button>
+        {{-- PARTS (пока оставил как у тебя массивом; потом подключим из products) --}}
+        <section class="car-single-parts-section">
+            <div class="container">
+                <h2 class="h2">Запчасти на {{ $car->title }}</h2>
 
-              <p class="copyright">
-                Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                <a href="/Политика_в_области_обработки_персональных_данных.pdf" target="_blank"> политикой
-                  конфиденциальности </a>
-              </p>
-            </form>
+                <div class="car-single-parts">
+                    @foreach ($products as $p)
+                        <x-car-single-part :id="$p->id" :image="(!empty($p->image) && $p->image !== 'default' ? asset('storage/'.$p->image): asset('images/no-image.jpg'))" :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''" :title="$p->title"
+                            :description="$p->description ?? ''" :price="$p->price ? number_format((int) $p->price, 0, '.', ' ') . ' ₽' : ''" :priceOld="$p->price_old ? number_format((int) $p->price_old, 0, '.', ' ') . ' ₽' : ''" :link="$p->link ?? ''" :alt="$p->alt ?: $p->title" />
+                    @endforeach
+                </div>
+            </div>
+        </section>
 
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+        <x-section.about-parts />
+        <x-section.how-we-work />
+        <x-section.gallery />
+
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('car-request-form');
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const btn = form.querySelector('button[type="submit"]');
+                btn.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                        },
+                        body: new FormData(form),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Request failed');
+                    }
+
+                    // успех → открываем модалку
+                    MicroModal.show('modal-2');
+
+                    // опционально: очистить форму
+                    form.reset();
+
+                } catch (err) {
+                    alert('Ошибка отправки формы. Попробуйте позже.');
+                    console.error(err);
+                } finally {
+                    btn.disabled = false;
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1) Подстановка товара в модалку
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-micromodal-trigger="modal-product"]');
+                if (!btn) return;
+
+                const form = document.getElementById('modal-product-form');
+                if (!form) return;
+
+                const pid = btn.dataset.productId || '';
+                const title = btn.dataset.productTitle || '';
+                const price = (btn.dataset.productPrice || '').replace(/\s+/g, '').trim(); // если "1 690"
+                const priceNum = price ? parseInt(price, 10) : '';
+
+                // data -> как в store_request_product: [{"id":123}]
+                const dataInput = document.getElementById('modal-product-data');
+                if (dataInput) dataInput.value = JSON.stringify(pid ? [{
+                    id: Number(pid)
+                }] : []);
+
+                // total_price (опционально)
+                const totalInput = document.getElementById('modal-product-total');
+                if (totalInput) totalInput.value = priceNum || '';
+
+                // можно подсветить заголовок модалки (не обязательно)
+                const h = document.getElementById('modal-product-title');
+                if (h && title) h.textContent = `Заказ: ${title}`;
+
+                // MicroModal сам откроется по data-micromodal-trigger, но если хочешь гарант:
+                // MicroModal.show('modal-product');
+            });
+
+            // 2) AJAX submit для модалки товара (и показать modal-2 на успех)
+            const modalForm = document.getElementById('modal-product-form');
+            if (modalForm) {
+                modalForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const action = modalForm.dataset.action;
+                    const btn = modalForm.querySelector('button[type="submit"]');
+                    btn.disabled = true;
+
+                    try {
+                        const resp = await fetch(action, {
+                            method: 'POST',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': modalForm.querySelector('input[name="_token"]')
+                                    .value,
+                            },
+                            body: new FormData(modalForm),
+                        });
+
+                        if (!resp.ok) throw new Error('Request failed');
+
+                        // закрываем модалку товара и открываем успех
+                        MicroModal.close('modal-product');
+                        MicroModal.show('modal-2');
+
+                        modalForm.reset();
+
+                        // вернём базовый заголовок
+                        const h = document.getElementById('modal-product-title');
+                        if (h) h.textContent = 'Заполните форму';
+
+                        // почистим data
+                        const dataInput = document.getElementById('modal-product-data');
+                        if (dataInput) dataInput.value = '[]';
+
+                    } catch (err) {
+                        alert('Ошибка отправки формы. Попробуйте позже.');
+                        console.error(err);
+                    } finally {
+                        btn.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

@@ -45,3 +45,34 @@ services:
             - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
         networks:
             - net
+    queue_imports:
+        build:
+          context: .
+          dockerfile: Dockerfile.dvaporoga
+        container_name: dvaporoga_queue_imports
+        working_dir: /var/www/dvaporoga
+        volumes:
+          - .:/var/www/dvaporoga
+          - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+        command: php artisan queue:work database --queue=imports --sleep=1 --tries=1 --timeout=300
+        depends_on:
+          - postgres_dvaporoga
+        restart: unless-stopped
+        networks:
+          - net
+
+    queue_images:
+        build:
+          context: .
+          dockerfile: Dockerfile.dvaporoga
+        container_name: dvaporoga_queue_images
+        working_dir: /var/www/dvaporoga
+        volumes:
+          - .:/var/www/dvaporoga
+          - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+        command: php artisan queue:work database --queue=imports-images --sleep=2 --tries=3 --timeout=300
+        depends_on:
+          - postgres_dvaporoga
+        restart: unless-stopped
+        networks:
+          - net

@@ -14,13 +14,10 @@
                 <div class="alert alert-danger alert-border-left alert-dismissible fade show " role="alert">
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     @foreach ($errors->all() as $error)
-                        <div>
-                            {{ $error }}
-                        </div>
+                        <div>{{ $error }}</div>
                     @endforeach
                 </div>
             @endif
-
 
             <div class="card">
                 <div class="card-body">
@@ -31,23 +28,27 @@
 
                                 <div class="col-xxl-6 col-md-6">
                                     <div>
-                                        <label for="valueInput" class="form-label">{{ __('admin.field_title') }} *</label>
-                                        <input type="text" value="{{ old('title') }}" class="form-control"
-                                            id="valueInput" name="title" placeholder="{{ __('admin.placeholder_text') }}">
+                                        <label for="titleInput" class="form-label">{{ __('admin.field_title') }} *</label>
+                                        <input
+                                            type="text"
+                                            value="{{ old('title') }}"
+                                            class="form-control"
+                                            id="titleInput"
+                                            name="title"
+                                            placeholder="{{ __('admin.placeholder_text') }}">
                                     </div>
                                 </div>
 
                                 <div class="col-xxl-6 col-md-6">
                                     <div class="mb-3">
-                                        <label for="valueInput"
-                                            class="form-label">{{ __('admin.aside_title_cars') }}</label>
+                                        <label for="carSelect" class="form-label">{{ __('admin.aside_title_cars') }}</label>
 
-                                        @if (!count($cars) == 0)
-                                            <select id="valueInput" class="form-control" data-choices
-                                                data-choices-removeItem name="cars[]" multiple>
+                                        @if (count($cars) > 0)
+                                            <select id="carSelect" class="form-control" data-choices name="car_id">
+                                                <option value="">{{ __('admin.placeholder_text') }}</option>
                                                 @foreach ($cars as $car)
-                                                    <option value="{{ $car->title }}"
-                                                        {{ collect(old('cars'))->contains($car->title) ? 'selected' : '' }}>
+                                                    <option value="{{ $car->id }}"
+                                                        {{ (string)old('car_id') === (string)$car->id ? 'selected' : '' }}>
                                                         {{ $car->title }}
                                                     </option>
                                                 @endforeach
@@ -60,70 +61,78 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xxl-6 col-md-6">
+                                {{-- NEW FIELDS: PRICE / DISCOUNT / OLD PRICE --}}
+                                <div class="col-xxl-4 col-md-4">
                                     <div>
-                                        <label for="formFile" class="form-label">{{ __('admin.field_image_mob') }}</label>
-                                        <input class="form-control" type="file" id="formFile" name="image_mob">
+                                        <label for="priceInput" class="form-label">Цена</label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            step="1"
+                                            value="{{ old('price') }}"
+                                            class="form-control"
+                                            id="priceInput"
+                                            name="price"
+                                            placeholder="Например: 1850">
                                     </div>
                                 </div>
-                                <div class="col-xxl-6 col-md-6">
+
+                                <div class="col-xxl-4 col-md-4">
                                     <div>
-                                        <label for="formFile" class="form-label">{{ __('admin.field_image') }}</label>
-                                        <input class="form-control" type="file" id="formFile" name="image">
+                                        <label for="discountInput" class="form-label">Скидка, %</label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            value="{{ old('discount_percentage') }}"
+                                            class="form-control"
+                                            id="discountInput"
+                                            name="discount_percentage"
+                                            placeholder="Например: 10">
                                     </div>
                                 </div>
+
+                                <div class="col-xxl-4 col-md-4">
+                                    <div>
+                                        <label for="priceOldInput" class="form-label">Старая цена</label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            step="1"
+                                            value="{{ old('price_old') }}"
+                                            class="form-control"
+                                            id="priceOldInput"
+                                            name="price_old"
+                                            placeholder="Например: 2350">
+                                    </div>
+                                </div>
+                                {{-- /NEW FIELDS --}}
+
+                                <div class="col-xxl-6 col-md-6">
+                                    <div>
+                                        <label for="imageMobFile" class="form-label">{{ __('admin.field_image_mob') }}</label>
+                                        <input class="form-control" type="file" id="imageMobFile" name="image_mob">
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-6 col-md-6">
+                                    <div>
+                                        <label for="imageFile" class="form-label">{{ __('admin.field_image') }}</label>
+                                        <input class="form-control" type="file" id="imageFile" name="image">
+                                    </div>
+                                </div>
+
                                 <div class="mb-3">
-                                    <label class="form-label"
-                                        for="basic-default-message">{{ __('admin.field_description') }}</label>
-                                    <textarea id="basic-default-message" class="form-control" name="description"
-                                        placeholder="{{ __('admin.placeholder_text') }}" style="height: 234px;">{{ old('description') }}</textarea>
+                                    <label class="form-label" for="basic-default-message">{{ __('admin.field_description') }}</label>
+                                    <textarea
+                                        id="basic-default-message"
+                                        class="form-control"
+                                        name="description"
+                                        placeholder="{{ __('admin.placeholder_text') }}"
+                                        style="height: 234px;">{{ old('description') }}</textarea>
                                 </div>
                             </div>
-
-                            {{-- <div class="row gy-4">
-
-                              <div class="card-header align-items-center d-flex">
-                              </div>
-                                  <div class="col-xxl-6 col-md-6">
-                                    <h4 class="card-title mb-0 flex-grow-1">{{ __('admin.title_seo') }}</h4>
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_meta_title') }}</label>
-                                          <input type="text" value="{{ old('meta_title') }}" class="form-control"
-                                              id="valueInput" name="meta_title"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_meta_keywords') }}</label>
-                                          <input type="text" value="{{ old('meta_keywords') }}" class="form-control"
-                                              id="valueInput" name="meta_keywords"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                  </div>
-                                  <div class="mb-3">
-                                      <label class="form-label">{{ __('admin.field_meta_description') }}</label>
-                                      <textarea id="editor" class="form-control" name="meta_description" placeholder="{{ __('admin.placeholder_text') }}"
-                                          style="height: 234px;">{{ old('meta_description') }}</textarea>
-                                  </div>
-                                  <div class="col-xxl-6 col-md-6">
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_og_url') }}</label>
-                                          <input type="text" value="{{ old('og_url') }}" class="form-control"
-                                              id="valueInput" name="og_url"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                      <div>
-                                          <label for="valueInput" class="form-label">{{ __('admin.field_og_title') }}</label>
-                                          <input type="text" value="{{ old('og_title') }}" class="form-control"
-                                              id="valueInput" name="og_title"
-                                              placeholder="{{ __('admin.placeholder_text') }}">
-                                      </div>
-                                  </div>
-                                  <div class="mb-3">
-                                      <label class="form-label">{{ __('admin.field_og_description') }}</label>
-                                      <textarea id="editor" class="form-control" name="og_description"
-                                          placeholder="{{ __('admin.placeholder_text') }}" style="height: 234px;">{{ old('og_description') }}</textarea>
-                                  </div>
-                              </div> --}}
 
                             <button type="submit"
                                 class="btn btn-soft-success waves-effect waves-light mt-5 float-end">{{ __('admin.btn_save') }}</button>

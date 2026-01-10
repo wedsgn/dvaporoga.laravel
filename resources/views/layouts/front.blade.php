@@ -180,6 +180,58 @@
       </div>
     </div>
   </div>
+
+  <!-- МОДАЛКА ТОВАР -->
+<div class="modal micromodal-slide" id="modal-product" aria-hidden="true">
+  <div class="modal__overlay" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-product-title"
+      aria-describedby="modal-product-desc" tabindex="-1">
+
+      <header class="modal__header">
+        <h2 class="modal__title" id="modal-product-title">Заполните форму</h2>
+        <p class="modal__description" id="modal-product-desc">
+          Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
+        </p>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
+
+      <form
+        id="modal-product-form"
+        class="modal-form"
+        data-action="{{ route('request_product.store') }}"
+        data-ym-goal="lead"
+      >
+        @csrf
+
+        <input type="text" placeholder="Имя" class="input" name="name" required />
+        <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
+
+        <input type="hidden" name="form_id" value="modal-product">
+
+        <input type="hidden" name="current_url" value="{{ request()->fullUrl() }}">
+        <input type="hidden" name="car" value="{{ $car->title ?? '' }}">
+
+        <input type="hidden" name="data" id="modal-product-data" value="[]">
+        <input type="hidden" name="total_price" id="modal-product-total" value="">
+
+        <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
+        <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
+        <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
+        <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
+        <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
+
+        <button class="btn lg submit-modal" type="submit">Отправить</button>
+
+        <p class="copyright">
+          Нажимая кнопку “Отправить” вы соглашаетесь с нашей
+          <a href="{{ asset('policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+        </p>
+      </form>
+
+    </div>
+  </div>
+</div>
+
   <!-- МОДАЛКА "СПАСИБО" -->
   <div class="modal modal-success micromodal-slide" id="modal-2" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>

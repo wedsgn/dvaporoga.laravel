@@ -34,7 +34,7 @@ class BlogPageController extends Controller
   public function search(Request $request)
   {
     $search = $request->input('search');
-    $blogs = Blog::filter($search)->paginate(8);
+    $blogs = Blog::smartFilter($search)->paginate(8);
     $pageCount = $blogs->lastPage();
     $currentPage = $blogs->currentPage();
     return view('partials.blog-card', compact('blogs', 'pageCount', 'currentPage'));

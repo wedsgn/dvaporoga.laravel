@@ -8,164 +8,198 @@ use App\Models\CarModel;
 use App\Models\Product;
 use App\Models\ImportRun;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
 
 class CatalogRowProcessor
 {
   public function processRow(ImportRun $run, array $row, array $detailColumns, array $ctx = []): void
   {
-    // Excel data row number (0-based) / excel row number (1-based) for logs
     $excelRow = $ctx['excel_row'] ?? null;
+    $dataRow  = $ctx['data_row'] ?? null;
 
+    // 0..5 = базовые поля
     $photoUrl   = trim((string)($row[0] ?? ''));
     $makeTitle  = trim((string)($row[1] ?? ''));
     $modelTitle = trim((string)($row[2] ?? ''));
-    $genTitle   = trim((string)($row[3] ?? ''));
+    $genRaw     = trim((string)($row[3] ?? ''));
 
     $years = trim((string)($row[4] ?? ''));
     $body  = trim((string)($row[5] ?? ''));
 
-    // пустые строки пропускаем молча
-    if ($makeTitle === '' && $modelTitle === '' && $genTitle === '') {
+    // полностью пустые строки (в excel бывают визуальные)
+    if ($makeTitle === '' && $modelTitle === '' && $genRaw === '' && $years === '' && $body === '') {
       return;
     }
 
+    // нормализованные ключи для дедупликации
     $makeKey  = $this->normKey($makeTitle);
     $modelKey = $this->normKey($modelTitle);
-    $genKey   = $this->normKey($genTitle);
+    $genKey   = $this->normKey($genRaw);
 
+    // если критично пусто — пропускаем, но с понятным логом
     if ($makeKey === '' || $modelKey === '' || $genKey === '') {
-      $rMake = isset($row[1]) ? (string)$row[1] : '';
-      $rModel = isset($row[2]) ? (string)$row[2] : '';
-      $rGen = isset($row[3]) ? (string)$row[3] : '';
-
-      ImportLogger::warn(
-        $run,
-        "Пропуск строки Excel #{$excelRow}: пустые марка/модель/поколение. RAW: make='{$rMake}' model='{$rModel}' gen='{$rGen}'",
-        [
-          'excel_row' => $excelRow,
-          'raw_make' => $rMake,
-          'raw_model' => $rModel,
-          'raw_generation' => $rGen,
-          'trim_make' => $makeTitle,
-          'trim_model' => $modelTitle,
-          'trim_generation' => $genTitle,
-          'norm_make' => $makeKey,
-          'norm_model' => $modelKey,
-          'norm_generation' => $genKey,
-        ]
-      );
+      ImportLogger::warn($run, "Строка пропущена: пустые марка/модель/поколение (после нормализации)", [
+        'excel_row' => $excelRow,
+        'data_row'  => $dataRow,
+        'raw_make'  => $makeTitle,
+        'raw_model' => $modelTitle,
+        'raw_generation' => $genRaw,
+        'years' => $years,
+        'body'  => $body,
+        'norm_make' => $makeKey,
+        'norm_model' => $modelKey,
+        'norm_generation' => $genKey,
+      ]);
       return;
     }
 
+    // поколение — приводим к нормальному виду
+    $generation = $this->formatGeneration($genRaw);
+
+    // slug марка/модель
     $makeSlug  = Str::slug($makeTitle);
     $modelSlug = Str::slug($modelTitle);
-    $generation = $genTitle;
 
-    $carTitle = trim($makeTitle . ' ' . $modelTitle . ' ' . $body . ' ' . $generation);
-    $carSlug  = Str::slug($carTitle);
-    $carKey = $this->normKey(trim($makeTitle . ' ' . $modelTitle . ' ' . $generation));
+    // title/slug машины по схеме:
+    // Марка + Модель + Кузов + Поколение
+    $carTitle = trim(preg_replace(
+      '~\s+~u',
+      ' ',
+      trim($makeTitle . ' ' . $modelTitle . ' ' . $body . ' ' . $generation)
+    ));
+    $carSlug = Str::slug($carTitle);
+
+    // norm_key машины (для дедупликации)
+    $carKey = $this->normKey(trim($makeTitle . ' ' . $modelTitle . ' ' . $body . ' ' . $generation));
 
     // 1) Марка
-    $make = $this->getOrCreateMake($makeTitle, $makeSlug, $makeKey);
+    $make = $this->getOrCreateMake($run, $makeTitle, $makeSlug, $makeKey);
 
-    // 2) Модель (учитываем глобальный unique по slug)
-    $model = $this->getOrCreateModel($make, $modelTitle, $modelSlug, $modelKey);
+    // 2) Модель
+    $model = $this->getOrCreateModel($run, $make, $modelTitle, $modelSlug, $modelKey);
 
-    // 3) Поколение (Car)
-    $car = $this->getOrCreateCar($model, $carTitle, $carSlug, $carKey, $years, $body, $generation);
+    // 3) Машина
+    [$car, $created] = $this->getOrCreateCar(
+      $run,
+      $model,
+      $carTitle,
+      $carSlug,
+      $carKey,
+      $years,
+      $body,
+      $generation
+    );
 
-    // 4) Фото: если URL и не "1"
-    $localImagePath = $this->downloadCarImageIfNeeded($photoUrl, $make->slug, $model->slug, $car->slug);
-    if ($localImagePath) {
-      $carImage = (string)($car->image ?? '');
-      if ($carImage === '' || str_starts_with($carImage, 'http')) {
-        $this->safeUpdateById($car->getTable(), $car->id, ['image' => $localImagePath]);
+    // картинка — как было (job)
+    if ($photoUrl !== '' && $photoUrl !== '1' && preg_match('~^https?://~i', $photoUrl)) {
+      $cur = (string)($car->image ?? '');
+      $need = false;
+
+      if ($cur === '') $need = true;
+      else if (preg_match('~^https?://~i', $cur)) $need = true;
+      else {
+        if (!\Illuminate\Support\Facades\Storage::disk('public')->exists(ltrim($cur, '/'))) {
+          $need = true;
+        }
       }
 
-      $modelImage = (string)($model->image ?? '');
-      if ($modelImage === '' || str_starts_with($modelImage, 'http')) {
-        $this->safeUpdateById($model->getTable(), $model->id, ['image' => $localImagePath]);
+      if ($need) {
+        \App\Jobs\CarImageDownloadJob::dispatch(
+          $run->id,
+          $car->id,
+          $model->id,
+          $photoUrl
+        )->onQueue('imports-images');
       }
     }
 
-    // 5) Детали: если 1 — создать связь car <-> product
+    // 5) Детали (products) — создаём/обновляем записи ПОД ЭТУ машину
     foreach ($detailColumns as $colIndex => $detailTitle) {
       $val = trim((string)($row[$colIndex] ?? ''));
       if ($val !== '1') continue;
 
-      $prodKey  = $this->normKey($detailTitle);
-      $prodSlug = Str::slug($detailTitle);
+      $norm = $this->normKey($detailTitle);
 
-      $product = $this->getOrCreateProduct($detailTitle, $prodSlug, $prodKey);
+      $baseSlug = ($norm === 'порог') ? 'porog' : Str::slug($detailTitle);
+      $slug = $baseSlug . '-' . $car->id;
 
-      // связь без дублей
-      $car->products()->syncWithoutDetaching([$product->id]);
+      $this->getOrCreateProductForCar(
+        run: $run,
+        carId: (int)$car->id,
+        title: (string)$detailTitle,
+        slug: (string)$slug,
+        normKey: (string)$norm
+      );
     }
 
-    // Логируем не каждую строку (иначе логов будет миллионы)
-    // Например, раз в 200 строк:
-    if (isset($ctx['data_row']) && ($ctx['data_row'] % 200 === 0)) {
-      ImportLogger::info($run, 'Прогресс: строка обработана', [
-        'excel_row' => $excelRow,
-        'make' => $make->title ?? null,
-        'model' => $model->title ?? null,
-        'car' => $car->title ?? null,
-      ]);
-    }
+    ImportLogger::info($run, 'Прогресс: строка обработана', [
+      'excel_row' => $excelRow,
+      'make' => $make->title ?? null,
+      'model' => $model->title ?? null,
+      'car_id' => $car->id ?? null,
+      'created' => $created,
+    ]);
   }
 
   /** -------------------- UPSERTS -------------------- */
 
-  private function getOrCreateMake(string $title, string $slug, string $normKey): CarMake
+  private function getOrCreateMake(ImportRun $run, string $title, string $slug, string $normKey): CarMake
   {
-    // 1) по norm_key
-    $make = CarMake::query()->where('norm_key', $normKey)->orderBy('id')->first();
+    $make = CarMake::query()
+      ->when(Schema::hasColumn('car_makes', 'norm_key'), fn($q) => $q->where('norm_key', $normKey))
+      ->orderBy('id')
+      ->first();
 
-    // 2) по slug
     if (!$make) {
       $make = CarMake::query()->where('slug', $slug)->orderBy('id')->first();
     }
 
-    // 3) если нашли и norm_key пустой — заполняем
     if ($make) {
-      if (empty($make->norm_key)) {
-        $this->safeUpdateById($make->getTable(), $make->id, ['norm_key' => $normKey]);
-        $make->norm_key = $normKey;
+      $upd = [];
+
+      if (Schema::hasColumn('car_makes', 'norm_key') && empty($make->norm_key)) {
+        $upd['norm_key'] = $normKey;
       }
+
+      // ВАЖНО: помечаем, что запись присутствует в текущем файле
+      if (Schema::hasColumn('car_makes', 'last_import_run_id')) {
+        if ((int)($make->last_import_run_id ?? 0) !== (int)$run->id) {
+          $upd['last_import_run_id'] = (int)$run->id;
+        }
+      }
+
+      if ($upd) {
+        $this->safeUpdateById($make->getTable(), (int)$make->id, $upd);
+        foreach ($upd as $k => $v) $make->{$k} = $v;
+      }
+
       return $make;
     }
 
-    // 4) создаём
     $data = [
-      'title'    => $title,
-      'slug'     => $slug,
-      'norm_key' => $normKey,
+      'title' => $title,
+      'slug'  => $slug,
     ];
 
+    if (Schema::hasColumn('car_makes', 'norm_key')) $data['norm_key'] = $normKey;
     if (Schema::hasColumn('car_makes', 'description')) $data['description'] = '';
     if (Schema::hasColumn('car_makes', 'is_published')) $data['is_published'] = true;
+    if (Schema::hasColumn('car_makes', 'last_import_run_id')) $data['last_import_run_id'] = (int)$run->id;
 
     return CarMake::create($data);
   }
 
-  private function getOrCreateModel(CarMake $make, string $title, string $slug, string $normKey): CarModel
+  private function getOrCreateModel(ImportRun $run, CarMake $make, string $title, string $slug, string $normKey): CarModel
   {
-    $makeId = $make->id;
+    $makeId = (int)$make->id;
 
-    // 1) по norm_key в рамках марки
     $model = CarModel::query()
       ->where('car_make_id', $makeId)
-      ->where('norm_key', $normKey)
+      ->when(Schema::hasColumn('car_models', 'norm_key'), fn($q) => $q->where('norm_key', $normKey))
       ->orderBy('id')
       ->first();
 
-    // 2) по slug в рамках марки
     if (!$model) {
       $model = CarModel::query()
         ->where('car_make_id', $makeId)
@@ -174,36 +208,53 @@ class CatalogRowProcessor
         ->first();
     }
 
-    // 3) нашли — заполнить norm_key если пустой
     if ($model) {
-      if (empty($model->norm_key)) {
-        $this->safeUpdateById($model->getTable(), $model->id, ['norm_key' => $normKey]);
-        $model->norm_key = $normKey;
+      $upd = [];
+
+      if (Schema::hasColumn('car_models', 'norm_key') && empty($model->norm_key)) {
+        $upd['norm_key'] = $normKey;
       }
+
+      if (Schema::hasColumn('car_models', 'last_import_run_id')) {
+        if ((int)($model->last_import_run_id ?? 0) !== (int)$run->id) {
+          $upd['last_import_run_id'] = (int)$run->id;
+        }
+      }
+
+      if ($upd) {
+        $this->safeUpdateById($model->getTable(), (int)$model->id, $upd);
+        foreach ($upd as $k => $v) $model->{$k} = $v;
+      }
+
       return $model;
     }
 
-    // 4) конфликт глобального unique slug: если slug уже занят другой маркой
+    // если slug уже занят в другой марке — делаем title+make
     if (CarModel::query()->where('slug', $slug)->exists()) {
-      $base = $slug . '-' . ($make->slug ?: Str::slug($make->title ?? (string)$makeId));
+      $base = Str::slug($title . '-' . ($make->slug ?: $make->title));
       $slug = $this->makeUniqueSlugForCarModels($base);
     }
 
-    // 5) создаём
     $data = [
       'car_make_id' => $makeId,
-      'title'       => $title,
-      'slug'        => $slug,
-      'norm_key'    => $normKey,
+      'title' => $title,
+      'slug'  => $slug,
     ];
 
+    if (Schema::hasColumn('car_models', 'norm_key')) $data['norm_key'] = $normKey;
     if (Schema::hasColumn('car_models', 'description')) $data['description'] = '';
     if (Schema::hasColumn('car_models', 'is_published')) $data['is_published'] = true;
+    if (Schema::hasColumn('car_models', 'last_import_run_id')) $data['last_import_run_id'] = (int)$run->id;
 
     return CarModel::create($data);
   }
 
+  /**
+   * Возвращает: [Car $car, bool $created]
+   * Важно: если нашли существующий — НЕ переписываем title/slug.
+   */
   private function getOrCreateCar(
+    ImportRun $run,
     CarModel $model,
     string $title,
     string $slug,
@@ -211,17 +262,15 @@ class CatalogRowProcessor
     string $years,
     string $body,
     string $generation
-  ): Car {
-    $modelId = $model->id;
+  ): array {
+    $modelId = (int)$model->id;
 
-    // 1) norm_key в рамках модели
     $car = Car::query()
       ->where('car_model_id', $modelId)
-      ->where('norm_key', $normKey)
+      ->when(Schema::hasColumn('cars', 'norm_key'), fn($q) => $q->where('norm_key', $normKey))
       ->orderBy('id')
       ->first();
 
-    // 2) slug в рамках модели
     if (!$car) {
       $car = Car::query()
         ->where('car_model_id', $modelId)
@@ -231,72 +280,124 @@ class CatalogRowProcessor
     }
 
     if ($car) {
-      if (empty($car->norm_key)) {
-        $this->safeUpdateById($car->getTable(), $car->id, ['norm_key' => $normKey]);
-        $car->norm_key = $normKey;
-      }
-
       $upd = [];
 
+      if (Schema::hasColumn('cars', 'norm_key') && empty($car->norm_key)) {
+        $upd['norm_key'] = $normKey;
+      }
+
+      // дозаполняем только пустые поля, НЕ трогаем title/slug
       if (Schema::hasColumn('cars', 'generation') && empty($car->generation) && $generation !== '') {
         $upd['generation'] = $generation;
       }
 
-      if (Schema::hasColumn('cars', 'years') && empty($car->years) && $years !== '') $upd['years'] = $years;
-      if (Schema::hasColumn('cars', 'body') && empty($car->body) && $body !== '') $upd['body'] = $body;
+      if (Schema::hasColumn('cars', 'years') && empty($car->years) && $years !== '') {
+        $upd['years'] = $years;
+      }
 
-      if ($upd) $this->safeUpdateById($car->getTable(), $car->id, $upd);
+      if (Schema::hasColumn('cars', 'body') && empty($car->body) && $body !== '') {
+        $upd['body'] = $body;
+      }
 
-      return $car;
+      // ВАЖНО: пометка текущего импорта
+      if (Schema::hasColumn('cars', 'last_import_run_id')) {
+        if ((int)($car->last_import_run_id ?? 0) !== (int)$run->id) {
+          $upd['last_import_run_id'] = (int)$run->id;
+        }
+      }
+
+      if ($upd) {
+        $this->safeUpdateById($car->getTable(), (int)$car->id, $upd);
+        foreach ($upd as $k => $v) $car->{$k} = $v;
+      }
+
+      return [$car, false];
     }
 
-    // если у cars тоже глобальный unique slug — можно включить такую же уникализацию (пока не включаю)
-    // if (Car::where('slug',$slug)->exists()) { ... }
-
+    // создаём новую запись
     $data = [
       'car_model_id' => $modelId,
-      'title'        => $title,
-      'slug'         => $slug,
-      'norm_key'     => $normKey,
+      'title' => $title,
+      'slug'  => $slug,
     ];
 
+    if (Schema::hasColumn('cars', 'norm_key')) $data['norm_key'] = $normKey;
     if (Schema::hasColumn('cars', 'description')) $data['description'] = '';
     if (Schema::hasColumn('cars', 'is_published')) $data['is_published'] = true;
     if (Schema::hasColumn('cars', 'years')) $data['years'] = $years !== '' ? $years : null;
     if (Schema::hasColumn('cars', 'body'))  $data['body']  = $body  !== '' ? $body  : null;
-    if (Schema::hasColumn('cars', 'generation')) {
-      $data['generation'] = $generation;
-    }
-    return Car::create($data);
+    if (Schema::hasColumn('cars', 'generation')) $data['generation'] = $generation !== '' ? $generation : null;
+    if (Schema::hasColumn('cars', 'last_import_run_id')) $data['last_import_run_id'] = (int)$run->id;
+
+    $car = Car::create($data);
+
+    return [$car, true];
   }
 
-  private function getOrCreateProduct(string $title, string $slug, string $normKey): Product
-  {
-    // 1) norm_key
-    $p = Product::query()->where('norm_key', $normKey)->orderBy('id')->first();
+  private function getOrCreateProductForCar(
+    ImportRun $run,
+    int $carId,
+    string $title,
+    string $slug,
+    string $normKey
+  ): Product {
+    $q = Product::query();
 
-    // 2) slug
+    if (Schema::hasColumn('products', 'car_id')) {
+      $q->where('car_id', $carId);
+    }
+
+    if (Schema::hasColumn('products', 'norm_key')) {
+      $q->where('norm_key', $normKey);
+    } else {
+      $q->where('slug', $slug);
+    }
+
+    $p = $q->orderBy('id')->first();
+
+    // фоллбэк по slug
     if (!$p) {
       $p = Product::query()->where('slug', $slug)->orderBy('id')->first();
     }
 
     if ($p) {
-      if (empty($p->norm_key)) {
-        $this->safeUpdateById($p->getTable(), $p->id, ['norm_key' => $normKey]);
-        $p->norm_key = $normKey;
+      $upd = [];
+
+      // если по каким-то причинам car_id не заполнен — дозаполним
+      if (Schema::hasColumn('products', 'car_id') && empty($p->car_id)) {
+        $upd['car_id'] = $carId;
       }
+
+      // если norm_key пустой — дозаполним
+      if (Schema::hasColumn('products', 'norm_key') && empty($p->norm_key)) {
+        $upd['norm_key'] = $normKey;
+      }
+
+      // пометка текущего импорта
+      if (Schema::hasColumn('products', 'last_import_run_id')) {
+        if ((int)($p->last_import_run_id ?? 0) !== (int)$run->id) {
+          $upd['last_import_run_id'] = (int)$run->id;
+        }
+      }
+
+      if ($upd) {
+        $this->safeUpdateById($p->getTable(), (int)$p->id, $upd);
+        foreach ($upd as $k => $v) $p->{$k} = $v;
+      }
+
       return $p;
     }
 
-    // если products.slug тоже уникален глобально, возможны конфликты; пока оставим как есть
-
     $data = [
-      'title'    => $title,
-      'slug'     => $slug,
-      'norm_key' => $normKey,
+      'title' => $title,
+      'slug'  => $slug,
     ];
+
+    if (Schema::hasColumn('products', 'car_id')) $data['car_id'] = $carId;
+    if (Schema::hasColumn('products', 'norm_key')) $data['norm_key'] = $normKey;
     if (Schema::hasColumn('products', 'description')) $data['description'] = '';
     if (Schema::hasColumn('products', 'is_published')) $data['is_published'] = true;
+    if (Schema::hasColumn('products', 'last_import_run_id')) $data['last_import_run_id'] = (int)$run->id;
 
     return Product::create($data);
   }
@@ -316,54 +417,10 @@ class CatalogRowProcessor
         break;
       }
     }
-
     return $slug;
   }
 
-  /** -------------------- IMAGE -------------------- */
-
-  private function downloadCarImageIfNeeded(string $value, string $makeSlug, string $modelSlug, string $carSlug): ?string
-  {
-    $value = trim($value);
-
-    if ($value === '' || $value === '1') return null;
-    if (!preg_match('~^https?://~i', $value)) return null;
-
-    try {
-      $resp = Http::timeout(25)
-        ->retry(2, 500)
-        ->withHeaders([
-          'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36',
-          'Accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
-        ])
-        ->withOptions(['allow_redirects' => true])
-        ->get($value);
-
-      if (!$resp->successful()) {
-        return null; // не критично
-      }
-
-
-      $bytes = $resp->body();
-      if (!$bytes || strlen($bytes) < 200) {
-        return null;
-      }
-
-      $dir  = "uploads/cars/{$makeSlug}/{$modelSlug}/{$carSlug}";
-      $file = Str::random(12) . ".webp";
-      $path = "{$dir}/{$file}";
-
-      $img = Image::read($bytes)->toWebp(80);
-      Storage::disk('public')->put($path, (string)$img);
-
-      return $path;
-    } catch (\Throwable $e) {
-      // фото не должно валить импорт
-      return null;
-    }
-  }
-
-  /** -------------------- SAFE UPDATE (без fillable проблем) -------------------- */
+  /** -------------------- SAFE UPDATE -------------------- */
 
   private function safeUpdateById(string $table, int $id, array $data): void
   {
@@ -386,8 +443,22 @@ class CatalogRowProcessor
     $s = str_replace(['ё'], ['е'], $s);
     $s = preg_replace('~\s+~u', ' ', $s);
     $s = preg_replace('~[^\p{L}\p{N}\s\-]+~u', '', $s);
-    $s = trim($s);
+    return trim($s);
+  }
 
-    return $s;
+  /**
+   * "8" => "8 поколение"
+   * "6 (EJ, EK ...)" => оставляем как есть
+   */
+  private function formatGeneration(string $raw): string
+  {
+    $raw = trim($raw);
+    if ($raw === '') return '';
+
+    if (preg_match('~^\d+$~', $raw)) {
+      return $raw . ' поколение';
+    }
+
+    return $raw;
   }
 }

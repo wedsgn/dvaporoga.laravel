@@ -5,22 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Thickness extends Model
+class CarTag extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'car_id',
         'title',
-        'slug'
+        'sort',
     ];
 
-    public function products()
+    public function car()
     {
-        return $this->belongsToMany(Product::class);
-    }
-
-    public function prices()
-    {
-        return $this->hasMany(Price::class);
+        return $this->belongsTo(Car::class);
     }
 }

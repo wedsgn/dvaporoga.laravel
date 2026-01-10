@@ -32,8 +32,7 @@ Route::get('/katalog/{car_make_slug}', [CatalogConcernPageController::class, 'ca
 //Car models
 Route::get('/katalog/{car_make_slug}/search', [CatalogModelPageController::class, 'search'])->name('car_model.search');
 Route::get('/katalog/{slug}/{model_slug}', [CatalogModelPageController::class, 'car_model_show'])->name('car_model.show');
-Route::get('/ajax/car-models', [CarAjaxController::class, 'models'])->name('ajax.car-models')->middleware('throttle:60,1');
-Route::post('/lead/store-car', [RequestsController::class, 'store_request_car'])->name('lead.store_car');
+
 //Car generations
 Route::get('/katalog/{concern}/{model}/{generation}', [CatalogGenerationPageController::class, 'car_generation_show'])->name('car_generation.show');
 Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
@@ -42,8 +41,8 @@ Route::get('/blog/search', [BlogPageController::class, 'search'])->name('blog.se
 Route::get('/blog/{slug}', [BlogPageController::class, 'show'])->name('blog.single');
 
 Route::post('/request-consultation', [RequestsController::class, 'store_request_consultation'])->name('request_consultation.store');
+Route::post('/requests/car', [RequestsController::class, 'store_request_car'])->name('requests.car');
 Route::post('/request-product', [RequestsController::class, 'store_request_product'])->name('request_product.store');
-Route::post('/request-product-section', [RequestsController::class, 'request_product_section'])->name('request_product_section.store');
 
 Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
@@ -54,15 +53,20 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
   Route::post('/editor-uploads', EditorImageUploadController::class)->name('image_upload');
 
-Route::get('/import_catalog', [CatalogImportController::class, 'index'])->name('import.catalog');
+  Route::get('/import_catalog', [\App\Http\Controllers\Admin\CatalogImportController::class, 'index'])->name('import.catalog');
 
-Route::post('/import_catalog/upload', [CatalogImportController::class, 'upload'])->name('import.catalog.upload');
-Route::post('/import_catalog/{run}/start', [CatalogImportController::class, 'start'])->name('import.catalog.start');
-Route::post('/import_catalog/{run}/pause', [CatalogImportController::class, 'pause'])->name('import.catalog.pause');
-Route::post('/import_catalog/{run}/resume', [CatalogImportController::class, 'resume'])->name('import.catalog.resume');
-Route::get('/import_catalog/{run}/status', [CatalogImportController::class, 'status'])->name('import.catalog.status');
-Route::delete('/import_catalog/{run}/logs', [CatalogImportController::class, 'clearLogs'])->name('import.catalog.logs.clear');
-Route::post('/import_catalog/{run}/restart', [CatalogImportController::class, 'restart'])->name('import.catalog.restart');
+  Route::post('/import_catalog/upload', [\App\Http\Controllers\Admin\CatalogImportController::class, 'upload'])->name('import.catalog.upload');
+
+  Route::post('/import_catalog/start', [\App\Http\Controllers\Admin\CatalogImportController::class, 'start'])->name('import.catalog.start');
+  Route::post('/import_catalog/resume', [\App\Http\Controllers\Admin\CatalogImportController::class, 'resume'])->name('import.catalog.resume');
+  Route::post('/import_catalog/pause', [\App\Http\Controllers\Admin\CatalogImportController::class, 'pause'])->name('import.catalog.pause');
+
+  Route::post('/import_catalog/clear-logs', [\App\Http\Controllers\Admin\CatalogImportController::class, 'clearLogs'])->name('import.catalog.clearLogs');
+
+  Route::get('/import_catalog/status', [\App\Http\Controllers\Admin\CatalogImportController::class, 'status'])->name('import.catalog.status');
+
+  Route::post('/import_catalog/cleanup', [\App\Http\Controllers\Admin\CatalogImportController::class, 'cleanup'])
+  ->name('import.catalog.cleanup');
 
   Route::name('pages.')->prefix('pages')->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('index');

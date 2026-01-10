@@ -82,14 +82,17 @@ class CarModelController extends BaseController
       return redirect()->route('admin.car_models.index')->with('status', 'item-deleted');
   }
 
-  public function search(Request $request)
-  {
-      $user = Auth::user();
-      if (request('search') == null) :
-          $car_models = CarModel::orderBy('id', 'DESC')->paginate(50);
-      else :
-          $car_models = CarModel::filter()->paginate(50);
-      endif;
-      return view('admin.car_models.index', compact('car_models', 'user'));
-  }
+public function search(Request $request)
+{
+    $user = Auth::user();
+    $search = trim((string) $request->input('search'));
+
+    if ($search === '') {
+        $car_models = CarModel::orderBy('id', 'DESC')->paginate(50);
+    } else {
+        $car_models = CarModel::smartFilter($search)->paginate(50);
+    }
+
+    return view('admin.car_models.index', compact('car_models', 'user'));
+}
 }

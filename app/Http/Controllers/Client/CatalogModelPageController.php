@@ -34,7 +34,7 @@ class CatalogModelPageController extends Controller
   {
     $search = $request->input('search');
     $car_make = CarMake::where('slug', $car_make_slug)->firstOrFail();
-    $car_models = $car_make->car_models()->filter($search)->get();
+    $car_models = $car_make->car_models()->smartFilter($search)->get();
     return view('partials.model-card', compact('car_models', 'car_make'));
   }
 }

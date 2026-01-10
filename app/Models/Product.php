@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
 use Transliterator;
 
 class Product extends Model
@@ -14,19 +14,31 @@ class Product extends Model
   use HasFactory, SoftDeletes;
 
   protected $fillable = [
-      'title',
-      'slug',
-      'image',
-      'image_mob',
-      'description',
-      'sort',
-      'meta_title',
-      'meta_description',
-      'meta_keywords',
-      'og_url',
-      'og_title',
-      'og_description'
+    'title',
+    'slug',
+    'image',
+    'image_mob',
+    'description',
+    'sort',
+
+    // Цены
+    'price',
+    'price_old',
+    'discount_percentage',
+
+    // SEO
+    'meta_title',
+    'meta_description',
+    'meta_keywords',
+    'og_url',
+    'og_title',
+    'og_description',
+
+    'norm_key',
+    'car_id',
+    'last_import_run_id'
   ];
+
   public static $products_routes = [
     'admin.products.index',
     'admin.products.search',
@@ -34,76 +46,90 @@ class Product extends Model
     'admin.products.edit',
     'admin.products.create'
   ];
+
   public function getRouteKeyName()
   {
-      return 'slug';
-  }
-  public function cars()
-  {
-      return $this->belongsToMany(Car::class);
-  }
-  public function car_make()
-  {
-      return $this->belongsTo(CarMake::class);
-  }
-  public function sizes()
-  {
-      return $this->belongsToMany(Size::class);
-  }
-  public function prices()
-  {
-      return $this->belongsToMany(Price::class, 'product_price');
-  }
-  public function thicknesses()
-  {
-      return $this->belongsToMany(Thickness::class, 'product_thickness');
-  }
-  public function steel_types()
-  {
-      return $this->belongsToMany(SteelType::class);
-  }
-  public function types()
-  {
-      return $this->belongsToMany(Type::class);
+    return 'slug';
   }
 
-  public function scopeFilter($items)
+  public function car()
   {
-    if (request('search') !== null) {
-      $search = request('search');
-      $search = mb_strtolower($search); // convert to lowercase
+    return $this->belongsTo(Car::class);
+  }
 
-      // Create a transliterator instance
-      $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', Transliterator::FORWARD);
 
-      // Transliterate Russian characters to Latin
-      $search = $transliterator->transliterate($search);
+  public function scopeSmartFilter($query, ?string $search)
+  {
+    $search = trim((string)$search);
+    if ($search === '') return $query;
 
-      // Remove accents and special characters
-      $search = preg_replace('/[^\w\s]/', '', $search);
+    $norm = mb_strtolower($search);
+    $norm = str_replace(["–", "—", "-"], "-", $norm);
+    $norm = preg_replace('/\s+/', ' ', $norm);
 
-      // Split search query into individual words
-      $words = explode(' ', $search);
+    $latin = $norm;
+    try {
+      $tr = Transliterator::createFromRules(
+        ':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;',
+        Transliterator::FORWARD
+      );
+      if ($tr) $latin = mb_strtolower($tr->transliterate($norm));
+    } catch (\Throwable $e) {
+    }
 
-      // Search for each word in the database
-      $items->where(function ($query) use ($words) {
-          foreach ($words as $word) {
-              $query->orWhere('title', 'LIKE', '%' . $word . '%')
-                    ->orWhere('slug', 'LIKE', '%' . $word . '%');
+    $tokensNorm  = preg_split('/\s+/u', $norm, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $tokensLatin = preg_split('/\s+/u', $latin, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $tokens = array_values(array_unique(array_merge($tokensNorm, $tokensLatin)));
+    $tokens = array_values(array_filter($tokens, fn($t) => mb_strlen(trim($t)) >= 2));
+
+    // JOIN вместо orWhereHas
+    $query->leftJoin('cars', 'cars.id', '=', 'products.car_id')
+      ->select('products.*');
+
+    // Ранжирование оставляем (оно почти не влияет после индексов pg_trgm)
+    $query->selectRaw("
+        CASE
+            WHEN LOWER(products.title) = ? THEN 300
+            WHEN LOWER(products.title) LIKE ? THEN 220
+            WHEN LOWER(products.slug)  = ? THEN 180
+            WHEN LOWER(products.slug)  LIKE ? THEN 140
+            ELSE 0
+        END AS relevance
+    ", [
+      $norm,
+      $norm . '%',
+      Str::slug($norm),
+      Str::slug($norm) . '%',
+    ]);
+
+    $query->where(function ($q) use ($norm, $latin, $tokens) {
+      // фразовый OR
+      foreach (array_unique([$norm, $latin]) as $needle) {
+        $needle = trim($needle);
+        if ($needle === '') continue;
+
+        $slugNeedle = mb_strtolower(Str::slug($needle));
+
+        $q->orWhereRaw('LOWER(products.title) LIKE ?', ['%' . $needle . '%'])
+          ->orWhereRaw('LOWER(products.slug)  LIKE ?', ['%' . $slugNeedle . '%'])
+          ->orWhereRaw('LOWER(cars.title)     LIKE ?', ['%' . $needle . '%']);
+      }
+
+      // токены AND (внутри одной ветки)
+      if ($tokens) {
+        $q->orWhere(function ($qq) use ($tokens) {
+          foreach ($tokens as $t) {
+            $t = mb_strtolower(trim($t));
+            $qq->where(function ($tq) use ($t) {
+              $tq->whereRaw('LOWER(products.title) LIKE ?', ['%' . $t . '%'])
+                ->orWhereRaw('LOWER(products.slug)  LIKE ?', ['%' . $t . '%'])
+                ->orWhereRaw('LOWER(cars.title)     LIKE ?', ['%' . $t . '%']);
+            });
           }
-      });
+        });
+      }
+    });
+
+    return $query->orderByDesc('relevance')->orderByDesc('products.id');
   }
-  return $items;
-  }
-  // public function delete_files($item)
-  // {
-  //     if( $item->image):
-  //         $path_to_file = Str::remove(env('APP_URL') . '/storage', $item->image);
-  //         Storage::disk('public')->delete($path_to_file);
-  //     endif;
-  //     if( $item->image_mob):
-  //         $path_to_file = Str::remove(env('APP_URL') . '/storage', $item->image_mob);
-  //         Storage::disk('public')->delete($path_to_file);
-  //     endif;
-  // }
 }

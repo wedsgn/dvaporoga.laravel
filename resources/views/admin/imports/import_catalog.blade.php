@@ -1,248 +1,406 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container">
-        <h1>Импорт каталога (фон + прогресс)</h1>
+    <div class="container py-3">
 
-        <div class="card p-3 mb-3">
-            <div class="mb-2"><b>Текущий импорт:</b>
-                <span id="runInfo">
-                    @if ($run)
-                        #{{ $run->id }} ({{ $run->status }})
-                    @else
-                        нет
-                    @endif
-                </span>
+        <h3 class="mb-3">Импорт каталога</h3>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        {{-- Upload --}}
+        <div class="card mb-3">
+            <div class="card-body">
+                <form method="POST" action="{{ route('admin.import.catalog.upload') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="d-flex gap-3 align-items-center">
+                        <input type="file" name="file" class="form-control" required>
+                        <button class="btn btn-primary">Загрузить файл</button>
+                    </div>
+                    @error('file')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </form>
+
+                @if (!empty($run))
+                    <div class="mt-3 text-muted">
+                        <div>Run #{{ $run->id }} | Статус: <span id="runStatus">{{ $run->status }}</span></div>
+                        <div>Файл: {{ $run->original_name ?? $run->stored_path }}</div>
+                    </div>
+                @else
+                    <div class="mt-3 text-muted">
+                        Сначала загрузите файл импорта.
+                    </div>
+                @endif
             </div>
+        </div>
 
-            <form id="uploadForm" enctype="multipart/form-data">
-                @csrf
-                <div class="mb-2">
-                    <input type="file" name="file" required class="form-control" />
+        {{-- Controls --}}
+        <div class="card mb-3">
+            <div class="card-body d-flex flex-wrap gap-2 align-items-center">
+                <button id="btnStart" class="btn btn-success">Старт</button>
+                <button id="btnResume" class="btn btn-outline-success">Продолжить</button>
+                <button id="btnPause" class="btn btn-warning">Пауза</button>
+                <button id="btnClearLogs" class="btn btn-outline-secondary">Очистить логи</button>
+                <span class="ms-auto text-muted" id="hint"></span>
+            </div>
+        </div>
+
+        {{-- Progress --}}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <div>Прогресс: <b id="progressText">0 / 0</b></div>
+                    <div><b id="progressPercent">0%</b></div>
                 </div>
-                <button class="btn btn-primary" type="submit">Загрузить файл</button>
-            </form>
-
-            <div class="mt-3 d-flex gap-2">
-                <button class="btn btn-success" id="btnStart" disabled>Старт</button>
-                <button class="btn btn-warning" id="btnPause" disabled>Пауза</button>
-                <button class="btn btn-info" id="btnResume" disabled>Продолжить</button>
-                <button class="btn btn-danger" id="btnClearLogs" disabled>Очистить логи</button>
+                <div class="progress">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width:0%"></div>
+                </div>
+                <div class="text-muted mt-2" id="lastError"></div>
             </div>
         </div>
 
-        <div class="card p-3 mb-3">
-            <div class="mb-2"><b>Прогресс:</b> <span id="progressText">0%</span></div>
-            <div style="height: 16px; background: #222; border-radius: 6px; overflow: hidden;">
-                <div id="progressBar" style="height: 16px; width: 0%; background: #3b82f6;"></div>
+        {{-- Logs --}}
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">Логи</h5>
+                </div>
+                <pre id="logBox"
+                    style="height: 320px; overflow:auto; background:#0b1220; color:#cfe7ff; padding:12px; border-radius:8px;">
+@foreach ($logs ?? [] as $l)
+{{ $l . "\n" }}
+@endforeach
+</pre>
             </div>
-            <div class="mt-2" id="rowsText">0 / 0</div>
-            <div class="mt-2 text-danger" id="lastError"></div>
         </div>
 
-        <div class="card p-3">
-            <div class="mb-2"><b>Логи:</b></div>
-            <div id="logs"
-                style="height: 320px; overflow:auto; background:#111; color:#ddd; padding:10px; font-family: monospace; font-size: 12px;">
+    </div>
+
+    {{-- Modal confirm start --}}
+    <div class="modal fade" id="confirmStartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Запуск с начала</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    Уже есть прогресс импорта. Запуск “Старт” обработает файл с начала и сбросит прогресс. Продолжить?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" id="btnConfirmStart" class="btn btn-danger">Да, старт с начала</button>
+                </div>
             </div>
         </div>
     </div>
-    <div id="restartModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9999;">
-        <div style="max-width:520px; margin:12% auto; background:#fff; padding:18px; border-radius:10px;">
-            <h3 style="margin:0 0 10px;">Запустить с начала?</h3>
-            <p style="margin:0 0 14px;">
-                Импорт уже запускался. Старт с начала приведёт к повторной обработке файла с первой строки.
-            </p>
-            <div style="display:flex; gap:10px; justify-content:flex-end;">
-                <button id="modalCancel" class="btn btn-secondary">Отмена</button>
-                <button id="modalConfirm" class="btn btn-danger">Да, запустить с начала</button>
-            </div>
-        </div>
-    </div>
+
     <script>
-        (() => {
-            let runId = @json($run?->id);
-            let lastLogId = 0;
-            let timer = null;
+        (function() {
+            // CSRF: сначала из meta, затем фоллбэк
+            const csrf =
+                document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
+                "{{ csrf_token() }}";
 
-            const csrf = document.querySelector('input[name="_token"]').value;
+            // ВАЖНО: относительные URL (без http/https и домена)
+            const routes = {
+                start: "{{ route('admin.import.catalog.start', [], false) }}",
+                resume: "{{ route('admin.import.catalog.resume', [], false) }}",
+                pause: "{{ route('admin.import.catalog.pause', [], false) }}",
+                clearLogs: "{{ route('admin.import.catalog.clearLogs', [], false) }}",
+                status: "{{ route('admin.import.catalog.status', [], false) }}",
+            };
 
-            const $ = (id) => document.getElementById(id);
+            const elStatus = document.getElementById("runStatus");
+            const elProgressText = document.getElementById("progressText");
+            const elProgressPercent = document.getElementById("progressPercent");
+            const elProgressBar = document.getElementById("progressBar");
+            const elLogBox = document.getElementById("logBox");
+            const elLastError = document.getElementById("lastError");
+            const elHint = document.getElementById("hint");
 
-            function setButtons(status) {
-                $('btnStart').disabled = !runId || ['running', 'queued'].includes(status);
-                $('btnPause').disabled = !runId || status !== 'running';
-                $('btnResume').disabled = !runId || !['paused', 'failed', 'uploaded'].includes(status);
-                $('btnClearLogs').disabled = !runId;
+            const btnStart = document.getElementById("btnStart");
+            const btnResume = document.getElementById("btnResume");
+            const btnPause = document.getElementById("btnPause");
+            const btnClearLogs = document.getElementById("btnClearLogs");
+
+            const modalEl = document.getElementById("confirmStartModal");
+            const btnConfirmStart = document.getElementById("btnConfirmStart");
+
+            let polling = null;
+
+            function showError(message) {
+                if (!elLastError) return;
+                elLastError.textContent = message || "";
+                elLastError.classList.remove('text-muted');
+                if (message) elLastError.classList.add('text-danger');
+                else elLastError.classList.remove('text-danger');
             }
 
-            function appendLog(line) {
-                const el = $('logs');
-                el.innerHTML += line + "<br>";
-                el.scrollTop = el.scrollHeight;
+            function clearError() {
+                showError("");
             }
 
-            async function poll() {
-                if (!runId) return;
-
-                const url = `{{ url('/admin/import_catalog') }}/${runId}/status?after_id=${lastLogId}`;
+            async function post(url, body = {}) {
                 const res = await fetch(url, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    cache: "no-store",
                     headers: {
-                        'Accept': 'application/json'
-                    }
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-CSRF-TOKEN": csrf,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                    body: JSON.stringify(body),
                 });
-                const data = await res.json();
 
-                if (!data.ok) return;
+                const data = await res.json().catch(() => ({}));
+                return {
+                    ok: res.ok,
+                    status: res.status,
+                    data
+                };
+            }
 
-                const run = data.run;
-                $('runInfo').innerText = `#${run.id} (${run.status})`;
-                $('progressText').innerText = run.progress + '%';
-                $('progressBar').style.width = run.progress + '%';
-                $('rowsText').innerText = `${run.processed_rows} / ${run.total_rows}`;
-                $('lastError').innerText = run.last_error ? run.last_error : '';
+            function hardCloseModal() {
+                document.querySelectorAll(".modal-backdrop").forEach((b) => b.remove());
+                document.body.classList.remove("modal-open");
+                document.body.style.removeProperty("padding-right");
+            }
 
-                setButtons(run.status);
+            function showConfirmModal() {
+                if (!modalEl || typeof bootstrap === "undefined") return;
+                const inst = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                inst.show();
+            }
 
-                if (data.logs && data.logs.length) {
-                    data.logs.forEach(l => {
-                        lastLogId = Math.max(lastLogId, l.id);
-                        appendLog(`[${l.created_at}] ${l.level.toUpperCase()}: ${l.message}`);
+            function hideConfirmModal() {
+                if (!modalEl || typeof bootstrap === "undefined") return;
+                const inst = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                inst.hide();
+                setTimeout(hardCloseModal, 200);
+            }
+
+            function setHintByStatus(status) {
+                if (!elHint) return;
+                if (status === "running") elHint.textContent = "Импорт выполняется...";
+                else if (status === "paused") elHint.textContent = "Пауза.";
+                else if (status === "failed") elHint.textContent =
+                    "Ошибка. Можно нажать «Продолжить» после исправления.";
+                else if (status === "done") elHint.textContent = "Готово.";
+                else elHint.textContent = "";
+            }
+
+            function escapeHtml(str) {
+                return String(str ?? "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;");
+            }
+
+            function renderLogs(logs) {
+                return (logs || []).map(rawLine => {
+                    const raw = String(rawLine ?? "");
+                    const safe = escapeHtml(raw);
+
+                    // для проверки — используем строку без пробелов слева
+                    const l = raw.trimStart();
+
+                    // WARN: может быть "WARN:", "[WARN]", "WARNING", с временем перед ним и т.п.
+                    if (/\bWARN(?:ING)?\b\s*:/i.test(l) || /\[WARN(?:ING)?\]/i.test(l)) {
+                        return `<span class="log-warn">${safe}</span>`;
+                    }
+
+                    // ERROR: может быть "ERROR:", "ERR:", "[ERROR]" и т.п.
+                    if (/\bERROR\b\s*:/i.test(l) || /\bERR\b\s*:/i.test(l) || /\[ERROR\]/i.test(l) || /\[ERR\]/i
+                        .test(l)) {
+                        return `<span class="log-error">${safe}</span>`;
+                    }
+
+                    return safe;
+                }).join("\n");
+            }
+            async function refresh() {
+                try {
+                    const url = new URL(routes.status, window.location.origin);
+                    url.searchParams.set("_t", Date.now()); // анти-кэш
+
+                    const res = await fetch(url.toString(), {
+                        method: "GET",
+                        credentials: "same-origin",
+                        cache: "no-store",
+                        headers: {
+                            "Accept": "application/json",
+                            "X-Requested-With": "XMLHttpRequest",
+                        },
                     });
-                }
 
-                // если done/canceled — остановим polling
-                if (['done', 'canceled'].includes(run.status)) {
-                    clearInterval(timer);
-                    timer = null;
+                    const json = await res.json().catch(() => null);
+                    if (!json || !json.ok) return;
+
+                    // если run отсутствует — покажем подсказку и выключим кнопки импорта
+                    if (!json.run) {
+                        if (elStatus) elStatus.textContent = "";
+                        if (elProgressText) elProgressText.textContent = "0 / 0";
+                        if (elProgressPercent) elProgressPercent.textContent = "0%";
+                        if (elProgressBar) elProgressBar.style.width = "0%";
+                        setHintByStatus("");
+                        // кнопки логично выключить до upload
+                        if (btnPause) btnPause.disabled = true;
+                        if (btnResume) btnResume.disabled = true;
+                        return;
+                    }
+
+                    const run = json.run;
+                    const logs = Array.isArray(json.logs) ? json.logs : [];
+
+                    if (elStatus) elStatus.textContent = run.status ?? "";
+                    if (elProgressText) elProgressText.textContent =
+                        `${run.processed_rows ?? 0} / ${run.total_rows ?? 0}`;
+                    if (elProgressPercent) elProgressPercent.textContent = `${run.progress ?? 0}%`;
+                    if (elProgressBar) elProgressBar.style.width = `${run.progress ?? 0}%`;
+
+                    if (run.last_error) showError(`Ошибка: ${run.last_error}`);
+                    else clearError();
+
+                    if (elLogBox) {
+                        elLogBox.innerHTML = renderLogs(logs);
+                        elLogBox.scrollTop = elLogBox.scrollHeight;
+                    }
+                    setHintByStatus(run.status);
+
+                    // кнопки
+                    if (btnPause) btnPause.disabled = (run.status !== "running");
+                    if (btnResume) btnResume.disabled = !(["ready", "paused", "failed"].includes(run.status));
+                } catch (e) {
+                    // не ломаем polling
                 }
             }
 
             function startPolling() {
-                if (timer) return;
-                poll();
-                timer = setInterval(poll, 1500);
+                if (polling) return;
+                polling = setInterval(refresh, 1500);
             }
 
-            $('uploadForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
+            // START (может потребовать confirm)
+            if (btnStart) {
+                btnStart.addEventListener("click", async () => {
+                    clearError();
 
-                const fd = new FormData(e.target);
-                const res = await fetch(`{{ route('admin.import.catalog.upload') }}`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrf,
-                        'Accept': 'application/json'
-                    },
-                    body: fd
+                    const r = await post(routes.start, {
+                        confirm: 0
+                    });
+
+                    if (!r.ok) {
+                        if (r.status === 409 && r.data && r.data.need_confirm) {
+                            showConfirmModal();
+                            return;
+                        }
+                        showError(r.data?.message || "Ошибка запуска импорта");
+                        return;
+                    }
+
+                    startPolling();
+                    await refresh();
                 });
-
-                const data = await res.json();
-                if (!data.ok) {
-                    alert(data.message || 'Upload error');
-                    return;
-                }
-
-                runId = data.run_id;
-                lastLogId = 0;
-                $('logs').innerHTML = '';
-                $('runInfo').innerText = `#${runId} (${data.status})`;
-                setButtons(data.status);
-                startPolling();
-            });
-
-            function showRestartModal(onConfirm) {
-                const modal = $('restartModal');
-                modal.style.display = 'block';
-
-                const cancel = $('modalCancel');
-                const confirm = $('modalConfirm');
-
-                const cleanup = () => {
-                    modal.style.display = 'none';
-                    cancel.onclick = null;
-                    confirm.onclick = null;
-                };
-
-                cancel.onclick = () => cleanup();
-                confirm.onclick = async () => {
-                    cleanup();
-                    await onConfirm();
-                };
             }
 
-            async function doRestart() {
-                await fetch(`{{ url('/admin/import_catalog') }}/${runId}/restart`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrf,
-                        'Accept': 'application/json'
+            // CONFIRM START
+            if (btnConfirmStart) {
+                btnConfirmStart.addEventListener("click", async () => {
+                    clearError();
+
+                    hideConfirmModal();
+                    const r = await post(routes.start, {
+                        confirm: 1
+                    });
+
+                    if (!r.ok) {
+                        showError(r.data?.message || "Ошибка запуска импорта");
+                        return;
                     }
+
+                    startPolling();
+                    await refresh();
                 });
-                startPolling();
             }
 
-            $('btnStart').addEventListener('click', async () => {
-                if (!runId) return;
+            // RESUME
+            if (btnResume) {
+                btnResume.addEventListener("click", async () => {
+                    clearError();
 
-                const res = await fetch(`{{ url('/admin/import_catalog') }}/${runId}/status`, {
-                    headers: {
-                        'Accept': 'application/json'
+                    const r = await post(routes.resume);
+
+                    if (!r.ok) {
+                        showError(r.data?.message || "Ошибка продолжения импорта");
+                        return;
                     }
+
+                    startPolling();
+                    await refresh();
                 });
-                const data = await res.json();
-                const status = data?.run?.status;
-
-                if (['running', 'queued', 'paused', 'failed', 'done'].includes(status)) {
-                    showRestartModal(doRestart);
-                    return;
-                }
-
-                await doRestart();
-            });
-
-            $('btnPause').addEventListener('click', async () => {
-                if (!runId) return;
-                await fetch(`{{ url('/admin/import_catalog') }}/${runId}/pause`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrf,
-                        'Accept': 'application/json'
-                    }
-                });
-                startPolling();
-            });
-
-            $('btnResume').addEventListener('click', async () => {
-                if (!runId) return;
-                await fetch(`{{ url('/admin/import_catalog') }}/${runId}/resume`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrf,
-                        'Accept': 'application/json'
-                    }
-                });
-                startPolling();
-            });
-            $('btnClearLogs').addEventListener('click', async () => {
-                if (!runId) return;
-
-                await fetch(`{{ url('/admin/import_catalog') }}/${runId}/logs`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': csrf,
-                        'Accept': 'application/json'
-                    }
-                });
-
-                lastLogId = 0;
-                $('logs').innerHTML = '';
-            });
-            // если уже есть run — стартуем polling
-            if (runId) {
-                setButtons(@json($run?->status ?? 'uploaded'));
-                startPolling();
             }
+
+            // PAUSE
+            if (btnPause) {
+                btnPause.addEventListener("click", async () => {
+                    clearError();
+
+                    const r = await post(routes.pause);
+
+                    if (!r.ok) {
+                        showError(r.data?.message || "Ошибка паузы");
+                        return;
+                    }
+
+                    await refresh();
+                });
+            }
+
+            // CLEAR LOGS
+            if (btnClearLogs) {
+                btnClearLogs.addEventListener("click", async () => {
+                    clearError();
+
+                    const r = await post(routes.clearLogs);
+
+                    if (!r.ok) {
+                        showError(r.data?.message || "Ошибка очистки логов");
+                        return;
+                    }
+
+                    if (elLogBox) elLogBox.textContent = "";
+                    await refresh();
+                });
+            }
+
+            // initial
+            startPolling();
+            refresh();
         })();
     </script>
+    <style>
+        #logBox {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            white-space: pre-wrap;
+        }
+
+        .log-warn {
+            color: #ffb020;
+            /* оранжевый */
+            font-weight: 600;
+        }
+
+        .log-error {
+            color: #ff5c5c;
+            /* красный */
+            font-weight: 700;
+        }
+    </style>
 @endsection

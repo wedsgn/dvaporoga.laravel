@@ -24,11 +24,11 @@
       <a href="{{ route('car_generation.show', [$car_make, $car_model, $model->slug]) }}" class="car-generation__model">
         <div class="car-generation__model_image">
           <div class="car-generation__model_image">
-              @if ($model->image === 'default')
-                <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
-              @else
-                <img src="{{ $model->image }}" alt="Логотип {{ $model->title }}" />
-              @endif
+@if ($model->image_url)
+  <img src="{{ $model->image_url }}" alt="Логотип {{ $model->title }}" />
+@else
+  <img src="{{ asset('images/mark/no-image.png') }}" alt="Изображения нет" />
+@endif
           </div>
         </div>
 
