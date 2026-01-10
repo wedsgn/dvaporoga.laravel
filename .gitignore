@@ -25,3 +25,5 @@ yarn-error.log
 dvaporoga_*.dump
 .local/
 .cursor/**
+/backup/
+.env.local
