@@ -300,6 +300,7 @@ public function store_request_car(
 
       // формы на страницах
       'index-hero-form'   => 'Главная',
+      'car-single-form-home' => 'Главная (форма заявки)',
       'catalog-form'      => 'Каталог',
       'product-section'   => 'Секция товара',
       'car-page-form'     => 'Страница авто',

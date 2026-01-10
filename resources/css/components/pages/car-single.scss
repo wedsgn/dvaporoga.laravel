@@ -171,6 +171,27 @@
   background: $black;
   color: #fff;
   padding: 32px 0;
+
+  &.--white {
+    background: #fff;
+    color: $black;
+
+    .input.black {
+      background: #fff;
+      border: 1px solid $gray;
+      color: $black;
+      &::placeholder {
+        color: rgba($black, 0.5);
+      }
+      &:focus {
+        border: 1px solid $black;
+      }
+    }
+
+    .car-single-form-section__label {
+      background: $red;
+    }
+  }
 }
 
 .car-single-form-section__top {

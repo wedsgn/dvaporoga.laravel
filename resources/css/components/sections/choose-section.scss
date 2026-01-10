@@ -19,6 +19,7 @@ select {
 }
 .choose-section__form_row {
   display: flex;
+  align-items: flex-start;
   gap: 16px;
 
   input,
