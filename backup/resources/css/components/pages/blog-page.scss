@@ -1,0 +1,42 @@
+.blog-page-section {
+  margin-top: 60px;
+}
+
+.blog-page-poster {
+  margin-top: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    display: block;
+    height: auto;
+  }
+}
+
+.blog-page__description {
+  margin-top: 28px;
+  p {
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .blog-page-poster {
+    margin-top: 20px;
+  }
+
+  .blog-page__description {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .blog-page-section {
+    margin-top: 40px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .blog-page-section {
+    margin-top: 20px;
+  }
+}

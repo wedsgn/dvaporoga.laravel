@@ -1,0 +1,145 @@
+.faq-wrap {
+  margin-top: 40px;
+}
+
+.faq-section__top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.faq-description {
+  max-width: 480px;
+  width: 100%;
+}
+
+.faq-accordition {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faq-item {
+  border: 1px solid #e1e1e1;
+  padding: 20px 24px;
+  background: #f9fbfa;
+  border-radius: 8px;
+  //   padding-bottom: 24px;
+  &.active {
+    .faq-item__head {
+      color: $red;
+      svg {
+        stroke: $red;
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .faq-item__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+    cursor: pointer;
+
+    transition: all 0.2s ease-in-out;
+    svg {
+      flex-shrink: 0;
+      margin-left: auto;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &:hover {
+      color: $red;
+
+      svg {
+        stroke: $red;
+      }
+    }
+  }
+
+  .faq-item__content {
+    padding-top: 24px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .faq-wrap {
+    display: flex;
+    gap: 120px;
+  }
+  .faq-left {
+    max-width: 320px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .faq-item .faq-item__head {
+    font-size: 16px;
+  }
+
+  .faq-section {
+    .h2 {
+      text-align: left;
+    }
+  }
+
+  .faq-item .faq-item__content {
+    padding-top: 16px;
+  }
+
+  .faq-item {
+    padding: 16px 16px;
+  }
+
+  .faq-description {
+    text-align: left;
+    max-width: none;
+  }
+  .faq-section__top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .faq-wrap {
+    gap: 64px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .faq-wrap {
+    margin-top: 16px;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  .faq-section__top {
+    margin-top: 8px;
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .faq-left {
+    max-width: none;
+  }
+
+  .faq-accordition {
+    margin-top: 24px;
+    gap: 8px;
+  }
+  .faq-item .faq-item__head {
+    font-size: 18px;
+  }
+
+  .faq-item__content {
+  }
+}
