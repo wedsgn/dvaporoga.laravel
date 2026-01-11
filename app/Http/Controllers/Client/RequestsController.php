@@ -299,6 +299,7 @@ public function store_request_car(
       'modal-form-hero'     => 'Слайдер',
 
       // формы на страницах
+      'modal-product'       => 'Модальное окно товара',
       'index-hero-form'   => 'Главная',
       'car-single-form-home' => 'Главная (форма заявки)',
       'catalog-form'      => 'Каталог',

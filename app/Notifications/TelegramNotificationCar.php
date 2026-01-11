@@ -29,7 +29,7 @@ class TelegramNotificationCar extends Notification
 
         $text = "📣 Новая — " . ($m['subject'] ?? 'Заявка') . "\n"
               . "🚘 Авто — " . ($car ?: '—') . "\n"
-              // . "🧑‍💼 Имя — " . ($m['name']  ?? '—') . "\n"
+              . "🧑‍💼 Имя — " . ($m['name']  ?? '—') . "\n"
               . "📞 Телефон — " . ($m['phone'] ?? '—');
 
         // if (!empty($m['form']))       $text .= "\n🗂 Форма — " . $m['form'];
