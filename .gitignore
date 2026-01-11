@@ -21,8 +21,6 @@ yarn-error.log
 /.vscode
 /docs/**
 # local dumps
-*.dump
-dvaporoga_*.dump
 .local/
 .cursor/**
 /backup/
