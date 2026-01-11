@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Jobs\CarImageDownloadJob;
+use App\Jobs\ProductImageDownloadJob;
 use App\Models\Car;
 use App\Models\CarMake;
 use App\Models\CarModel;
@@ -9,6 +11,7 @@ use App\Models\Product;
 use App\Models\ImportRun;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CatalogRowProcessor
@@ -18,7 +21,6 @@ class CatalogRowProcessor
     $excelRow = $ctx['excel_row'] ?? null;
     $dataRow  = $ctx['data_row'] ?? null;
 
-    // 0..5 = базовые поля
     $photoUrl   = trim((string)($row[0] ?? ''));
     $makeTitle  = trim((string)($row[1] ?? ''));
     $modelTitle = trim((string)($row[2] ?? ''));
@@ -27,17 +29,14 @@ class CatalogRowProcessor
     $years = trim((string)($row[4] ?? ''));
     $body  = trim((string)($row[5] ?? ''));
 
-    // полностью пустые строки (в excel бывают визуальные)
     if ($makeTitle === '' && $modelTitle === '' && $genRaw === '' && $years === '' && $body === '') {
       return;
     }
 
-    // нормализованные ключи для дедупликации
     $makeKey  = $this->normKey($makeTitle);
     $modelKey = $this->normKey($modelTitle);
     $genKey   = $this->normKey($genRaw);
 
-    // если критично пусто — пропускаем, но с понятным логом
     if ($makeKey === '' || $modelKey === '' || $genKey === '') {
       ImportLogger::warn($run, "Строка пропущена: пустые марка/модель/поколение (после нормализации)", [
         'excel_row' => $excelRow,
@@ -54,15 +53,11 @@ class CatalogRowProcessor
       return;
     }
 
-    // поколение — приводим к нормальному виду
     $generation = $this->formatGeneration($genRaw);
 
-    // slug марка/модель
     $makeSlug  = Str::slug($makeTitle);
     $modelSlug = Str::slug($modelTitle);
 
-    // title/slug машины по схеме:
-    // Марка + Модель + Кузов + Поколение
     $carTitle = trim(preg_replace(
       '~\s+~u',
       ' ',
@@ -70,16 +65,16 @@ class CatalogRowProcessor
     ));
     $carSlug = Str::slug($carTitle);
 
-    // norm_key машины (для дедупликации)
+
     $carKey = $this->normKey(trim($makeTitle . ' ' . $modelTitle . ' ' . $body . ' ' . $generation));
 
-    // 1) Марка
+
     $make = $this->getOrCreateMake($run, $makeTitle, $makeSlug, $makeKey);
 
-    // 2) Модель
+
     $model = $this->getOrCreateModel($run, $make, $modelTitle, $modelSlug, $modelKey);
 
-    // 3) Машина
+
     [$car, $created] = $this->getOrCreateCar(
       $run,
       $model,
@@ -91,46 +86,79 @@ class CatalogRowProcessor
       $generation
     );
 
-    // картинка — как было (job)
-    if ($photoUrl !== '' && $photoUrl !== '1' && preg_match('~^https?://~i', $photoUrl)) {
+    $carPhotoUrl = $this->normalizeUrl($photoUrl);
+    if ($carPhotoUrl && $carPhotoUrl !== '1') {
       $cur = (string)($car->image ?? '');
       $need = false;
 
       if ($cur === '') $need = true;
       else if (preg_match('~^https?://~i', $cur)) $need = true;
       else {
-        if (!\Illuminate\Support\Facades\Storage::disk('public')->exists(ltrim($cur, '/'))) {
+        if (!Storage::disk('public')->exists(ltrim($cur, '/'))) {
           $need = true;
         }
       }
 
       if ($need) {
-        \App\Jobs\CarImageDownloadJob::dispatch(
+        CarImageDownloadJob::dispatch(
           $run->id,
           $car->id,
           $model->id,
-          $photoUrl
+          $carPhotoUrl
         )->onQueue('imports-images');
       }
     }
 
-    // 5) Детали (products) — создаём/обновляем записи ПОД ЭТУ машину
+    $sync = [];
+    $imageJobs = [];
+
     foreach ($detailColumns as $colIndex => $detailTitle) {
-      $val = trim((string)($row[$colIndex] ?? ''));
-      if ($val !== '1') continue;
+      $valRaw = (string)($row[$colIndex] ?? '');
+      $val = trim($valRaw);
 
-      $norm = $this->normKey($detailTitle);
+      if ($val === '') continue;
 
-      $baseSlug = ($norm === 'порог') ? 'porog' : Str::slug($detailTitle);
-      $slug = $baseSlug . '-' . $car->id;
+      $has = false;
+      $photoUrl = null;
 
-      $this->getOrCreateProductForCar(
-        run: $run,
-        carId: (int)$car->id,
-        title: (string)$detailTitle,
-        slug: (string)$slug,
-        normKey: (string)$norm
-      );
+      if ($val === '1') {
+        $has = true;
+      } else {
+        $maybe = $this->normalizeUrl($val);
+        if ($maybe) {
+          $has = true;
+          $photoUrl = $maybe;
+        }
+      }
+
+      if (!$has) continue;
+
+      $product = $this->getOrCreateBaseProductByTitle($run, (string)$detailTitle);
+
+      $sync[(int)$product->id] = [
+        'image' => null,
+        'image_mob' => null,
+      ];
+
+      if ($photoUrl) {
+        $imageJobs[] = [
+          'run_id' => (int)$run->id,
+          'car_id' => (int)$car->id,
+          'product_id' => (int)$product->id,
+          'url' => $photoUrl,
+        ];
+      }
+    }
+
+    $car->products()->sync($sync);
+
+    foreach ($imageJobs as $job) {
+      ProductImageDownloadJob::dispatch(
+        $job['run_id'],
+        $job['car_id'],
+        $job['product_id'],
+        $job['url']
+      )->onQueue('imports-images');
     }
 
     ImportLogger::info($run, 'Прогресс: строка обработана', [
@@ -142,7 +170,6 @@ class CatalogRowProcessor
     ]);
   }
 
-  /** -------------------- UPSERTS -------------------- */
 
   private function getOrCreateMake(ImportRun $run, string $title, string $slug, string $normKey): CarMake
   {
@@ -162,7 +189,6 @@ class CatalogRowProcessor
         $upd['norm_key'] = $normKey;
       }
 
-      // ВАЖНО: помечаем, что запись присутствует в текущем файле
       if (Schema::hasColumn('car_makes', 'last_import_run_id')) {
         if ((int)($make->last_import_run_id ?? 0) !== (int)$run->id) {
           $upd['last_import_run_id'] = (int)$run->id;
@@ -229,7 +255,6 @@ class CatalogRowProcessor
       return $model;
     }
 
-    // если slug уже занят в другой марке — делаем title+make
     if (CarModel::query()->where('slug', $slug)->exists()) {
       $base = Str::slug($title . '-' . ($make->slug ?: $make->title));
       $slug = $this->makeUniqueSlugForCarModels($base);
@@ -249,10 +274,6 @@ class CatalogRowProcessor
     return CarModel::create($data);
   }
 
-  /**
-   * Возвращает: [Car $car, bool $created]
-   * Важно: если нашли существующий — НЕ переписываем title/slug.
-   */
   private function getOrCreateCar(
     ImportRun $run,
     CarModel $model,
@@ -286,7 +307,6 @@ class CatalogRowProcessor
         $upd['norm_key'] = $normKey;
       }
 
-      // дозаполняем только пустые поля, НЕ трогаем title/slug
       if (Schema::hasColumn('cars', 'generation') && empty($car->generation) && $generation !== '') {
         $upd['generation'] = $generation;
       }
@@ -299,7 +319,6 @@ class CatalogRowProcessor
         $upd['body'] = $body;
       }
 
-      // ВАЖНО: пометка текущего импорта
       if (Schema::hasColumn('cars', 'last_import_run_id')) {
         if ((int)($car->last_import_run_id ?? 0) !== (int)$run->id) {
           $upd['last_import_run_id'] = (int)$run->id;
@@ -314,7 +333,6 @@ class CatalogRowProcessor
       return [$car, false];
     }
 
-    // создаём новую запись
     $data = [
       'car_model_id' => $modelId,
       'title' => $title,
@@ -334,17 +352,17 @@ class CatalogRowProcessor
     return [$car, true];
   }
 
-  private function getOrCreateProductForCar(
-    ImportRun $run,
-    int $carId,
-    string $title,
-    string $slug,
-    string $normKey
-  ): Product {
+
+  private function getOrCreateBaseProductByTitle(ImportRun $run, string $title): Product
+  {
+    $title = trim($title);
+    $normKey = $this->normKey($title);
+    $slug = ($normKey === 'порог') ? 'porog' : Str::slug($title);
+
     $q = Product::query();
 
     if (Schema::hasColumn('products', 'car_id')) {
-      $q->where('car_id', $carId);
+      $q->whereNull('car_id');
     }
 
     if (Schema::hasColumn('products', 'norm_key')) {
@@ -355,29 +373,28 @@ class CatalogRowProcessor
 
     $p = $q->orderBy('id')->first();
 
-    // фоллбэк по slug
     if (!$p) {
-      $p = Product::query()->where('slug', $slug)->orderBy('id')->first();
+      $q2 = Product::query()->where('slug', $slug);
+      if (Schema::hasColumn('products', 'car_id')) $q2->whereNull('car_id');
+      $p = $q2->orderBy('id')->first();
     }
 
     if ($p) {
       $upd = [];
 
-      // если по каким-то причинам car_id не заполнен — дозаполним
-      if (Schema::hasColumn('products', 'car_id') && empty($p->car_id)) {
-        $upd['car_id'] = $carId;
-      }
-
-      // если norm_key пустой — дозаполним
       if (Schema::hasColumn('products', 'norm_key') && empty($p->norm_key)) {
         $upd['norm_key'] = $normKey;
       }
 
-      // пометка текущего импорта
       if (Schema::hasColumn('products', 'last_import_run_id')) {
         if ((int)($p->last_import_run_id ?? 0) !== (int)$run->id) {
           $upd['last_import_run_id'] = (int)$run->id;
         }
+      }
+
+      if (empty($p->image)) {
+        $def = $this->resolveDefaultProductImage($title);
+        if ($def) $upd['image'] = $def;
       }
 
       if ($upd) {
@@ -393,16 +410,52 @@ class CatalogRowProcessor
       'slug'  => $slug,
     ];
 
-    if (Schema::hasColumn('products', 'car_id')) $data['car_id'] = $carId;
     if (Schema::hasColumn('products', 'norm_key')) $data['norm_key'] = $normKey;
     if (Schema::hasColumn('products', 'description')) $data['description'] = '';
     if (Schema::hasColumn('products', 'is_published')) $data['is_published'] = true;
     if (Schema::hasColumn('products', 'last_import_run_id')) $data['last_import_run_id'] = (int)$run->id;
 
+    $def = $this->resolveDefaultProductImage($title);
+    if ($def) $data['image'] = $def;
+
     return Product::create($data);
   }
 
-  /** -------------------- SLUG UNIQUE HELPERS -------------------- */
+  private function resolveDefaultProductImage(string $productTitle): ?string
+  {
+    $baseDir = storage_path('app/products_defolt');
+
+    $candidates = [
+      $productTitle,
+      $this->normKey($productTitle),
+      Str::slug($productTitle),
+    ];
+
+    $exts = ['jpg', 'jpeg', 'png', 'webp'];
+
+    foreach ($candidates as $name) {
+      $name = trim((string)$name);
+      if ($name === '') continue;
+
+      foreach ($exts as $ext) {
+        $src = $baseDir . DIRECTORY_SEPARATOR . $name . '.' . $ext;
+        if (!is_file($src)) continue;
+
+        $destRel = 'products_default/' . Str::slug($productTitle) . '.' . $ext;
+        $destAbs = storage_path('app/public/' . $destRel);
+
+        if (!is_file($destAbs)) {
+          @mkdir(dirname($destAbs), 0775, true);
+          @copy($src, $destAbs);
+        }
+
+        return $destRel;
+      }
+    }
+
+    return null;
+  }
+
 
   private function makeUniqueSlugForCarModels(string $base): string
   {
@@ -420,7 +473,6 @@ class CatalogRowProcessor
     return $slug;
   }
 
-  /** -------------------- SAFE UPDATE -------------------- */
 
   private function safeUpdateById(string $table, int $id, array $data): void
   {
@@ -435,7 +487,6 @@ class CatalogRowProcessor
     DB::table($table)->where('id', $id)->update($filtered);
   }
 
-  /** -------------------- NORMALIZE -------------------- */
 
   private function normKey(string $s): string
   {
@@ -446,10 +497,21 @@ class CatalogRowProcessor
     return trim($s);
   }
 
-  /**
-   * "8" => "8 поколение"
-   * "6 (EJ, EK ...)" => оставляем как есть
-   */
+  private function normalizeUrl(string $raw): ?string
+  {
+    $raw = trim($raw);
+    if ($raw === '' || $raw === '1') return null;
+
+    if (preg_match('~^https?://~i', $raw)) return $raw;
+
+    if (!preg_match('~\s~u', $raw) && str_contains($raw, '.') && str_contains($raw, '/')) {
+      return 'https://' . ltrim($raw, '/');
+    }
+
+    return null;
+  }
+
+
   private function formatGeneration(string $raw): string
   {
     $raw = trim($raw);

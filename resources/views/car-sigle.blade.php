@@ -2,6 +2,60 @@
 
 @section('content')
   <main>
+{{-- FEATURES = tags --}}
+                        @if (($car->tags ?? collect())->isNotEmpty())
+                            <div class="car-single-hero__features">
+                                @foreach ($car->tags as $tag)
+                                    <div class="car-single-hero__feature">
+                                        {{ $tag->title }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        {{-- PROMO = offers --}}
+                        @php
+                            $offers = ($car->offers ?? collect())
+                                ->filter(fn($o) => (bool) ($o->is_active ?? true))
+                                ->values();
+                        @endphp
+
+                        @if ($offers->isNotEmpty())
+                            <div class="car-single-hero__promo-wrap">
+                                @foreach ($offers as $offer)
+                                    <div class="car-single-hero__promo">
+                                        <div class="car-single-hero__promo-item">
+
+                                            <div class="car-single-hero__promo-item-title">
+                                                {{ $offer->title }}
+                                            </div>
+
+                                            <div class="car-single-hero__promo-item-price-wrap">
+                                                @if (!is_null($offer->price_from))
+                                                    <div class="car-single-hero__promo-item-price">
+                                                        от {{ number_format((int) $offer->price_from, 0, '.', ' ') }}
+                                                        {{ $offer->currency ?? '₽' }}
+                                                    </div>
+                                                @endif
+
+                                                @if (!is_null($offer->price_old))
+                                                    <div class="car-single-hero__promo-item-price-old">
+                                                        {{ number_format((int) $offer->price_old, 0, '.', ' ') }}
+                                                        {{ $offer->currency ?? '₽' }}
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                    </div>
+
+
+
     {{-- {{ Breadcrumbs::render('blog') }} --}}
 
     <section class="car-single__hero-section">

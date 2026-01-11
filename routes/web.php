@@ -21,7 +21,7 @@ use App\Http\Controllers\Client\WelcomePageController;
 use App\Http\Controllers\Client\CarAjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PageBannerController;
-use App\Http\Controllers\Admin\CatalogImportController;
+use App\Http\Controllers\Admin\ProductCarImagesController;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
 //Concern
@@ -51,6 +51,12 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
   Route::patch('/{main_info_id}/update_info', [MainController::class, 'update_info'])->name('update_info');
 
 
+  Route::get('/products/{product:slug}/cars', [ProductCarImagesController::class, 'index'])
+    ->name('products.cars.index');
+
+  Route::post('/products/{product:slug}/cars/{car}/image', [ProductCarImagesController::class, 'updateImage'])
+    ->name('products.cars.image');
+
   Route::post('/editor-uploads', EditorImageUploadController::class)->name('image_upload');
 
   Route::get('/import_catalog', [\App\Http\Controllers\Admin\CatalogImportController::class, 'index'])->name('import.catalog');
@@ -66,7 +72,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
   Route::get('/import_catalog/status', [\App\Http\Controllers\Admin\CatalogImportController::class, 'status'])->name('import.catalog.status');
 
   Route::post('/import_catalog/cleanup', [\App\Http\Controllers\Admin\CatalogImportController::class, 'cleanup'])
-  ->name('import.catalog.cleanup');
+    ->name('import.catalog.cleanup');
 
   Route::name('pages.')->prefix('pages')->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('index');

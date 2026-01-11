@@ -47,10 +47,12 @@ class Car extends Model
     return 'slug';
   }
 
-  public function products()
-  {
-    return $this->hasMany(Product::class);
-  }
+public function products()
+{
+  return $this->belongsToMany(Product::class, 'car_product')
+    ->withPivot(['image', 'image_mob'])
+    ->withTimestamps();
+}
 
   public function car_model()
   {

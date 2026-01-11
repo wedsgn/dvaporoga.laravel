@@ -16,58 +16,54 @@
                             <br>
                             ДЛЯ <span>{{ mb_strtoupper($car->title) }}</span>
                         </h1>
-
-                        {{-- FEATURES = tags --}}
-                        @if (($car->tags ?? collect())->isNotEmpty())
-                            <div class="car-single-hero__features">
-                                @foreach ($car->tags as $tag)
-                                    <div class="car-single-hero__feature">
-                                        {{ $tag->title }}
-                                    </div>
-                                @endforeach
+                        <div class="car-single-hero__features">
+                            <div class="car-single-hero__feature">
+                                Без предоплаты. Оплата при получении!
                             </div>
-                        @endif
-
-                        {{-- PROMO = offers --}}
-                        @php
-                            $offers = ($car->offers ?? collect())
-                                ->filter(fn($o) => (bool) ($o->is_active ?? true))
-                                ->values();
-                        @endphp
-
-                        @if ($offers->isNotEmpty())
-                            <div class="car-single-hero__promo-wrap">
-                                @foreach ($offers as $offer)
-                                    <div class="car-single-hero__promo">
-                                        <div class="car-single-hero__promo-item">
-
-                                            <div class="car-single-hero__promo-item-title">
-                                                {{ $offer->title }}
-                                            </div>
-
-                                            <div class="car-single-hero__promo-item-price-wrap">
-                                                @if (!is_null($offer->price_from))
-                                                    <div class="car-single-hero__promo-item-price">
-                                                        от {{ number_format((int) $offer->price_from, 0, '.', ' ') }}
-                                                        {{ $offer->currency ?? '₽' }}
-                                                    </div>
-                                                @endif
-
-                                                @if (!is_null($offer->price_old))
-                                                    <div class="car-single-hero__promo-item-price-old">
-                                                        {{ number_format((int) $offer->price_old, 0, '.', ' ') }}
-                                                        {{ $offer->currency ?? '₽' }}
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                @endforeach
+                            <div class="car-single-hero__feature">
+                                ХКС и Оцинковка
                             </div>
-                        @endif
+                            <div class="car-single-hero__feature">
+                                От 0,8 до 1,5 мм
+                            </div>
+                            <div class="car-single-hero__feature">
+                                Доставка по РФ
+                            </div>
+                        </div>
 
+                        <div class="car-single-hero__promo-wrap">
+                            <div class="car-single-hero__promo">
+
+                                <div class="car-single-hero__promo-item">
+                                    <div class="car-single-hero__promo-item-title">
+                                        ПОРОГИ
+                                    </div>
+
+
+                                    <div class="car-single-hero__promo-item-price-wrap">
+                                        <div class="car-single-hero__promo-item-price">от 1 690 ₽</div>
+                                        <div class="car-single-hero__promo-item-price-old">2 050 ₽</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="car-single-hero__promo">
+
+                                <div class="car-single-hero__promo-item">
+                                    <div class="car-single-hero__promo-item-title">
+                                        АРКИ
+                                    </div>
+
+
+                                    <div class="car-single-hero__promo-item-price-wrap">
+                                        <div class="car-single-hero__promo-item-price">от 1 950 ₽</div>
+                                        <div class="car-single-hero__promo-item-price-old">2 250 ₽</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
 
                     {{-- right --}}
                     <div class="car-single-hero__image">
@@ -95,18 +91,18 @@
         <section class="car-single-form-section">
             <div class="container">
                 <div class="car-single-form-section__top">
-                    @php
+                    {{-- @php
                         $hasOffers = ($car->offers ?? collect())
                             ->filter(fn($o) => (bool) ($o->is_active ?? true))
                             ->isNotEmpty();
                     @endphp
 
-                    @if ($hasOffers)
-                        <div class="car-single-form-section__label">
-                            <img src="{{ asset('images/icons/fire.svg') }}" alt="">
-                            <p>Акция</p>
-                        </div>
-                    @endif
+                    @if ($hasOffers) --}}
+                    <div class="car-single-form-section__label">
+                        <img src="{{ asset('images/icons/fire.svg') }}" alt="">
+                        <p>Акция</p>
+                    </div>
+                    {{-- @endif --}}
                     <h2 class="car-single-form-section__title">Оставьте заявку</h2>
                 </div>
 
@@ -151,14 +147,34 @@
             </div>
         </section>
 
-        {{-- PARTS (пока оставил как у тебя массивом; потом подключим из products) --}}
         <section class="car-single-parts-section">
             <div class="container">
                 <h2 class="h2">Запчасти на {{ $car->title }}</h2>
 
                 <div class="car-single-parts">
                     @foreach ($products as $p)
-                        <x-car-single-part :id="$p->id" :image="(!empty($p->image) && $p->image !== 'default' ? asset('storage/'.$p->image): asset('images/no-image.jpg'))" :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''" :title="$p->title"
+                        @php
+                            $adminPath = !empty($p->image) && $p->image !== 'default' ? ltrim($p->image, '/') : null;
+                            $pivotPath =
+                                !empty($p->pivot?->image) && $p->pivot->image !== 'default'
+                                    ? ltrim($p->pivot->image, '/')
+                                    : null;
+
+                            $fallbackPath = null;
+                            foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
+                                $pp = "products_default/{$p->slug}.{$ext}";
+                                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($pp)) {
+                                    $fallbackPath = $pp;
+                                    break;
+                                }
+                            }
+
+                            $finalPath = $adminPath ?: ($pivotPath ?: $fallbackPath);
+
+                            $imageUrl = $finalPath ? asset('storage/' . $finalPath) : asset('images/no-image.jpg');
+                        @endphp
+
+                        <x-car-single-part :id="$p->id" :image="$imageUrl" :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''" :title="$p->title"
                             :description="$p->description ?? ''" :price="$p->price ? number_format((int) $p->price, 0, '.', ' ') . ' ₽' : ''" :priceOld="$p->price_old ? number_format((int) $p->price_old, 0, '.', ' ') . ' ₽' : ''" :link="$p->link ?? ''" :alt="$p->alt ?: $p->title" />
                     @endforeach
                 </div>

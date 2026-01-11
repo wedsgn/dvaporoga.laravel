@@ -157,16 +157,44 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-4">{{ __('admin.aside_title_cars') }}</h5>
-
-                    @if ($item->car)
-                        <a href="{{ route('admin.cars.show', $item->car->slug) }}"
-                            class="badge bg-primary-subtle text-primary fs-6">
-                            {{ $item->car->title }}
+                    <div class="d-flex align-items-center mb-3">
+                        <h5 class="card-title mb-0 flex-grow-1">{{ __('admin.aside_title_cars') }}</h5>
+                        <a href="{{ route('admin.products.cars.index', $item) }}" class="btn btn-sm btn-primary">
+                            Картинки
                         </a>
+                    </div>
+
+                    @php
+                        // если у тебя не eager-load — можно прямо тут подгрузить count:
+                        $carsCount = method_exists($item, 'cars') ? $item->cars()->count() : 0;
+                        $carsList = method_exists($item, 'cars')
+                            ? $item->cars()->orderBy('title')->limit(10)->get()
+                            : collect();
+                    @endphp
+
+                    @if ($carsCount > 0)
+                        <div class="text-muted mb-2" style="font-size: 12px;">
+                            Связано машин: {{ $carsCount }}
+                        </div>
+
+                        <div class="d-flex flex-column gap-2">
+                            @foreach ($carsList as $car)
+                                <a href="{{ route('admin.cars.show', $car->slug) }}"
+                                    class="badge bg-primary-subtle text-primary fs-6 text-wrap"
+                                    style="width: 100%; text-align: left;">
+                                    {{ $car->title }}
+                                </a>
+                            @endforeach
+                        </div>
+
+                        @if ($carsCount > 10)
+                            <div class="text-muted mt-2" style="font-size: 12px;">
+                                Показаны первые 10. Остальные — на странице «Картинки».
+                            </div>
+                        @endif
                     @else
-                        <div class="text-danger">
-                            {{ __('admin.notification_no_entries') }}
+                        <div class="text-muted">
+                            Нет машин с этим товаром.
                         </div>
                     @endif
                 </div>

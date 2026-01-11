@@ -56,7 +56,7 @@
         </div>
         <nav class="footer-bottom__nav">
           <a href="{{ route('home') }}#features" class="footer__nav-link">Преимущества</a>
-          {{-- <a href="{{ route('catalog') }}" class="footer__nav-link">Каталог</a> --}}
+          <a href="{{ route('catalog') }}" class="footer__nav-link">Каталог</a>
           <a href="{{ route('blog') }}" class="footer__nav-link">Блог</a>
           <a href="{{ route('home') }}#about" class="footer__nav-link">О нас</a>
           <a href="{{ route('home') }}#delivery" class="footer__nav-link">Доставка</a>

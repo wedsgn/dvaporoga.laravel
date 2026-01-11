@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\CarMake;
-use App\Models\Page;
-use App\Models\Product;
-use Illuminate\Http\Request;
 
 class CatalogGenerationPageController extends Controller
 {
@@ -15,9 +12,15 @@ class CatalogGenerationPageController extends Controller
     $car_make = CarMake::where('slug', $car_make_slug)->firstOrFail();
     $car_model = $car_make->car_models()->where('slug', $model_slug)->firstOrFail();
     $car = $car_model->cars()->where('slug', $slug)->firstOrFail();
+
     $page = $car;
-    $products = $car->products;
+
+    $products = $car->products()
+      ->select('products.*')
+      ->withPivot(['image', 'image_mob'])
+      ->orderBy('products.sort')
+      ->get();
+
     return view('catalog_product', compact('products', 'car', 'car_model', 'car_make', 'page'));
   }
 }
-

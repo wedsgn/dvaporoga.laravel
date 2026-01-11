@@ -69,7 +69,7 @@
                                     <tr>
                                         <th scope="col" style="width: 80px;">ID</th>
                                         <th scope="col">{{ __('admin.field_title') }}</th>
-                                        <th scope="col">{{ __('admin.aside_title_cars') }}</th>
+                                        <th scope="col">Машин</th>
                                         <th scope="col">{{ __('admin.field_slug') }}</th>
                                         <th scope="col" style="width: 150px;">{{ __('admin.field_updated') }}</th>
                                         <th scope="col" style="width: 150px;">{{ __('admin.field_action') }}</th>
@@ -87,12 +87,17 @@
                                             </td>
 
                                             <td>
-                                                @if ($item->car)
-                                                    <a href="{{ route('admin.cars.show', $item->car->slug) }}">
-                                                        {{ $item->car->title }}
+                                                @php $cnt = (int)($item->cars_count ?? 0); @endphp
+
+                                                @if($cnt > 0)
+                                                    <a href="{{ route('admin.products.cars.index', $item) }}">
+                                                        {{ $cnt }}
                                                     </a>
+                                                    <div class="text-muted" style="font-size:12px;">
+                                                        открыть список
+                                                    </div>
                                                 @else
-                                                    <span class="text-muted">—</span>
+                                                    <span class="text-muted">0</span>
                                                 @endif
                                             </td>
 
@@ -109,16 +114,15 @@
                                                         <li>
                                                             <a href="{{ route('admin.products.show', $item->slug) }}"
                                                                 class="dropdown-item">
-                                                                <i
-                                                                    class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                                <i class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                                 {{ __('admin.btn_show') }}
                                                             </a>
                                                         </li>
+
                                                         <li>
                                                             <a href="{{ route('admin.products.edit', $item->slug) }}"
                                                                 class="dropdown-item edit-item-btn">
-                                                                <i
-                                                                    class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                                <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                                 {{ __('admin.btn_edit') }}
                                                             </a>
                                                         </li>
@@ -148,8 +152,7 @@
                                                             data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p
-                                                            class="mt-1 text-sm text-gray-600 alert alert-warning text-wrap">
+                                                        <p class="mt-1 text-sm text-gray-600 alert alert-warning text-wrap">
                                                             {{ __('admin.notification_delete') }}
                                                         </p>
                                                     </div>
@@ -158,8 +161,7 @@
                                                             data-bs-dismiss="modal">
                                                             {{ __('admin.btn_close') }}
                                                         </button>
-                                                        <form
-                                                            action="{{ route('admin.products.destroy', $item->slug) }}"
+                                                        <form action="{{ route('admin.products.destroy', $item->slug) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

@@ -52,9 +52,11 @@ class Product extends Model
     return 'slug';
   }
 
-  public function car()
+  public function cars()
   {
-    return $this->belongsTo(Car::class);
+    return $this->belongsToMany(Car::class, 'car_product')
+      ->withPivot(['image', 'image_mob'])
+      ->withTimestamps();
   }
 
 
