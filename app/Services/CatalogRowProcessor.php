@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Database\QueryException;
 
 class CatalogRowProcessor
 {
@@ -270,8 +271,17 @@ class CatalogRowProcessor
     if (Schema::hasColumn('car_models', 'description')) $data['description'] = '';
     if (Schema::hasColumn('car_models', 'is_published')) $data['is_published'] = true;
     if (Schema::hasColumn('car_models', 'last_import_run_id')) $data['last_import_run_id'] = (int)$run->id;
-
-    return CarModel::create($data);
+    try {
+      return CarModel::create($data);
+    } catch (QueryException $e) {
+      // Гонка между воркерами: параллельные чанки могут одновременно создать один и тот же slug.
+      // В этом случае просто читаем уже вставленную запись и продолжаем импорт.
+      if ((string)$e->getCode() === '23505') {
+        $model = CarModel::query()->where('slug', $slug)->orderBy('id')->first();
+        if ($model) return $model;
+      }
+      throw $e;
+    }
   }
 
   private function getOrCreateCar(
@@ -353,61 +363,85 @@ class CatalogRowProcessor
   }
 
 
-  private function getOrCreateBaseProductByTitle(ImportRun $run, string $title): Product
-  {
+private function getOrCreateBaseProductByTitle(ImportRun $run, string $title): Product
+{
     $title = trim($title);
     $normKey = $this->normKey($title);
     $slug = ($normKey === 'порог') ? 'porog' : Str::slug($title);
 
-    $q = Product::query();
+    // 1) Ищем базовую деталь (car_id NULL) включая soft-deleted
+    $q = Product::withTrashed();
 
     if (Schema::hasColumn('products', 'car_id')) {
-      $q->whereNull('car_id');
+        $q->whereNull('car_id');
     }
 
     if (Schema::hasColumn('products', 'norm_key')) {
-      $q->where('norm_key', $normKey);
+        $q->where('norm_key', $normKey);
     } else {
-      $q->where('slug', $slug);
+        $q->where('slug', $slug);
     }
 
+    /** @var Product|null $p */
     $p = $q->orderBy('id')->first();
 
+    // 2) Фолбэк по slug (всё ещё базовая, car_id NULL)
     if (!$p) {
-      $q2 = Product::query()->where('slug', $slug);
-      if (Schema::hasColumn('products', 'car_id')) $q2->whereNull('car_id');
-      $p = $q2->orderBy('id')->first();
+        $q2 = Product::withTrashed()->where('slug', $slug);
+        if (Schema::hasColumn('products', 'car_id')) $q2->whereNull('car_id');
+        $p = $q2->orderBy('id')->first();
     }
 
+    // 3) ЖЁСТКИЙ фолбэк: slug уникален глобально, поэтому ищем без car_id-ограничений
+    if (!$p) {
+        $p = Product::withTrashed()
+            ->where('slug', $slug)
+            ->orderBy('id')
+            ->first();
+    }
+
+    // 4) Если нашли — восстановить/обновить и вернуть
     if ($p) {
-      $upd = [];
-
-      if (Schema::hasColumn('products', 'norm_key') && empty($p->norm_key)) {
-        $upd['norm_key'] = $normKey;
-      }
-
-      if (Schema::hasColumn('products', 'last_import_run_id')) {
-        if ((int)($p->last_import_run_id ?? 0) !== (int)$run->id) {
-          $upd['last_import_run_id'] = (int)$run->id;
+        if (method_exists($p, 'restore') && !is_null($p->deleted_at)) {
+            $p->restore();
         }
-      }
 
-      if (empty($p->image)) {
-        $def = $this->resolveDefaultProductImage($title);
-        if ($def) $upd['image'] = $def;
-      }
+        $upd = [];
 
-      if ($upd) {
-        $this->safeUpdateById($p->getTable(), (int)$p->id, $upd);
-        foreach ($upd as $k => $v) $p->{$k} = $v;
-      }
+        if (Schema::hasColumn('products', 'norm_key') && empty($p->norm_key)) {
+            $upd['norm_key'] = $normKey;
+        }
 
-      return $p;
+        // ВАЖНО: если нашли "не базовую" (car_id != null), а ты хочешь именно базовую деталь:
+        // можешь раскомментировать, чтобы "перевести" её в базовую.
+        // Но это решение спорное — я бы так делал только если ты уверен, что lonzeron всегда общий.
+        /*
+        if (Schema::hasColumn('products', 'car_id') && !is_null($p->car_id)) {
+            $upd['car_id'] = null;
+        }
+        */
+
+        if (Schema::hasColumn('products', 'last_import_run_id')) {
+            $upd['last_import_run_id'] = (int)$run->id;
+        }
+
+        if (empty($p->image)) {
+            $def = $this->resolveDefaultProductImage($title);
+            if ($def) $upd['image'] = $def;
+        }
+
+        if ($upd) {
+            $this->safeUpdateById($p->getTable(), (int)$p->id, $upd);
+            foreach ($upd as $k => $v) $p->{$k} = $v;
+        }
+
+        return $p;
     }
 
+    // 5) Если не нашли — создаём
     $data = [
-      'title' => $title,
-      'slug'  => $slug,
+        'title' => $title,
+        'slug'  => $slug,
     ];
 
     if (Schema::hasColumn('products', 'norm_key')) $data['norm_key'] = $normKey;
@@ -418,8 +452,25 @@ class CatalogRowProcessor
     $def = $this->resolveDefaultProductImage($title);
     if ($def) $data['image'] = $def;
 
-    return Product::create($data);
-  }
+    // 6) Подстраховка от гонки
+    try {
+        return Product::create($data);
+    } catch (\Illuminate\Database\QueryException $e) {
+        $sqlState = $e->errorInfo[0] ?? null;
+        if ($sqlState === '23505') {
+            $p = Product::withTrashed()->where('slug', $slug)->orderBy('id')->first();
+            if ($p) {
+                if (method_exists($p, 'restore') && !is_null($p->deleted_at)) {
+                    $p->restore();
+                }
+                return $p;
+            }
+        }
+        throw $e;
+    }
+}
+
+
 
   private function resolveDefaultProductImage(string $productTitle): ?string
   {

@@ -15,6 +15,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Schema;
 
@@ -25,6 +26,14 @@ class CatalogImportChunkJob implements ShouldQueue
     public int $tries = 1;
 
     public function __construct(public int $runId) {}
+
+    public function middleware(): array
+    {
+        return [
+            (new WithoutOverlapping('catalog-import-run-' . $this->runId))
+                ->releaseAfter(10),
+        ];
+    }
 
     public function handle(
         CatalogSpreadsheetReader $reader,
@@ -38,14 +47,18 @@ class CatalogImportChunkJob implements ShouldQueue
 
         $abs = storage_path('app/' . $run->stored_path);
 
-        $detailColumns = [];
+        // detail columns map (из run или построение на лету)
         if (!empty($run->detail_columns) && is_array($run->detail_columns)) {
             $detailColumns = $run->detail_columns;
         } else {
-            $h1 = $reader->readFirstHeaderRow($abs);
-            $h2 = $reader->readSecondHeaderRow($abs);
-            $header2 = $h2;
-            $detailColumns = $this->buildDetailColumnsFallback($header2);
+            // IMPORTANT: group row1 must be resolved by merge ranges
+            $h1 = array_values($reader->readFirstHeaderRowResolved($abs));
+            $h2 = array_values($reader->readSecondHeaderRow($abs));
+            $detailColumns = $this->buildDetailColumns($h1, $h2);
+
+            ImportLogger::warn($run, 'detail_columns отсутствует в run — построено на лету', [
+                'count' => count($detailColumns),
+            ]);
         }
 
         $offset = (int)$run->current_row; // 0-based data offset
@@ -152,13 +165,57 @@ class CatalogImportChunkJob implements ShouldQueue
         $run->save();
     }
 
-    private function buildDetailColumnsFallback(array $headerRow2): array
+    /**
+     * То же построение, что и в StartJob.
+     */
+    private function buildDetailColumns(array $h1, array $h2): array
     {
         $out = [];
-        for ($i = 6; $i <= 200; $i++) {
-            $name = trim((string)($headerRow2[$i] ?? ''));
-            if ($name !== '') $out[$i] = $name;
+
+        $bodyIdx = null;
+        foreach ($h2 as $i => $v) {
+            $name = trim((string)$v);
+            if (mb_strtolower($name) === 'кузов') {
+                $bodyIdx = (int)$i;
+                break;
+            }
         }
+
+        $start = $bodyIdx !== null ? ($bodyIdx + 1) : 6;
+
+        $last = 0;
+        $max = max(count($h1), count($h2));
+        for ($i = $max - 1; $i >= 0; $i--) {
+            $v1 = trim((string)($h1[$i] ?? ''));
+            $v2 = trim((string)($h2[$i] ?? ''));
+            if ($v1 !== '' || $v2 !== '') {
+                $last = $i;
+                break;
+            }
+        }
+
+        for ($i = 0; $i <= $last; $i++) {
+            if ($i < $start) continue;
+
+            $group = trim((string)($h1[$i] ?? ''));
+            $n = trim((string)($h2[$i] ?? ''));
+
+            if ($n === '' && $group === '') continue;
+
+            if ($n !== '' && $group !== '') {
+                $title = (mb_strtolower($n) === mb_strtolower($group))
+                    ? $n
+                    : ($group . ' ' . $n);
+            } else {
+                $title = $n !== '' ? $n : $group;
+            }
+
+            $title = trim(preg_replace('~\s+~u', ' ', $title));
+            if ($title === '') continue;
+
+            $out[$i] = $title;
+        }
+
         return $out;
     }
 
@@ -171,7 +228,6 @@ class CatalogImportChunkJob implements ShouldQueue
     {
         $runId = (int)$run->id;
 
-        // если колонок нет — cleanup невозможен
         $tables = [
             'products' => Product::class,
             'cars' => Car::class,

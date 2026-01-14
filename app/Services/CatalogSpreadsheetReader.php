@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 class CatalogSpreadsheetReader
 {
@@ -28,7 +28,6 @@ class CatalogSpreadsheetReader
         $spreadsheet->disconnectWorksheets();
         unset($spreadsheet);
 
-        // минус строки заголовков
         return max(0, $highestRow - $this->headerRows);
     }
 
@@ -62,9 +61,6 @@ class CatalogSpreadsheetReader
         $spreadsheet = IOFactory::load($absolutePath);
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Excel строка, с которой начинаем читать
-        // +1 потому что Excel 1-based
-        // +headerRows потому что пропускаем заголовки
         $startRow = $this->headerRows + 1 + $offset;
         $endRow   = $startRow + $limit - 1;
 
@@ -113,5 +109,55 @@ class CatalogSpreadsheetReader
         unset($spreadsheet);
 
         return $rowArray[0] ?? [];
+    }
+
+    /**
+     * ВАЖНО: первая строка заголовков должна быть "точечной" по merge-диапазонам.
+     * Если M1:O1 = "Пенка", то "Пенка" должна быть только в M..O.
+     * В P..S должно быть пусто, если там пусто в верхней строке.
+     */
+    public function readFirstHeaderRowResolved(string $absolutePath): array
+    {
+        $spreadsheet = IOFactory::load($absolutePath);
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $highestCol = Coordinate::columnIndexFromString($sheet->getHighestColumn());
+        $row = array_fill(0, $highestCol, '');
+
+        $groupRow = 1;
+
+        // 1) merged-группы (M1:O1 => "Пенка" только внутри M..O)
+        foreach ($sheet->getMergeCells() as $range) {
+            if (!preg_match('/^([A-Z]+)' . $groupRow . ':([A-Z]+)' . $groupRow . '$/', $range, $m)) {
+                continue;
+            }
+
+            $startCol = Coordinate::columnIndexFromString($m[1]);
+            $endCol   = Coordinate::columnIndexFromString($m[2]);
+
+            $topLeftCell = Coordinate::stringFromColumnIndex($startCol) . $groupRow;
+            $val = trim((string) $sheet->getCell($topLeftCell)->getValue());
+            if ($val === '') continue;
+
+            for ($c = $startCol; $c <= $endCol; $c++) {
+                $row[$c - 1] = $val;
+            }
+        }
+
+        // 2) одиночные заголовки (если есть)
+        for ($c = 1; $c <= $highestCol; $c++) {
+            if ($row[$c - 1] !== '') continue;
+
+            $cell = Coordinate::stringFromColumnIndex($c) . $groupRow;
+            $val = trim((string) $sheet->getCell($cell)->getValue());
+            if ($val !== '') {
+                $row[$c - 1] = $val;
+            }
+        }
+
+        $spreadsheet->disconnectWorksheets();
+        unset($spreadsheet);
+
+        return $row;
     }
 }

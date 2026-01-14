@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ProductCarImagesController;
 
+
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
 //Concern
 
@@ -60,19 +61,18 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
   Route::post('/editor-uploads', EditorImageUploadController::class)->name('image_upload');
 
   Route::get('/import_catalog', [\App\Http\Controllers\Admin\CatalogImportController::class, 'index'])->name('import.catalog');
-
   Route::post('/import_catalog/upload', [\App\Http\Controllers\Admin\CatalogImportController::class, 'upload'])->name('import.catalog.upload');
-
   Route::post('/import_catalog/start', [\App\Http\Controllers\Admin\CatalogImportController::class, 'start'])->name('import.catalog.start');
   Route::post('/import_catalog/resume', [\App\Http\Controllers\Admin\CatalogImportController::class, 'resume'])->name('import.catalog.resume');
   Route::post('/import_catalog/pause', [\App\Http\Controllers\Admin\CatalogImportController::class, 'pause'])->name('import.catalog.pause');
-
   Route::post('/import_catalog/clear-logs', [\App\Http\Controllers\Admin\CatalogImportController::class, 'clearLogs'])->name('import.catalog.clearLogs');
-
   Route::get('/import_catalog/status', [\App\Http\Controllers\Admin\CatalogImportController::class, 'status'])->name('import.catalog.status');
-
   Route::post('/import_catalog/cleanup', [\App\Http\Controllers\Admin\CatalogImportController::class, 'cleanup'])
     ->name('import.catalog.cleanup');
+
+Route::get('/import-catalog/download/{run}', [\App\Http\Controllers\Admin\CatalogImportController::class, 'download'])
+    ->name('import_catalog.download');
+
 
   Route::name('pages.')->prefix('pages')->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('index');

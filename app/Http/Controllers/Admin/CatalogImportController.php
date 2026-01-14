@@ -11,11 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\Storage;
 use App\Models\CarMake;
 use App\Models\CarModel;
 use App\Models\Car;
 use App\Models\Product;
+use Illuminate\Support\Str;
 
 class CatalogImportController extends Controller
 {
@@ -25,13 +26,17 @@ class CatalogImportController extends Controller
 
     // берём последний run
     $run = ImportRun::query()->orderByDesc('id')->first();
-
+    $runs = ImportRun::query()
+    ->whereNotNull('stored_path')
+    ->orderByDesc('id')
+    ->limit(30)
+    ->get();
     $logs = [];
     if ($run) {
       $logs = ImportLogger::tail($run, 200);
     }
 
-    return view('admin.imports.import_catalog', compact('user', 'run', 'logs'));
+    return view('admin.imports.import_catalog', compact('user', 'run', 'logs', 'runs'));
   }
 
   public function upload(Request $request)
@@ -41,21 +46,21 @@ class CatalogImportController extends Controller
     ]);
 
     $file = $request->file('file');
-    $hash = sha1_file($file->getRealPath());
 
-    // если последний run уже с таким же файлом — просто возвращаемся (не дублим)
-    $existing = ImportRun::query()->where('file_hash', $hash)->orderByDesc('id')->first();
-    if ($existing) {
-      return redirect()->route('admin.import.catalog')
-        ->with('success', 'Файл уже загружен ранее. Можно нажать "Продолжить" или "Старт с начала".');
-    }
 
-    $storedPath = $file->store('imports', 'local'); // storage/app/imports/...
+    $file = $request->file('file');
+
+$versionPrefix = now()->format('Y-m-d_H-i-s') . '_' . Str::uuid();
+$filename = $versionPrefix . '_' . $file->getClientOriginalName();
+
+$storedPath = $file->storeAs('imports', $filename, 'local');
 
     $run = new ImportRun();
     $run->stored_path = $storedPath;
     $run->original_name = $file->getClientOriginalName();
-    $run->file_hash = $hash;
+    $run->file_size = $file->getSize();
+    $run->mime_type = $file->getMimeType();
+    $run->file_hash     = sha1_file($file->getRealPath());
 
     $run->status = 'ready';
     $run->chunk_size = $run->chunk_size ?: 300;
@@ -380,4 +385,17 @@ class CatalogImportController extends Controller
 
     return $out;
   }
+
+  public function download(ImportRun $run)
+{
+    abort_if(empty($run->stored_path), 404);
+
+    if (!Storage::disk('local')->exists($run->stored_path)) {
+        abort(404, 'Файл не найден на диске');
+    }
+
+    $name = $run->original_name ?: basename($run->stored_path);
+
+    return Storage::disk('local')->download($run->stored_path, $name);
+}
 }
