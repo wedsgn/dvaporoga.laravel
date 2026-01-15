@@ -239,7 +239,7 @@ window.addEventListener("load", () => {
 
   setTimeout(() => {
     MicroModal.show("modal-3");
-  }, 60000);
+  }, 90000);
 
   accordition();
   sliders();
