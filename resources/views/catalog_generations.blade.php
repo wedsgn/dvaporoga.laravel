@@ -26,12 +26,12 @@
 
     <x-section.car-models :models="$car_make->car_models->whereNotIn('id', [$car_model->id])" :concern_title="$car_make->title" />
 
-    <x-section.about-parts />
+    {{-- <x-section.about-parts />
     <x-section.how-we-work />
     <x-section.about-company />
-    <x-section.faq />
+    <x-section.faq /> --}}
     {{-- <x-section.products :items="$products" /> --}}
     {{-- <x-section.installing /> --}}
-    <x-section.faq />
+    {{-- <x-section.faq /> --}}
   </main>
 @endsection
