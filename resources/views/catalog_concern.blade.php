@@ -49,10 +49,10 @@
 
 
 
-    <x-section.about-parts />
+    {{-- <x-section.about-parts />
     <x-section.how-we-work />
     <x-section.about-company />
-    <x-section.faq />
+    <x-section.faq /> --}}
 
 
   </main>
