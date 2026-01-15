@@ -88,6 +88,13 @@
   &:hover {
     color: $red;
   }
+
+  &.--highlighted {
+    color: #fff;
+    background: $red;
+    padding: 8px 16px;
+    border-radius: 100px;
+  }
 }
 
 .burger {

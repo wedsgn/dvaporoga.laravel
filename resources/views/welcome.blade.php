@@ -74,10 +74,12 @@
     {{-- <x-section.features /> --}}
     <x-section.about-parts />
     {{-- <x-section.marks :items="$car_makes" /> --}}
+    <x-section.how-we-work />
     <x-section.gallery />
+
+    <x-section.about-company />
     {{-- <x-section.products :items="$products" /> --}}
     {{-- <x-section.installing /> --}}
-    <x-section.about-company />
     @if ($blogs->count())
       <x-section.blog :items="$blogs" />
     @endif

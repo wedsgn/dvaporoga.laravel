@@ -119,10 +119,6 @@
             </div>
           </ul>
 
-
-          <button class="btn about-parts-btn lg" data-micromodal-trigger="modal-about">
-            Обратный звонок
-          </button>
         </div>
       </div>
 

@@ -47,8 +47,11 @@
       </div>
     </section>
 
-    {{-- <x-section.products :items="$products" /> --}}
-    {{-- <x-section.installing /> --}}
+
+
+    <x-section.about-parts />
+    <x-section.how-we-work />
+    <x-section.about-company />
     <x-section.faq />
 
 
