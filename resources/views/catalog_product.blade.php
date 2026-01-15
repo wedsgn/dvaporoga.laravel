@@ -180,7 +180,9 @@
 
     <x-section.about-parts />
     <x-section.how-we-work />
-    <x-section.gallery />
+    <x-section.about-company />
+    <x-section.faq />
+    {{-- <x-section.gallery /> --}}
 
   </main>
   <script>
