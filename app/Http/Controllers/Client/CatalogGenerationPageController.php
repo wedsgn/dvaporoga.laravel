@@ -15,11 +15,25 @@ class CatalogGenerationPageController extends Controller
 
     $page = $car;
 
-    $products = $car->products()
-      ->select('products.*')
-      ->withPivot(['image', 'image_mob'])
-      ->orderBy('products.sort')
-      ->get();
+$products = $car->products()
+    ->select('products.*')
+    ->withPivot(['image', 'image_mob'])
+    ->orderByRaw("
+        CASE
+            -- 1) Пороги
+            WHEN products.title ILIKE 'порог%' THEN 0
+            WHEN products.title ILIKE 'усилитель%порог%' THEN 1
+
+            -- 2) Арки (все)
+            WHEN products.title ILIKE 'арка%' THEN 10
+
+            -- 3) Всё остальное
+            ELSE 100
+        END
+    ")
+    ->orderBy('products.sort')
+    ->orderBy('products.id')
+    ->get();
 
     return view('catalog_product', compact('products', 'car', 'car_model', 'car_make', 'page'));
   }
