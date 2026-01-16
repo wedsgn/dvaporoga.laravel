@@ -10,16 +10,21 @@
     border: 1px solid $black;
   }
 
+  &::placeholder {
+    opacity: 1;
+    color: #000;
+  }
+
   &.is-invalid {
     border: 1px solid $red;
   }
 
   &.black {
-    background: #252525;
-    border: 1px solid #252525;
+    background: #373737;
+    border: 1px solid #373737;
     color: #fff;
     &::placeholder {
-      color: #fff;
+      color: #fff !important;
     }
   }
 }

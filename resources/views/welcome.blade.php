@@ -45,11 +45,11 @@
 
           <div class="choose-section__form_row">
             <div class="input-item">
-              <input class="input black" type="text" name="name" placeholder="Имя">
+              <input class="input" type="text" name="name" placeholder="Имя">
             </div>
 
             <div class="input-item">
-              <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __">
+              <input class="input" type="tel" name="phone" placeholder="+7 (___) ___ __ __">
             </div>
 
             <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
@@ -101,11 +101,11 @@
 
           <div class="choose-section__form_row">
             <div class="input-item">
-              <input class="input black" type="text" name="name" placeholder="Имя">
+              <input class="input " type="text" name="name" placeholder="Имя">
             </div>
 
             <div class="input-item">
-              <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __">
+              <input class="input " type="tel" name="phone" placeholder="+7 (___) ___ __ __">
             </div>
 
             <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>

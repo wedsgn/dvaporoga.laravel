@@ -13,12 +13,12 @@
 
             <h1 class="car-single__title">
               КУЗОВНЫЕ ЭЛЕМЕНТЫ
-              <br>
-              ДЛЯ <span>{{ mb_strtoupper($car->title) }}</span>
+
+              ДЛЯ <br><span>{{ mb_strtoupper($car->title) }}</span>
             </h1>
             <div class="car-single-hero__features">
               <div class="car-single-hero__feature">
-                Без предоплаты. Оплата при получении!
+                Оплата при получении
               </div>
               <div class="car-single-hero__feature">
                 ХКС и Оцинковка
@@ -41,7 +41,7 @@
 
 
                   <div class="car-single-hero__promo-item-price-wrap">
-                    <div class="car-single-hero__promo-item-price">от 1 690 ₽</div>
+                    <div class="car-single-hero__promo-item-price">1 690 ₽</div>
                     <div class="car-single-hero__promo-item-price-old">2 050 ₽</div>
                   </div>
                 </div>
@@ -56,7 +56,7 @@
 
 
                   <div class="car-single-hero__promo-item-price-wrap">
-                    <div class="car-single-hero__promo-item-price">от 1 950 ₽</div>
+                    <div class="car-single-hero__promo-item-price">1 950 ₽</div>
                     <div class="car-single-hero__promo-item-price-old">2 250 ₽</div>
                   </div>
                 </div>
@@ -106,7 +106,7 @@
           <h2 class="car-single-form-section__title">Оставьте заявку</h2>
         </div>
 
-        <p class="car-single-form-section__descr">И мы перезвоним вам в течении минуты и ответим на все вопросы</p>
+        <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы </p>
 
         <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form">
           @csrf
