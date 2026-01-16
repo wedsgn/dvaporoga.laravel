@@ -28,7 +28,7 @@
           <h2 class="car-single-form-section__title">Оставьте заявку</h2>
         </div>
 
-        <p class="car-single-form-section__descr">И мы перезвоним вам в течении минуты и ответим на все вопросы</p>
+        <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы</p>
 
         <form class="car-single-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="lead">
           @csrf
@@ -84,7 +84,7 @@
           <h2 class="car-single-form-section__title">Оставьте заявку</h2>
         </div>
 
-        <p class="car-single-form-section__descr">И мы перезвоним вам в течении минуты и ответим на все вопросы</p>
+        <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы</p>
 
         <form class="car-single-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="lead">
           @csrf
