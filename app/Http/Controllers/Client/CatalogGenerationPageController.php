@@ -24,8 +24,12 @@ $products = $car->products()
             WHEN products.title ILIKE 'порог%' THEN 0
             WHEN products.title ILIKE 'усилитель%порог%' THEN 1
 
-            -- 2) Арки (все)
-            WHEN products.title ILIKE 'арка%' THEN 10
+            -- 2) Арки: передняя -> задняя -> внутренняя -> универсальная -> прочие арки
+            WHEN products.title ILIKE 'арка%перед%' THEN 10
+            WHEN products.title ILIKE 'арка%задн%' THEN 11
+            WHEN products.title ILIKE 'арка%внутренн%' AND products.title NOT ILIKE '%универс%' THEN 12
+            WHEN products.title ILIKE 'арка%универс%' OR products.title ILIKE 'арка%внутренн%универс%' THEN 13
+            WHEN products.title ILIKE 'арка%' THEN 19
 
             -- 3) Всё остальное
             ELSE 100
