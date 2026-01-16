@@ -29,6 +29,9 @@
               <div class="car-single-hero__feature">
                 Доставка по РФ
               </div>
+              <div class="car-single-hero__feature">
+                Повторение оригинала
+              </div>
             </div>
 
             <div class="car-single-hero__promo-wrap">
