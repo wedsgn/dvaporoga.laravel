@@ -86,14 +86,13 @@
                                                 }
                                             }
 
-                                            // PRIORITY: admin > pivot > fallback
-                                            $finalPath = $adminPath ?: ($pivotPath ?: $fallbackPath);
+                                            $finalPath = $pivotPath ?: ($adminPath ?: $fallbackPath);
                                             $finalSrc = $finalPath ? asset('storage/' . $finalPath) : null;
 
-                                            $source = $adminPath
-                                                ? 'админка (товар)'
-                                                : ($pivotPath
-                                                    ? 'таблица (pivot)'
+                                            $source = $pivotPath
+                                                ? 'таблица (pivot)'
+                                                : ($adminPath
+                                                    ? 'админка (товар)'
                                                     : ($fallbackPath
                                                         ? 'дефолт по slug'
                                                         : 'нет'));
@@ -131,6 +130,18 @@
                                                 <button class="btn btn-soft-success" type="submit">Заменить</button>
                                             </form>
                                             <div class="text-muted mt-1" style="font-size:12px;">JPG/PNG/WebP до 5MB</div>
+                                            @if ($pivotPath)
+    <form method="POST"
+          action="{{ route('admin.products.cars.image.delete', [$product, $car]) }}"
+          class="mt-2"
+          onsubmit="return confirm('Удалить изображение только для этой машины?');">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-soft-danger btn-sm" type="submit">
+            Удалить картинку для этой машины
+        </button>
+    </form>
+@endif
                                         </td>
                                     </tr>
                                 @empty

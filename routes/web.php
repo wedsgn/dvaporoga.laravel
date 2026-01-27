@@ -22,7 +22,7 @@ use App\Http\Controllers\Client\CarAjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ProductCarImagesController;
-
+use App\Http\Controllers\YandexFeedController;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
 //Concern
@@ -57,7 +57,10 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 
   Route::post('/products/{product:slug}/cars/{car}/image', [ProductCarImagesController::class, 'updateImage'])
     ->name('products.cars.image');
-
+  Route::delete(
+    '/products/{product}/cars/{car}/image',
+    [ProductCarImagesController::class, 'destroy']
+)->name('products.cars.image.delete');
   Route::post('/editor-uploads', EditorImageUploadController::class)->name('image_upload');
 
   Route::get('/import_catalog', [\App\Http\Controllers\Admin\CatalogImportController::class, 'index'])->name('import.catalog');
@@ -198,7 +201,18 @@ Route::get('/import-catalog/download/{run}', [\App\Http\Controllers\Admin\Catalo
   });
 });
 
+Route::get('/feeds/yandex.yml', YandexFeedController::class);
 
-Route::get('single-car', function () {
-  return view('car-sigle');
+
+
+Route::get('/feed/preview', function () {
+    $path = storage_path('app/feeds/yandex.yml');
+
+    abort_unless(file_exists($path), 404, 'Feed not generated');
+
+    $xml = simplexml_load_file($path);
+
+    return view('feed.preview', [
+        'offers' => $xml->shop->offers->offer
+    ]);
 });
