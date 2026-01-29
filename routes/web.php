@@ -201,7 +201,7 @@ Route::get('/import-catalog/download/{run}', [\App\Http\Controllers\Admin\Catalo
   });
 });
 
-Route::get('/feeds/yandex.yml', YandexFeedController::class);
+// Route::get('/feeds/yandex.yml', YandexFeedController::class);
 
 
 
