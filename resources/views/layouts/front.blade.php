@@ -26,7 +26,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="lead">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -199,7 +199,7 @@
         id="modal-product-form"
         class="modal-form"
         data-action="{{ route('request_product.store') }}"
-        data-ym-goal="lead"
+        data-ym-goal="calculator"
       >
         @csrf
 
