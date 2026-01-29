@@ -11,10 +11,11 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->call(function () {
-            if (Cache::pull('yandex_feed_dirty')) {
-                Artisan::call('feed:yandex');
-            }
-        })->everyFiveMinutes();
+      // Если нужно обновление по расписанию, раскомментировать этот блок
+        // $schedule->call(function () {
+        //     if (Cache::pull('yandex_feed_dirty')) {
+        //         Artisan::call('feed:yandex');
+        //     }
+        // })->everyFiveMinutes();
     }
 }

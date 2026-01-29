@@ -3,22 +3,22 @@
 namespace App\Observers;
 
 use App\Models\Product;
-use App\Support\Feeds\RebuildYandexFeed;
+use App\Support\Feeds\MarkYandexFeedDirty;
 
 class ProductObserver
 {
     public function saved(Product $product): void
     {
-        RebuildYandexFeed::run();
+        MarkYandexFeedDirty::mark();
     }
 
     public function deleted(Product $product): void
     {
-        RebuildYandexFeed::run();
+        MarkYandexFeedDirty::mark();
     }
 
     public function restored(Product $product): void
     {
-        RebuildYandexFeed::run();
+        MarkYandexFeedDirty::mark();
     }
 }

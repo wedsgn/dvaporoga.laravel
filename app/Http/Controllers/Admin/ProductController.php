@@ -112,9 +112,23 @@ class ProductController extends BaseController
 
     $cars = $carsQuery->paginate(50)->withQueryString();
 
-    $selectedCarIds = $item->cars()->pluck('cars.id')->map(fn($v) => (int)$v)->all();
+    $selectedCarIds = $item->cars()
+      ->pluck('cars.id')
+      ->map(fn($v) => (int) $v)
+      ->all();
 
-    return view('admin.products.edit', compact('user', 'item', 'cars', 'q', 'selectedCarIds'));
+    sort($selectedCarIds);
+
+    $serverSig = sha1(json_encode($selectedCarIds));
+
+    return view('admin.products.edit', compact(
+      'user',
+      'item',
+      'cars',
+      'q',
+      'selectedCarIds',
+      'serverSig'
+    ));
   }
   public function update(UpdateRequest $request, $product_slug)
   {

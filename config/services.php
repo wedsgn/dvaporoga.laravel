@@ -43,4 +43,7 @@ return [
     'source_id' => env('BITRIX24_SOURCE_ID'),
     'responsible_id' => env('BITRIX24_RESPONSIBLE_ID'),
   ],
+  'teletype' => [
+    'id' => env('TELETYPE_ID'),
+  ],
 ];

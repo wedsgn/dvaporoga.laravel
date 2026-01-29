@@ -205,14 +205,14 @@ Route::get('/feeds/yandex.yml', YandexFeedController::class);
 
 
 
-Route::get('/feed/preview', function () {
-    $path = storage_path('app/feeds/yandex.yml');
+// Route::get('/feed/preview', function () {
+//     $path = storage_path('app/feeds/yandex.yml');
 
-    abort_unless(file_exists($path), 404, 'Feed not generated');
+//     abort_unless(file_exists($path), 404, 'Feed not generated');
 
-    $xml = simplexml_load_file($path);
+//     $xml = simplexml_load_file($path);
 
-    return view('feed.preview', [
-        'offers' => $xml->shop->offers->offer
-    ]);
-});
+//     return view('feed.preview', [
+//         'offers' => $xml->shop->offers->offer
+//     ]);
+// });

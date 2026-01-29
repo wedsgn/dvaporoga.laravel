@@ -3,22 +3,22 @@
 namespace App\Observers;
 
 use App\Models\Car;
-use App\Support\Feeds\RebuildYandexFeed;
+use App\Support\Feeds\MarkYandexFeedDirty;
 
 class CarObserver
 {
     public function saved(Car $car): void
     {
-        RebuildYandexFeed::run();
+        MarkYandexFeedDirty::mark();
     }
 
     public function deleted(Car $car): void
     {
-        RebuildYandexFeed::run();
+        MarkYandexFeedDirty::mark();
     }
 
     public function restored(Car $car): void
     {
-        RebuildYandexFeed::run();
+        MarkYandexFeedDirty::mark();
     }
 }

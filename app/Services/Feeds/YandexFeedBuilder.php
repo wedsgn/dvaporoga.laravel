@@ -80,27 +80,28 @@ class YandexFeedBuilder
     $xml->endElement();
   }
 
-  protected function writeOffers(XMLWriter $xml): void
-  {
+protected function writeOffers(XMLWriter $xml): void
+{
     $xml->startElement('offers');
 
     Car::query()
-      ->with([
-        'car_model.car_make',
-        'products' => function ($q) {
-          $q->whereNotNull('car_product.id');
-        }
-      ])
-      ->chunk(50, function ($cars) use ($xml) {
-        foreach ($cars as $car) {
-          foreach ($car->products as $product) {
-            $this->writeOffer($xml, $car, $product);
-          }
-        }
-      });
+        ->with(['car_model.car_make'])
+        ->chunk(50, function ($cars) use ($xml) {
+            foreach ($cars as $car) {
+
+                // берём ТОЛЬКО связанные продукты через pivot
+                $products = $car->products()
+                    ->withPivot(['id', 'image', 'image_mob'])
+                    ->get();
+
+                foreach ($products as $product) {
+                    $this->writeOffer($xml, $car, $product);
+                }
+            }
+        });
 
     $xml->endElement();
-  }
+}
 
   protected function writeOffer(XMLWriter $xml, $car, $product): void
 {
@@ -342,6 +343,6 @@ protected function buildDescription($car, $product): string
         }
     }
 
-    return 'Собственное производство. Оплата при получении.';
+    return 'Собственное производство.1–1.5 мм. ХКС и Цинк. Оплата при получении.';
 }
 }

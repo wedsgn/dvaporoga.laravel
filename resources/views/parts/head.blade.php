@@ -31,7 +31,6 @@
     window._ab_id_ = 164880
   </script>
   <script src="https://cdn.botfaqtor.ru/one.js"></script>
-  <script src="https://cdn.botfaqtor.ru/one.js"></script>
 
 
   <link rel="canonical" href="{{ url()->current() }}" />
@@ -71,4 +70,6 @@
   <!-- UIS -->
   <!-- /Yandex.Metrika counter -->
   @vite(['resources/css/app.scss', 'resources/js/app.js'])
+
+
 </head>
