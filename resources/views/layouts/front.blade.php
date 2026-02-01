@@ -26,7 +26,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner" data-ym-mode="manual">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -93,7 +93,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="company">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="company" data-ym-mode="manual">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -127,7 +127,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="delivery">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="delivery" data-ym-mode="manual">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -200,6 +200,7 @@
         class="modal-form"
         data-action="{{ route('request_product.store') }}"
         data-ym-goal="calculator"
+        data-ym-mode="manual"
       >
         @csrf
 
@@ -264,7 +265,7 @@
         </header>
 
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="automatic">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="automatic" data-ym-mode="manual">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />

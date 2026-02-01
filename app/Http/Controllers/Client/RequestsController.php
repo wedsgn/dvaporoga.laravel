@@ -80,7 +80,7 @@ class RequestsController extends Controller
       Log::error('B24 consult exception: ' . $e->getMessage());
     }
 
-    return response()->json(['message' => 'Request created successfully'], 201);
+    return response()->json(['success' => true], 201);
   }
 
   public function store_request_product(
@@ -146,7 +146,7 @@ class RequestsController extends Controller
       Log::error('B24 product exception: ' . $e->getMessage());
     }
 
-    return response()->json(['message' => 'Request created successfully'], 201);
+    return response()->json(['success' => true], 201);
   }
 
 public function store_request_car(
@@ -240,7 +240,7 @@ public function store_request_car(
     Log::error('B24 car-page exception: ' . $e->getMessage());
   }
 
-  return response()->json(['message' => 'Request created successfully'], 201);
+  return response()->json(['success' => true], 201);
 }
 
   /* ===================== NOTIFICATIONS ===================== */

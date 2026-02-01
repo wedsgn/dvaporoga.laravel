@@ -110,7 +110,7 @@
                 <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы
                 </p>
 
-                <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form" data-ym-goal="calculator">
+                <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form" data-ym-goal="calculator" data-ym-mode="manual">
                     @csrf
 
                     <input type="hidden" name="form_id" value="car-page-form">
