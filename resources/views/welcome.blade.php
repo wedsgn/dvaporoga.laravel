@@ -32,7 +32,7 @@
 
         <form class="car-single-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner" data-ym-mode="manual">
           @csrf
-          <input type="hidden" name="form_id" value="car-single-form-home">
+          <input type="hidden" name="form_id" value="car-single-form-home-banner">
           <input type="hidden" name="current_url"
             value="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">
 
@@ -88,7 +88,7 @@
 
         <form class="car-single-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="delivery" data-ym-mode="manual">
           @csrf
-          <input type="hidden" name="form_id" value="car-single-form-home">
+          <input type="hidden" name="form_id" value="car-single-form-home-delivery">
           <input type="hidden" name="current_url"
             value="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">
 

@@ -178,12 +178,21 @@
       } catch {}
 
       if (res.ok) {
-        form.reset();
-        closeParentModalIfAny(form);
-        openThanks();
-        document.dispatchEvent(new CustomEvent('form:success', { detail: { form } }));
+        if (data && data.success === true) {
+          form.reset();
+          closeParentModalIfAny(form);
+          openThanks();
+          document.dispatchEvent(
+            new CustomEvent("form:success", { detail: { form } })
+          );
+        } else {
+
+          const msg =
+            (data && (data.message || data.error)) ||
+            "Не удалось подтвердить отправку. Попробуйте ещё раз.";
+          alert(msg);
+        }
       } else if (res.status === 422) {
-        // используем только серверные сообщения валидации
         const errs = (data && (data.errors || data)) || {};
         showErrors(form, errs);
       } else if (res.status === 419 || res.status === 401) {

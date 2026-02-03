@@ -59,7 +59,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner" data-ym-mode="manual">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -160,7 +160,7 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
 
-        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="faq">
+        <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="faq" data-ym-mode="manual">
           @csrf
           <input type="text" placeholder="Имя" class="input" name="name" />
           <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
@@ -286,7 +286,7 @@
     </div>
   </div>
   <script src="{{ asset('/js/forms-ajax.js') }}"></script>
-  {{-- <script defer src="{{ asset('js/products-section.js') }}"></script> --}}
+<script src="{{ asset('/js/ym-goals.js') }}"></script>
   <script src="{{ asset('/js/product_calc.js') }}"></script>
 
     <script>
