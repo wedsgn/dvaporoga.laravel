@@ -32,16 +32,76 @@
     font-size: 16px;
   }
 }
-/* Десктоп: показываем только desktop-версію */
 @media (min-width: 769px) {
   .swiper-banner-mobile {
     display: none;
   }
 }
 
-/* Мобильный: показываем только mobile-версію */
 @media (max-width: 768px) {
   .swiper-banner-desktop {
     display: none;
   }
 }
+.call-float {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ff2f2f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+
+  box-shadow: 0 8px 24px rgba(255, 47, 47, 0.35);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.call-float:hover {
+  transform: scale(1.1) rotate(-8deg);
+  box-shadow: 0 12px 32px rgba(255, 47, 47, 0.55);
+  background: #ff1f1f;
+}
+
+.call-float:active {
+  transform: scale(0.95);
+}
+
+.call-float__ring {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: rgba(255, 0, 0, 0.08);
+  animation: call-pulse 1.8s infinite;
+}
+
+.call-float__btn {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  background: #ff2d2d;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(255, 45, 45, 0.45);
+}
+
+.call-float__btn svg {
+  width: 26px;
+  height: 26px;
+}
+
+@keyframes call-pulse {
+  0%   { transform: scale(0.6); opacity: 0.6; }
+  70%  { transform: scale(1);   opacity: 0; }
+  100% { opacity: 0; }
+}
+
