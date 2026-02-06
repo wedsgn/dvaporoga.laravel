@@ -337,23 +337,46 @@
     margin-top: 6px;
   }
 }
+/* ===== MOBILE 2-COLS: ровные карточки, цена и кнопка снизу ===== */
 @media screen and (max-width: 640px) {
-  .car-single-part {
-    gap: 6px;
+  .car-single-parts {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    align-items: stretch;
   }
 
-  .car-single-part__bottom {
+  .car-single-part {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    height: 100%;
     gap: 8px;
   }
 
+  /* чтобы блок "низ" всегда был внизу карточки */
+  .car-single-part__bottom {
+    margin-top: auto;              /* ключ */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  /* цена слева, можно колонкой (цена + старая цена) */
+  .car-single-part__price-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  /* кнопка справа */
   .car-single-part__btn {
     margin-left: 0;
-    width: 100%;
+    flex: 0 0 auto;
   }
 
   .car-single-part__btn button {
-    width: 100%;
+    width: auto;                   /* НЕ на всю ширину */
+    white-space: nowrap;
   }
 }
