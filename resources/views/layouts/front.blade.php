@@ -81,7 +81,7 @@
   </div>
 
   <!-- МОДАЛКА О НАС -->
-  <div class="modal micromodal-slide" id="modal-about" aria-hidden="true" onsubmit="console.log(123123)">
+  <div class="modal micromodal-slide" id="modal-about" aria-hidden="true">
     <div class="modal__overlay" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-about-title"
         aria-describedby="modal-about-desc" tabindex="-about">

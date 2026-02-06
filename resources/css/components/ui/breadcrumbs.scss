@@ -34,8 +34,12 @@
   }
 }
 
-@media screen and (max-width: 550px) {
-  .breadcrumbs-section {
-    margin-top: 60px;
+main:has(.breadcrumbs-section) .car-single__hero-section {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  main:has(.breadcrumbs-section) .car-single__hero-section {
+    margin-top: 20px;
   }
 }

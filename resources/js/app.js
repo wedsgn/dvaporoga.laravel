@@ -9,6 +9,8 @@ import { Fancybox } from "@fancyapps/ui";
 import Choices from "choices.js";
 
 window.addEventListener("load", () => {
+
+
   // Choices (только если есть элементы)
   const makeEl = document.querySelector("#choose-make");
   const modelEl = document.querySelector("#choose-model");

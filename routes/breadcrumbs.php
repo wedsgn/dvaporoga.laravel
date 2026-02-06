@@ -50,3 +50,7 @@ Breadcrumbs::for('blog.single', function (BreadcrumbTrail $trail, $post) {
     $trail->parent('blog');
     $trail->push($post->title, route('blog.single', $post->title));
 });
+Breadcrumbs::for('catalog_product', function (BreadcrumbTrail $trail, CarMake $make, $model, $car) {
+    $trail->parent('car_model.show', $make, $model);
+    $trail->push($car->title, route('catalog_product', [$make->slug, $model->slug, $car->slug]));
+});

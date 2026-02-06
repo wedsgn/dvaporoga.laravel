@@ -2,9 +2,20 @@
 
 @section('content')
     <main>
-
+        {{ Breadcrumbs::render('car_generation.show', $car_make, $car_model, $car) }}
         {{-- HERO --}}
         <section class="car-single__hero-section">
+            @php
+                $img = null;
+
+                if (!empty($car->image) && $car->image !== 'default') {
+                    $img = asset('storage/' . $car->image);
+                } elseif (!empty($car->image_mob) && $car->image_mob !== 'default') {
+                    $img = asset('storage/' . $car->image_mob);
+                } else {
+                    $img = asset('images/cars/merc.png');
+                }
+            @endphp
             <div class="container">
                 <div class="car-single-hero__wrap">
 
@@ -16,6 +27,12 @@
 
                             ДЛЯ <br><span>{{ mb_strtoupper($car->title) }}</span>
                         </h1>
+
+                        {{-- ✅ MOBILE: фото сразу под заголовком --}}
+                        <div class="car-single-hero__image car-single-hero__image--mob">
+                            <img src="{{ $img }}" alt="{{ $car->title }}">
+                        </div>
+
                         <div class="car-single-hero__features">
                             <div class="car-single-hero__feature">
                                 Оплата при получении
@@ -67,21 +84,8 @@
                         </div>
                     </div>
 
-
-                    {{-- right --}}
-                    <div class="car-single-hero__image">
-                        @php
-                            $img = null;
-
-                            if (!empty($car->image) && $car->image !== 'default') {
-                                $img = asset('storage/' . $car->image);
-                            } elseif (!empty($car->image_mob) && $car->image_mob !== 'default') {
-                                $img = asset('storage/' . $car->image_mob);
-                            } else {
-                                $img = asset('images/cars/merc.png');
-                            }
-                        @endphp
-
+                    {{-- ✅ DESKTOP: картинка справа --}}
+                    <div class="car-single-hero__image car-single-hero__image--desk">
                         <img src="{{ $img }}" alt="{{ $car->title }}">
                     </div>
 
@@ -110,7 +114,8 @@
                 <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы
                 </p>
 
-                <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form" data-ym-goal="calculator" data-ym-mode="manual">
+                <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form"
+                    data-ym-goal="calculator" data-ym-mode="manual">
                     @csrf
 
                     <input type="hidden" name="form_id" value="car-page-form">
@@ -150,7 +155,7 @@
 
         <section class="car-single-parts-section">
             <div class="container">
-                <h2 class="h2">Запчасти на {{ $car->title }}</h2>
+                <h2 class="h2">Запчасти на <span>{{ $car->title }}</span></h2>
 
                 <div class="car-single-parts">
                     @foreach ($products as $p)

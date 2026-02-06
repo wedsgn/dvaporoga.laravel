@@ -16,10 +16,19 @@
   align-items: center;
 }
 
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
 .header__logo {
   display: block;
+
   img {
     display: block;
+    height: 32px;
+    width: auto;
   }
 }
 
@@ -29,23 +38,16 @@
   gap: 16px;
 }
 
-.header__left {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-
 .header__btns {
   margin-left: auto;
   display: flex;
-
   align-items: center;
   gap: 24px;
+
   a {
     display: block;
-    svg {
-      display: block;
-    }
+
+    svg,
     img {
       display: block;
     }
@@ -64,16 +66,15 @@
   gap: 4px;
 
   a {
-    font-style: normal;
-    line-height: 100%;
     font-size: 20px;
     font-weight: 700;
-  }
-  span {
-    display: block;
-    font-size: 14px;
     line-height: 100%;
+  }
+
+  span {
+    font-size: 14px;
     font-weight: 300;
+    line-height: 100%;
   }
 }
 
@@ -85,6 +86,7 @@
 
 .header__link {
   transition: color 0.2s ease-in-out;
+
   &:hover {
     color: $red;
   }
@@ -101,154 +103,119 @@
   display: none;
 }
 
-.mobile-nav__bottom {
-  display: none;
-}
-@media screen and (max-width: 1440px) {
-  @media screen and (max-width: 1200px) {
-    .header-consultation-btn {
-      display: none;
-    }
-
-    .header__phone {
-      gap: 2px;
-    }
-
-    .mobile-nav {
-      display: block;
-      position: fixed;
-      z-index: 10;
-      color: $black;
-      height: 100vh;
-      top: 0;
-      right: -100%;
-      background: $white;
-      width: 100%;
-      transition: all 0.3s ease-in-out;
-
-      &.active {
-        right: 0;
-      }
-    }
-
-    .mobile-nav__wrap {
-      padding: 100px 16px 32px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .mobile-nav__nav {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      font-weight: 500;
-    }
-
-    .burger {
-      background: $red;
-      width: 32px;
-      height: 32px;
-      border-radius: 100%;
-      display: block;
-      position: relative;
-      flex-shrink: 0;
-
-      span {
-        position: absolute;
-        width: 18px;
-        height: 2px;
-        border-radius: 2px;
-        background: $white;
-        pointer-events: none;
-        border-radius: 2px;
-        left: 7px;
-        transition: all 0.2s ease-in-out;
-
-        &:nth-child(1) {
-          top: 10px;
-        }
-        &:nth-child(2) {
-          top: 15px;
-        }
-        &:nth-child(3) {
-          bottom: 10px;
-        }
-      }
-
-      &.active {
-        span {
-          &:nth-child(1) {
-            top: 15px;
-            transform: rotate(225deg);
-          }
-          &:nth-child(2) {
-            opacity: 0;
-          }
-          &:nth-child(3) {
-            bottom: 15px;
-            transform: rotate(-225deg);
-          }
-        }
-      }
-    }
-
-    .header__nav {
-      position: absolute;
-      // transform: translateY(-100%);
-      display: none;
-    }
-  }
-
-  .header-div {
+/* =========================
+   <= 1200px
+========================= */
+@media screen and (max-width: 1200px) {
+  .header-consultation-btn {
     display: none;
   }
 
-  .header__phone_top {
-    svg {
-      display: none;
+  .header__nav {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+    background: $red;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+
+    span {
+      position: absolute;
+      width: 18px;
+      height: 2px;
+      background: #fff;
+      left: 7px;
+      transition: 0.2s;
+
+      &:nth-child(1) { top: 10px; }
+      &:nth-child(2) { top: 15px; }
+      &:nth-child(3) { bottom: 10px; }
     }
 
-    a {
-      font-weight: 700;
+    &.active span:nth-child(1) {
+      top: 15px;
+      transform: rotate(45deg);
+    }
+
+    &.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    &.active span:nth-child(3) {
+      bottom: 15px;
+      transform: rotate(-45deg);
     }
   }
 }
 
+/* =========================
+   <= 550px (КЛЮЧЕВОЕ)
+========================= */
 @media screen and (max-width: 550px) {
+  /* ЛОГОТИП ОСТАЁТСЯ */
+  .header__left {
+    display: flex;
+    gap: 0;
+  }
+
+  .header__logo img {
+    height: 28px;
+  }
+
+  /* убираем всё лишнее */
+  .header__nav,
+  .header-div {
+    display: none !important;
+  }
+
+  /* телефон УБИРАЕМ из шапки */
+  .header__btns .header__phone {
+    display: none !important;
+  }
+
+  .header__btns {
+    margin-left: auto;
+    gap: 12px;
+  }
+
+  /* соцсети скрыты в шапке */
   .social-link {
     display: none !important;
   }
 
-  .header__logo {
-    img {
-      height: 24px;
-    }
-  }
-
-  .header__left {
-    display: none;
-  }
-
-  .header__btns {
-    justify-content: space-between;
-    width: 100%;
-  }
-
+  /* mobile menu */
   .mobile-nav {
+    display: block;
+    position: fixed;
+    z-index: 10;
+    height: 100vh;
+    top: 0;
+    right: -100%;
+    background: $white;
+    width: 100%;
+    transition: right 0.3s ease-in-out;
+
+    &.active {
+      right: 0;
+    }
   }
 
   .mobile-nav__wrap {
     padding: 100px 16px 120px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
-  .mobile-nav__bottom-contacts {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
   .mobile-nav__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 12px;
   }
 
@@ -257,24 +224,21 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
 
-    .header-consultation-btn {
-      display: block;
-      border-radius: 8px;
-    }
+  .mobile-nav__bottom-contacts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .mobile-nav__bottom-socials {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-left: auto;
-    }
-    .header__phone {
-      display: block;
-    }
+  /* ТЕЛЕФОН ТОЛЬКО ЗДЕСЬ */
+  .mobile-nav__bottom .header__phone {
+    display: block;
+  }
 
-    .social-link {
-      display: block !important;
-    }
+  .mobile-nav__bottom-socials {
+    display: flex;
+    gap: 12px;
   }
 }
