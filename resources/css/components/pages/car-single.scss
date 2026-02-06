@@ -368,6 +368,10 @@
     align-items: flex-start;
     gap: 4px;
   }
+.car-single-part__price,
+.car-single-part__price-old {
+  white-space: nowrap;   // ⬅️ КЛЮЧ
+}
 
   /* кнопка справа */
   .car-single-part__btn {
