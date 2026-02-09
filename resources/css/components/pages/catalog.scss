@@ -652,32 +652,28 @@
   overflow: hidden;
 }
 
-/* ✅ УВЕЛИЧИВАЕМ ТОЛЬКО ЛОГОТИП (ещё больше) */
 .catalog-concern__wrap .mark-image img {
   width: auto !important;
   height: auto !important;
 
-  /* чуть меньше база, чтобы при scale не резало */
   max-width: 86% !important;
   max-height: 86% !important;
 
   object-fit: contain;
   display: block;
 
-  transform: scale(1.65);      /* было 1.35 */
+  transform: scale(1.65);
   transform-origin: center;
 
-  /* чтобы alt/битые не раздувало визуально */
   color: transparent;
   font-size: 0;
 }
 
 .catalog-concern__wrap .mark-title {
-  text-transform: none;
-  font-weight: 500;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.55);
-  text-align: center;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
 }
 
 /* ===== responsive ===== */
@@ -705,16 +701,5 @@
   .catalog-concern__wrap .mark-image {
     border-radius: 14px;
     padding: 4px;
-  }
-
-  .catalog-concern__wrap .mark-image img {
-    max-width: 82% !important;
-    max-height: 82% !important;
-    transform: scale(2.25);    /* было 1.55 */
-  }
-
-  .catalog-concern__wrap .mark-title {
-    font-size: 12px;
-    line-height: 1.1;
   }
 }
