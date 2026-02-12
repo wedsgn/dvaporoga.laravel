@@ -297,7 +297,7 @@
         </div>
     </div>
     <script src="{{ asset('/js/forms-ajax.js') }}"></script>
-    {{-- <script src="{{ asset('/js/ym-goals.js') }}"></script> --}}
+    <script src="{{ asset('/js/ym-goals.js') }}"></script>
     <script src="{{ asset('/js/product_calc.js') }}"></script>
 
     <script>
