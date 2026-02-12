@@ -2,6 +2,7 @@
 
 @section('content')
     <main>
+
         {{ Breadcrumbs::render('car_generation.show', $car_make, $car_model, $car) }}
         {{-- HERO --}}
         <section class="car-single__hero-section">
@@ -27,7 +28,6 @@
 
                             ДЛЯ <br><span>{{ mb_strtoupper($car->title) }}</span>
                         </h1>
-
                         {{-- ✅ MOBILE: фото сразу под заголовком --}}
                         <div class="car-single-hero__image car-single-hero__image--mob">
                             <img src="{{ $img }}" alt="{{ $car->title }}">
@@ -37,7 +37,7 @@
                             <div class="car-single-hero__feature">
                                 Оплата при получении
                             </div>
-                            <div class="car-single-hero__feature">
+                            <div class="car-single-hero__feature">ф
                                 ХКС и Оцинковка
                             </div>
                             <div class="car-single-hero__feature">
@@ -122,12 +122,13 @@
                     <input type="hidden" name="car_id" value="{{ $car->id }}">
                     <input type="hidden" name="current_url" value="{{ request()->fullUrl() }}">
 
-                    <input type="hidden" name="utm_source" value="{{ request('utm_source') }}">
-                    <input type="hidden" name="utm_medium" value="{{ request('utm_medium') }}">
-                    <input type="hidden" name="utm_campaign" value="{{ request('utm_campaign') }}">
-                    <input type="hidden" name="utm_term" value="{{ request('utm_term') }}">
-                    <input type="hidden" name="utm_content" value="{{ request('utm_content') }}">
-
+                    {{-- UTM метки --}}
+                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
+                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
+                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
+                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
+                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
+                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
                     <div class="choose-section__form_row">
                         <div class="input-item">
                             <input class="input black" type="text" name="name" placeholder="Имя" required>

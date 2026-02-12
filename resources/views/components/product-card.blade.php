@@ -3,7 +3,6 @@
 ])
 
 
-
 <div class="product" data-prices="{{ json_encode($part->prices) }}" data-item="{{ json_encode($part) }}">
 
 
@@ -24,11 +23,13 @@
                     <input type="text" placeholder="Имя" class="input" name="name" />
                     <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
                     <input type="hidden" name="form_id" value="modal-form-product {{ $part->slug }}">
-                    <input type="hidden" name="utm_source" value="{{ request()->input('utm_source') }}">
-                    <input type="hidden" name="utm_medium" value="{{ request()->input('utm_medium') }}">
-                    <input type="hidden" name="utm_campaign" value="{{ request()->input('utm_campaign') }}">
-                    <input type="hidden" name="utm_term" value="{{ request()->input('utm_term') }}">
-                    <input type="hidden" name="utm_content" value="{{ request()->input('utm_content') }}">
+                    {{-- UTM метки --}}
+                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
+                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
+                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
+                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
+                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
+                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
                     <p class="copyright">
                         Нажимая кнопку “Отправить” вы соглашаетесь с нашей
