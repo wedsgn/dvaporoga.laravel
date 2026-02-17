@@ -37,7 +37,7 @@
                             <div class="car-single-hero__feature">
                                 Оплата при получении
                             </div>
-                            <div class="car-single-hero__feature">ф
+                            <div class="car-single-hero__feature">
                                 ХКС и Оцинковка
                             </div>
                             <div class="car-single-hero__feature">
