@@ -216,10 +216,10 @@ Route::get('/import-catalog/download/{run}', [\App\Http\Controllers\Admin\Catalo
 //         'offers' => $xml->shop->offers->offer
 //     ]);
 // });
-Route::get('/_debug/utm', function () {
-    return response()->json([
-        'cookie' => request()->cookie('utm_payload'),
-        'payload' => \App\Support\Utm::payload(request()),
-        'all_cookies' => request()->cookies->all(),
-    ]);
-});
+// Route::get('/_debug/utm', function () {
+//     return response()->json([
+//         'cookie' => request()->cookie('utm_payload'),
+//         'payload' => \App\Support\Utm::payload(request()),
+//         'all_cookies' => request()->cookies->all(),
+//     ]);
+// });
