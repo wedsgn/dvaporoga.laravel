@@ -1,0 +1,100 @@
+
+.call-float {
+  position: fixed;
+  left: 32px;
+  bottom: 32px;
+
+  width: 76px;
+  height: 76px;
+
+  border-radius: 50%;
+  padding: 0 !important;
+  line-height: 0 !important;
+
+  display: grid;
+  place-items: center;
+
+  background: #ff2f2f;
+  z-index: 9999;
+
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+
+  box-shadow: 0 12px 30px rgba(255, 47, 47, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.call-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 16px 36px rgba(255, 47, 47, 0.6);
+}
+
+.call-float:active {
+  transform: scale(0.95);
+}
+
+.call-float__ring {
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  background: rgba(255, 0, 0, 0.08);
+  animation: call-pulse 1.8s infinite;
+}
+
+.call-float__btn {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  background: #ff2d2d;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(255, 45, 45, 0.45);
+}
+
+.call-float svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+@keyframes call-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  70% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .call-float {
+    left: 16px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 10px 26px rgba(255, 47, 47, 0.45);
+  }
+
+  .call-float__ring {
+    inset: -20px;
+  }
+
+  .call-float__btn {
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 10px 25px rgba(255, 45, 45, 0.45);
+  }
+
+  .call-float svg {
+    width: 26px;
+    height: 26px;
+  }
+}

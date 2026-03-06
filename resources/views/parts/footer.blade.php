@@ -16,13 +16,16 @@
 
                 <div class="footer-top__right">
                     <div class="footer-socials">
-
+                       @if (!empty($main_info->whats_app))
                         <a href="{{ $main_info->whats_app }}" target="_blank" class="footer-social">
                             <img src="{{ asset('images/socials/wa.svg') }}" alt="dvaporoga whatssup">
                         </a>
+                        @endif
+                         @if (!empty($main_info->telegram))
                         <a href="{{ $main_info->telegram }}" target="_blank" class="footer-social">
                             <img src="{{ asset('images/socials/tg.svg') }}" alt="dvaporoga telegram">
                         </a>
+                        @endif
                         <a href="https://vk.com/avtoporogiru" target="_blank" class="footer-social">
                             <img src="{{ asset('images/socials/vk.svg') }}" alt="dvaporoga vk">
                         </a>

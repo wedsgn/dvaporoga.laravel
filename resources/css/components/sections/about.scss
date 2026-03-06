@@ -14,7 +14,7 @@
 
 .about-section__info_wrap {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 48px;
 }
 
@@ -36,8 +36,12 @@
   max-width: 830px;
   width: 100%;
   flex-shrink: 0;
+  display: flex;
+
   img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 8px;
     overflow: hidden;
     display: block;
@@ -49,9 +53,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+
   li {
     position: relative;
     padding-left: 16px;
+
     &:before {
       content: "";
       position: absolute;
@@ -68,8 +74,11 @@
 @media screen and (max-width: 1440px) {
   .about-section__info_image {
     max-width: 60%;
+
     img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
   }
@@ -87,6 +96,11 @@
 
   .about-section__info_image {
     max-width: none;
+
+    img {
+      height: auto;
+      object-fit: contain;
+    }
   }
 
   .about-section__info_list {

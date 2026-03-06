@@ -1,0 +1,13 @@
+.home-page-form-section .container {
+  background: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .home-page-form-section .container {
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+}

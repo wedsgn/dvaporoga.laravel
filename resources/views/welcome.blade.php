@@ -21,112 +21,28 @@
         </section>
 
 
-        <section class="car-single-form-section --white">
-            <div class="container">
-                <div class="car-single-form-section__top">
-
-                    <h2 class="car-single-form-section__title">Оставьте заявку</h2>
-                </div>
-
-                <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы</p>
-
-                <form class="car-single-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner"
-                    data-ym-mode="manual">
-                    @csrf
-                    <input type="hidden" name="form_id" value="car-single-form-home-banner">
-                    <input type="hidden" name="current_url"
-                        value="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">
-
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-                    <div class="choose-section__form_row">
-                        <div class="input-item">
-                            <input class="input" type="text" name="name" placeholder="Имя">
-                        </div>
-
-                        <div class="input-item">
-                            <input class="input" type="tel" name="phone" placeholder="+7 (___) ___ __ __">
-                        </div>
-
-                        <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
-                    </div>
-
-                    <div class="form-policy">
-                        <input type="checkbox" id="choose-check" name="policy" value="1" checked=""
-                            required="">
-                        <label for="choose-check">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                </form>
-            </div>
-        </section>
-
+        <x-forms.request-form goal="banner" form-id="car-single-form-home-banner" checkbox-id="choose-check-home-banner" />
         {{-- <x-section.choose-auto :makes="$makesForForm" /> --}}
-
-
         {{-- <x-section.marquee /> --}}
         {{-- <x-section.features /> --}}
-        <x-section.about-parts />
         <x-section.marks :items="$car_makes" />
+        <x-section.about-parts />
         <x-section.gallery />
-        <x-section.how-we-work />
-
-        <section class="car-single-form-section --white">
+        <section class="reviews-widget-section section">
             <div class="container">
-                <div class="car-single-form-section__top">
 
-                    <h2 class="car-single-form-section__title">Оставьте заявку</h2>
-                </div>
+                <h2 class="reviews-widget-section__title">
+                    Отзывы клиентов
+                </h2>
 
-                <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы</p>
+                <review-lab data-widgetid="69984c4658896b169079008c"></review-lab>
 
-                <form class="car-single-form" data-action="{{ route('request_consultation.store') }}"
-                    data-ym-goal="delivery" data-ym-mode="manual">
-                    @csrf
-                    <input type="hidden" name="form_id" value="car-single-form-home-delivery">
-                    <input type="hidden" name="current_url"
-                        value="{{ url()->current() }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">
-
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-
-                    <div class="choose-section__form_row">
-                        <div class="input-item">
-                            <input class="input " type="text" name="name" placeholder="Имя">
-                        </div>
-
-                        <div class="input-item">
-                            <input class="input " type="tel" name="phone" placeholder="+7 (___) ___ __ __">
-                        </div>
-
-                        <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
-                    </div>
-
-                    <div class="form-policy">
-                        <input type="checkbox" id="choose-check2" name="policy" value="1" checked=""
-                            required="">
-                        <label for="choose-check">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                </form>
             </div>
         </section>
+        <x-section.how-we-work />
+
+        <x-forms.request-form goal="delivery" form-id="car-single-form-home-delivery"
+            checkbox-id="choose-check-home-delivery" />
 
         <x-section.about-company />
         {{-- <x-section.products :items="$products" /> --}}

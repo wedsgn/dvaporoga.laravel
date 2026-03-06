@@ -93,3 +93,13 @@
     width: 100%;
   }
 }
+.marks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.marks-catalog-btn {
+  white-space: nowrap;
+}
