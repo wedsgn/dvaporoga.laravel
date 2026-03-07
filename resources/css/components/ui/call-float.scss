@@ -98,3 +98,21 @@
     height: 26px;
   }
 }
+body.cookie-banner-visible .call-float {
+  bottom: calc(var(--cookie-banner-height, 0px) + 20px);
+}
+
+@media (max-width: 768px) {
+  body.cookie-banner-visible .call-float {
+    bottom: calc(var(--cookie-banner-height, 0px) + 12px);
+  }
+}
+body.cookie-visible .call-float {
+  bottom: calc(var(--cookie-height) + 20px);
+}
+
+@media (max-width: 768px) {
+  body.cookie-visible .call-float {
+    bottom: calc(var(--cookie-height) + 12px);
+  }
+}
