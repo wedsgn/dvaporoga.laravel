@@ -143,7 +143,7 @@
                     </div>
 
                     <div class="form-policy">
-                        <input type="checkbox" id="choose-check" name="policy" value="1" checked required>
+                        <input type="checkbox" id="choose-check" name="policy" value="1" required>
                         <label for="choose-check">
                             Я соглашаюсь с
                             <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>

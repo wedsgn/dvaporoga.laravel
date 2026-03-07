@@ -1,8 +1,7 @@
-@extends('layouts.front')
+{{-- @extends('layouts.front')
 
 @section('content')
   <main>
-{{-- FEATURES = tags --}}
                         @if (($car->tags ?? collect())->isNotEmpty())
                             <div class="car-single-hero__features">
                                 @foreach ($car->tags as $tag)
@@ -13,7 +12,6 @@
                             </div>
                         @endif
 
-                        {{-- PROMO = offers --}}
                         @php
                             $offers = ($car->offers ?? collect())
                                 ->filter(fn($o) => (bool) ($o->is_active ?? true))
@@ -56,13 +54,11 @@
 
 
 
-    {{-- {{ Breadcrumbs::render('blog') }} --}}
 
     <section class="car-single__hero-section">
       <div class="container">
 
         <div class="car-single-hero__wrap">
-          {{-- left --}}
           <div class="car-single-hero__info">
             <h1 class="car-single__title">КУЗОВНЫЕ ЭЛЕМЕНТЫ
               <br>
@@ -118,7 +114,7 @@
           </div>
 
 
-          {{-- right --}}
+
 
           <div class="car-single-hero__image">
             <img src="" alt=" ">
@@ -127,7 +123,7 @@
       </div>
     </section>
 
-    {{-- Форма --}}
+
 
     <section class="car-single-form-section">
       <div class="container">
@@ -167,7 +163,6 @@
       </div>
     </section>
 
-    {{-- Запчасти --}}
     @php
       $parts = [
           [
@@ -312,4 +307,4 @@
 
 
   </main>
-@endsection
+@endsection --}}

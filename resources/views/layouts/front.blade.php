@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -40,11 +38,15 @@
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+                    <div class="form-policy">
+                        <input type="checkbox" id="policy-modal-1" name="policy" value="1" required>
+                        <label for="policy-modal-1">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                    </p>
                 </form>
             </div>
         </div>
@@ -75,11 +77,15 @@
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+                    <div class="form-policy">
+                        <input type="checkbox" id="policy-modal-hero" name="policy" value="1" required>
+                        <label for="policy-modal-hero">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                    </p>
                 </form>
             </div>
         </div>
@@ -111,11 +117,16 @@
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+                    <div class="form-policy">
+                        <input type="checkbox" id="policy-modal-about" name="policy" value="1" required>
+                        <label for="policy-modal-about">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                    </p>
+
                 </form>
             </div>
         </div>
@@ -147,11 +158,16 @@
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+                    <div class="form-policy">
+                        <input type="checkbox" id="policy-modal-delivery" name="policy" value="1" required>
+                        <label for="policy-modal-delivery">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                    </p>
+
                 </form>
             </div>
         </div>
@@ -181,12 +197,17 @@
                     <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">\
+                    <div class="form-policy">
+                        <input type="checkbox" id="policy-modal-faq" name="policy" value="1" required>
+                        <label for="policy-modal-faq">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                    </p>
+
                 </form>
             </div>
         </div>
@@ -228,13 +249,15 @@
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-
+                    <div class="form-policy">
+                        <input type="checkbox" id="policy-modal-product" name="policy" value="1" required>
+                        <label for="policy-modal-product">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                       <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                    </p>
                 </form>
 
             </div>
@@ -287,16 +310,21 @@
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+                    <div class="form-policy">
+                        <input type="checkbox" id="policy-modal-3" name="policy" value="1" required>
+                        <label for="policy-modal-3">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                    </p>
+
                 </form>
             </div>
         </div>
     </div>
-        <a href="tel:{{ $main_info->phone }}" class="call-float" aria-label="Позвонить">
+    <a href="tel:{{ $main_info->phone }}" class="call-float" aria-label="Позвонить">
         <span class="call-float__ring"></span>
         <span class="call-float__btn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -316,8 +344,26 @@
             </svg>
         </span>
     </a>
-        <script>if(!window._teletypeWidget){window._teletypeWidget = window._teletypeWidget || {};!function(){var t = document.getElementsByTagName("app-teletype-root");if (t.length > 0 && _teletypeWidget.init)return;var d = new Date().getTime();var n = document.createElement("script"),c = document.getElementsByTagName("script")[0];n.id = "teletype-widget-embed",n.src = "https://widget.teletype.app/init.js?_=" + d,n.async = !0,n.setAttribute("data-embed-version", "0.1");c.parentNode.insertBefore(n, c);}();document.addEventListener("teletype.ready", function(){console.log("Teletype ready")});window.teletypeExternalId = "9r-HEiFWuZSmfbxCznKb6eaiqhAQ_cGYiIaCvpzpesillSszGAEE-SLrPf945waD";}</script>
-<x-ui.cookie-banner />
+    <script>
+        if (!window._teletypeWidget) {
+            window._teletypeWidget = window._teletypeWidget || {};
+            ! function() {
+                var t = document.getElementsByTagName("app-teletype-root");
+                if (t.length > 0 && _teletypeWidget.init) return;
+                var d = new Date().getTime();
+                var n = document.createElement("script"),
+                    c = document.getElementsByTagName("script")[0];
+                n.id = "teletype-widget-embed", n.src = "https://widget.teletype.app/init.js?_=" + d, n.async = !0, n
+                    .setAttribute("data-embed-version", "0.1");
+                c.parentNode.insertBefore(n, c);
+            }();
+            document.addEventListener("teletype.ready", function() {
+                console.log("Teletype ready")
+            });
+            window.teletypeExternalId = "9r-HEiFWuZSmfbxCznKb6eaiqhAQ_cGYiIaCvpzpesillSszGAEE-SLrPf945waD";
+        }
+    </script>
+    <x-ui.cookie-banner />
     <script src="{{ asset('/js/forms-ajax.js') }}"></script>
     <script src="{{ asset('/js/ym-goals.js') }}"></script>
     <script src="{{ asset('/js/product_calc.js') }}"></script>

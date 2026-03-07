@@ -51,22 +51,42 @@
 
         {{-- footer bootm --}}
 
-        <div class="footer-bottom">
-            <div class="footer-bottom__wrap">
-                <div class="footer-bottom__descr">
-                    Ремонтные арки и пороги
-                    для всех автомобилей
-                </div>
-                <nav class="footer-bottom__nav">
-                    <a href="{{ route('home') }}#features" class="footer__nav-link">Преимущества</a>
-                    <a href="{{ route('catalog') }}" class="footer__nav-link">Каталог</a>
-                    <a href="{{ route('blog') }}" class="footer__nav-link">Блог</a>
-                    <a href="{{ route('home') }}#about" class="footer__nav-link">О нас</a>
-                    <a href="{{ route('home') }}#delivery" class="footer__nav-link">Доставка</a>
-                    <a href="{{ route('home') }}#faq" class="footer__nav-link">FAQ</a>
+<div class="footer-bottom">
+    <div class="footer-bottom__wrap">
+        <div class="footer-bottom__descr">
+            Ремонтные арки и пороги
+            для всех автомобилей
+        </div>
 
+        <nav class="footer-bottom__nav">
+            <a href="{{ route('home') }}#features" class="footer__nav-link">Преимущества</a>
+            <a href="{{ route('catalog') }}" class="footer__nav-link">Каталог</a>
+            <a href="{{ route('blog') }}" class="footer__nav-link">Блог</a>
+            <a href="{{ route('home') }}#about" class="footer__nav-link">О нас</a>
+            <a href="{{ route('home') }}#delivery" class="footer__nav-link">Доставка</a>
+            <a href="{{ route('home') }}#faq" class="footer__nav-link">FAQ</a>
+        </nav>
+
+        <div class="footer-bottom__docs">
+            <div class="footer-bottom__title">Документы</div>
+
+            <div class="footer-bottom__docs-list">
+                <a href="{{ asset('docs/ОФЕРТА.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                    Договор оферта
+                </a>
+                <a href="{{ asset('docs/ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                    Политика конфиденциальности
+                </a>
+                <a href="{{ asset('docs/СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                    Согласие на обработку персональных данных
+                </a>
+                <a href="{{ asset('docs/СОГЛАСИЕ НА ПОЛУЧЕНИЕ ИНФОРМАЦИОННЫХ РАССЫЛОК.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                    Согласие на получение информационных рассылок
+                </a>
             </div>
         </div>
+    </div>
+</div>
     </div>
 
 
@@ -75,7 +95,6 @@
             <div class="footer-copy__wrap">
                 <p>{{ $main_info->company_details }}</p>
 
-                <p>Сайт не является офертой</p>
             </div>
         </div>
     </div>

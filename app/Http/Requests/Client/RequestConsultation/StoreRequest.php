@@ -64,6 +64,7 @@ class StoreRequest extends FormRequest
       'utm_campaign' => ['nullable', 'string', 'max:100'],
       'utm_term'     => ['nullable', 'string', 'max:100'],
       'utm_content'  => ['nullable', 'string', 'max:100'],
+      'policy'   => ['accepted'],
     ];
   }
 
@@ -79,6 +80,7 @@ class StoreRequest extends FormRequest
 
       'form_id.required' => 'Поле форма не может быть пустым.',
       'form_id.max'     => 'Поле форма слишком длинное.',
+      'policy.accepted' => 'Необходимо согласиться с политикой конфиденциальности.',
     ];
   }
 

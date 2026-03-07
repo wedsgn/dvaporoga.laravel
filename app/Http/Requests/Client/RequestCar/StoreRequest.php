@@ -74,7 +74,6 @@ class StoreRequest extends FormRequest
             'utm_campaign' => ['nullable', 'string', 'max:255'],
             'utm_term'     => ['nullable', 'string', 'max:255'],
             'utm_content'  => ['nullable', 'string', 'max:255'],
-
             'policy'   => ['accepted'],
         ];
     }
@@ -87,7 +86,6 @@ class StoreRequest extends FormRequest
 
             'car_id.required' => 'Автомобиль не определён.',
             'car_id.exists'   => 'Автомобиль не найден.',
-
             'policy.accepted' => 'Необходимо согласиться с политикой конфиденциальности.',
         ];
     }

@@ -30,11 +30,18 @@
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+
+                    <div class="form-policy">
+                        <input type="checkbox" id="product-policy-{{ $part->id }}" name="policy" value="1"
+                            required>
+                        <label for="product-policy-{{ $part->id }}">
+                            Я соглашаюсь с
+                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
+                            и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
+
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
-                    <p class="copyright">
-                        Нажимая кнопку “Отправить” вы соглашаетесь с нашей
-                        <a href="" download="">политикой конфиденциальности</a>
-                    </p>
                 </form>
 
             </div>
