@@ -4,7 +4,7 @@
     <main>
 
         {{ Breadcrumbs::render('car_generation.show', $car_make, $car_model, $car) }}
-        {{-- HERO --}}
+
         <section class="car-single__hero-section">
             @php
                 $img = null;
@@ -17,48 +17,33 @@
                     $img = asset('images/cars/merc.png');
                 }
             @endphp
+
             <div class="container">
                 <div class="car-single-hero__wrap">
-
-                    {{-- left --}}
                     <div class="car-single-hero__info">
-
                         <h1 class="car-single__title">
                             КУЗОВНЫЕ ЭЛЕМЕНТЫ
-
                             ДЛЯ <br><span>{{ mb_strtoupper($car->title) }}</span>
                         </h1>
-                        {{-- ✅ MOBILE: фото сразу под заголовком --}}
+
                         <div class="car-single-hero__image car-single-hero__image--mob">
                             <img src="{{ $img }}" alt="{{ $car->title }}">
                         </div>
 
                         <div class="car-single-hero__features">
-                            <div class="car-single-hero__feature">
-                                Оплата при получении
-                            </div>
-                            <div class="car-single-hero__feature">
-                                ХКС и Оцинковка
-                            </div>
-                            <div class="car-single-hero__feature">
-                                От 0,8 до 1,5 мм
-                            </div>
-                            <div class="car-single-hero__feature">
-                                Доставка по РФ
-                            </div>
-                            <div class="car-single-hero__feature">
-                                Повторение оригинала
-                            </div>
+                            <div class="car-single-hero__feature">Оплата при получении</div>
+                            <div class="car-single-hero__feature">ХКС и Оцинковка</div>
+                            <div class="car-single-hero__feature">От 0,8 до 1,5 мм</div>
+                            <div class="car-single-hero__feature">Доставка по РФ</div>
+                            <div class="car-single-hero__feature">Повторение оригинала</div>
                         </div>
 
                         <div class="car-single-hero__promo-wrap">
                             <div class="car-single-hero__promo">
-
                                 <div class="car-single-hero__promo-item">
                                     <div class="car-single-hero__promo-item-title">
                                         ПОРОГИ
                                     </div>
-
 
                                     <div class="car-single-hero__promo-item-price-wrap">
                                         <div class="car-single-hero__promo-item-price">1 690 ₽</div>
@@ -68,12 +53,10 @@
                             </div>
 
                             <div class="car-single-hero__promo">
-
                                 <div class="car-single-hero__promo-item">
                                     <div class="car-single-hero__promo-item-title">
                                         АРКИ
                                     </div>
-
 
                                     <div class="car-single-hero__promo-item-price-wrap">
                                         <div class="car-single-hero__promo-item-price">1 950 ₽</div>
@@ -84,71 +67,76 @@
                         </div>
                     </div>
 
-                    {{-- ✅ DESKTOP: картинка справа --}}
                     <div class="car-single-hero__image car-single-hero__image--desk">
                         <img src="{{ $img }}" alt="{{ $car->title }}">
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <section class="car-single-form-section">
+<section class="car-single-form-section">
             <div class="container">
                 <div class="car-single-form-section__top">
-                    {{-- @php
-                        $hasOffers = ($car->offers ?? collect())
-                            ->filter(fn($o) => (bool) ($o->is_active ?? true))
-                            ->isNotEmpty();
-                    @endphp
-
-                    @if ($hasOffers) --}}
                     <div class="car-single-form-section__label">
                         <img src="{{ asset('images/icons/fire.svg') }}" alt="">
                         <p>Акция</p>
                     </div>
-                    {{-- @endif --}}
+
                     <h2 class="car-single-form-section__title">Оставьте заявку</h2>
                 </div>
 
-                <p class="car-single-form-section__descr">Мы подберем деталь под ваш автомобиль и ответим на все вопросы
+                <p class="car-single-form-section__descr">
+                    Мы подберем деталь под ваш автомобиль и ответим на все вопросы
                 </p>
 
-                <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form"
-                    data-ym-goal="calculator" data-ym-mode="manual">
+                <form
+                    id="car-request-form"
+                    action="{{ route('requests.car') }}"
+                    method="POST"
+                    class="car-single-form"
+                    data-action="{{ route('requests.car') }}"
+                    data-ym-goal="calculator"
+                    data-ym-mode="manual"
+                >
                     @csrf
 
                     <input type="hidden" name="form_id" value="car-page-form">
                     <input type="hidden" name="car_id" value="{{ $car->id }}">
                     <input type="hidden" name="current_url" value="{{ request()->fullUrl() }}">
 
-                    {{-- UTM метки --}}
                     <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
                     <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
                     <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
                     <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
+
                     <div class="choose-section__form_row">
                         <div class="input-item">
                             <input class="input black" type="text" name="name" placeholder="Имя" required>
+                            <div class="field-error" data-error-for="name"></div>
                         </div>
 
                         <div class="input-item">
-                            <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __"
-                                required>
+                            <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __" required>
+                            <div class="field-error" data-error-for="phone"></div>
                         </div>
 
                         <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
                     </div>
 
-                    <div class="form-policy">
-                        <input type="checkbox" id="choose-check" name="policy" value="1" required>
-                        <label for="choose-check">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
+                    <div class="form-policy-wrap">
+                        <div class="form-policy">
+                            <input type="checkbox" id="choose-check" name="policy" value="1" required>
+                            <label for="choose-check">
+                                Я соглашаюсь с
+                                <a href="{{ url('/policy.pdf') }}" target="_blank" rel="noopener noreferrer">
+                                    политикой конфиденциальности
+                                </a>
+                                и даю согласие на обработку персональных данных
+                            </label>
+                        </div>
+                        <div class="field-error field-error--policy" data-error-for="policy"></div>
                     </div>
                 </form>
             </div>
@@ -166,7 +154,9 @@
                                     ? ltrim($p->pivot->image, '/')
                                     : null;
 
-                            $adminPath = !empty($p->image) && $p->image !== 'default' ? ltrim($p->image, '/') : null;
+                            $adminPath = !empty($p->image) && $p->image !== 'default'
+                                ? ltrim($p->image, '/')
+                                : null;
 
                             $fallbackPath = null;
                             foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
@@ -178,12 +168,20 @@
                             }
 
                             $finalPath = $pivotPath ?: ($adminPath ?: $fallbackPath);
-
                             $imageUrl = $finalPath ? asset('storage/' . $finalPath) : asset('images/no-image.jpg');
                         @endphp
 
-                        <x-car-single-part :id="$p->id" :image="$imageUrl" :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''" :title="$p->title"
-                            :description="$p->description ?? ''" :price="$p->price ? number_format((int) $p->price, 0, '.', ' ') . ' ₽' : ''" :priceOld="$p->price_old ? number_format((int) $p->price_old, 0, '.', ' ') . ' ₽' : ''" :link="$p->link ?? ''" :alt="$p->alt ?: $p->title" />
+                        <x-car-single-part
+                            :id="$p->id"
+                            :image="$imageUrl"
+                            :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''"
+                            :title="$p->title"
+                            :description="$p->description ?? ''"
+                            :price="$p->price ? number_format((int) $p->price, 0, '.', ' ') . ' ₽' : ''"
+                            :priceOld="$p->price_old ? number_format((int) $p->price_old, 0, '.', ' ') . ' ₽' : ''"
+                            :link="$p->link ?? ''"
+                            :alt="$p->alt ?: $p->title"
+                        />
                     @endforeach
                 </div>
             </div>
@@ -193,47 +191,8 @@
         <x-section.how-we-work />
         <x-section.about-company />
         <x-section.faq />
-        {{-- <x-section.gallery /> --}}
-
     </main>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('car-request-form');
-            if (!form) return;
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const btn = form.querySelector('button[type="submit"]');
-                btn.disabled = true;
-
-                try {
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
-                        },
-                        body: new FormData(form),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Request failed');
-                    }
-
-                    MicroModal.show('modal-2');
-
-                    form.reset();
-
-                } catch (err) {
-                    alert('Ошибка отправки формы. Попробуйте позже.');
-                    console.error(err);
-                } finally {
-                    btn.disabled = false;
-                }
-            });
-        });
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.addEventListener('click', (e) => {
@@ -245,62 +204,46 @@
 
                 const pid = btn.dataset.productId || '';
                 const title = btn.dataset.productTitle || '';
-                const price = (btn.dataset.productPrice || '').replace(/\s+/g, '').trim(); // если "1 690"
+                const price = (btn.dataset.productPrice || '').replace(/\s+/g, '').trim();
                 const priceNum = price ? parseInt(price, 10) : '';
 
                 const dataInput = document.getElementById('modal-product-data');
-                if (dataInput) dataInput.value = JSON.stringify(pid ? [{
-                    id: Number(pid)
-                }] : []);
+                if (dataInput) {
+                    dataInput.value = JSON.stringify(pid ? [{ id: Number(pid) }] : []);
+                }
 
                 const totalInput = document.getElementById('modal-product-total');
-                if (totalInput) totalInput.value = priceNum || '';
+                if (totalInput) {
+                    totalInput.value = priceNum || '';
+                }
 
                 const h = document.getElementById('modal-product-title');
-                if (h && title) h.textContent = `Заказ: ${title}`;
+                if (h && title) {
+                    h.textContent = `Заказ: ${title}`;
+                }
             });
 
-            const modalForm = document.getElementById('modal-product-form');
-            if (modalForm) {
-                modalForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
+            document.addEventListener('form:success', (e) => {
+                const form = e.detail?.form;
+                if (!form) return;
 
-                    const action = modalForm.dataset.action;
-                    const btn = modalForm.querySelector('button[type="submit"]');
-                    btn.disabled = true;
-
-                    try {
-                        const resp = await fetch(action, {
-                            method: 'POST',
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRF-TOKEN': modalForm.querySelector('input[name="_token"]')
-                                    .value,
-                            },
-                            body: new FormData(modalForm),
-                        });
-
-                        if (!resp.ok) throw new Error('Request failed');
-
-                        MicroModal.close('modal-product');
-                        MicroModal.show('modal-2');
-
-                        modalForm.reset();
-
-                        const h = document.getElementById('modal-product-title');
-                        if (h) h.textContent = 'Заполните форму';
-
-                        const dataInput = document.getElementById('modal-product-data');
-                        if (dataInput) dataInput.value = '[]';
-
-                    } catch (err) {
-                        alert('Ошибка отправки формы. Попробуйте позже.');
-                        console.error(err);
-                    } finally {
-                        btn.disabled = false;
+                if (form.id === 'modal-product-form') {
+                    const h = document.getElementById('modal-product-title');
+                    if (h) {
+                        h.textContent = 'Заполните форму';
                     }
-                });
-            }
+
+                    const dataInput = document.getElementById('modal-product-data');
+                    if (dataInput) {
+                        dataInput.value = '[]';
+                    }
+
+                    const totalInput = document.getElementById('modal-product-total');
+                    if (totalInput) {
+                        totalInput.value = '';
+                    }
+                }
+            });
         });
     </script>
 @endsection

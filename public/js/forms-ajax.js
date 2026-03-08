@@ -1,7 +1,8 @@
 (() => {
   "use strict";
 
-  const SEL = "form.index-hero-form, form.footer-form, form.modal-form, form.car-single-form";
+  const SEL =
+    "form.index-hero-form, form.footer-form, form.modal-form, form.car-single-form";
   const BUSY = new WeakSet();
 
   // --- helpers ---
@@ -14,9 +15,7 @@
 
   const csrfOf = (form) =>
     form.querySelector('input[name="_token"]')?.value ||
-    document
-      .querySelector('meta[name="csrf-token"]')
-      ?.getAttribute("content") ||
+    document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
     "";
 
   const blurInside = (node) => {
@@ -37,7 +36,9 @@
       try {
         MicroModal.close(id);
       } catch {}
-    } else m.setAttribute("aria-hidden", "true");
+    } else {
+      m.setAttribute("aria-hidden", "true");
+    }
   };
 
   const unlockScroll = () => {
@@ -66,55 +67,105 @@
 
   // --- вывод ошибок у полей ---
   const clearErrors = (form) => {
-    form.querySelectorAll(".field-error").forEach((n) => n.remove());
+    form.querySelectorAll(".field-error").forEach((n) => {
+      n.textContent = "";
+    });
+
     form.querySelectorAll(".is-invalid").forEach((el) => {
       el.classList.remove("is-invalid");
       el.removeAttribute("aria-invalid");
+
       if (el.hasAttribute("data-added-describedby")) {
         const prev = el.getAttribute("data-added-describedby");
-        if (prev) el.setAttribute("aria-describedby", prev);
-        else el.removeAttribute("aria-describedby");
+        if (prev) {
+          el.setAttribute("aria-describedby", prev);
+        } else {
+          el.removeAttribute("aria-describedby");
+        }
         el.removeAttribute("data-added-describedby");
+      } else {
+        el.removeAttribute("aria-describedby");
       }
     });
+
     form.classList.remove("has-errors");
   };
 
-  const ensureErrorBox = (input) => {
-    let box = input.nextElementSibling;
-    if (!(box && box.classList && box.classList.contains("field-error"))) {
-      box = document.createElement("div");
-      box.className = "field-error";
-      input.insertAdjacentElement("afterend", box);
+  const getErrorBox = (form, input, field) => {
+    let box =
+      form.querySelector(`[data-error-for="${field}"]`) ||
+      form.querySelector(`[data-error-for="${CSS.escape(field)}"]`);
+
+    if (box) {
+      if (!box.id) {
+        const base = input?.id || input?.name || field || "field";
+        box.id = `${base}-error`;
+      }
+      return box;
     }
-    if (!box.id) {
-      const base = input.id || input.name || "field";
-      box.id = `${base}-error`;
+
+    // fallback для старых форм без контейнеров
+    if (input) {
+      let next = input.nextElementSibling;
+      if (!(next && next.classList && next.classList.contains("field-error"))) {
+        next = document.createElement("div");
+        next.className = "field-error";
+        input.insertAdjacentElement("afterend", next);
+      }
+      if (!next.id) {
+        const base = input.id || input.name || field || "field";
+        next.id = `${base}-error`;
+      }
+      return next;
     }
-    return box;
+
+    return null;
   };
 
   const showFieldError = (form, field, message) => {
     const input = form.querySelector(`[name="${CSS.escape(field)}"]`);
     if (!input) return;
-    input.classList.add("is-invalid");
-    input.setAttribute("aria-invalid", "true");
-    const box = ensureErrorBox(input);
-    box.textContent = Array.isArray(message)
+
+    const text = Array.isArray(message)
       ? message[0]
       : message || "Некорректное значение";
-    const prev = input.getAttribute("aria-describedby");
-    if (prev) input.setAttribute("data-added-describedby", prev);
-    input.setAttribute("aria-describedby", box.id);
+
+    const box = getErrorBox(form, input, field);
+    if (box) {
+      box.textContent = text;
+    }
+
+    if (
+      input.matches(
+        'input:not([type="checkbox"]):not([type="radio"]), textarea, select'
+      )
+    ) {
+      input.classList.add("is-invalid");
+    }
+
+    input.setAttribute("aria-invalid", "true");
+
+    if (box?.id) {
+      const prev = input.getAttribute("aria-describedby");
+      if (prev && prev !== box.id) {
+        input.setAttribute("data-added-describedby", prev);
+      }
+      input.setAttribute("aria-describedby", box.id);
+    }
   };
 
   const showErrors = (form, errors) => {
     form.classList.add("has-errors");
+
     if (errors && typeof errors === "object") {
       Object.entries(errors).forEach(([field, msg]) =>
         showFieldError(form, field, msg)
       );
-      const firstInvalid = form.querySelector(".is-invalid");
+
+      const firstInvalid =
+        form.querySelector(".is-invalid") ||
+        form.querySelector('[aria-invalid="true"]');
+
       if (firstInvalid) {
         try {
           firstInvalid.focus({ preventScroll: false });
@@ -127,7 +178,9 @@
   const setLoading = (form, on) => {
     const btn = form.querySelector('[type="submit"]');
     if (!btn) return;
+
     btn.disabled = !!on;
+
     if (!btn.querySelector("img")) {
       if (on) {
         if (!btn.dataset._t) btn.dataset._t = btn.textContent;
@@ -145,6 +198,7 @@
 
     e.preventDefault();
     e.stopPropagation();
+
     if (BUSY.has(form)) return;
     BUSY.add(form);
 
@@ -160,6 +214,7 @@
     const csrf = csrfOf(form);
 
     setLoading(form, true);
+
     try {
       const res = await fetch(url, {
         method: form.getAttribute("method") || "POST",
@@ -180,13 +235,14 @@
       if (res.ok) {
         if (data && data.success === true) {
           form.reset();
+          clearErrors(form);
           closeParentModalIfAny(form);
           openThanks();
+
           document.dispatchEvent(
             new CustomEvent("form:success", { detail: { form } })
           );
         } else {
-
           const msg =
             (data && (data.message || data.error)) ||
             "Не удалось подтвердить отправку. Попробуйте ещё раз.";
@@ -217,10 +273,14 @@
   const attachDirect = () => {
     document.querySelectorAll(SEL).forEach((f) => {
       if (f.dataset._ajaxBound) return;
+
       f.addEventListener("submit", handle, { capture: true });
       f.dataset._ajaxBound = "1";
-      if (!f.hasAttribute("action") && !f.hasAttribute("data-action"))
+
+      if (!f.hasAttribute("action") && !f.hasAttribute("data-action")) {
         f.setAttribute("action", "#");
+      }
+
       f.setAttribute("novalidate", "novalidate");
     });
   };
@@ -231,16 +291,75 @@
     attachDirect();
   }
 
+  // --- курсор в телефонном поле: ставим внутрь скобок ---
+  const getPhoneCaretPos = (value) => {
+    const str = String(value || "");
+
+    const bracketIndex = str.indexOf("(");
+    if (bracketIndex !== -1) {
+      return bracketIndex + 1;
+    }
+
+    if (!str.trim()) {
+      return 4; // для "+7 ("
+    }
+
+    return Math.min(str.length, 4);
+  };
+
+  document.addEventListener(
+    "focus",
+    (e) => {
+      const input = e.target;
+
+      if (!(input instanceof HTMLInputElement)) return;
+      if (input.type !== "tel") return;
+
+      if (!input.value) {
+        input.value = "+7 (";
+      }
+
+      setTimeout(() => {
+        const pos = getPhoneCaretPos(input.value);
+        input.setSelectionRange(pos, pos);
+      }, 0);
+    },
+    true
+  );
+
+  document.addEventListener(
+    "click",
+    (e) => {
+      const input = e.target;
+
+      if (!(input instanceof HTMLInputElement)) return;
+      if (input.type !== "tel") return;
+
+      setTimeout(() => {
+        const minPos = getPhoneCaretPos(input.value);
+        const currentPos = input.selectionStart ?? 0;
+
+        if (currentPos < minPos) {
+          input.setSelectionRange(minPos, minPos);
+        }
+      }, 0);
+    },
+    true
+  );
+
   // чистим фокус/скролл при ручном закрытии «спасибо»
   document.addEventListener(
     "click",
     (e) => {
       const t = e.target;
       if (!(t instanceof Element)) return;
+
       if (t.hasAttribute("data-micromodal-close")) {
         const m = t.closest(".modal");
         if (m) blurInside(m);
-        if (m && m.id === "modal-2") setTimeout(unlockScroll, 0);
+        if (m && m.id === "modal-2") {
+          setTimeout(unlockScroll, 0);
+        }
       }
     },
     true

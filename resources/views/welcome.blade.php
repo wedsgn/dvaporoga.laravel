@@ -51,7 +51,7 @@
             <x-section.blog :items="$blogs" />
         @endif
         <x-section.faq />
-
+        <x-section.partnership />
 
 
     </main>

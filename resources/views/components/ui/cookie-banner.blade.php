@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function getFrames() {
         return {
             buttonFrame: document.getElementById("teletype-widget-component-button"),
-            popupFrame: document.getElementById("teletype-widget-component-popup")
+            popupFrame: document.getElementById("teletype-widget-component-popup"),
         };
     }
 
@@ -51,11 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         banner.style.display = "block";
 
-        const height = banner.offsetHeight || 0;
-        const gap = window.innerWidth <= 768 ? 12 : 20;
-        const buttonBottom = height + gap;
+        const bannerHeight = banner.offsetHeight || 0;
+        const isMobile = window.innerWidth <= 768;
 
-        document.documentElement.style.setProperty("--cookie-height", height + "px");
+        const gapAboveBanner = isMobile ? 12 : 16;
+        const gapBetweenButtonAndPopup = isMobile ? 10 : 12;
+
+        const buttonBottom = bannerHeight + gapAboveBanner;
+        const buttonHeight = buttonFrame ? (buttonFrame.offsetHeight || 100) : 100;
+
+        document.documentElement.style.setProperty("--cookie-height", bannerHeight + "px");
         document.body.classList.add("cookie-visible");
 
         if (buttonFrame) {
@@ -63,10 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (popupFrame) {
-            const popupHeight = popupFrame.offsetHeight || 100;
             popupFrame.style.setProperty(
                 "bottom",
-                (buttonBottom + popupHeight) + "px",
+                (buttonBottom + buttonHeight + gapBetweenButtonAndPopup) + "px",
                 "important"
             );
         }
@@ -75,17 +79,19 @@ document.addEventListener("DOMContentLoaded", function () {
     function waitTeletype() {
         let tries = 0;
 
-        const t = setInterval(() => {
+        const timer = setInterval(() => {
             const { buttonFrame } = getFrames();
 
             if (buttonFrame) {
                 updateUI();
-                clearInterval(t);
+                clearInterval(timer);
                 return;
             }
 
             tries++;
-            if (tries > 50) clearInterval(t);
+            if (tries > 50) {
+                clearInterval(timer);
+            }
         }, 300);
     }
 

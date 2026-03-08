@@ -23,9 +23,11 @@
         {{ $title }}
     </h3>
 
-    <p class="car-single-part__descr">
-        {{ $description }}
-    </p>
+    @if (!empty($description))
+        <p class="car-single-part__descr">
+            {{ $description }}
+        </p>
+    @endif
 
     <div class="car-single-part__bottom">
         <div class="car-single-part__price-wrap">
@@ -37,9 +39,14 @@
         </div>
 
         <div class="car-single-part__btn">
-            <button type="button" data-micromodal-trigger="modal-product" data-product-id="{{ $id ?? '' }}"
-                data-product-title="{{ $title }}" data-product-price="{{ $price }}"
-                data-product-price-old="{{ $priceOld }}">
+            <button
+                type="button"
+                data-micromodal-trigger="modal-product"
+                data-product-id="{{ $id ?? '' }}"
+                data-product-title="{{ $title }}"
+                data-product-price="{{ $price }}"
+                data-product-price-old="{{ $priceOld }}"
+            >
                 Заказать
             </button>
         </div>

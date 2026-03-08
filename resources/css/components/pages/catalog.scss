@@ -177,13 +177,12 @@
     object-fit: cover;
   }
 }
-
 .car-generation__model_title {
-  transition: all 0.2s ease-in-out;
-  font-size: 16px;
-  line-height: 100%;
+  font-family: "Golos", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1B1B1B;
 }
-
 .product-parts-section {
   margin-top: 60px;
 }
@@ -672,7 +671,7 @@
 .catalog-concern__wrap .mark-title {
     text-transform: none;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
 }
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-
 @include('parts.head')
 
 <body>
@@ -11,260 +10,75 @@
 
     @include('parts.footer')
 
-    <!-- МОДАЛКА ШАПКА -->
+    <x-forms.modal-request-form
+        modal-id="modal-1"
+        title-id="modal-1-title"
+        desc-id="modal-1-desc"
+        goal="banner"
+        form-id="modal-1"
+        checkbox-id="policy-modal-1"
+        description="Мы свяжемся с вами в течение 5-ти минут
+и ответим на все вопросы"
+    />
 
-    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-        <div class="modal__overlay" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title"
-                aria-describedby="modal-1-desc" tabindex="-1">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
-                    <p class="modal__description" id="modal-1-desc">
-                        Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
+    <x-forms.modal-request-form
+        modal-id="modal-hero"
+        title-id="modal-hero-title"
+        desc-id="modal-hero-desc"
+        goal="banner"
+        form-id="modal-form-hero"
+        checkbox-id="policy-modal-hero"
+        description="Мы свяжемся с вами в течение 5-ти минут
+и ответим на все вопросы"
+    />
 
-                <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner"
-                    data-ym-mode="manual">
-                    @csrf
-                    <input type="text" placeholder="Имя" class="input" name="name" />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
-                    <input type="hidden" name="form_id" value="modal-1">
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-                    <div class="form-policy">
-                        <input type="checkbox" id="policy-modal-1" name="policy" value="1" required>
-                        <label for="policy-modal-1">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- МОДАЛКА БАНЕРА -->
-    <div class="modal micromodal-slide" id="modal-hero" aria-hidden="true">
-        <div class="modal__overlay" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-hero-title"
-                aria-describedby="modal-hero-desc" tabindex="-hero">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-hero-title">Заполните форму</h2>
-                    <p class="modal__description" id="modal-hero-desc">
-                        Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
+    <x-forms.modal-request-form
+        modal-id="modal-about"
+        title-id="modal-about-title"
+        desc-id="modal-about-desc"
+        goal="company"
+        form-id="modal-form-about"
+        checkbox-id="policy-modal-about"
+        description="Мы свяжемся с вами в течение 5-ти минут
+и ответим на все вопросы"
+    />
 
-                <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="banner"
-                    data-ym-mode="manual">
-                    @csrf
-                    <input type="text" placeholder="Имя" class="input" name="name" />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
-                    <input type="hidden" name="form_id" value="modal-form-hero">
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-                    <div class="form-policy">
-                        <input type="checkbox" id="policy-modal-hero" name="policy" value="1" required>
-                        <label for="policy-modal-hero">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <x-forms.modal-request-form
+        modal-id="modal-delivery"
+        title-id="modal-delivery-title"
+        desc-id="modal-delivery-desc"
+        goal="delivery"
+        form-id="modal-form-delivery"
+        checkbox-id="policy-modal-delivery"
+        description="Мы свяжемся с вами в течение 5-ти минут
+и ответим на все вопросы"
+    />
 
-    <!-- МОДАЛКА О НАС -->
-    <div class="modal micromodal-slide" id="modal-about" aria-hidden="true">
-        <div class="modal__overlay" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-about-title"
-                aria-describedby="modal-about-desc" tabindex="-about">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-about-title">Заполните форму</h2>
-                    <p class="modal__description" id="modal-about-desc">
-                        Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
+    <x-forms.modal-request-form
+        modal-id="modal-faq"
+        title-id="modal-faq-title"
+        desc-id="modal-faq-desc"
+        goal="faq"
+        form-id="modal-form-faq"
+        checkbox-id="policy-modal-faq"
+        description="Мы свяжемся с вами в течение 5-ти минут
+и ответим на все вопросы"
+    />
 
-                <form class="modal-form" data-action="{{ route('request_consultation.store') }}"
-                    data-ym-goal="company" data-ym-mode="manual">
-                    @csrf
-                    <input type="text" placeholder="Имя" class="input" name="name" />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
-                    <input type="hidden" name="form_id" value="modal-form-about">
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-                    <div class="form-policy">
-                        <input type="checkbox" id="policy-modal-about" name="policy" value="1" required>
-                        <label for="policy-modal-about">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
+    <x-forms.modal-request-form
+        modal-id="modal-product"
+        title-id="modal-product-title"
+        desc-id="modal-product-desc"
+        action="{{ route('request_product.store') }}"
+        goal="calculator"
+        form-id="modal-product"
+        checkbox-id="policy-modal-product"
+        product-mode="true"
+        :car-title="$car->title ?? ''"
+        description="Мы свяжемся с вами в течение 5-ти минут
+и ответим на все вопросы"
+    />
 
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА ДОСТАВКА -->
-    <div class="modal micromodal-slide" id="modal-delivery" aria-hidden="true">
-        <div class="modal__overlay" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-delivery-title"
-                aria-describedby="modal-delivery-desc" tabindex="-delivery">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-delivery-title">Заполните форму</h2>
-                    <p class="modal__description" id="modal-delivery-desc">
-                        Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
-
-                <form class="modal-form" data-action="{{ route('request_consultation.store') }}"
-                    data-ym-goal="delivery" data-ym-mode="manual">
-                    @csrf
-                    <input type="text" placeholder="Имя" class="input" name="name" />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
-                    <input type="hidden" name="form_id" value="modal-form-delivery">
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-                    <div class="form-policy">
-                        <input type="checkbox" id="policy-modal-delivery" name="policy" value="1" required>
-                        <label for="policy-modal-delivery">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- МОДАЛКА ФАК -->
-    <div class="modal micromodal-slide" id="modal-faq" aria-hidden="true">
-        <div class="modal__overlay" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-faq-title"
-                aria-describedby="modal-faq-desc" tabindex="-1">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-faq-title">Заполните форму</h2>
-                    <p class="modal__description" id="modal-faq-desc">
-                        Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
-
-                <form class="modal-form" data-action="{{ route('request_consultation.store') }}" data-ym-goal="faq"
-                    data-ym-mode="manual">
-                    @csrf
-                    <input type="text" placeholder="Имя" class="input" name="name" />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
-                    <input type="hidden" name="form_id" value="modal-form-faq">
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">\
-                    <div class="form-policy">
-                        <input type="checkbox" id="policy-modal-faq" name="policy" value="1" required>
-                        <label for="policy-modal-faq">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА ТОВАР -->
-    <div class="modal micromodal-slide" id="modal-product" aria-hidden="true">
-        <div class="modal__overlay" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-product-title"
-                aria-describedby="modal-product-desc" tabindex="-1">
-
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-product-title">Заполните форму</h2>
-                    <p class="modal__description" id="modal-product-desc">
-                        Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
-
-                <form id="modal-product-form" class="modal-form" data-action="{{ route('request_product.store') }}"
-                    data-ym-goal="calculator" data-ym-mode="manual">
-                    @csrf
-
-                    <input type="text" placeholder="Имя" class="input" name="name" required />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" required />
-
-                    <input type="hidden" name="form_id" value="modal-product">
-
-                    <input type="hidden" name="current_url" value="{{ request()->fullUrl() }}">
-                    <input type="hidden" name="car" value="{{ $car->title ?? '' }}">
-
-                    <input type="hidden" name="data" id="modal-product-data" value="[]">
-                    <input type="hidden" name="total_price" id="modal-product-total" value="">
-
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-                    <div class="form-policy">
-                        <input type="checkbox" id="policy-modal-product" name="policy" value="1" required>
-                        <label for="policy-modal-product">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА "СПАСИБО" -->
     <div class="modal modal-success micromodal-slide" id="modal-2" aria-hidden="true">
         <div class="modal__overlay" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-2-title"
@@ -282,48 +96,17 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА "Автоматическая" -->
-    <div class="modal modal-success micromodal-slide" id="modal-3" aria-hidden="true">
-        <div class="modal__overlay" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-3-title"
-                aria-describedby="modal-3-desc" tabindex="-1">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="modal-3-title">Остались вопросы?</h2>
-                    <p class="modal__description" id="modal-3-desc">
-                        Оставьте свой номер телефона и мы перезвоним Вам в кратчайшее время, чтобы ответить на все Ваши
-                        вопросы!
-                    </p>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
+    <x-forms.modal-request-form
+        modal-id="modal-3"
+        title-id="modal-3-title"
+        desc-id="modal-3-desc"
+        title="Остались вопросы?"
+        goal="automatic"
+        form-id="modal-3"
+        checkbox-id="policy-modal-3"
+        description="Оставьте свой номер телефона и мы перезвоним Вам в кратчайшее время, чтобы ответить на все Ваши вопросы!"
+    />
 
-
-                <form class="modal-form" data-action="{{ route('request_consultation.store') }}"
-                    data-ym-goal="automatic" data-ym-mode="manual">
-                    @csrf
-                    <input type="text" placeholder="Имя" class="input" name="name" />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
-                    <input type="hidden" name="form_id" value="modal-3">
-                    {{-- UTM метки --}}
-                    <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
-                    <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
-                    <input type="hidden" name="utm_campaign" value="{{ $utm['utm_campaign'] ?? '' }}">
-                    <input type="hidden" name="utm_term" value="{{ $utm['utm_term'] ?? '' }}">
-                    <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
-                    <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
-                    <div class="form-policy">
-                        <input type="checkbox" id="policy-modal-3" name="policy" value="1" required>
-                        <label for="policy-modal-3">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-                    <button class="btn lg submit-modal" type="submit">Отправить</button>
-
-                </form>
-            </div>
-        </div>
-    </div>
     <a href="tel:{{ $main_info->phone }}" class="call-float" aria-label="Позвонить">
         <span class="call-float__ring"></span>
         <span class="call-float__btn">
@@ -344,33 +127,36 @@
             </svg>
         </span>
     </a>
+
     <script>
         if (!window._teletypeWidget) {
             window._teletypeWidget = window._teletypeWidget || {};
-            ! function() {
+            !function() {
                 var t = document.getElementsByTagName("app-teletype-root");
                 if (t.length > 0 && _teletypeWidget.init) return;
                 var d = new Date().getTime();
                 var n = document.createElement("script"),
                     c = document.getElementsByTagName("script")[0];
-                n.id = "teletype-widget-embed", n.src = "https://widget.teletype.app/init.js?_=" + d, n.async = !0, n
-                    .setAttribute("data-embed-version", "0.1");
+                n.id = "teletype-widget-embed";
+                n.src = "https://widget.teletype.app/init.js?_=" + d;
+                n.async = !0;
+                n.setAttribute("data-embed-version", "0.1");
                 c.parentNode.insertBefore(n, c);
             }();
+
             document.addEventListener("teletype.ready", function() {
-                console.log("Teletype ready")
+                console.log("Teletype ready");
             });
+
             window.teletypeExternalId = "9r-HEiFWuZSmfbxCznKb6eaiqhAQ_cGYiIaCvpzpesillSszGAEE-SLrPf945waD";
         }
     </script>
+
     <x-ui.cookie-banner />
+
     <script src="{{ asset('/js/forms-ajax.js') }}"></script>
     <script src="{{ asset('/js/ym-goals.js') }}"></script>
     <script src="{{ asset('/js/product_calc.js') }}"></script>
-
     <script src="https://app.reviewlab.ru/widget/index-es2015.js" defer></script>
-
 </body>
-
-
 </html>

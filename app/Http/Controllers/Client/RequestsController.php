@@ -305,6 +305,7 @@ public function store_request_car(
       'catalog-form'      => 'Каталог',
       'product-section'   => 'Секция товара',
       'car-page-form'     => 'Страница авто',
+      'partnership-form'  => 'Сотрудничество',
     ];
     return $map[$formId] ?? ($formId ?: 'Без идентификатора');
   }

@@ -1,11 +1,12 @@
 .input {
+  width: 100%;
   border-radius: 8px;
-  border: none;
   border: 1px solid $gray;
   margin: 0;
   padding: 15px 19px;
-
   transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+
   &:focus {
     border: 1px solid $black;
   }
@@ -23,6 +24,7 @@
     background: #373737;
     border: 1px solid #373737;
     color: #fff;
+
     &::placeholder {
       color: #fff !important;
     }
@@ -31,19 +33,30 @@
 
 .field-error {
   font-size: 14px;
+  line-height: 140%;
   color: $red;
+}
+
+.field-error:empty {
+  display: none;
 }
 
 .select-item {
   width: 100%;
 }
+
 .input-item {
   width: 100%;
 }
+
+.input-item .field-error {
+  margin-top: 8px;
+}
+
 .copyright {
-  // font-weight: 300;
   font-size: 14px;
   line-height: 130%;
+
   a {
     color: $red;
     display: inline;
@@ -56,9 +69,14 @@
   }
 }
 
+.form-policy-wrap {
+  margin-top: 8px;
+}
+
 .form-policy {
   display: flex;
-  margin-top: 8px;
+  align-items: flex-start;
+  gap: 10px;
 
   a {
     color: $red;
@@ -68,42 +86,45 @@
 
 .form-policy label {
   position: relative;
+  display: block;
+  line-height: 140%;
+  cursor: pointer;
+  min-width: 0;
 }
 
 .form-policy input {
-  padding: 0;
-  height: initial;
-  width: initial;
-  margin-bottom: 0;
-  display: none;
-  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .form-policy label:before {
   content: "";
-  -webkit-appearance: none;
-  background-color: transparent;
-  border: 1px solid $red;
-  top: 6px;
   display: inline-block;
-  border-radius: 2px;
-  position: relative;
+  vertical-align: top;
   width: 24px;
   height: 24px;
   margin-right: 10px;
+  border: 1px solid $red;
+  border-radius: 2px;
+  background-color: transparent;
+  box-sizing: border-box;
 }
 
 .form-policy input:checked + label:after {
   content: "";
   display: block;
   position: absolute;
-  top: 10px;
+  top: 4px;
   left: 4px;
-
-  background: $red;
   width: 16px;
   height: 16px;
   border-radius: 2px;
+  background: $red;
+}
+
+.field-error--policy {
+  margin-top: 8px;
 }
 
 .choices {
@@ -114,6 +135,7 @@
 .is-open .choices__inner {
   border-radius: 8px !important;
 }
+
 .choices__inner {
   display: inline-block;
   height: 100%;
@@ -125,16 +147,13 @@
   font-size: 16px;
   background: none;
   min-height: 56px;
+  box-sizing: border-box;
 }
 
 .choices__list--dropdown,
 .choices__list[aria-expanded] {
   padding: 8px;
   z-index: 10;
-}
-
-.choices__list--dropdown,
-.choices__list[aria-expanded] {
   border-radius: 8px;
   top: 60px;
 }
@@ -143,6 +162,7 @@
 .choices__list[aria-expanded] .choices__list {
   margin-top: 16px;
 }
+
 .choices__list--single {
   padding: 0;
 }
@@ -155,18 +175,40 @@
   line-height: 130%;
 }
 
+.modal-form .input-item {
+  width: 100%;
+}
+
+.modal-form .input-item + .input-item {
+  margin-top: 16px;
+}
+
+.modal-form .field-error {
+  margin-top: 8px;
+}
+
+.modal-form .form-policy-wrap {
+  margin-top: 16px;
+}
+
+.modal-form .submit-modal {
+  margin-top: 16px;
+}
+
 @media screen and (max-width: 1024px) {
   .choices__inner {
     height: 56px;
   }
 }
+
 @media screen and (max-width: 768px) {
   .input {
+    width: 100%;
     border-radius: 8px;
     margin: 0;
     padding: 12px 19px;
-
     transition: all 0.2s ease-in-out;
+
     &:focus {
       border: 1px solid $black;
     }
@@ -175,4 +217,30 @@
   .modal__container .copyright {
     text-align: left;
   }
+
+  .form-policy {
+    gap: 8px;
+  }
+
+  .form-policy label:before {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+
+  .form-policy input:checked + label:after {
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+  }
+}
+.form-policy.is-invalid label:before {
+  border-color: $red;
+  box-shadow: 0 0 0 1px $red inset;
+}
+
+.form-policy input[aria-invalid="true"] + label:before {
+  border-color: $red;
+  box-shadow: 0 0 0 1px $red inset;
 }

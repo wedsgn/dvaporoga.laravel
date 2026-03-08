@@ -31,14 +31,13 @@
 
 .car-single-hero__wrap {
   display: grid;
-  height: 16px;
   align-items: center;
   height: auto;
   gap: 16px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   @media screen and (max-width: 1200px) {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
 
@@ -47,6 +46,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
+  min-width: 0;
 }
 
 .car-single-hero__features {
@@ -69,6 +69,7 @@
   border: 1px solid $red;
   background: rgba($red, 0.1);
   padding: 8px 16px;
+
   @media screen and (max-width: 1024px) {
     padding: 8px 12px;
     line-height: 100%;
@@ -85,6 +86,8 @@
   border-radius: 12px;
   background: $gray;
   overflow: hidden;
+  min-width: 0;
+
   img {
     object-fit: cover;
     width: 100%;
@@ -104,9 +107,8 @@
 }
 
 .car-single-hero__promo {
-  background: $gray;
-  padding: 12px;
   width: 100%;
+  padding: 12px;
   border-radius: 8px;
   background: #f7f7f7;
   border: 1px solid rgba(#000, 0.1);
@@ -147,6 +149,7 @@
   font-size: 18px;
   font-weight: 500;
   position: relative;
+
   &::before {
     content: "";
     position: absolute;
@@ -161,6 +164,7 @@
 
   @media screen and (max-width: 768px) {
     font-size: 18px;
+
     &::before {
       width: 110%;
     }
@@ -181,9 +185,11 @@
       background: #fff;
       border: 1px solid $gray;
       color: $black;
+
       &::placeholder {
         color: rgba($black, 0.5);
       }
+
       &:focus {
         border: 1px solid $black;
       }
@@ -200,12 +206,14 @@
   align-items: center;
   gap: 8px;
 }
+
 .car-single-form-section__label {
   background: $red;
   border-radius: 100px;
   display: inline-flex;
   padding: 4px 12px;
   gap: 4px;
+
   img {
     display: block;
   }
@@ -217,7 +225,6 @@
 
 .car-single-form {
   margin-top: 16px;
-  // display: flex;
   align-items: center;
   gap: 8px;
 
@@ -232,6 +239,7 @@
 
 .car-single-parts-section {
   margin-top: 120px;
+
   @media screen and (max-width: 1024px) {
     margin-top: 80px;
   }
@@ -240,25 +248,40 @@
 .car-single-parts {
   margin-top: 32px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 32px 16px;
 
   @media screen and (max-width: 1200px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
   @media screen and (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
   @media screen and (max-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-items: stretch;
   }
 }
 
 .car-single-part {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   position: relative;
+  height: 100%;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid rgba(#000, 0.08);
+
+  @media screen and (max-width: 640px) {
+    gap: 8px;
+    padding: 10px;
+  }
 }
 
 .car-single-part__image {
@@ -266,11 +289,14 @@
   border-radius: 8px;
   background: #f9fbfa;
   overflow: hidden;
+  padding: 8px;
+  min-width: 0;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    display: block;
   }
 }
 
@@ -283,104 +309,181 @@
   border-radius: 4px;
   padding: 4px 8px;
   line-height: 100%;
+  z-index: 2;
+}
+
+.car-single-part__title {
+  margin: 0;
+  min-width: 0;
+  font-size: 24px;
+  line-height: 115%;
+  font-weight: 700;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 640px) {
+    font-size: 18px;
+  }
+}
+
+.car-single-part__descr {
+  margin: 0;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 135%;
+  color: rgba(#000, 0.65);
+  overflow-wrap: anywhere;
 }
 
 .car-single-part__bottom {
+  margin-top: auto;
+  min-width: 0;
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media screen and (max-width: 640px) {
+    gap: 10px;
+    align-items: stretch;
+  }
 }
 
 .car-single-part__price-wrap {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-width: 0;
+
+  @media screen and (max-width: 640px) {
+    gap: 8px;
+  }
 }
 
 .car-single-part__price {
   font-weight: 700;
+  font-size: 24px;
+  line-height: 110%;
+  color: $black;
+  white-space: nowrap;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 640px) {
+    font-size: 18px;
+  }
 }
 
 .car-single-part__price-old {
-  color: $gray;
+  color: #9b9b9b;
   position: relative;
+  font-size: 18px;
+  line-height: 110%;
+  white-space: nowrap;
+
   &::before {
     content: "";
     position: absolute;
-    width: 110%;
+    width: 108%;
     height: 2px;
     left: 50%;
     top: 50%;
-    background: $red;
+    background: #c7c7c7;
     transform: translate(-50%, -50%);
+  }
+
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: 640px) {
+    font-size: 14px;
   }
 }
 
 .car-single-part__btn {
-  margin-left: auto;
+  width: 100%;
+  min-width: 0;
+  margin-left: 0;
 }
 
 .car-single-part__btn button {
-  font-weight: 600;
-  margin-left: auto;
-  color: $red;
+  width: 100%;
+  min-height: 46px;
+  border: none;
+  border-radius: 10px;
+  background: $red;
+  color: #fff;
   font-weight: 700;
-}
-/* ===== HERO: image position (desktop vs mobile) ===== */
-.car-single-hero__image--mob { display: none; }
-.car-single-hero__image--desk { display: block; }
+  font-size: 16px;
+  line-height: 100%;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
 
-@media screen and (max-width: 768px) {
-  .car-single-hero__image--mob { display: block; }
-  .car-single-hero__image--desk { display: none; }
-
-  /* чуть аккуратнее под заголовком */
-  .car-single-hero__image--mob {
-    margin-top: 6px;
-  }
-}
-/* ===== MOBILE 2-COLS: ровные карточки, цена и кнопка снизу ===== */
-@media screen and (max-width: 640px) {
-  .car-single-parts {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    align-items: stretch;
+  &:hover {
+    background: $redHover;
   }
 
+  &:active {
+    transform: translateY(1px);
+  }
+
+  @media screen and (max-width: 640px) {
+    min-height: 42px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 360px) {
   .car-single-part {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 8px;
+    padding: 8px;
   }
 
-  /* чтобы блок "низ" всегда был внизу карточки */
-  .car-single-part__bottom {
-    margin-top: auto;              /* ключ */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+  .car-single-part__title {
+    font-size: 16px;
   }
 
-  /* цена слева, можно колонкой (цена + старая цена) */
-  .car-single-part__price-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+  .car-single-part__descr {
+    font-size: 13px;
   }
-.car-single-part__price,
-.car-single-part__price-old {
-  white-space: nowrap;   // ⬅️ КЛЮЧ
-}
 
-  /* кнопка справа */
-  .car-single-part__btn {
-    margin-left: 0;
-    flex: 0 0 auto;
+  .car-single-part__price {
+    font-size: 16px;
+  }
+
+  .car-single-part__price-old {
+    font-size: 13px;
   }
 
   .car-single-part__btn button {
-    width: auto;                   /* НЕ на всю ширину */
-    white-space: nowrap;
+    min-height: 40px;
+    font-size: 14px;
+  }
+}
+
+/* ===== HERO: image position (desktop vs mobile) ===== */
+.car-single-hero__image--mob {
+  display: none;
+}
+
+.car-single-hero__image--desk {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .car-single-hero__image--mob {
+    display: block;
+    margin-top: 6px;
+  }
+
+  .car-single-hero__image--desk {
+    display: none;
   }
 }
