@@ -17,6 +17,7 @@
     "company": "company",
     "delivery": "delivery",
     "automatic": "automatic",
+    "partnership": "partnership",
   };
 
   const perFormTs = new WeakMap();

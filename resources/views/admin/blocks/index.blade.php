@@ -32,7 +32,13 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->key }}</td>
                                         <td>{{ $item->title }}</td>
-                                        <td>{{ is_array($item->images) ? count($item->images) : 0 }}</td>
+                                        <td>
+                                            @if ($item->key === 'repair_examples')
+                                                {{ is_array($item->items) ? count($item->items) : 0 }}
+                                            @else
+                                                {{ is_array($item->images) ? count($item->images) : 0 }}
+                                            @endif
+                                        </td>
                                         <td class="text-end">
                                             <a href="{{ route('admin.blocks.edit', $item->id) }}"
                                                 class="btn btn-sm btn-primary">
