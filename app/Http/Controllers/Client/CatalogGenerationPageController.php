@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Block;
 use App\Models\CarMake;
 
 class CatalogGenerationPageController extends Controller
@@ -38,7 +39,7 @@ $products = $car->products()
     ->orderBy('products.sort')
     ->orderBy('products.id')
     ->get();
-
-    return view('catalog_product', compact('products', 'car', 'car_model', 'car_make', 'page'));
+    $repairExamplesBlock = Block::where('key', 'repair_examples')->first();
+    return view('catalog_product', compact('products', 'car', 'car_model', 'car_make', 'page', 'repairExamplesBlock'));
   }
 }

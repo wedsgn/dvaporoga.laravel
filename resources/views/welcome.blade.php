@@ -27,7 +27,11 @@
         {{-- <x-section.features /> --}}
         <x-section.marks :items="$car_makes" />
         <x-section.about-parts />
-        <x-section.gallery />
+        <x-section.gallery :block="$galleryBlock" />
+
+        <x-section.catalog-parts :block="$catalogPartsBlock" />
+
+        <x-section.repair-examples :block="$repairExamplesBlock" />
         <section class="reviews-widget-section section">
             <div class="container">
 

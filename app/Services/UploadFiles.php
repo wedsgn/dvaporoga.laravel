@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Storage;
 class UploadFiles
 {
 
-  public function imageConvertAndStore($request, $data, $id_or_slug)
-  {
+public function imageConvertAndStore($request, $data, $id_or_slug)
+{
     if ($request->is('*/car_makes/*')) {
       $directory = 'uploads/car_makes/' . $id_or_slug . '/images/';
     }
@@ -32,14 +32,18 @@ class UploadFiles
     if ($request->is('*/page-banners/*')) {
       $directory = 'uploads/page_banners/' . $id_or_slug . '/images/';
     }
+    if ($request->is('*/blocks/*')) {
+      $directory = 'uploads/blocks/' . $id_or_slug . '/images/';
+    }
 
     $defaultImage = Image::read($data);
     $filename = Str::ulid() . '.webp';
     $path = $directory . $filename;
     $defaultImage = $defaultImage->toWebp(80);
     Storage::disk('public')->put($path, (string)$defaultImage);
+
     return $path;
-  }
+}
 
   public function videoStore($request, $data, $id_or_slug)
   {

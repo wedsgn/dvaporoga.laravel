@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ProductCarImagesController;
 use App\Http\Controllers\YandexFeedController;
+use App\Http\Controllers\Admin\BlockController;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
 //Concern
@@ -51,6 +52,11 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
   Route::get('/edit_info', [MainController::class, 'edit_info'])->name('edit_info');
   Route::patch('/{main_info_id}/update_info', [MainController::class, 'update_info'])->name('update_info');
 
+  Route::name('blocks.')->prefix('blocks')->group(function () {
+    Route::get('/', [BlockController::class, 'index'])->name('index');
+    Route::get('/{block}/edit', [BlockController::class, 'edit'])->name('edit');
+    Route::patch('/{block}', [BlockController::class, 'update'])->name('update');
+});
 
   Route::get('/products/{product:slug}/cars', [ProductCarImagesController::class, 'index'])
     ->name('products.cars.index');

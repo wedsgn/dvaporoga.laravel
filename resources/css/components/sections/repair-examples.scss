@@ -1,0 +1,176 @@
+.repair-examples-section {
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    max-width: 320px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+}
+
+.repair-examples-slider {
+  overflow: hidden;
+}
+
+.repair-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+
+  &__labels {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  &__label {
+    position: absolute;
+    top: 0;
+    font-size: 12px;
+    line-height: 1;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.72);
+    border-radius: 6px;
+    padding: 6px 8px;
+    text-transform: lowercase;
+
+    &--left {
+      left: 0;
+    }
+
+    &--right {
+      right: 0;
+    }
+  }
+
+  &__compare {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    aspect-ratio: 16 / 9;
+    background: #f4f4f4;
+  }
+
+  &__half {
+    min-width: 0;
+    overflow: hidden;
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  }
+
+  &__divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.14);
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 7px;
+        height: 7px;
+        border-top: 2px solid #444;
+        border-right: 2px solid #444;
+      }
+
+      &::before {
+        left: 9px;
+        transform: translateY(-50%) rotate(-135deg);
+      }
+
+      &::after {
+        right: 9px;
+        transform: translateY(-50%) rotate(45deg);
+      }
+    }
+  }
+}
+
+.repair-examples-pagination {
+  position: static;
+  margin-top: 20px;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .repair-examples-section {
+    &__top {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .repair-examples-section {
+    &__top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    &__title {
+      max-width: none;
+    }
+
+    &__nav {
+      display: none;
+    }
+  }
+
+  .repair-card {
+    &__label {
+      font-size: 11px;
+      padding: 5px 7px;
+    }
+  }
+
+  .repair-examples-pagination {
+    margin-top: 16px;
+  }
+}
