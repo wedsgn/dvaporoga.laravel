@@ -32,17 +32,7 @@
         {{-- <x-section.catalog-parts :block="$catalogPartsBlock" /> --}}
 
         <x-section.repair-examples :block="$repairExamplesBlock" />
-        <section class="reviews-widget-section section">
-            <div class="container">
-
-                <h2 class="reviews-widget-section__title">
-                    Отзывы клиентов
-                </h2>
-
-                <review-lab data-widgetid="69984c4658896b169079008c"></review-lab>
-
-            </div>
-        </section>
+        <x-section.reviews />
         <x-section.how-we-work />
 
         <x-forms.request-form goal="delivery" form-id="car-single-form-home-delivery"

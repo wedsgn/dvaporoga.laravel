@@ -10,7 +10,21 @@
     <div class="container">
         <h2 class="h2">{{ $title }}</h2>
 
-        <div class="gallery-slider-wrap">
+        <div class="gallery-section__wrap">
+            @foreach ($images as $item)
+                @php
+                    $url = str_starts_with($item, 'uploads/')
+                        ? asset('storage/' . $item)
+                        : asset($item);
+                @endphp
+
+                <a href="{{ $url }}" data-fancybox="gallery" class="gallery-section__item">
+                    <img src="{{ $url }}" alt="{{ $title }}" loading="lazy">
+                </a>
+            @endforeach
+        </div>
+
+        <div class="gallery-swiper-mob">
             <div class="swiper gallery-swiper">
                 <div class="swiper-wrapper">
                     @foreach ($images as $item)

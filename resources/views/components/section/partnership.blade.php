@@ -1,7 +1,7 @@
 <section class="partnership-section">
     <div class="container">
         <div class="partnership-section__head">
-            <h2 class="partnership-section__title">Сотрудничество</h2>
+            <h2 class="partnership-section__title h2">Сотрудничество</h2>
             <p class="partnership-section__subtitle">
                 Станьте представителем нашей компании в своем регионе
             </p>

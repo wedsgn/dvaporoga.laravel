@@ -42,10 +42,11 @@
 
         <div class="swiper repair-examples-slider">
             <div class="swiper-wrapper">
-                @foreach ($items as $item)
+                @foreach ($items as $index => $item)
                     @php
                         $before = $assetUrl($item['before'] ?? '');
                         $after = $assetUrl($item['after'] ?? '');
+                        $galleryId = 'repair-before-after-' . $index;
                     @endphp
 
                     @if ($before && $after)
@@ -56,22 +57,32 @@
                                     <span class="repair-card__label repair-card__label--right">после</span>
                                 </div>
 
-                                <div class="repair-card__compare">
-                                    <div class="repair-card__half repair-card__half--before">
-                                        <a href="{{ $before }}" data-fancybox="repair-before-after">
+                                <div class="repair-compare" data-compare>
+                                    <div class="repair-compare__before">
+                                        <a href="{{ $before }}" data-fancybox="{{ $galleryId }}">
                                             <img src="{{ $before }}" alt="До ремонта" loading="lazy">
                                         </a>
                                     </div>
 
-                                    <div class="repair-card__half repair-card__half--after">
-                                        <a href="{{ $after }}" data-fancybox="repair-before-after">
+                                    <div class="repair-compare__after" data-compare-overlay>
+                                        <a href="{{ $after }}" data-fancybox="{{ $galleryId }}">
                                             <img src="{{ $after }}" alt="После ремонта" loading="lazy">
                                         </a>
                                     </div>
 
-                                    <div class="repair-card__divider">
-                                        <span></span>
-                                    </div>
+                                    <button type="button" class="repair-compare__handle" data-compare-handle aria-label="Сравнить фото">
+                                        <span class="repair-compare__line"></span>
+                                        <span class="repair-compare__circle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m15 18-6-6 6-6" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m9 18 6-6-6-6" />
+                                            </svg>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>

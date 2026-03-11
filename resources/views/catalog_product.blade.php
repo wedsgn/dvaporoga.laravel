@@ -189,6 +189,7 @@
 
         <x-section.about-parts />
         <x-section.repair-examples :block="$repairExamplesBlock" />
+        <x-section.reviews />
         <x-section.how-we-work />
         <x-section.about-company />
         <x-section.faq />

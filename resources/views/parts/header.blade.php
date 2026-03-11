@@ -96,12 +96,26 @@
 
             <div class="mobile-nav__contact-card">
                 <a href="tel:{{ $main_info->phone }}" class="mobile-nav__contact-row">
-                    <span class="mobile-nav__contact-icon">📞</span>
+                    <span class="mobile-nav__contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path
+                                d="M22 16.92V21a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 11.19 19.93a19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h4.09a2 2 0 0 1 2 1.72c.12.89.32 1.76.59 2.6a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.48-1.2a2 2 0 0 1 2.11-.45c.84.27 1.71.47 2.6.59A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                    </span>
                     <span>{{ $main_info->phone }}</span>
                 </a>
 
                 <div class="mobile-nav__contact-row">
-                    <span class="mobile-nav__contact-icon">🕒</span>
+                    <span class="mobile-nav__contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 6v6l4 2" />
+                        </svg>
+                    </span>
                     <span>ПН – ВС: с 9 до 21</span>
                 </div>
             </div>

@@ -154,47 +154,6 @@
       transform: rotate(-45deg);
     }
   }
-}
-
-
-/* =========================
-   <= 550px
-========================= */
-
-@media screen and (max-width: 550px) {
-
-  .header__left {
-    display: flex;
-    gap: 0;
-  }
-
-  .header__logo img {
-    height: 28px;
-  }
-
-  .header__nav,
-  .header-div {
-    display: none !important;
-  }
-
-  /* телефон убираем из шапки */
-
-  .header__btns .header__phone {
-    display: none !important;
-  }
-
-  .header__btns {
-    margin-left: auto;
-    gap: 12px;
-  }
-
-  /* соцсети скрыты */
-
-  .social-link {
-    display: none !important;
-  }
-
-  /* mobile menu */
 
   .mobile-nav {
     display: block;
@@ -226,8 +185,6 @@
     gap: 16px;
   }
 
-  /* большая кнопка каталог */
-
   .mobile-nav__nav .header__link.--highlighted {
     font-size: 20px;
     padding: 14px 28px;
@@ -239,14 +196,14 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-
     padding-top: 16px;
-    padding-bottom: 120px; /* чтобы кнопки не перекрывали */
+    padding-bottom: 120px;
   }
 
   .mobile-nav__bottom-contacts {
     display: block;
   }
+
   .mobile-nav__bottom-socials {
     display: flex;
     align-items: flex-start;
@@ -279,7 +236,6 @@
     font-weight: 500;
     text-align: center;
   }
-  /* карточка контактов */
 
   .mobile-nav__contact-card {
     background: #f3f3f3;
@@ -290,20 +246,65 @@
     gap: 10px;
   }
 
-  /* строки контактов */
-
   .mobile-nav__contact-row {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     color: $black;
     text-decoration: none;
     font-size: 18px;
     font-weight: 600;
   }
 
-  /* иконки убраны */
-
   .mobile-nav__contact-icon {
-    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 59, 48, 0.08);
+    color: $red;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+  }
+}
+
+/* =========================
+   <= 550px
+========================= */
+
+@media screen and (max-width: 550px) {
+
+  .header__left {
+    display: flex;
+    gap: 0;
   }
 
+  .header__logo img {
+    height: 28px;
+  }
+
+  .header__nav,
+  .header-div {
+    display: none !important;
+  }
+
+  .header__btns .header__phone {
+    display: none !important;
+  }
+
+  .header__btns {
+    margin-left: auto;
+    gap: 12px;
+  }
+
+  .social-link {
+    display: none !important;
+  }
 }
