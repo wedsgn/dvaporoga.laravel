@@ -153,10 +153,6 @@
     </script>
 
     <x-ui.cookie-banner />
-
-    <script src="{{ asset('/js/forms-ajax.js') }}"></script>
-    <script src="{{ asset('/js/ym-goals.js') }}"></script>
-    <script src="{{ asset('/js/product_calc.js') }}"></script>
     <script src="https://app.reviewlab.ru/widget/index-es2015.js" defer></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 @endphp
 
 @if (!empty($images))
-<section class="gallery-section section">
+<section class="gallery-section section" id="examples">
     <div class="container">
         <h2 class="h2">{{ $title }}</h2>
 

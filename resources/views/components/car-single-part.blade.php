@@ -8,6 +8,8 @@
     'priceOld' => '',
     'link' => '',
     'alt' => '',
+    'requestSource' => 'car',
+    'requestCar' => '',
 ])
 
 <div class="car-single-part">
@@ -39,14 +41,10 @@
         </div>
 
         <div class="car-single-part__btn">
-            <button
-                type="button"
-                data-micromodal-trigger="modal-product"
-                data-product-id="{{ $id ?? '' }}"
-                data-product-title="{{ $title }}"
-                data-product-price="{{ $price }}"
-                data-product-price-old="{{ $priceOld }}"
-            >
+            <button type="button" data-micromodal-trigger="modal-product" data-product-id="{{ $id ?? '' }}"
+                data-product-title="{{ $title }}" data-product-price="{{ $price }}"
+                data-product-price-old="{{ $priceOld }}" data-request-source="{{ $requestSource }}"
+                data-request-car="{{ $requestCar }}">
                 Заказать
             </button>
         </div>

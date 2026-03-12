@@ -16,6 +16,9 @@ class UpdateRequest extends FormRequest
         return [
             'title' => ['nullable', 'string', 'max:255'],
 
+            'selected_products' => ['nullable', 'array'],
+            'selected_products.*' => ['integer', 'exists:products,id'],
+
             'keep_images' => ['nullable', 'array'],
             'keep_images.*' => ['string'],
 

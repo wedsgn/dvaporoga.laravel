@@ -73,7 +73,7 @@
 
   li {
     position: relative;
-    padding-left: 34px;
+    padding-left: 36px;
     font-size: 18px;
     line-height: 135%;
     color: #1b1b1b;
@@ -82,23 +82,25 @@
       content: "";
       position: absolute;
       left: 0;
-      top: 3px;
+      top: 50%;
       width: 22px;
       height: 22px;
       border-radius: 50%;
       background: $red;
+      transform: translateY(-50%);
     }
 
     &::after {
       content: "";
       position: absolute;
-      left: 7px;
-      top: 9px;
-      width: 8px;
+      left: 11px;
+      top: 50%;
+      width: 7px;
       height: 4px;
       border-left: 2px solid #fff;
       border-bottom: 2px solid #fff;
-      transform: rotate(-45deg);
+      transform: translate(-50%, -50%) rotate(-45deg);
+      box-sizing: border-box;
     }
   }
 }

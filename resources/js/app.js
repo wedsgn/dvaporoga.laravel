@@ -7,7 +7,12 @@ import MicroModal from "micromodal";
 import Swiper from "swiper/bundle";
 import { Fancybox } from "@fancyapps/ui";
 import Choices from "choices.js";
-
+import "./modules/product-modal";
+import "./modules/forms-ajax";
+import "./modules/ym-goals";
+window.MicroModal = MicroModal;
+window.Choices = Choices;
+window.Swiper = Swiper;
 window.addEventListener("load", () => {
 
 

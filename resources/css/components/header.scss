@@ -185,11 +185,12 @@
     gap: 16px;
   }
 
-  .mobile-nav__nav .header__link.--highlighted {
-    font-size: 20px;
-    padding: 14px 28px;
-    margin-bottom: 20px;
-  }
+.mobile-nav__nav .header__link.--highlighted {
+  font-family: "Golos", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+
+}
 
   .mobile-nav__bottom {
     margin-top: auto;

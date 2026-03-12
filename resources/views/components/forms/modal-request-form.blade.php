@@ -59,7 +59,7 @@
 
                 @if($productMode)
                     <input type="hidden" name="current_url" value="{{ request()->fullUrl() }}">
-                    <input type="hidden" name="car" value="{{ $carTitle }}">
+                    <input type="hidden" name="car" id="modal-product-car" value="{{ $carTitle }}">
                     <input type="hidden" name="data" id="modal-product-data" value="[]">
                     <input type="hidden" name="total_price" id="modal-product-total" value="">
                 @endif

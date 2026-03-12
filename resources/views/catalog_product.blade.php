@@ -74,7 +74,7 @@
             </div>
         </section>
 
-<section class="car-single-form-section">
+        <section class="car-single-form-section">
             <div class="container">
                 <div class="car-single-form-section__top">
                     <div class="car-single-form-section__label">
@@ -89,15 +89,8 @@
                     Мы подберем деталь под ваш автомобиль и ответим на все вопросы
                 </p>
 
-                <form
-                    id="car-request-form"
-                    action="{{ route('requests.car') }}"
-                    method="POST"
-                    class="car-single-form"
-                    data-action="{{ route('requests.car') }}"
-                    data-ym-goal="calculator"
-                    data-ym-mode="manual"
-                >
+                <form id="car-request-form" action="{{ route('requests.car') }}" method="POST" class="car-single-form"
+                    data-action="{{ route('requests.car') }}" data-ym-goal="calculator" data-ym-mode="manual">
                     @csrf
 
                     <input type="hidden" name="form_id" value="car-page-form">
@@ -118,7 +111,8 @@
                         </div>
 
                         <div class="input-item">
-                            <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __" required>
+                            <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __"
+                                required>
                             <div class="field-error" data-error-for="phone"></div>
                         </div>
 
@@ -154,9 +148,7 @@
                                     ? ltrim($p->pivot->image, '/')
                                     : null;
 
-                            $adminPath = !empty($p->image) && $p->image !== 'default'
-                                ? ltrim($p->image, '/')
-                                : null;
+                            $adminPath = !empty($p->image) && $p->image !== 'default' ? ltrim($p->image, '/') : null;
 
                             $fallbackPath = null;
                             foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
@@ -171,17 +163,9 @@
                             $imageUrl = $finalPath ? asset('storage/' . $finalPath) : asset('images/no-image.jpg');
                         @endphp
 
-                        <x-car-single-part
-                            :id="$p->id"
-                            :image="$imageUrl"
-                            :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''"
-                            :title="$p->title"
-                            :description="$p->description ?? ''"
-                            :price="$p->price ? number_format((int) $p->price, 0, '.', ' ') . ' ₽' : ''"
-                            :priceOld="$p->price_old ? number_format((int) $p->price_old, 0, '.', ' ') . ' ₽' : ''"
-                            :link="$p->link ?? ''"
-                            :alt="$p->alt ?: $p->title"
-                        />
+                        <x-car-single-part :id="$p->id" :image="$imageUrl" :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''" :title="$p->title"
+                            :description="$p->description ?? ''" :price="$p->price ? number_format((int) $p->price, 0, '.', ' ') . ' ₽' : ''" :priceOld="$p->price_old ? number_format((int) $p->price_old, 0, '.', ' ') . ' ₽' : ''" :link="$p->link ?? ''" :alt="$p->alt ?: $p->title"
+                            request-source="car" :request-car="$car->title" />
                     @endforeach
                 </div>
             </div>
@@ -194,58 +178,4 @@
         <x-section.about-company />
         <x-section.faq />
     </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.addEventListener('click', (e) => {
-                const btn = e.target.closest('[data-micromodal-trigger="modal-product"]');
-                if (!btn) return;
-
-                const form = document.getElementById('modal-product-form');
-                if (!form) return;
-
-                const pid = btn.dataset.productId || '';
-                const title = btn.dataset.productTitle || '';
-                const price = (btn.dataset.productPrice || '').replace(/\s+/g, '').trim();
-                const priceNum = price ? parseInt(price, 10) : '';
-
-                const dataInput = document.getElementById('modal-product-data');
-                if (dataInput) {
-                    dataInput.value = JSON.stringify(pid ? [{ id: Number(pid) }] : []);
-                }
-
-                const totalInput = document.getElementById('modal-product-total');
-                if (totalInput) {
-                    totalInput.value = priceNum || '';
-                }
-
-                const h = document.getElementById('modal-product-title');
-                if (h && title) {
-                    h.textContent = `Заказ: ${title}`;
-                }
-            });
-
-            document.addEventListener('form:success', (e) => {
-                const form = e.detail?.form;
-                if (!form) return;
-
-                if (form.id === 'modal-product-form') {
-                    const h = document.getElementById('modal-product-title');
-                    if (h) {
-                        h.textContent = 'Заполните форму';
-                    }
-
-                    const dataInput = document.getElementById('modal-product-data');
-                    if (dataInput) {
-                        dataInput.value = '[]';
-                    }
-
-                    const totalInput = document.getElementById('modal-product-total');
-                    if (totalInput) {
-                        totalInput.value = '';
-                    }
-                }
-            });
-        });
-    </script>
 @endsection

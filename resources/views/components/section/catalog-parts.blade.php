@@ -1,46 +1,57 @@
 @props(['block' => null])
 
 @php
-$images = $block?->images ?? [];
-$title = $block?->title;
+    use App\Models\Product;
+    use Illuminate\Support\Facades\Storage;
+
+    $title = $block?->title;
+    $productIds = collect($block?->items ?? [])
+        ->map(fn($id) => (int) $id)
+        ->filter(fn($id) => $id > 0)
+        ->values()
+        ->all();
+
+    $products = collect();
+
+    if ($block && !empty($productIds)) {
+        $products = Product::query()
+            ->whereIn('id', $productIds)
+            ->get()
+            ->sortBy(fn($product) => array_search($product->id, $productIds, true))
+            ->values();
+    }
 @endphp
 
-@if($block && count($images))
-<section class="catalog-parts-section section">
+@if ($block && $products->count())
+    <section class="car-single-parts-section section">
+        <div class="container">
+            @if (!empty($title))
+                <h2 class="h2">{{ $title }}</h2>
+            @endif
 
-    <div class="container">
+            <div class="car-single-parts">
+                @foreach ($products as $p)
+                    @php
+                        $adminPath = !empty($p->image) && $p->image !== 'default' ? ltrim($p->image, '/') : null;
 
-        <h2 class="catalog-parts-title h2">
-            {{ $title }}
-        </h2>
+                        $fallbackPath = null;
+                        foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
+                            $pp = "products_default/{$p->slug}.{$ext}";
+                            if (Storage::disk('public')->exists($pp)) {
+                                $fallbackPath = $pp;
+                                break;
+                            }
+                        }
 
-        <div class="catalog-parts-grid">
+                        $finalPath = $adminPath ?: $fallbackPath;
+                        $imageUrl = $finalPath ? asset('storage/' . $finalPath) : asset('images/no-image.jpg');
+                    @endphp
 
-            @foreach ($images as $item)
-
-                @php
-                $url = str_starts_with($item,'uploads/')
-                    ? asset('storage/'.$item)
-                    : asset($item);
-                @endphp
-
-                <a
-                    class="catalog-parts-item"
-                    href="{{ $url }}"
-                    data-fancybox="catalog-parts"
-                >
-                    <img
-                        src="{{ $url }}"
-                        alt="{{ $title }}"
-                        loading="lazy"
-                    >
-                </a>
-
-            @endforeach
-
+                    <x-car-single-part :id="$p->id" :image="$imageUrl" :discount_percentage="$p->discount_percentage ? '-' . $p->discount_percentage . ' %' : ''" :title="$p->title"
+                        :description="$p->description ?? ''" :price="$p->price ? number_format((int) $p->price, 0, '.', ' ') . ' ₽' : ''" :priceOld="$p->price_old ? number_format((int) $p->price_old, 0, '.', ' ') . ' ₽' : ''" :link="$p->link ?? ''" :alt="$p->title"
+                        request-source="home" request-car="" />
+                @endforeach
+            </div>
         </div>
-
-    </div>
-
-</section>
+    </section>
 @endif

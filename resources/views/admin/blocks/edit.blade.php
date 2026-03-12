@@ -44,7 +44,7 @@
                         @if($block->key === 'repair_examples')
 
                             <div class="mb-4">
-                                <label class="form-label">Текущие карточки "До / После"</label>
+                                <label class="form-label">Текущие карточки</label>
 
                                 @if(!empty($block->items))
                                     <div class="row g-3">
@@ -71,37 +71,29 @@
                                                             </label>
                                                         </div>
 
-                                                        <div class="row g-3">
+                                                        <div class="row g-2">
                                                             <div class="col-6">
-                                                                <div class="border rounded p-2">
-                                                                    <div class="small text-muted mb-2">До</div>
-                                                                    @if($before)
-                                                                        <img
-                                                                            src="{{ str_starts_with($before, 'uploads/') ? asset('storage/' . $before) : asset($before) }}"
-                                                                            alt=""
-                                                                            class="img-fluid rounded"
-                                                                            style="width:100%; height:180px; object-fit:cover;"
-                                                                        >
-                                                                    @else
-                                                                        <div class="text-muted">Нет фото</div>
-                                                                    @endif
-                                                                </div>
+                                                                <div class="small text-muted mb-1">До</div>
+                                                                @if($before)
+                                                                    <img
+                                                                        src="{{ str_starts_with($before, 'uploads/') ? asset('storage/' . $before) : asset($before) }}"
+                                                                        alt=""
+                                                                        class="img-fluid rounded border"
+                                                                        style="width:100%; height:180px; object-fit:cover;"
+                                                                    >
+                                                                @endif
                                                             </div>
 
                                                             <div class="col-6">
-                                                                <div class="border rounded p-2">
-                                                                    <div class="small text-muted mb-2">После</div>
-                                                                    @if($after)
-                                                                        <img
-                                                                            src="{{ str_starts_with($after, 'uploads/') ? asset('storage/' . $after) : asset($after) }}"
-                                                                            alt=""
-                                                                            class="img-fluid rounded"
-                                                                            style="width:100%; height:180px; object-fit:cover;"
-                                                                        >
-                                                                    @else
-                                                                        <div class="text-muted">Нет фото</div>
-                                                                    @endif
-                                                                </div>
+                                                                <div class="small text-muted mb-1">После</div>
+                                                                @if($after)
+                                                                    <img
+                                                                        src="{{ str_starts_with($after, 'uploads/') ? asset('storage/' . $after) : asset($after) }}"
+                                                                        alt=""
+                                                                        class="img-fluid rounded border"
+                                                                        style="width:100%; height:180px; object-fit:cover;"
+                                                                    >
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -128,6 +120,88 @@
                             <small class="text-muted d-block mt-2">
                                 Карточка добавится только если выбраны оба файла: "До" и "После".
                             </small>
+
+                        @elseif($block->key === 'catalog_default_parts')
+
+                            @php
+                                $selectedProducts = collect(old('selected_products', $block->items ?? []))
+                                    ->map(fn($id) => (int) $id)
+                                    ->all();
+                            @endphp
+
+                            <div class="mb-4">
+                                <label class="form-label">Товары для блока</label>
+
+                                @if(isset($products) && $products->count())
+                                    <div class="row g-3">
+                                        @foreach($products as $product)
+                                            @php
+                                                $imagePath = null;
+
+                                                if (!empty($product->image) && $product->image !== 'default') {
+                                                    $imagePath = asset('storage/' . ltrim($product->image, '/'));
+                                                } else {
+                                                    foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
+                                                        $fallback = "products_default/{$product->slug}.{$ext}";
+                                                        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($fallback)) {
+                                                            $imagePath = asset('storage/' . $fallback);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                $imagePath = $imagePath ?: asset('images/no-image.jpg');
+                                            @endphp
+
+                                            <div class="col-md-4 col-xl-3">
+                                                <label class="card h-100 border" style="cursor:pointer;">
+                                                    <div class="card-body">
+                                                        <div class="form-check mb-3">
+                                                            <input
+                                                                class="form-check-input"
+                                                                type="checkbox"
+                                                                name="selected_products[]"
+                                                                value="{{ $product->id }}"
+                                                                {{ in_array((int) $product->id, $selectedProducts, true) ? 'checked' : '' }}
+                                                            >
+                                                            <span class="form-check-label">Показать в блоке</span>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <img
+                                                                src="{{ $imagePath }}"
+                                                                alt="{{ $product->title }}"
+                                                                class="img-fluid rounded border"
+                                                                style="width:100%; height:180px; object-fit:contain; background:#f8f9fa;"
+                                                            >
+                                                        </div>
+
+                                                        <div class="fw-semibold mb-2">{{ $product->title }}</div>
+
+                                                        <div class="small text-muted mb-1">
+                                                            Цена:
+                                                            <strong class="text-dark">
+                                                                {{ $product->price ? number_format((int) $product->price, 0, '.', ' ') . ' ₽' : '—' }}
+                                                            </strong>
+                                                        </div>
+
+                                                        @if($product->price_old)
+                                                            <div class="small text-muted">
+                                                                Старая цена:
+                                                                <strong class="text-dark">
+                                                                    {{ number_format((int) $product->price_old, 0, '.', ' ') . ' ₽' }}
+                                                                </strong>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-muted mb-0">Товаров пока нет.</p>
+                                @endif
+                            </div>
 
                         @else
 
@@ -233,8 +307,6 @@
 
                 if (!addBtn || !container || !template) return;
 
-                let index = 0;
-
                 function reindexCards() {
                     const cards = container.querySelectorAll('.repair-card-item');
 
@@ -255,8 +327,6 @@
                             afterInput.name = `new_items[${i}][after]`;
                         }
                     });
-
-                    index = cards.length;
                 }
 
                 addBtn.addEventListener('click', function () {

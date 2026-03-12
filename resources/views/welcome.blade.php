@@ -29,7 +29,7 @@
         <x-section.about-parts />
         <x-section.gallery :block="$galleryBlock" />
 
-        {{-- <x-section.catalog-parts :block="$catalogPartsBlock" /> --}}
+        <x-section.catalog-parts :block="$catalogPartsBlock" />
 
         <x-section.repair-examples :block="$repairExamplesBlock" />
         <x-section.reviews />

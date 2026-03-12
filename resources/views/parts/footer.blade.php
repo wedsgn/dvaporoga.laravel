@@ -1,35 +1,32 @@
 <footer class="footer section">
     <div class="container">
-        {{-- Footer Top --}}
         <div class="footer-top">
             <div class="footer-top__wrap">
                 <div class="footer-top__left">
                     <a href="{{ route('home') }}" class="footer-logo">
-                        <img src="{{ asset('images/footerlogo.svg') }}" alt="">
+                        <img src="{{ asset('images/footerlogo.svg') }}" alt="2POROGA">
                     </a>
-
-                    <div class="footer-bottom__descr --mob">
-                        Ремонтные арки и пороги
-                        для всех автомобилей
-                    </div>
                 </div>
 
                 <div class="footer-top__right">
                     <div class="footer-socials">
-                       @if (!empty($main_info->whats_app))
-                        <a href="{{ $main_info->whats_app }}" target="_blank" class="footer-social">
-                            <img src="{{ asset('images/socials/wa.svg') }}" alt="dvaporoga whatssup">
-                        </a>
+                        @if (!empty($main_info->whats_app))
+                            <a href="{{ $main_info->whats_app }}" target="_blank" class="footer-social">
+                                <img src="{{ asset('images/socials/wa.svg') }}" alt="WhatsApp">
+                            </a>
                         @endif
-                         @if (!empty($main_info->telegram))
-                        <a href="{{ $main_info->telegram }}" target="_blank" class="footer-social">
-                            <img src="{{ asset('images/socials/tg.svg') }}" alt="dvaporoga telegram">
-                        </a>
+
+                        @if (!empty($main_info->telegram))
+                            <a href="{{ $main_info->telegram }}" target="_blank" class="footer-social">
+                                <img src="{{ asset('images/socials/tg.svg') }}" alt="Telegram">
+                            </a>
                         @endif
+
                         <a href="https://vk.com/avtoporogiru" target="_blank" class="footer-social">
-                            <img src="{{ asset('images/socials/vk.svg') }}" alt="dvaporoga vk">
+                            <img src="{{ asset('images/socials/vk.svg') }}" alt="VK">
                         </a>
                     </div>
+
                     <div class="header__phone --footer">
                         <div class="header__phone_top">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -49,54 +46,56 @@
             </div>
         </div>
 
-        {{-- footer bootm --}}
+        <div class="footer-main">
+            <div class="footer-main__grid">
+                <div class="footer-main__about">
+                    <div class="footer-main__descr">
+                        Ремонтные арки и пороги для всех автомобилей
+                    </div>
+                </div>
 
-<div class="footer-bottom">
-    <div class="footer-bottom__wrap">
-        <div class="footer-bottom__descr">
-            Ремонтные арки и пороги
-            для всех автомобилей
-        </div>
+                <div class="footer-main__menu">
+                    <div class="footer-main__title">Информация</div>
 
-        <nav class="footer-bottom__nav">
-            <a href="{{ route('home') }}#features" class="footer__nav-link">Преимущества</a>
-            <a href="{{ route('catalog') }}" class="footer__nav-link">Каталог</a>
-            <a href="{{ route('blog') }}" class="footer__nav-link">Блог</a>
-            <a href="{{ route('home') }}#about" class="footer__nav-link">О нас</a>
-            <a href="{{ route('home') }}#delivery" class="footer__nav-link">Доставка</a>
-            <a href="{{ route('home') }}#faq" class="footer__nav-link">FAQ</a>
-        </nav>
+                    <nav class="footer-main__nav">
+                        <a href="{{ route('catalog') }}" class="footer__nav-link">Каталог</a>
+                        <a href="{{ route('home') }}#features" class="footer__nav-link">Наши преимущества</a>
+                        <a href="{{ route('home') }}#examples" class="footer__nav-link">Наши работы</a>
+                        <a href="{{ route('home') }}#about" class="footer__nav-link">О нас</a>
+                        <a href="{{ route('home') }}#delivery" class="footer__nav-link">Доставка и оплата</a>
+                    </nav>
+                </div>
 
-        <div class="footer-bottom__docs">
-            <div class="footer-bottom__title">Документы</div>
+                <div class="footer-main__docs">
+                    <div class="footer-main__title">Документы</div>
 
-            <div class="footer-bottom__docs-list">
-                <a href="{{ asset('docs/ОФЕРТА.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
-                    Договор оферта
-                </a>
-                <a href="{{ asset('docs/ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
-                    Политика конфиденциальности
-                </a>
-                <a href="{{ asset('docs/СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
-                    Согласие на обработку персональных данных
-                </a>
-                <a href="{{ asset('docs/СОГЛАСИЕ НА ПОЛУЧЕНИЕ ИНФОРМАЦИОННЫХ РАССЫЛОК.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
-                    Согласие на получение информационных рассылок
-                </a>
+                    <div class="footer-main__docs-list">
+                        <a href="{{ asset('docs/ОФЕРТА.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                            Договор оферты
+                        </a>
+
+                        <a href="{{ asset('docs/ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                            Политика конфиденциальности
+                        </a>
+
+                        <a href="{{ asset('docs/СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                            Согласие на обработку персональных данных
+                        </a>
+
+                        <a href="{{ asset('docs/СОГЛАСИЕ НА ПОЛУЧЕНИЕ ИНФОРМАЦИОННЫХ РАССЫЛОК.docx') }}" target="_blank" rel="noopener noreferrer" class="footer__nav-link">
+                            Согласие на получение информационной рассылки
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-    </div>
-
 
     <div class="footer-copy">
         <div class="container">
             <div class="footer-copy__wrap">
                 <p>{{ $main_info->company_details }}</p>
-
             </div>
         </div>
     </div>
 </footer>
-

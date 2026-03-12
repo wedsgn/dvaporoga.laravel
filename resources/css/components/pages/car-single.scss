@@ -145,7 +145,7 @@
 }
 
 .car-single-hero__promo-item-price-old {
-  color: rgba(#000, 0.8);
+  color: rgba(#c7c7c7, 0.8);
   font-size: 18px;
   font-weight: 500;
   position: relative;
@@ -159,7 +159,7 @@
     width: 120%;
     height: 2px;
     border-radius: 2px;
-    background: $red;
+    background: #c7c7c7;
   }
 
   @media screen and (max-width: 768px) {
@@ -315,18 +315,18 @@
 .car-single-part__title {
   margin: 0;
   min-width: 0;
-  font-size: 24px;
-  line-height: 115%;
-  font-weight: 700;
+  font-size: 18px;
+  line-height: 120%;
+  font-weight: 600;
   word-break: break-word;
   overflow-wrap: anywhere;
 
   @media screen and (max-width: 1024px) {
-    font-size: 20px;
+    font-size: 17px;
   }
 
   @media screen and (max-width: 640px) {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
@@ -365,18 +365,18 @@
 }
 
 .car-single-part__price {
-  font-weight: 700;
-  font-size: 24px;
+  font-weight: 600;
+  font-size: 18px;
   line-height: 110%;
   color: $black;
   white-space: nowrap;
 
   @media screen and (max-width: 1024px) {
-    font-size: 20px;
+    font-size: 17px;
   }
 
   @media screen and (max-width: 640px) {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
@@ -420,9 +420,11 @@
   border-radius: 10px;
   background: $red;
   color: #fff;
-  font-weight: 700;
+
   font-size: 16px;
   line-height: 100%;
+  letter-spacing: 0.2px;
+
   cursor: pointer;
   transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
 
@@ -435,8 +437,8 @@
   }
 
   @media screen and (max-width: 640px) {
-    min-height: 42px;
-    font-size: 15px;
+    min-height: 40px;
+    font-size: 14px;
     white-space: nowrap;
   }
 }
