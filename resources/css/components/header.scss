@@ -65,10 +65,14 @@
   flex-direction: column;
   gap: 4px;
 
-  a {
+  a,
+  .header__phone_plain {
     font-size: 20px;
     font-weight: 700;
     line-height: 100%;
+    white-space: nowrap;
+    color: $black;
+    text-decoration: none;
   }
 
   span {
@@ -82,6 +86,21 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.header__phone--secondary {
+  gap: 4px;
+
+  .header__phone_top {
+    gap: 8px;
+  }
+
+  span:last-child {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 100%;
+    white-space: nowrap;
+  }
 }
 
 .header__link {
@@ -109,7 +128,6 @@
 ========================= */
 
 @media screen and (max-width: 1200px) {
-
   .header-consultation-btn {
     display: none;
   }
@@ -135,9 +153,15 @@
       left: 7px;
       transition: 0.2s;
 
-      &:nth-child(1) { top: 10px; }
-      &:nth-child(2) { top: 15px; }
-      &:nth-child(3) { bottom: 10px; }
+      &:nth-child(1) {
+        top: 10px;
+      }
+      &:nth-child(2) {
+        top: 15px;
+      }
+      &:nth-child(3) {
+        bottom: 10px;
+      }
     }
 
     &.active span:nth-child(1) {
@@ -185,12 +209,11 @@
     gap: 16px;
   }
 
-.mobile-nav__nav .header__link.--highlighted {
-  font-family: "Golos", sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-
-}
+  .mobile-nav__nav .header__link.--highlighted {
+    font-family: "Golos", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
 
   .mobile-nav__bottom {
     margin-top: auto;
@@ -257,6 +280,29 @@
     font-weight: 600;
   }
 
+  .mobile-nav__contact-row--plain {
+    align-items: flex-start;
+  }
+
+  .mobile-nav__contact-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.2;
+
+    strong {
+      font-size: 18px;
+      font-weight: 600;
+      color: $black;
+    }
+
+    small {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba($black, 0.7);
+    }
+  }
+
   .mobile-nav__contact-icon {
     width: 36px;
     height: 36px;
@@ -275,13 +321,20 @@
     }
   }
 }
+/* =========================
+   <= 760px
+========================= */
 
+@media screen and (max-width: 760px) {
+  .header__phone--secondary {
+    display: none;
+  }
+}
 /* =========================
    <= 550px
 ========================= */
 
 @media screen and (max-width: 550px) {
-
   .header__left {
     display: flex;
     gap: 0;
