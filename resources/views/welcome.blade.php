@@ -27,11 +27,9 @@
         {{-- <x-section.features /> --}}
         <x-section.marks :items="$car_makes" />
         <x-section.about-parts />
-        <x-section.gallery :block="$galleryBlock" />
-
-        <x-section.catalog-parts :block="$catalogPartsBlock" />
-
         <x-section.repair-examples :block="$repairExamplesBlock" />
+        <x-section.catalog-parts :block="$catalogPartsBlock" />
+        <x-section.gallery :block="$galleryBlock" />
         <x-section.reviews />
         <x-section.how-we-work />
 
