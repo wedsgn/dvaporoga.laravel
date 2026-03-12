@@ -16,7 +16,6 @@ class ProductController extends BaseController
   {
     $user = Auth::user();
 
-    // car больше не belongsTo, теперь many-to-many
     $products = Product::query()
       ->withCount('cars')
       ->orderBy('id', 'DESC')
@@ -50,7 +49,6 @@ class ProductController extends BaseController
 
     $cars = $carsQuery->paginate(50)->withQueryString();
 
-    // для create: начальные выбранные — пустые (или old(), но мы используем localStorage)
     $selectedCarIds = [];
 
     return view('admin.products.create', compact('user', 'cars', 'q', 'selectedCarIds'));
@@ -60,22 +58,18 @@ class ProductController extends BaseController
   {
     $data = $request->validated();
 
-    // ТОВАР БАЗОВЫЙ: car_id всегда null
     if (array_key_exists('car_id', $data)) {
       unset($data['car_id']);
     }
 
-    // slug: просто от title, но уникальный
     $baseSlug = Str::slug($data['title'] ?? '');
     $data['slug'] = $this->makeUniqueProductSlug($baseSlug);
 
-    // дефолтные картинки товара (не индивидуальные)
     foreach (['image', 'image_mob'] as $image) {
       if ($request->hasFile($image)) {
         $data[$image] = $this->upload_service
           ->imageConvertAndStore($request, $data[$image], $data['slug']);
       } else {
-        // если в форме этих полей уже нет — ничего
         unset($data[$image]);
       }
     }
@@ -136,13 +130,10 @@ class ProductController extends BaseController
 
     $data = $request->validated();
 
-    // car_id больше не используется
     unset($data['car_id']);
 
-    // slug не меняем
     unset($data['slug']);
 
-    // дефолтные картинки товара (можно оставить, или вообще запретить)
     foreach (['image', 'image_mob'] as $image) {
       if ($request->hasFile($image)) {
         $data[$image] = $this->upload_service

@@ -30,25 +30,21 @@
 
                         <div class="mb-3">
                             <label class="form-label">Заголовок блока</label>
-                            <input
-                                type="text"
-                                name="title"
-                                value="{{ old('title', $block->title) }}"
-                                class="form-control @error('title') is-invalid @enderror"
-                            >
+                            <input type="text" name="title" value="{{ old('title', $block->title) }}"
+                                class="form-control @error('title') is-invalid @enderror">
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        @if($block->key === 'repair_examples')
+                        @if ($block->key === 'repair_examples')
 
                             <div class="mb-4">
                                 <label class="form-label">Текущие карточки</label>
 
-                                @if(!empty($block->items))
+                                @if (!empty($block->items))
                                     <div class="row g-3">
-                                        @foreach($block->items as $index => $item)
+                                        @foreach ($block->items as $index => $item)
                                             @php
                                                 $before = $item['before'] ?? null;
                                                 $after = $item['after'] ?? null;
@@ -58,15 +54,11 @@
                                                 <div class="card h-100 border">
                                                     <div class="card-body">
                                                         <div class="form-check mb-3">
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="checkbox"
-                                                                name="keep_items[]"
-                                                                value="{{ $index }}"
-                                                                id="keep_item_{{ $index }}"
-                                                                checked
-                                                            >
-                                                            <label class="form-check-label" for="keep_item_{{ $index }}">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="keep_items[]" value="{{ $index }}"
+                                                                id="keep_item_{{ $index }}" checked>
+                                                            <label class="form-check-label"
+                                                                for="keep_item_{{ $index }}">
                                                                 Оставить карточку
                                                             </label>
                                                         </div>
@@ -74,25 +66,19 @@
                                                         <div class="row g-2">
                                                             <div class="col-6">
                                                                 <div class="small text-muted mb-1">До</div>
-                                                                @if($before)
-                                                                    <img
-                                                                        src="{{ str_starts_with($before, 'uploads/') ? asset('storage/' . $before) : asset($before) }}"
-                                                                        alt=""
-                                                                        class="img-fluid rounded border"
-                                                                        style="width:100%; height:180px; object-fit:cover;"
-                                                                    >
+                                                                @if ($before)
+                                                                    <img src="{{ str_starts_with($before, 'uploads/') ? asset('storage/' . $before) : asset($before) }}"
+                                                                        alt="" class="img-fluid rounded border"
+                                                                        style="width:100%; height:180px; object-fit:cover;">
                                                                 @endif
                                                             </div>
 
                                                             <div class="col-6">
                                                                 <div class="small text-muted mb-1">После</div>
-                                                                @if($after)
-                                                                    <img
-                                                                        src="{{ str_starts_with($after, 'uploads/') ? asset('storage/' . $after) : asset($after) }}"
-                                                                        alt=""
-                                                                        class="img-fluid rounded border"
-                                                                        style="width:100%; height:180px; object-fit:cover;"
-                                                                    >
+                                                                @if ($after)
+                                                                    <img src="{{ str_starts_with($after, 'uploads/') ? asset('storage/' . $after) : asset($after) }}"
+                                                                        alt="" class="img-fluid rounded border"
+                                                                        style="width:100%; height:180px; object-fit:cover;">
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -120,21 +106,25 @@
                             <small class="text-muted d-block mt-2">
                                 Карточка добавится только если выбраны оба файла: "До" и "После".
                             </small>
-
                         @elseif($block->key === 'catalog_default_parts')
-
                             @php
                                 $selectedProducts = collect(old('selected_products', $block->items ?? []))
                                     ->map(fn($id) => (int) $id)
                                     ->all();
+
+                                $productsById = isset($products) ? $products->keyBy('id') : collect();
+
+                                $orderedSelectedProducts = collect($selectedProducts)
+                                    ->map(fn($id) => $productsById->get($id))
+                                    ->filter();
                             @endphp
 
                             <div class="mb-4">
                                 <label class="form-label">Товары для блока</label>
 
-                                @if(isset($products) && $products->count())
+                                @if (isset($products) && $products->count())
                                     <div class="row g-3">
-                                        @foreach($products as $product)
+                                        @foreach ($products as $product)
                                             @php
                                                 $imagePath = null;
 
@@ -143,7 +133,11 @@
                                                 } else {
                                                     foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
                                                         $fallback = "products_default/{$product->slug}.{$ext}";
-                                                        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($fallback)) {
+                                                        if (
+                                                            \Illuminate\Support\Facades\Storage::disk('public')->exists(
+                                                                $fallback,
+                                                            )
+                                                        ) {
                                                             $imagePath = asset('storage/' . $fallback);
                                                             break;
                                                         }
@@ -157,23 +151,20 @@
                                                 <label class="card h-100 border" style="cursor:pointer;">
                                                     <div class="card-body">
                                                         <div class="form-check mb-3">
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="checkbox"
-                                                                name="selected_products[]"
+                                                            <input class="form-check-input catalog-product-checkbox"
+                                                                type="checkbox" name="selected_products[]"
                                                                 value="{{ $product->id }}"
-                                                                {{ in_array((int) $product->id, $selectedProducts, true) ? 'checked' : '' }}
-                                                            >
+                                                                data-product-id="{{ $product->id }}"
+                                                                data-product-title="{{ $product->title }}"
+                                                                data-product-image="{{ $imagePath }}"
+                                                                {{ in_array((int) $product->id, $selectedProducts, true) ? 'checked' : '' }}>
                                                             <span class="form-check-label">Показать в блоке</span>
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <img
-                                                                src="{{ $imagePath }}"
-                                                                alt="{{ $product->title }}"
+                                                            <img src="{{ $imagePath }}" alt="{{ $product->title }}"
                                                                 class="img-fluid rounded border"
-                                                                style="width:100%; height:180px; object-fit:contain; background:#f8f9fa;"
-                                                            >
+                                                                style="width:100%; height:180px; object-fit:contain; background:#f8f9fa;">
                                                         </div>
 
                                                         <div class="fw-semibold mb-2">{{ $product->title }}</div>
@@ -185,7 +176,7 @@
                                                             </strong>
                                                         </div>
 
-                                                        @if($product->price_old)
+                                                        @if ($product->price_old)
                                                             <div class="small text-muted">
                                                                 Старая цена:
                                                                 <strong class="text-dark">
@@ -203,33 +194,87 @@
                                 @endif
                             </div>
 
-                        @else
+                            <hr class="my-4">
 
+                            <div class="mb-3">
+                                <label class="form-label">Порядок вывода выбранных товаров</label>
+                                <p class="text-muted mb-2">
+                                    Перетаскивай карточки мышкой. Этот порядок будет на сайте.
+                                </p>
+
+                                <div id="catalog-selected-order" class="row g-3">
+                                    @foreach ($orderedSelectedProducts as $product)
+                                        @php
+                                            $imagePath = null;
+
+                                            if (!empty($product->image) && $product->image !== 'default') {
+                                                $imagePath = asset('storage/' . ltrim($product->image, '/'));
+                                            } else {
+                                                foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
+                                                    $fallback = "products_default/{$product->slug}.{$ext}";
+                                                    if (
+                                                        \Illuminate\Support\Facades\Storage::disk('public')->exists(
+                                                            $fallback,
+                                                        )
+                                                    ) {
+                                                        $imagePath = asset('storage/' . $fallback);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            $imagePath = $imagePath ?: asset('images/no-image.jpg');
+                                        @endphp
+
+                                        <div class="col-md-4 col-xl-3 catalog-selected-order-item"
+                                            data-product-id="{{ $product->id }}">
+                                            <div class="card h-100 border">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <strong class="small">Позиция</strong>
+                                                        <span class="badge bg-secondary">drag</span>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <img src="{{ $imagePath }}" alt="{{ $product->title }}"
+                                                            class="img-fluid rounded border"
+                                                            style="width:100%; height:140px; object-fit:contain; background:#f8f9fa;">
+                                                    </div>
+
+                                                    <div class="fw-semibold small">{{ $product->title }}</div>
+
+                                                    <input type="hidden" name="ordered_products[]"
+                                                        value="{{ $product->id }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div id="catalog-selected-order-empty"
+                                    class="text-muted {{ count($selectedProducts) ? 'd-none' : '' }}">
+                                    Пока не выбрано ни одного товара.
+                                </div>
+                            </div>
+                        @else
                             <div class="mb-4">
                                 <label class="form-label">Текущие фото</label>
 
-                                @if(!empty($block->images))
+                                @if (!empty($block->images))
                                     <div class="row g-3">
-                                        @foreach($block->images as $image)
+                                        @foreach ($block->images as $image)
                                             <div class="col-md-3">
                                                 <div class="card h-100">
-                                                    <img
-                                                        src="{{ str_starts_with($image, 'uploads/') ? asset('storage/' . $image) : asset($image) }}"
-                                                        alt=""
-                                                        class="card-img-top"
-                                                        style="height: 180px; object-fit: cover;"
-                                                    >
+                                                    <img src="{{ str_starts_with($image, 'uploads/') ? asset('storage/' . $image) : asset($image) }}"
+                                                        alt="" class="card-img-top"
+                                                        style="height: 180px; object-fit: cover;">
                                                     <div class="card-body">
                                                         <div class="form-check">
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="checkbox"
-                                                                name="keep_images[]"
-                                                                value="{{ $image }}"
-                                                                id="keep_{{ $loop->index }}"
-                                                                checked
-                                                            >
-                                                            <label class="form-check-label" for="keep_{{ $loop->index }}">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="keep_images[]" value="{{ $image }}"
+                                                                id="keep_{{ $loop->index }}" checked>
+                                                            <label class="form-check-label"
+                                                                for="keep_{{ $loop->index }}">
                                                                 Оставить
                                                             </label>
                                                         </div>
@@ -245,13 +290,8 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Добавить новые фото</label>
-                                <input
-                                    type="file"
-                                    name="new_images[]"
-                                    multiple
-                                    accept="image/*"
-                                    class="form-control @error('new_images.*') is-invalid @enderror"
-                                >
+                                <input type="file" name="new_images[]" multiple accept="image/*"
+                                    class="form-control @error('new_images.*') is-invalid @enderror">
                                 @error('new_images.*')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -273,7 +313,7 @@
         </div>
     </div>
 
-    @if($block->key === 'repair_examples')
+    @if ($block->key === 'repair_examples')
         <template id="repair-card-template">
             <div class="card border mb-3 repair-card-item">
                 <div class="card-body">
@@ -300,7 +340,7 @@
         </template>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 const addBtn = document.getElementById('add-repair-card');
                 const container = document.getElementById('repair-cards-container');
                 const template = document.getElementById('repair-card-template');
@@ -329,13 +369,13 @@
                     });
                 }
 
-                addBtn.addEventListener('click', function () {
+                addBtn.addEventListener('click', function() {
                     const fragment = template.content.cloneNode(true);
                     container.appendChild(fragment);
                     reindexCards();
                 });
 
-                container.addEventListener('click', function (e) {
+                container.addEventListener('click', function(e) {
                     const removeBtn = e.target.closest('.remove-repair-card');
 
                     if (!removeBtn) return;
@@ -351,4 +391,99 @@
             });
         </script>
     @endif
+    @if($block->key === 'catalog_default_parts')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.3/Sortable.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const orderWrap = document.getElementById('catalog-selected-order');
+            const emptyNote = document.getElementById('catalog-selected-order-empty');
+            const checkboxes = document.querySelectorAll('.catalog-product-checkbox');
+
+            if (!orderWrap || !checkboxes.length) return;
+
+            const productMap = {};
+
+            checkboxes.forEach((checkbox) => {
+                productMap[String(checkbox.dataset.productId)] = {
+                    id: checkbox.dataset.productId,
+                    title: checkbox.dataset.productTitle || '',
+                    image: checkbox.dataset.productImage || ''
+                };
+            });
+
+            const renderEmptyState = () => {
+                const hasItems = orderWrap.querySelectorAll('.catalog-selected-order-item').length > 0;
+                if (emptyNote) {
+                    emptyNote.classList.toggle('d-none', hasItems);
+                }
+            };
+
+            const createOrderCard = (product) => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 col-xl-3 catalog-selected-order-item';
+                col.dataset.productId = product.id;
+
+                col.innerHTML = `
+                    <div class="card h-100 border">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <strong class="small">Позиция</strong>
+                                <span class="badge bg-secondary">drag</span>
+                            </div>
+
+                            <div class="mb-3">
+                                <img
+                                    src="${product.image}"
+                                    alt="${product.title}"
+                                    class="img-fluid rounded border"
+                                    style="width:100%; height:140px; object-fit:contain; background:#f8f9fa;"
+                                >
+                            </div>
+
+                            <div class="fw-semibold small">${product.title}</div>
+
+                            <input type="hidden" name="ordered_products[]" value="${product.id}">
+                        </div>
+                    </div>
+                `;
+
+                return col;
+            };
+
+            const addToOrder = (productId) => {
+                if (!productMap[productId]) return;
+                if (orderWrap.querySelector(`.catalog-selected-order-item[data-product-id="${productId}"]`)) return;
+
+                orderWrap.appendChild(createOrderCard(productMap[productId]));
+                renderEmptyState();
+            };
+
+            const removeFromOrder = (productId) => {
+                const node = orderWrap.querySelector(`.catalog-selected-order-item[data-product-id="${productId}"]`);
+                if (node) node.remove();
+                renderEmptyState();
+            };
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener('change', function () {
+                    const productId = String(this.value);
+
+                    if (this.checked) {
+                        addToOrder(productId);
+                    } else {
+                        removeFromOrder(productId);
+                    }
+                });
+            });
+
+            new Sortable(orderWrap, {
+                animation: 150,
+                draggable: '.catalog-selected-order-item'
+            });
+
+            renderEmptyState();
+        });
+    </script>
+@endif
 @endsection

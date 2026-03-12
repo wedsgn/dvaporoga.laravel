@@ -77,10 +77,7 @@ $storedPath = $file->storeAs('imports', $filename, 'local');
     return redirect()->route('admin.import.catalog')->with('success', 'Файл загружен.');
   }
 
-  /**
-   * Start = С НАЧАЛА.
-   * Если уже был прогресс — требуем confirm=1 (для модалки).
-   */
+
   public function start(Request $request, CatalogSpreadsheetReader $reader)
   {
     $run = ImportRun::query()->orderByDesc('id')->first();
@@ -106,7 +103,6 @@ $storedPath = $file->storeAs('imports', $filename, 'local');
       ], 409);
     }
 
-    // Сбрасываем прогресс run (НЕ трогаем данные в БД здесь!)
     $run->status = 'ready';
     $run->total_rows = 0;
     $run->processed_rows = 0;
@@ -116,9 +112,6 @@ $storedPath = $file->storeAs('imports', $filename, 'local');
     $run->finished_at = null;
     $run->heartbeat_at = null;
     $run->save();
-
-    // Раньше тут был хард-делит products — убираем.
-    // Удаление "всего лишнего" теперь делается ПОСЛЕ импорта через cleanup (по last_import_run_id).
 
     $abs = storage_path('app/' . $run->stored_path);
     $run->total_rows = $reader->countDataRows($abs);
@@ -139,9 +132,6 @@ $storedPath = $file->storeAs('imports', $filename, 'local');
     return response()->json(['ok' => true, 'run_id' => $run->id]);
   }
 
-  /**
-   * Resume = продолжить с текущей current_row
-   */
   public function resume()
   {
     $run = ImportRun::query()->orderByDesc('id')->first();
@@ -242,13 +232,6 @@ $storedPath = $file->storeAs('imports', $filename, 'local');
     ]);
   }
 
-  /**
-   * CLEANUP: удалить всё, чего НЕ было в текущем импорт-файле.
-   * Дёргать только когда run.status === 'done'
-   *
-   * Роут добавишь:
-   * Route::post('/import_catalog/cleanup', [CatalogImportController::class, 'cleanup'])->name('import.catalog.cleanup');
-   */
   public function cleanup()
   {
     $run = ImportRun::query()->orderByDesc('id')->first();
