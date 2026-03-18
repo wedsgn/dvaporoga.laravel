@@ -46,7 +46,7 @@
                                     </div>
 
                                     <div class="car-single-hero__promo-item-price-wrap">
-                                        <div class="car-single-hero__promo-item-price">1 690 ₽</div>
+                                        <div class="car-single-hero__promo-item-price">1 790 ₽</div>
                                         <div class="car-single-hero__promo-item-price-old">2 050 ₽</div>
                                     </div>
                                 </div>
