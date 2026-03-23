@@ -33,7 +33,7 @@
 
                     <div class="form-policy">
                         <input type="checkbox" id="product-policy-{{ $part->id }}" name="policy" value="1"
-                            required>
+                            required checked>
                         <label for="product-policy-{{ $part->id }}">
                             Я соглашаюсь с
                             <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>

@@ -54,7 +54,7 @@
 
             <div class="form-policy-wrap">
                 <div class="form-policy">
-                    <input type="checkbox" id="{{ $checkboxId }}" name="policy" value="1" required>
+                    <input type="checkbox" id="{{ $checkboxId }}" name="policy" value="1" required checked>
                     <label for="{{ $checkboxId }}">
                         Я соглашаюсь с
                         <a href="{{ url('/policy.pdf') }}" target="_blank" rel="noopener noreferrer">
