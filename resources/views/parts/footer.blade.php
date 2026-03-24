@@ -21,13 +21,14 @@
                                 <img src="{{ asset('images/socials/tg.svg') }}" alt="Telegram">
                             </a>
                         @endif
-
-                        <a href="https://vk.com/avtoporogiru" target="_blank" class="footer-social">
+                        @if (!empty($main_info->vk))
+                        <a href="{{ $main_info->vk }}" target="_blank" class="footer-social">
                             <img src="{{ asset('images/socials/vk.svg') }}" alt="VK">
                         </a>
+                        @endif
                     </div>
 
-                    <div class="header__phone --footer">
+                    <div class="header__phone header__phone--footer">
                         <div class="header__phone_top">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

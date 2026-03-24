@@ -33,7 +33,7 @@
                             <path
                                 d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
                         </svg>
-                        <a>+7 (906) 244 41 51</a>
+                        <a>{{ $main_info->phone_clients }}</a>
                     </div>
                     <span>Для постоянных клиентов</span>
                 </div>
@@ -121,7 +121,7 @@
                         </svg>
                     </span>
                     <span class="mobile-nav__contact-text">
-                        <span>+7 (906) 244 41 51</span>
+                        <span>{{ $main_info->phone_clients }}</span>
                         <small>Для постоянных клиентов</small>
                     </span>
                 </div>

@@ -1,38 +1,78 @@
-
 .call-float {
   position: fixed;
-  left: 32px;
+  right: 32px;
   bottom: 32px;
-
-  width: 76px;
-  height: 76px;
-
-  border-radius: 50%;
-  padding: 0 !important;
-  line-height: 0 !important;
-
-  display: grid;
-  place-items: center;
-
-  background: #ff2f2f;
+  left: auto;
   z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   transform: translateZ(0);
   -webkit-font-smoothing: antialiased;
-
-  box-shadow: 0 12px 30px rgba(255, 47, 47, 0.45);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.call-float:hover {
-  transform: scale(1.08);
-  box-shadow: 0 16px 36px rgba(255, 47, 47, 0.6);
+/* список кнопок */
+.call-float__items {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 14px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
 }
 
-.call-float:active {
-  transform: scale(0.95);
+.call-float.is-open .call-float__items {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
+/* общие кнопки */
+.call-float__item,
+.call-float__toggle {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* ===== КНОПКА МЕНЮ ===== */
+.call-float__toggle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.call-float__btn {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #ff2d2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(255, 45, 45, 0.45);
+  position: relative;
+}
+
+/* пульсация */
 .call-float__ring {
   position: absolute;
   inset: -22px;
@@ -41,24 +81,82 @@
   animation: call-pulse 1.8s infinite;
 }
 
-.call-float__btn {
-  position: relative;
+/* ===== КНОПКА ЗВОНКА ===== */
+.call-float__item--phone {
   width: 76px;
   height: 76px;
-  background: #ff2d2d;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
+  background: #ff2d2d;
   box-shadow: 0 12px 28px rgba(255, 45, 45, 0.45);
+  transition: 0.2s;
 }
 
-.call-float svg {
-  width: 30px;
-  height: 30px;
+/* ===== СОЦСЕТИ ===== */
+.call-float__item--social {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  transition: 0.2s;
+}
+
+/* цвета соцсетей */
+.call-float__item[aria-label="Telegram"] {
+  background: #2AABEE;
+}
+
+.call-float__item[aria-label="MAX"] {
+  background: linear-gradient(135deg, #3b82f6, #9333ea);
+}
+
+.call-float__item[aria-label="ВКонтакте"] {
+  background: #2787F5;
+}
+
+/* ===== ИКОНКИ ===== */
+
+/* белые иконки (меню, крест, телефон) */
+.call-float__icon,
+.call-float__item--phone img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* соцсети чуть крупнее */
+.call-float__item--social img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+/* ===== ПЕРЕКЛЮЧЕНИЕ МЕНЮ / КРЕСТ ===== */
+
+.call-float__icon--close {
+  display: none;
+}
+
+.call-float.is-open .call-float__icon--menu {
+  display: none;
+}
+
+.call-float.is-open .call-float__icon--close {
   display: block;
 }
+
+/* ===== ХОВЕРЫ ===== */
+
+.call-float__item:hover,
+.call-float__toggle:hover {
+  transform: scale(1.08);
+}
+
+.call-float__item:active,
+.call-float__toggle:active {
+  transform: scale(0.95);
+}
+
+/* ===== АНИМАЦИЯ ===== */
 
 @keyframes call-pulse {
   0% {
@@ -74,30 +172,45 @@
   }
 }
 
+/* ===== АДАПТИВ ===== */
+
 @media (max-width: 768px) {
   .call-float {
-    left: 16px;
+    right: 16px;
     bottom: 20px;
+  }
+
+  .call-float__items {
+    bottom: calc(100% + 12px);
+    gap: 12px;
+  }
+
+  .call-float__toggle,
+  .call-float__btn,
+  .call-float__item--phone,
+  .call-float__item--social {
     width: 60px;
     height: 60px;
-    box-shadow: 0 10px 26px rgba(255, 47, 47, 0.45);
   }
 
   .call-float__ring {
     inset: -20px;
   }
 
-  .call-float__btn {
-    width: 60px;
-    height: 60px;
-    box-shadow: 0 10px 25px rgba(255, 45, 45, 0.45);
+  .call-float__icon,
+  .call-float__item--phone img {
+    width: 24px;
+    height: 24px;
   }
 
-  .call-float svg {
-    width: 26px;
-    height: 26px;
+  .call-float__item--social img {
+    width: 28px;
+    height: 28px;
   }
 }
+
+/* ===== COOKIE OFFSET ===== */
+
 body.cookie-banner-visible .call-float {
   bottom: calc(var(--cookie-banner-height, 0px) + 20px);
 }
@@ -107,12 +220,17 @@ body.cookie-banner-visible .call-float {
     bottom: calc(var(--cookie-banner-height, 0px) + 12px);
   }
 }
+
 body.cookie-visible .call-float {
-  bottom: calc(var(--cookie-height) + 20px);
+  bottom: calc(var(--cookie-height, 0px) + 20px);
 }
 
 @media (max-width: 768px) {
   body.cookie-visible .call-float {
-    bottom: calc(var(--cookie-height) + 12px);
+    bottom: calc(var(--cookie-height, 0px) + 12px);
   }
+}
+.call-float__btn,
+.call-float__item--phone {
+  color: #fff;
 }

@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class MainInfo extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = [
-      'company_title',
-      'company_details',
-      'phone',
-      'whats_app',
-      'telegram',
-      'company_image',
+  protected $fillable = [
+    'company_title',
+    'company_details',
+    'phone',
+    'whats_app',
+    'telegram',
+    'vk',
+    'max',
+    'phone_clients',
+    'company_image',
   ];
-
 }

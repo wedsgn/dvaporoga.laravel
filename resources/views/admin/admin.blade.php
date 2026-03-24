@@ -47,6 +47,18 @@
                                     <td class="text-muted">{{ $main_info->telegram }}</td>
                                 </tr>
                                 <tr>
+                                    <th class="ps-0" scope="row">ВКонтакте :</th>
+                                    <td class="text-muted">{{ $main_info->vk }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">MAX :</th>
+                                    <td class="text-muted">{{ $main_info->max }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Телефон постоянных клиентов :</th>
+                                    <td class="text-muted">{{ $main_info->phone_clients }}</td>
+                                </tr>
+                                <tr>
                                     <th class="ps-0" scope="row">{{ __('admin.fild_company_details') }} :</th>
                                     <td class="text-muted">{{ $main_info->company_details }}</td>
                                 </tr>
@@ -62,10 +74,10 @@
                     </a>
 
 
-    <a href="{{ route('admin.import.catalog') }}"
-       class="nav-link {{ request()->routeIs('admin.import.catalog*') ? 'active' : '' }}">
-        Импорт каталога
-    </a>
+                    <a href="{{ route('admin.import.catalog') }}"
+                        class="nav-link {{ request()->routeIs('admin.import.catalog*') ? 'active' : '' }}">
+                        Импорт каталога
+                    </a>
                 </div>
             </div>
         </div>

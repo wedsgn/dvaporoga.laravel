@@ -27,6 +27,9 @@ class UpdateRequest extends FormRequest
       'phone' => ['nullable', 'string'],
       'whats_app' => ['nullable', 'string'],
       'telegram' => ['nullable', 'string'],
+      'vk' => ['nullable', 'string'],
+      'max' => ['nullable', 'string'],
+      'phone_clients' => ['nullable', 'string'],
       'company_image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
     ];
   }
@@ -46,6 +49,9 @@ class UpdateRequest extends FormRequest
       'telegram.string' => 'Telegram должен быть строкой',
       'company_image.image' => 'Изображение должно быть изображением',
       'company_image.max' => 'Изображение должно быть меньше 200 КБ',
+      'vk.string' => 'VK должен быть строкой',
+      'max.string' => 'MAX должен быть строкой',
+      'phone_clients.string' => 'Телефон клиентов должен быть строкой',
       'company_image.mimes' => 'Изображение должно быть в формате jpeg,png,jpg,gif,svg'
     ];
   }
