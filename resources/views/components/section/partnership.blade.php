@@ -73,6 +73,7 @@
                     Для Вас действуют специальные гибкие условия
                     по поставке запчастей и работе с клиентами
                 </div>
+                @if (!empty($main_info->phone_clients))
                 <div class="partnership-info-card__phone">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -86,6 +87,7 @@
                     <span>{{ $main_info->phone_clients }}</span>
                 </div>
                 <span>Для постоянных клиентов</span>
+                @endif
             </div>
         </div>
     </div>

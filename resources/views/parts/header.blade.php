@@ -23,6 +23,7 @@
             </div>
 
             <div class="header__btns">
+              @if (!empty($main_info->phone_clients))
                 <div class="header__phone header__phone--secondary">
                     <div class="header__phone_top">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -37,7 +38,7 @@
                     </div>
                     <span>Для постоянных клиентов</span>
                 </div>
-
+                @endif
                 <div class="header__phone">
                     <div class="header__phone_top">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -111,6 +112,7 @@
                     </span>
                     <span>{{ $main_info->phone }}</span>
                 </a>
+                @if (!empty($main_info->phone_clients))
                 <div class="mobile-nav__contact-row mobile-nav__contact-row--plain">
                     <span class="mobile-nav__contact-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -125,6 +127,7 @@
                         <small>Для постоянных клиентов</small>
                     </span>
                 </div>
+                @endif
                 <div class="mobile-nav__contact-row">
                     <span class="mobile-nav__contact-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
