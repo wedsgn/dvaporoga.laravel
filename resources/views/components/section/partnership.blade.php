@@ -88,6 +88,7 @@
                 </div>
                 <span>Для постоянных клиентов</span>
                 @endif
+
             </div>
         </div>
     </div>
