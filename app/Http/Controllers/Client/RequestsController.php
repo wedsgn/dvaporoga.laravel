@@ -196,14 +196,15 @@ public function store_request_car(
   ];
 
   // Telegram + Mail
-      try {
-        $rc->notify(new TelegramNotificationConsultation($details));
-    } catch (\Throwable $e) {
-        Log::error('Telegram consultation exception: '.$e->getMessage(), [
-            'request_consultation_id' => $rc->id,
-        ]);
-    }
-  dispatch(new RequestCarMailSendJob($details));
+// try {
+//     $rc->notify(new TelegramNotificationCar($details));
+// } catch (\Throwable $e) {
+//     Log::error('Telegram car exception: '.$e->getMessage(), [
+//         'request_consultation_id' => $rc->id,
+//         'car_id' => $details['car_id'] ?? null,
+//     ]);
+// }
+dispatch(new RequestCarMailSendJob($details));
 
   // Bitrix24
   try {
@@ -261,47 +262,45 @@ public function store_request_car(
     ];
 
     // Telegram
-        try {
-        $rc->notify(new TelegramNotificationConsultation($details));
-    } catch (\Throwable $e) {
-        Log::error('Telegram consultation exception: '.$e->getMessage(), [
-            'request_consultation_id' => $rc->id,
-        ]);
-    }
+    //     try {
+    //     $rc->notify(new TelegramNotificationConsultation($details));
+    // } catch (\Throwable $e) {
+    //     Log::error('Telegram consultation exception: '.$e->getMessage(), [
+    //         'request_consultation_id' => $rc->id,
+    //     ]);
+    // }
 
     // Mail (queue)
     dispatch(new RequestConsultationMailSendJob($details));
   }
 
-  protected function send_request_product(RequestProduct $rp, string $subject): void
-  {
+protected function send_request_product(RequestProduct $rp, string $subject): void
+{
     $products = [];
     foreach (json_decode($rp->data, true) ?: [] as $id) {
-      if ($p = Product::find($id)) $products[] = $p;
+        if ($p = Product::find($id)) $products[] = $p;
     }
 
     $details = [
-      'subject'     => $subject,
-      'name'        => preg_replace('/[_\*]/', ' ', $rp->name),
-      'phone'       => $rp->phone,
-      'products'    => $products,
-      'total_price' => $rp->total_price,
-      'car'         => $rp->car,
-      'form'        => $this->formLabelRu($rp->form_id),
+        'subject'     => $subject,
+        'name'        => preg_replace('/[_\*]/', ' ', $rp->name),
+        'phone'       => $rp->phone,
+        'products'    => $products,
+        'total_price' => $rp->total_price,
+        'car'         => $rp->car,
+        'form'        => $this->formLabelRu($rp->form_id),
     ];
 
-    // Telegram
-        try {
-        $rc->notify(new TelegramNotificationConsultation($details));
-    } catch (\Throwable $e) {
-        Log::error('Telegram consultation exception: '.$e->getMessage(), [
-            'request_consultation_id' => $rc->id,
-        ]);
-    }
+    // try {
+    //     $rp->notify(new TelegramNotificationProduct($details));
+    // } catch (\Throwable $e) {
+    //     Log::error('Telegram product exception: '.$e->getMessage(), [
+    //         'request_product_id' => $rp->id,
+    //     ]);
+    // }
 
-    // Mail (queue)
     dispatch(new RequestProductMailSendJob($details));
-  }
+}
 
     /* ===================== HELPERS ===================== */
 
