@@ -196,7 +196,13 @@ public function store_request_car(
   ];
 
   // Telegram + Mail
-  $rc->notify(new TelegramNotificationCar($details));
+      try {
+        $rc->notify(new TelegramNotificationConsultation($details));
+    } catch (\Throwable $e) {
+        Log::error('Telegram consultation exception: '.$e->getMessage(), [
+            'request_consultation_id' => $rc->id,
+        ]);
+    }
   dispatch(new RequestCarMailSendJob($details));
 
   // Bitrix24
@@ -255,7 +261,13 @@ public function store_request_car(
     ];
 
     // Telegram
-    $rc->notify(new TelegramNotificationConsultation($details));
+        try {
+        $rc->notify(new TelegramNotificationConsultation($details));
+    } catch (\Throwable $e) {
+        Log::error('Telegram consultation exception: '.$e->getMessage(), [
+            'request_consultation_id' => $rc->id,
+        ]);
+    }
 
     // Mail (queue)
     dispatch(new RequestConsultationMailSendJob($details));
@@ -279,7 +291,13 @@ public function store_request_car(
     ];
 
     // Telegram
-    $rp->notify(new TelegramNotificationProduct($details));
+        try {
+        $rc->notify(new TelegramNotificationConsultation($details));
+    } catch (\Throwable $e) {
+        Log::error('Telegram consultation exception: '.$e->getMessage(), [
+            'request_consultation_id' => $rc->id,
+        ]);
+    }
 
     // Mail (queue)
     dispatch(new RequestProductMailSendJob($details));
