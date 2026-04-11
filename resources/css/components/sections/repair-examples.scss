@@ -72,11 +72,11 @@
   inset: 0;
 }
 
-.repair-compare__before {
+.repair-compare__after {
   z-index: 1;
 }
 
-.repair-compare__after {
+.repair-compare__before {
   z-index: 2;
   clip-path: inset(0 calc(100% - var(--compare-position)) 0 0);
 }
