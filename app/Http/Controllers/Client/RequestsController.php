@@ -23,6 +23,8 @@ use App\Notifications\TelegramNotificationProduct;
 use App\Notifications\TelegramNotificationCar;
 
 use App\Services\Bitrix24Service;
+use App\Services\Forms\FormSubmissionCooldownService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class RequestsController extends Controller
@@ -31,225 +33,266 @@ class RequestsController extends Controller
 
   public function store_request_consultation(
     RequestConsultationStoreRequest $request,
-    Bitrix24Service $b24
+    Bitrix24Service $b24,
+    FormSubmissionCooldownService $cooldown
   ) {
-    $rc = new RequestConsultation();
-    $rc->fill($request->validated());
-    $rc->save();
-
-    $site  = $this->siteTag($request);
-    // ВАЖНО: titleRu($context, $formId, $site)
-    $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
-
-    $this->send_request_consultation($rc, $title);
-
-    try {
-      $utm = $this->resolveUtm($request);
-
-      $res = $b24->addLead([
-        'TITLE'   => $title,
-        'NAME'    => preg_replace('/[_\*]/', ' ', $rc->name),
-        'PHONE'   => $rc->phone,
-        'EMAIL'   => $rc->email ?? null,
-
-        'SOURCE_DESCRIPTION' => $this->comments([
-          'form_id'     => $rc->form_id,               // id формы
-          'form_ru'     => $this->formLabelRu($rc->form_id),
-          'current_url' => $request->input('current_url'),
-          'extra'       => [
-            'Имя'     => $rc->name,
-            'Телефон' => $rc->phone,
-          ],
-        ], $request),
-
-        'UTM_SOURCE'   => $utm['utm_source'],
-        'UTM_MEDIUM'   => $utm['utm_medium'],
-        'UTM_CAMPAIGN' => $utm['utm_campaign'],
-        'UTM_TERM'     => $utm['utm_term'],
-        'UTM_CONTENT'  => $utm['utm_content'],
-      ]);
-
-      Log::info('B24 response (consultation)', [
-        'status' => $res['status'] ?? null,
-        'body'   => $res['response'] ?? null,
-      ]);
-      if (!($res['ok'] ?? false)) {
-        Log::warning('B24 lead add failed (consultation)', $res);
-      }
-    } catch (\Throwable $e) {
-      Log::error('B24 consult exception: ' . $e->getMessage());
+    if ($response = $this->acquireCooldownOrRespond($request->input('phone'), $cooldown)) {
+      return $response;
     }
 
-    return response()->json(['success' => true], 201);
+    try {
+      $rc = new RequestConsultation();
+      $rc->fill($request->validated());
+      $rc->save();
+
+      $site  = $this->siteTag($request);
+      $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
+
+      $this->send_request_consultation($rc, $title);
+
+      try {
+        $utm = $this->resolveUtm($request);
+
+        $res = $b24->addLead([
+          'TITLE'   => $title,
+          'NAME'    => preg_replace('/[_\*]/', ' ', $rc->name),
+          'PHONE'   => $rc->phone,
+          'EMAIL'   => $rc->email ?? null,
+
+          'SOURCE_DESCRIPTION' => $this->comments([
+            'form_id'     => $rc->form_id,
+            'form_ru'     => $this->formLabelRu($rc->form_id),
+            'current_url' => $request->input('current_url'),
+            'extra'       => [
+              'Имя'     => $rc->name,
+              'Телефон' => $rc->phone,
+            ],
+          ], $request),
+
+          'UTM_SOURCE'   => $utm['utm_source'],
+          'UTM_MEDIUM'   => $utm['utm_medium'],
+          'UTM_CAMPAIGN' => $utm['utm_campaign'],
+          'UTM_TERM'     => $utm['utm_term'],
+          'UTM_CONTENT'  => $utm['utm_content'],
+        ]);
+
+        Log::info('B24 response (consultation)', [
+          'status' => $res['status'] ?? null,
+          'body'   => $res['response'] ?? null,
+        ]);
+
+        if (!($res['ok'] ?? false)) {
+          Log::warning('B24 lead add failed (consultation)', $res);
+        }
+      } catch (\Throwable $e) {
+        Log::error('B24 consult exception: ' . $e->getMessage());
+      }
+
+      return response()->json(['success' => true], 201);
+    } catch (\Throwable $e) {
+      $cooldown->release($request->input('phone'));
+      throw $e;
+    }
   }
 
   public function store_request_product(
     RequestProductStoreRequest $request,
-    Bitrix24Service $b24
+    Bitrix24Service $b24,
+    FormSubmissionCooldownService $cooldown
   ) {
-    $rp = new RequestProduct();
-    $rp->fill($request->validated());
-
-    $raw = json_decode($request->validated()['data'] ?? '[]', true) ?: [];
-    $ids = [];
-    foreach ($raw as $row) {
-      if (isset($row['id'])) $ids[] = (int)$row['id'];
+    if ($response = $this->acquireCooldownOrRespond($request->input('phone'), $cooldown)) {
+      return $response;
     }
-    $rp->data = json_encode($ids);
-    $rp->save();
-
-    $site  = $this->siteTag($request);
-    $title = $this->titleRu('Заявка с сайта', $rp->form_id, $site);
-
-    $this->send_request_product($rp, $title);
 
     try {
-      $utm = $this->resolveUtm($request);
+      $rp = new RequestProduct();
+      $rp->fill($request->validated());
 
-      $items = [];
-      foreach ($ids as $pid) {
-        if ($p = Product::find($pid)) $items[] = "#{$p->id} {$p->title}";
+      $raw = json_decode($request->validated()['data'] ?? '[]', true) ?: [];
+      $ids = [];
+      foreach ($raw as $row) {
+        if (isset($row['id'])) {
+          $ids[] = (int) $row['id'];
+        }
       }
 
-      $res = $b24->addLead([
-        'TITLE'   => $title,
-        'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
-        'PHONE'   => $rp->phone,
-        'EMAIL'   => $rp->email ?? null,
+      $rp->data = json_encode($ids);
+      $rp->save();
 
-        'SOURCE_DESCRIPTION' => $this->comments([
-          'form_id'     => $rp->form_id,
-          'form_ru'     => $this->formLabelRu($rp->form_id),
-          'current_url' => $request->input('current_url'),
-          'extra'       => [
-            'Авто'   => $rp->car,
-            'Итого'  => $rp->total_price,
-            'Товары' => $items ? implode("\n", $items) : '—',
-          ],
-        ], $request),
+      $site  = $this->siteTag($request);
+      $title = $this->titleRu('Заявка с сайта', $rp->form_id, $site);
 
-        'UTM_SOURCE'   => $utm['utm_source'],
-        'UTM_MEDIUM'   => $utm['utm_medium'],
-        'UTM_CAMPAIGN' => $utm['utm_campaign'],
-        'UTM_TERM'     => $utm['utm_term'],
-        'UTM_CONTENT'  => $utm['utm_content'],
-      ]);
+      $this->send_request_product($rp, $title);
 
-      Log::info('B24 response (product)', [
-        'status' => $res['status'] ?? null,
-        'body'   => $res['response'] ?? null,
-      ]);
-      if (!($res['ok'] ?? false)) {
-        Log::warning('B24 lead add failed (product)', $res);
+      try {
+        $utm = $this->resolveUtm($request);
+
+        $items = [];
+        foreach ($ids as $pid) {
+          if ($p = Product::find($pid)) {
+            $items[] = "#{$p->id} {$p->title}";
+          }
+        }
+
+        $res = $b24->addLead([
+          'TITLE'   => $title,
+          'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
+          'PHONE'   => $rp->phone,
+          'EMAIL'   => $rp->email ?? null,
+
+          'SOURCE_DESCRIPTION' => $this->comments([
+            'form_id'     => $rp->form_id,
+            'form_ru'     => $this->formLabelRu($rp->form_id),
+            'current_url' => $request->input('current_url'),
+            'extra'       => [
+              'Авто'   => $rp->car,
+              'Итого'  => $rp->total_price,
+              'Товары' => $items ? implode("\n", $items) : '—',
+            ],
+          ], $request),
+
+          'UTM_SOURCE'   => $utm['utm_source'],
+          'UTM_MEDIUM'   => $utm['utm_medium'],
+          'UTM_CAMPAIGN' => $utm['utm_campaign'],
+          'UTM_TERM'     => $utm['utm_term'],
+          'UTM_CONTENT'  => $utm['utm_content'],
+        ]);
+
+        Log::info('B24 response (product)', [
+          'status' => $res['status'] ?? null,
+          'body'   => $res['response'] ?? null,
+        ]);
+
+        if (!($res['ok'] ?? false)) {
+          Log::warning('B24 lead add failed (product)', $res);
+        }
+      } catch (\Throwable $e) {
+        Log::error('B24 product exception: ' . $e->getMessage());
       }
+
+      return response()->json(['success' => true], 201);
     } catch (\Throwable $e) {
-      Log::error('B24 product exception: ' . $e->getMessage());
+      $cooldown->release($request->input('phone'));
+      throw $e;
+    }
+  }
+
+  public function store_request_car(
+    RequestCarStoreRequest $request,
+    Bitrix24Service $b24,
+    FormSubmissionCooldownService $cooldown
+  ) {
+    if ($response = $this->acquireCooldownOrRespond($request->input('phone'), $cooldown)) {
+      return $response;
     }
 
-    return response()->json(['success' => true], 201);
-  }
+    try {
+      $rc = new RequestConsultation();
+      $rc->fill([
+        'name'    => $request->input('name'),
+        'phone'   => $request->input('phone'),
+        'form_id' => $request->input('form_id', 'car-page-form'),
+      ]);
+      $rc->save();
 
-public function store_request_car(
-  RequestCarStoreRequest $request,
-  Bitrix24Service $b24
-) {
-  // сохраняем как Consultation (единая таблица у тебя)
-  $rc = new RequestConsultation();
-  $rc->fill([
-    'name'    => $request->input('name'),
-    'phone'   => $request->input('phone'),
-    'form_id' => $request->input('form_id', 'car-page-form'),
-  ]);
-  $rc->save();
+      $site  = $this->siteTag($request);
+      $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
 
-  $site  = $this->siteTag($request);
-  $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
+      $car = Car::with(['car_model'])->find($request->integer('car_id'));
 
-  // ТЕПЕРЬ: получаем конкретное авто по car_id
-  $car = Car::with(['car_model'])->find($request->integer('car_id'));
+      $carHuman = $car?->title ?: '—';
+      $modelTitle = $car?->car_model?->title ?? null;
 
-  // Человеческое название авто
-  $carHuman = $car?->title ?: '—';
+      $makeTitle = null;
+      if ($car?->car_model && method_exists($car->car_model, 'car_make')) {
+        $makeTitle = $car->car_model->car_make?->title ?? null;
+      }
 
-  // Попытаемся достать марку/модель (если связи есть)
-  $modelTitle = $car?->car_model?->title ?? null;
+      $details = [
+        'subject'     => $title,
+        'name'        => preg_replace('/[_\*]/', ' ', (string) $rc->name),
+        'phone'       => $rc->phone,
 
-  $makeTitle = null;
-  // если в CarModel есть связь car_make()
-  if ($car?->car_model && method_exists($car->car_model, 'car_make')) {
-    $makeTitle = $car->car_model->car_make?->title ?? null;
-  }
+        'car_id'      => $car?->id,
+        'car'         => $carHuman,
+        'make'        => $makeTitle,
+        'model'       => $modelTitle,
 
-  // Детали для всех каналов
-  $details = [
-    'subject'     => $title,
-    'name'        => preg_replace('/[_\*]/', ' ', (string)$rc->name),
-    'phone'       => $rc->phone,
+        'form'        => $this->formLabelRu($rc->form_id),
+        'current_url' => $request->input('current_url'),
+      ];
 
-    'car_id'      => $car?->id,
-    'car'         => $carHuman,
-    'make'        => $makeTitle,
-    'model'       => $modelTitle,
+      dispatch(new RequestCarMailSendJob($details));
 
-    'form'        => $this->formLabelRu($rc->form_id),
-    'current_url' => $request->input('current_url'),
-  ];
+      try {
+        $utm = $this->resolveUtm($request);
 
-  // Telegram + Mail
-// try {
-//     $rc->notify(new TelegramNotificationCar($details));
-// } catch (\Throwable $e) {
-//     Log::error('Telegram car exception: '.$e->getMessage(), [
-//         'request_consultation_id' => $rc->id,
-//         'car_id' => $details['car_id'] ?? null,
-//     ]);
-// }
-dispatch(new RequestCarMailSendJob($details));
+        $res = $b24->addLead([
+          'TITLE'   => $title,
+          'NAME'    => $details['name'] ?: null,
+          'PHONE'   => $details['phone'],
+          'EMAIL'   => null,
 
-  // Bitrix24
-  try {
-    $utm = $this->resolveUtm($request);
+          'SOURCE_DESCRIPTION' => $this->comments([
+            'form_id'     => $rc->form_id,
+            'form_ru'     => $details['form'],
+            'current_url' => $details['current_url'],
+            'extra'       => [
+              'Авто'    => $carHuman,
+              'Car ID'  => $details['car_id'] ?: '—',
+              'Марка'   => $makeTitle ?: '—',
+              'Модель'  => $modelTitle ?: '—',
+              'Телефон' => $rc->phone,
+            ],
+          ], $request),
 
-    $res = $b24->addLead([
-      'TITLE'   => $title,
-      'NAME'    => $details['name'] ?: null,
-      'PHONE'   => $details['phone'],
-      'EMAIL'   => null,
+          'UTM_SOURCE'   => $utm['utm_source'],
+          'UTM_MEDIUM'   => $utm['utm_medium'],
+          'UTM_CAMPAIGN' => $utm['utm_campaign'],
+          'UTM_TERM'     => $utm['utm_term'],
+          'UTM_CONTENT'  => $utm['utm_content'],
+        ]);
 
-      'SOURCE_DESCRIPTION' => $this->comments([
-        'form_id'     => $rc->form_id,
-        'form_ru'     => $details['form'],
-        'current_url' => $details['current_url'],
-        'extra'       => [
-          'Авто'    => $carHuman,
-          'Car ID'  => $details['car_id'] ?: '—',
-          'Марка'   => $makeTitle ?: '—',
-          'Модель'  => $modelTitle ?: '—',
-          'Телефон' => $rc->phone,
-        ],
-      ], $request),
+        Log::info('B24 response (car-page)', [
+          'status' => $res['status'] ?? null,
+          'body'   => $res['response'] ?? null,
+        ]);
 
-      'UTM_SOURCE'   => $utm['utm_source'],
-      'UTM_MEDIUM'   => $utm['utm_medium'],
-      'UTM_CAMPAIGN' => $utm['utm_campaign'],
-      'UTM_TERM'     => $utm['utm_term'],
-      'UTM_CONTENT'  => $utm['utm_content'],
-    ]);
+        if (!($res['ok'] ?? false)) {
+          Log::warning('B24 lead add failed (car-page)', $res);
+        }
+      } catch (\Throwable $e) {
+        Log::error('B24 car-page exception: ' . $e->getMessage());
+      }
 
-    Log::info('B24 response (car-page)', [
-      'status' => $res['status'] ?? null,
-      'body'   => $res['response'] ?? null,
-    ]);
-    if (!($res['ok'] ?? false)) {
-      Log::warning('B24 lead add failed (car-page)', $res);
+      return response()->json(['success' => true], 201);
+    } catch (\Throwable $e) {
+      $cooldown->release($request->input('phone'));
+      throw $e;
     }
-  } catch (\Throwable $e) {
-    Log::error('B24 car-page exception: ' . $e->getMessage());
   }
+  private function acquireCooldownOrRespond(
+    ?string $phone,
+    FormSubmissionCooldownService $cooldown
+  ): ?JsonResponse {
+    if ($cooldown->acquire($phone)) {
+      return null;
+    }
 
-  return response()->json(['success' => true], 201);
-}
+    $retryAfter = $cooldown->retryAfter($phone);
+    $minutes = max(1, (int) ceil($retryAfter / 60));
 
+    $message = "Запрос уже отправлен. Повторная отправка будет доступна через {$minutes} мин.";
+
+    return response()->json([
+      'success'     => false,
+      'message'     => $message,
+      'retry_after' => $retryAfter,
+      'errors'      => [
+        'phone' => [$message],
+      ],
+    ], 429)->header('Retry-After', (string) $retryAfter);
+  }
   /* ===================== NOTIFICATIONS ===================== */
 
   protected function send_request_consultation(RequestConsultation $rc, string $subject): void
@@ -274,21 +317,21 @@ dispatch(new RequestCarMailSendJob($details));
     dispatch(new RequestConsultationMailSendJob($details));
   }
 
-protected function send_request_product(RequestProduct $rp, string $subject): void
-{
+  protected function send_request_product(RequestProduct $rp, string $subject): void
+  {
     $products = [];
     foreach (json_decode($rp->data, true) ?: [] as $id) {
-        if ($p = Product::find($id)) $products[] = $p;
+      if ($p = Product::find($id)) $products[] = $p;
     }
 
     $details = [
-        'subject'     => $subject,
-        'name'        => preg_replace('/[_\*]/', ' ', $rp->name),
-        'phone'       => $rp->phone,
-        'products'    => $products,
-        'total_price' => $rp->total_price,
-        'car'         => $rp->car,
-        'form'        => $this->formLabelRu($rp->form_id),
+      'subject'     => $subject,
+      'name'        => preg_replace('/[_\*]/', ' ', $rp->name),
+      'phone'       => $rp->phone,
+      'products'    => $products,
+      'total_price' => $rp->total_price,
+      'car'         => $rp->car,
+      'form'        => $this->formLabelRu($rp->form_id),
     ];
 
     // try {
@@ -300,7 +343,7 @@ protected function send_request_product(RequestProduct $rp, string $subject): vo
     // }
 
     dispatch(new RequestProductMailSendJob($details));
-}
+  }
 
     /* ===================== HELPERS ===================== */
 

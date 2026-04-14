@@ -15,7 +15,9 @@
 
   const csrfOf = (form) =>
     form.querySelector('input[name="_token"]')?.value ||
-    document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
+    document
+      .querySelector('meta[name="csrf-token"]')
+      ?.getAttribute("content") ||
     "";
 
   const blurInside = (node) => {
@@ -137,7 +139,7 @@
 
     if (
       input.matches(
-        'input:not([type="checkbox"]):not([type="radio"]), textarea, select'
+        'input:not([type="checkbox"]):not([type="radio"]), textarea, select',
       )
     ) {
       input.classList.add("is-invalid");
@@ -159,7 +161,7 @@
 
     if (errors && typeof errors === "object") {
       Object.entries(errors).forEach(([field, msg]) =>
-        showFieldError(form, field, msg)
+        showFieldError(form, field, msg),
       );
 
       const firstInvalid =
@@ -240,7 +242,7 @@
           openThanks();
 
           document.dispatchEvent(
-            new CustomEvent("form:success", { detail: { form } })
+            new CustomEvent("form:success", { detail: { form } }),
           );
         } else {
           const msg =
@@ -251,6 +253,11 @@
       } else if (res.status === 422) {
         const errs = (data && (data.errors || data)) || {};
         showErrors(form, errs);
+      } else if (res.status === 429) {
+        const msg =
+          (data && (data.message || data.error)) ||
+          "Запрос уже отправлен. Повторите позже.";
+        showErrors(form, { phone: [msg] });
       } else if (res.status === 419 || res.status === 401) {
         alert("Сессия истекла. Обновите страницу и попробуйте снова.");
       } else {
@@ -324,7 +331,7 @@
         input.setSelectionRange(pos, pos);
       }, 0);
     },
-    true
+    true,
   );
 
   document.addEventListener(
@@ -344,7 +351,7 @@
         }
       }, 0);
     },
-    true
+    true,
   );
 
   // чистим фокус/скролл при ручном закрытии «спасибо»
@@ -362,6 +369,6 @@
         }
       }
     },
-    true
+    true,
   );
 })();

@@ -213,9 +213,11 @@ window.addEventListener("load", () => {
           return;
         }
 
-        if (res.status === 422) {
+        if (res.status === 422 || res.status === 429) {
           const data = await res.json();
-          const errors = data.errors || {};
+          const errors =
+            data.errors ||
+            (data.message ? { phone: [data.message] } : {});
 
           console.log(errors);
 
