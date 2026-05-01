@@ -25,6 +25,7 @@ class UpdateRequest extends FormRequest
         return [
             'title' => ['required', 'max:140', Rule::unique('pages')->ignore($this->old_title, 'title')],
             'description'  => ['nullable'],
+            'phone' => ['nullable', 'max:50'],
             'meta_title' => ['nullable', 'max:140'],
             'meta_description' => ['nullable', 'max:280'],
             'meta_keywords' => ['nullable'],
@@ -46,6 +47,7 @@ class UpdateRequest extends FormRequest
             'title.max' => 'Поле заголовок не может быть больше 140 символов',
             'title.unique' => 'Поле заголовок должно быть уникальным',
             'description.required' => 'Поле описание не может быть пустым',
+            'phone.max' => 'Поле телефон не может быть больше 50 символов',
             'meta_title.max' => 'Поле meta_title не может быть больше 140 символов',
             'meta_description.max' => 'Поле meta_description не может быть больше 280 символов',
             'og_title.max' => 'Поле og_title не может быть больше 140 символов',
@@ -54,4 +56,3 @@ class UpdateRequest extends FormRequest
         ];
     }
 }
-

@@ -17,6 +17,7 @@
 
                     <a href="{{ route('home') }}#about" class="header__link">О нас</a>
                     <a href="{{ route('home') }}#faq" class="header__link">FAQ</a>
+                    <a href="{{ route('partnership') }}" class="header__link{{ request()->routeIs('partnership') ? ' is-active' : '' }}">Сотрудничество</a>
 
                     {{-- <a href="{{ route('home') }}#reviews" class="header__link">Отзывы</a> --}}
                 </nav>
@@ -79,6 +80,7 @@
             <a href="{{ route('home') }}#about" class="header__link">О нас</a>
             <a href="{{ route('home') }}#delivery" class="header__link">Доставка</a>
             <a href="{{ route('home') }}#faq" class="header__link">FAQ</a>
+            <a href="{{ route('partnership') }}" class="header__link{{ request()->routeIs('partnership') ? ' is-active' : '' }}">Сотрудничество</a>
         </nav>
 
         <div class="mobile-nav__bottom">

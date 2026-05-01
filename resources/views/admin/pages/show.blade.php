@@ -73,6 +73,13 @@
                                     <td class="text-muted">{{ $item->slug }}</td>
                                 </tr>
 
+                                @if ($item->slug === 'sotrudnichestvo')
+                                    <tr>
+                                        <th class="ps-0" scope="row">{{ __('admin.field_phone') }}:</th>
+                                        <td class="text-muted">{{ $item->phone }}</td>
+                                    </tr>
+                                @endif
+
                                 <tr>
                                     <th class="ps-0" scope="row">{{ __('admin.field_created') }}:</th>
                                     <td class="text-muted">{{ $item->created_at }}</td>

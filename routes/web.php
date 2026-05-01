@@ -16,6 +16,7 @@ use App\Http\Controllers\Client\BlogPageController;
 use App\Http\Controllers\Client\CatalogConcernPageController;
 use App\Http\Controllers\Client\CatalogGenerationPageController;
 use App\Http\Controllers\Client\CatalogModelPageController;
+use App\Http\Controllers\Client\PartnershipPageController;
 use App\Http\Controllers\Client\RequestsController;
 use App\Http\Controllers\Client\WelcomePageController;
 use App\Http\Controllers\Client\CarAjaxController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\YandexFeedController;
 use App\Http\Controllers\Admin\BlockController;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('home');
+Route::get('/sotrudnichestvo', [PartnershipPageController::class, 'index'])->name('partnership');
 //Concern
 
 Route::get('/katalog', [CatalogConcernPageController::class, 'index'])->name('catalog');

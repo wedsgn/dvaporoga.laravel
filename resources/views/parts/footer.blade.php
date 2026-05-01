@@ -25,7 +25,7 @@
                         <a href="{{ route('home') }}#examples" class="footer__nav-link">Наши работы</a>
                         <a href="{{ route('home') }}#about" class="footer__nav-link">О нас</a>
                         <a href="{{ route('home') }}#delivery" class="footer__nav-link">Доставка и оплата</a>
-                        <a href="{{ route('home') }}#partnership" class="footer__nav-link">Сотрудничество</a>
+                        <a href="{{ route('partnership') }}" class="footer__nav-link">Сотрудничество</a>
                     </nav>
                 </div>
 

@@ -49,6 +49,17 @@
                                     </div>
                                 </div>
 
+                                @if ($item->slug === 'sotrudnichestvo')
+                                    <div class="col-xxl-6 col-md-6">
+                                        <div>
+                                            <label for="phoneInput" class="form-label">{{ __('admin.field_phone') }}</label>
+                                            <input type="text" value="{{ $item->phone }}" class="form-control"
+                                                id="phoneInput" name="phone"
+                                                placeholder="+7 (...) ...-..-..">
+                                        </div>
+                                    </div>
+                                @endif
+
                             </div>
 
                             <div class="row gy-4">

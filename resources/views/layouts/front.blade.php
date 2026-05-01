@@ -3,7 +3,19 @@
 
 @include('parts.head')
 
-<body class="{{ request()->routeIs('home') ? 'page-home' : '' }}">
+@php
+    $bodyClasses = [];
+
+    if (request()->routeIs('home')) {
+        $bodyClasses[] = 'page-home';
+    }
+
+    if (request()->routeIs('partnership')) {
+        $bodyClasses[] = 'page-partnership';
+    }
+@endphp
+
+<body class="{{ implode(' ', $bodyClasses) }}">
     @include('parts.header')
 
     @yield('content')
@@ -32,6 +44,12 @@
 
     <x-forms.modal-request-form modal-id="modal-faq" title-id="modal-faq-title" desc-id="modal-faq-desc" goal="faq"
         form-id="modal-form-faq" checkbox-id="policy-modal-faq"
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
+
+    <x-forms.modal-request-form modal-id="modal-partnership" title-id="modal-partnership-title"
+        desc-id="modal-partnership-desc" goal="partnership" form-id="partnership-form"
+        checkbox-id="policy-modal-partnership"
         description="Заполните форму и мы свяжемся с вами
 в течение 5-ти минут и ответим на все вопросы" />
 
