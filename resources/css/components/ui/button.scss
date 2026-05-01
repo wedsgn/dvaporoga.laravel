@@ -1,33 +1,43 @@
 .btn {
-  background: $red;
+  background: $gradient-red;
   color: $white;
-  transition: all 0.3s ease-in-out;
+  transition: filter 0.2s ease-in-out, transform 0.2s ease-in-out;
   border-radius: 8px;
   padding: 12px 24px;
-  line-height: 1;
+  line-height: 100%;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
 
   &:hover {
-    background: $redHover;
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 
   &.lg {
-    padding: 18px 24px;
+    padding: 18px 24px 18px 20px;
   }
 
   &.black {
-    background: #000;
-    color: #fff;
+    background: $gradient-dark;
+    color: $white;
 
     &:hover {
-      background: $red;
+      filter: brightness(1.08);
     }
   }
 }
 
 @media screen and (max-width: 768px) {
   .btn {
+    font-size: 20px;
+
     &.lg {
-      padding: 18px 24px;
+      padding: 12px 24px 13px;
     }
   }
 }

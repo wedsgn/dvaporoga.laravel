@@ -88,8 +88,8 @@
                 </div>
               </div>
 
-              {{-- PRICE / DISCOUNT / OLD PRICE --}}
-              <div class="col-xxl-4 col-md-4">
+              {{-- PRICE / OLD PRICE --}}
+              <div class="col-xxl-6 col-md-6">
                 <div>
                   <label for="priceInput" class="form-label">Цена</label>
                   <input type="number"
@@ -103,22 +103,7 @@
                 </div>
               </div>
 
-              <div class="col-xxl-4 col-md-4">
-                <div>
-                  <label for="discountInput" class="form-label">Скидка, %</label>
-                  <input type="number"
-                         min="0"
-                         max="100"
-                         step="1"
-                         value="{{ old('discount_percentage') }}"
-                         class="form-control"
-                         id="discountInput"
-                         name="discount_percentage"
-                         placeholder="Например: 10">
-                </div>
-              </div>
-
-              <div class="col-xxl-4 col-md-4">
+              <div class="col-xxl-6 col-md-6">
                 <div>
                   <label for="priceOldInput" class="form-label">Старая цена</label>
                   <input type="number"

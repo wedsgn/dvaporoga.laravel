@@ -52,7 +52,7 @@
     }
 
     if (titleNode) {
-      titleNode.textContent = title ? `Заказ: ${title}` : "Заполните форму";
+      titleNode.textContent = title ? `Заказ: ${title}` : "Остались вопросы?";
     }
   };
 
@@ -63,7 +63,7 @@
     const carInput = document.getElementById("modal-product-car");
 
     if (titleNode) {
-      titleNode.textContent = "Заполните форму";
+      titleNode.textContent = "Остались вопросы?";
     }
 
     if (dataInput) {

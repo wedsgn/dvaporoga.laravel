@@ -1,57 +1,18 @@
 <footer class="footer section">
     <div class="container">
-        <div class="footer-top">
-            <div class="footer-top__wrap">
-                <div class="footer-top__left">
+        <div class="footer-main">
+            <div class="footer-main__grid">
+                <div class="footer-main__brand">
                     <a href="{{ route('home') }}" class="footer-logo">
                         <img src="{{ asset('images/footerlogo.svg') }}" alt="2POROGA">
                     </a>
-                </div>
 
-                <div class="footer-top__right">
-                    <div class="footer-socials">
-                        @if (!empty($main_info->whats_app))
-                            <a href="{{ $main_info->whats_app }}" target="_blank" class="footer-social">
-                                <img src="{{ asset('images/socials/wa.svg') }}" alt="WhatsApp">
-                            </a>
-                        @endif
-
-                        @if (!empty($main_info->telegram))
-                            <a href="{{ $main_info->telegram }}" target="_blank" class="footer-social">
-                                <img src="{{ asset('images/socials/tg.svg') }}" alt="Telegram">
-                            </a>
-                        @endif
-                        @if (!empty($main_info->vk))
-                        <a href="{{ $main_info->vk }}" target="_blank" class="footer-social">
-                            <img src="{{ asset('images/socials/vk.svg') }}" alt="VK">
-                        </a>
-                        @endif
-                    </div>
-
-                    <div class="header__phone header__phone--footer">
-                        <div class="header__phone_top">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-phone-call-icon lucide-phone-call">
-                                <path d="M13 2a9 9 0 0 1 9 9"></path>
-                                <path d="M13 6a5 5 0 0 1 5 5"></path>
-                                <path
-                                    d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384">
-                                </path>
-                            </svg>
-                            <a href="tel:{{ $main_info->phone }}">{{ $main_info->phone }}</a>
-                        </div>
-                        <span>Бесплатный звонок по РФ</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-main">
-            <div class="footer-main__grid">
-                <div class="footer-main__about">
                     <div class="footer-main__descr">
                         Ремонтные арки и пороги для всех автомобилей
+                    </div>
+
+                    <div class="footer-main__company">
+                        {{ $main_info->company_details }}
                     </div>
                 </div>
 
@@ -64,6 +25,7 @@
                         <a href="{{ route('home') }}#examples" class="footer__nav-link">Наши работы</a>
                         <a href="{{ route('home') }}#about" class="footer__nav-link">О нас</a>
                         <a href="{{ route('home') }}#delivery" class="footer__nav-link">Доставка и оплата</a>
+                        <a href="{{ route('home') }}#partnership" class="footer__nav-link">Сотрудничество</a>
                     </nav>
                 </div>
 
@@ -88,14 +50,46 @@
                         </a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="footer-copy">
-        <div class="container">
-            <div class="footer-copy__wrap">
-                <p>{{ $main_info->company_details }}</p>
+                <div class="footer-main__contacts">
+                    <div class="footer-main__title">Контакты для связи</div>
+
+                    <a href="tel:{{ $main_info->phone }}" class="footer-main__phone">
+                        <svg class="footer-main__phone-icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M22 16.92V20a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 5.09 12.8 19.86 19.86 0 0 1 2 4.18 2 2 0 0 1 4 2h3.09a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                        <span>{{ $main_info->phone }}</span>
+                    </a>
+
+                    <button type="button" class="btn btn--primary footer-main__callback" data-micromodal-trigger="modal-1">
+                        Заказать звонок
+                    </button>
+
+                    <div class="footer-socials">
+                        @if (!empty($main_info->telegram))
+                            <a href="{{ $main_info->telegram }}" target="_blank" class="footer-social footer-social--telegram" rel="noopener noreferrer">
+                                <img src="{{ asset('images/socials/footer-telegram.svg') }}" alt="Telegram">
+                            </a>
+                        @endif
+
+                        @if (!empty($main_info->vk))
+                            <a href="{{ $main_info->vk }}" target="_blank" class="footer-social footer-social--vk" rel="noopener noreferrer">
+                                <img src="{{ asset('images/socials/footer-vk.svg') }}" alt="VK">
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-main__legal">
+                <div class="footer-main__legal-company">
+                    {{ $main_info->company_details }}
+                </div>
+
+                <div class="footer-main__legal-note">
+                    Сайт не является офертой
+                </div>
             </div>
         </div>
     </div>

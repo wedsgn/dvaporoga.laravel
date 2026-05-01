@@ -19,13 +19,14 @@ select {
 }
 .choose-section__form_row {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 16px;
 
   input,
   select {
     display: inline-block;
     width: 100%;
+    min-height: 52px;
     padding: 16px 20px;
     border: 1px solid $gray;
     line-height: 100%;

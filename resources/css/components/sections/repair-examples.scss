@@ -1,13 +1,16 @@
 .repair-examples-section__top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  position: relative;
   gap: 24px;
   margin-bottom: 32px;
 }
 
 .repair-examples-section__title {
   margin: 0;
+  width: 100%;
+  text-align: center;
 }
 
 .repair-examples-section__nav {
@@ -15,6 +18,10 @@
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .repair-examples-slider {
@@ -147,6 +154,20 @@
   text-align: center;
 }
 
+.repair-examples-pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 3px !important;
+  background: #a7a7a7;
+  opacity: 1;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.repair-examples-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: #e51026;
+}
+
 @media screen and (max-width: 1024px) {
   .repair-examples-section__top {
     margin-bottom: 24px;
@@ -159,7 +180,7 @@
 
 @media screen and (max-width: 768px) {
   .repair-examples-section__top {
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
     gap: 16px;
   }

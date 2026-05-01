@@ -1,82 +1,66 @@
-@extends('layouts.front')
+﻿@extends('layouts.front')
 
 @section('content')
   <main>
 
     {{ Breadcrumbs::render('catalog') }}
 
-    <section class="catalog-page-section">
+    <section class="catalog-parts-page">
       <div class="container">
-        <div class="catalog-page-top">
-          <h1 class="h1 catalog-page__title">{!! $page->title !!}</h1>
-          {{-- <div class="catalog-page__description">
-                      {!! $page->description !!}
+        <div class="catalog-parts-page__header">
+          <h1 class="catalog-parts-page__title">{!! $page->title !!}</h1>
 
-                        <button class="btn catalog-page-top__btn" data-micromodal-trigger="modal-1">Подобрать
-                            запчасть</button>
-                    </div> --}}
-        </div>
+          <form method="get" id="concernSearchForm" class="catalog-parts-search">
+            <label class="catalog-parts-search__field" for="concernSearchInput">
+              <input
+                type="text"
+                name="search"
+                class="catalog-parts-search__input"
+                id="concernSearchInput"
+                placeholder="Введите марку, модель или кузов автомобиля"
+                autocomplete="off"
+              />
+            </label>
 
-        <div class="blog-search">
-          <form method="get" id="concernSearchForm">
-            @csrf
-            <input type="text" name="search" class="blog-search__input" id="concernSearchInput"
-              placeholder="Поиск по марке" />
-            <button type="submit" class="blog-search__btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z"
-                  stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M13.1696 13.168L17.5 17.4984" stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
+            <button type="submit" class="btn catalog-parts-search__submit" aria-label="Подобрать">
+              <span class="catalog-parts-search__submit-label">Подобрать</span>
+              <svg class="catalog-parts-search__submit-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="6.16667" cy="6.16667" r="5.16667" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M10.25 10.25L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
               </svg>
             </button>
           </form>
         </div>
-      </div>
-    </section>
 
-    <section class="catalog-concern">
-      <div class="container" id="concernsCatalog">
-        <div class="catalog-concern__wrap">
-          @foreach ($car_makes as $car_make)
-            <x-concern-card :title="$car_make->title" :slug="$car_make->slug" :count="$car_make->car_models->count()" image="{{ $car_make->image }}"
-              link="{{ route('car_make.show', $car_make->slug) }}" />
-          @endforeach
+        <div class="catalog-parts-results" id="concernsCatalog">
+          @include('partials.concern-card', ['car_makes' => $car_makes])
         </div>
       </div>
     </section>
 
-
-
-    {{-- <x-section.about-parts />
-    <x-section.how-we-work />
-    <x-section.about-company />
-    <x-section.faq /> --}}
-
-
   </main>
-  <script>
-    const search = document.getElementById('concernSearchInput')
 
-    search.addEventListener('keyup', () => {
+  <script>
+    const search = document.getElementById('concernSearchInput');
+    const form = document.getElementById('concernSearchForm');
+    const results = document.getElementById('concernsCatalog');
+
+    const renderConcerns = () => {
       const searchInput = document.getElementById('concernSearchInput').value;
-      const url = "{{ route('car_make.search') }}?search=" + searchInput;
+      const url = "{{ route('car_make.search') }}?search=" + encodeURIComponent(searchInput);
+
       fetch(url)
         .then(response => response.text())
         .then(data => {
-          document.getElementById('concernsCatalog').innerHTML = data;
+          results.innerHTML = data;
         });
-    })
-    document.getElementById('concernSearchForm').addEventListener('submit', function(event) {
+    };
+
+    search.addEventListener('keyup', renderConcerns);
+
+    form.addEventListener('submit', function(event) {
       event.preventDefault();
-      const searchInput = document.getElementById('modelSearchInput').value;
-      const url = "{{ route('car_make.search') }}?search=" + searchInput;
-      fetch(url)
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('concernsCatalog').innerHTML = data;
-        });
+      renderConcerns();
     });
   </script>
 @endsection

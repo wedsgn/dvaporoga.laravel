@@ -12,15 +12,14 @@
 
 html,
 body {
-  overflow-x: hidden;
   font-size: 16px;
   height: 100%;
   line-height: 140%;
-  font-family: "Golos", sans-serif;
+  font-family: "Golos Text", "Golos", sans-serif;
   font-weight: 400;
   position: relative;
   overflow-x: hidden;
-  scroll-padding-top: 120px;
+  scroll-padding-top: 92px;
 }
 
 body {
@@ -28,6 +27,7 @@ body {
   flex-direction: column;
   min-height: 100%;
   color: $text;
+  background: $grayLight;
 }
 
 main {
@@ -77,46 +77,23 @@ button {
 }
 
 .section {
-  margin-top: 120px;
-}
-
-.slider-arrow {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: flex;
-  gap: 8px;
-
-  .swiper-button-next,
-  .swiper-button-prev {
-    background: $white;
-    border-radius: 100%;
-    overflow: hidden;
-    width: 44px;
-    height: 44px;
-    position: static;
-    margin-top: 0;
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
-    &:after {
-      display: none;
-    }
-  }
+  margin-top: 96px;
 }
 
 @media screen and (max-width: 1440px) {
   .section {
-    margin-top: 100px;
+    margin-top: 88px;
   }
 }
 
 @media screen and (max-width: 1200px) {
   .section {
-    margin-top: 100px;
+    margin-top: 80px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .section {
-    margin-top: 80px;
+    margin-top: 64px;
   }
 }

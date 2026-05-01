@@ -115,17 +115,6 @@
                             </tr>
 
                             <tr>
-                                <th>Скидка, %:</th>
-                                <td class="text-muted">
-                                    @if (!is_null($item->discount_percentage))
-                                        {{ (int) $item->discount_percentage }}%
-                                    @else
-                                        —
-                                    @endif
-                                </td>
-                            </tr>
-
-                            <tr>
                                 <th>Старая цена:</th>
                                 <td class="text-muted">
                                     @if (!is_null($item->price_old))

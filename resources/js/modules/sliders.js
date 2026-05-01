@@ -41,18 +41,16 @@ export const sliders = () => {
   if (document.querySelector('.repair-examples-slider')) {
     // eslint-disable-next-line no-new
     new Swiper('.repair-examples-slider', {
-      spaceBetween: 16,
-      slidesPerView: 1.15,
+      spaceBetween: 0,
+      slidesPerView: 1,
       loop: false,
+      observer: true,
+      observeParents: true,
+      resizeObserver: true,
 
       pagination: {
         el: '.repair-examples-pagination',
         clickable: true
-      },
-
-      navigation: {
-        nextEl: '.repair-examples-arrow-next',
-        prevEl: '.repair-examples-arrow-prev'
       },
 
       breakpoints: {

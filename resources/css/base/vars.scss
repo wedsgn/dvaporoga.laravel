@@ -1,13 +1,20 @@
-// Colors
-$red: #fa3636;
-$redHover: #b00a0a;
-$yellow: #f2c014;
-$text: #1b1b1b;
-$white: #fff;
-$black: #1e1e1e;
-$gray: #c1c1c1;
-$grayDark: #585858;
-$stroke: #e1e1e1;
-$grayLight: #f9fbfa;
+// Brand Colors (Figma)
+$red: #e51026;
+$redHover: #f43044;
+$yellow: #ffc600;
+$text: #383838;
+$white: #ffffff;
+$black: #1b1b1b;
+$gray: #d7d7d7;
+$grayDark: #4e4e4e;
+$stroke: #d7d7d7;
+$grayLight: #eeeeee;
+$muted: #a7a7a7;
 
-$shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15);
+// Shared gradients from design
+$gradient-red: linear-gradient(271.88deg, #e51026 32.54%, #f43044 81.98%);
+$gradient-red-horizontal: linear-gradient(90deg, #f9384c 0%, #e9172e 100%);
+$gradient-dark: linear-gradient(271.69deg, #383838 15.06%, #4e4e4e 85.57%);
+$gradient-dark-light: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
+
+$shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);

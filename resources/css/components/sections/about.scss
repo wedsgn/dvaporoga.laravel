@@ -1,122 +1,360 @@
-.about-section__top {
-  margin-top: 32px;
+.about-section__head {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.about-section__title {
+  width: 100%;
+  text-align: center;
 }
 
 .about-section__description {
-  margin-top: 16px;
-  max-width: 780px;
   width: 100%;
+  margin: 0;
+  text-align: center;
+  color: #000;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
 }
 
-.about-section__info {
-  margin-top: 40px;
+.about-section__description-strong {
+  font-weight: 700;
 }
 
-.about-section__info_wrap {
-  display: flex;
-  align-items: stretch;
-  gap: 48px;
+.about-section__layout {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: minmax(0, 716px) minmax(0, 716px);
+  gap: 16px;
+  align-items: start;
 }
 
-.about-section__info_item {
-  h4 {
-    font-size: 22px;
-    line-height: 120%;
-    margin-bottom: 8px;
-  }
+.about-section__image {
+  width: 100%;
+  height: 639px;
 }
 
-.about-section__info_list {
+.about-section__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.about-section__content {
+  width: 100%;
+  min-height: 639px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 33px;
 }
 
-.about-section__info_image {
-  max-width: 830px;
-  width: 100%;
-  flex-shrink: 0;
-  display: flex;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    overflow: hidden;
-    display: block;
-  }
+.about-section__subtitle {
+  margin: 0;
+  color: #383838;
+  font-family: "Gilroy", sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
 }
 
-.about-section__info_item_ul {
-  margin-top: 24px;
+.about-section__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.about-section__stat-card {
+  min-height: 217px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 38px 29px;
+}
+
+.about-section__stat-card h4 {
+  margin: 0;
+  color: #636363;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 114%;
+}
+
+.about-section__stat-card p {
+  margin: 16px 0 0;
+  color: #383838;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.about-section__tech h3 {
+  margin: 0;
+  color: #383838;
+  font-family: "Gilroy", sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.about-section__tech-intro {
+  margin: 18px 0 0;
+  color: #383838;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.about-section__tech-list {
+  margin: 8px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-
-  li {
-    position: relative;
-    padding-left: 16px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: 7px;
-      left: 0px;
-      border-radius: 100%;
-      width: 8px;
-      height: 8px;
-      background: $red;
-    }
-  }
+  gap: 12px;
 }
 
-@media screen and (max-width: 1440px) {
-  .about-section__info_image {
-    max-width: 60%;
+.about-section__tech-list li {
+  position: relative;
+  padding-left: 22px;
+  color: #383838;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+.about-section__tech-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e51026;
+}
+
+.about-section__tech-list li b {
+  font-weight: 700;
+  color: #383838;
+}
+
+.about-section__accent {
+  font-weight: 700;
+  color: #e51026;
+}
+
+.about-section__tech-goal b {
+  font-weight: 700;
+  color: #383838;
+}
+
+.about-section__tech-goal {
+  margin: 12px 0 0;
+  color: #383838;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+@media screen and (max-width: 1488px) {
+  .about-section__layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .about-section__info_wrap {
-    gap: 32px;
+  .about-section__image {
+    height: 560px;
   }
 }
 
 @media screen and (max-width: 1200px) {
-  .about-section__info_wrap {
-    flex-direction: column;
-    align-items: flex-start;
+  .about-section__head {
+    max-width: 760px;
+    gap: 14px;
   }
 
-  .about-section__info_image {
-    max-width: none;
-
-    img {
-      height: auto;
-      object-fit: contain;
-    }
-  }
-
-  .about-section__info_list {
-    gap: 20px;
-  }
-
-  .about-section__info_item h4 {
-    margin-bottom: 4px;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .about-section__info {
+  .about-section__layout {
     margin-top: 24px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .about-section__image {
+    height: auto;
+  }
+
+  .about-section__image img {
+    aspect-ratio: 716 / 639;
+  }
+
+  .about-section__content {
+    min-height: 0;
+    gap: 24px;
   }
 }
 
 @media screen and (max-width: 768px) {
+  .about-section .container {
+    width: calc(100% - 30px);
+    max-width: none;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .about-section__head {
+    max-width: none;
+    gap: 5px;
+  }
+
+  .about-section__title {
+    color: #383838;
+    font-family: "Golos Text", "Golos", sans-serif;
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 800;
+    line-height: 100%;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .about-section__description {
+    font-size: clamp(10px, 1.8vw, 14px);
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .about-section__layout {
+    margin-top: 14px;
+    gap: 14px;
+  }
+
+  .about-section__image img {
+    aspect-ratio: 290 / 121;
+    border-radius: 6px;
+  }
+
+  .about-section__content {
+    gap: 14px;
+  }
+
+  .about-section__tech {
+    order: 1;
+  }
+
+  .about-section__subtitle {
+    order: 2;
+  }
+
+  .about-section__stats {
+    order: 3;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .about-section__subtitle,
+  .about-section__tech h3 {
+    font-family: "Gilroy", sans-serif;
+    font-size: clamp(12px, 2vw, 18px);
+    font-weight: 800;
+    line-height: 120%;
+  }
+
+  .about-section__stat-card {
+    min-height: 94px;
+    border-radius: 6px;
+    padding: 14px 17px 13px;
+    box-shadow: 0 1px 2.5px rgba(0, 0, 0, 0.25);
+  }
+
+  .about-section__stat-card h4 {
+    font-size: clamp(12px, 1.8vw, 16px);
+    line-height: 120%;
+  }
+
+  .about-section__stat-card p {
+    margin-top: 6px;
+    font-size: clamp(8px, 1.3vw, 11px);
+    line-height: 140%;
+  }
+
+  .about-section__tech-intro {
+    margin: 7px 0 0;
+    font-size: clamp(10px, 1.8vw, 14px);
+    line-height: 140%;
+  }
+
+  .about-section__tech-list {
+    margin: 6px 0 0;
+    gap: 10px;
+  }
+
+  .about-section__tech-list li {
+    padding-left: 12px;
+    font-size: clamp(10px, 1.8vw, 14px);
+    line-height: 140%;
+  }
+
+  .about-section__tech-list li::before {
+    top: 5px;
+    width: 4px;
+    height: 4px;
+  }
+
+  .about-section__tech-list .about-section__accent,
+  .about-section__tech-list li b {
+    color: #000;
+  }
+
+  .about-section__tech-goal {
+    margin: 10px 0 0;
+    font-size: clamp(10px, 1.8vw, 14px);
+    line-height: 140%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .about-section__title {
+    font-size: 24px;
+  }
+
+  .about-section__description {
+    font-size: 10px;
+  }
+
+  .about-section__subtitle,
+  .about-section__tech h3 {
+    font-size: 12px;
+  }
+
+  .about-section__stat-card h4 {
+    font-size: 12px;
+  }
+
+  .about-section__stat-card p {
+    font-size: 8px;
+  }
+
+  .about-section__tech-intro,
+  .about-section__tech-list li,
+  .about-section__tech-goal {
+    font-size: 10px;
+  }
 }

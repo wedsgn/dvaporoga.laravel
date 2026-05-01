@@ -3,7 +3,7 @@
         <div class="marks-layout">
             <div class="marks-header">
                 <h2 class="h2">
-                    или выберите деталь по марке
+                    Поиск по марке
                 </h2>
             </div>
 

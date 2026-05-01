@@ -1,5 +1,3 @@
-// @import "choices.js/src/styles/choices";
-
 @import "choices.js/src/styles/choices";
 
 @import "./base/vars";
@@ -7,8 +5,9 @@
 @import "./mixins";
 @import "./base/base";
 @import "./base/fonts.scss";
+@import "./components/sections/about.scss";
+@import "./components/sections/how-we-work.scss";
 @import "./components/**/*";
-
 
 .not-found-section {
   margin-top: 64px;
@@ -19,7 +18,6 @@
 @media screen and (max-width: 768px) {
   .not-found-section {
     margin-top: 24px;
-    font-weight: 600;
     font-size: 16px;
   }
 }
@@ -33,35 +31,5 @@
 @media (max-width: 768px) {
   .swiper-banner-desktop {
     display: none;
-  }
-}
-
-
-/* ================================
-   Блок отзывов (ReviewLab)
-================================ */
-
-.reviews-widget-section .container {
-  overflow: hidden;
-}
-
-.reviews-widget-section__title {
-  margin-bottom: 24px;
-}
-
-.reviews-widget-section review-lab {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-}
-
-/* ================================
-   Mobile
-================================ */
-
-@media (max-width: 768px) {
-  .reviews-widget-section__title {
-    margin-bottom: 28px;
-    min-height: 42px;
   }
 }

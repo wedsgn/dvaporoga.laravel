@@ -8,21 +8,33 @@
 
     <div class="modal micromodal-slide product-modal-card" id="modal-prod-{{ $part->slug }}" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <div class="modal__container" role="dialog" aria-modal="true"
+                aria-labelledby="modal-prod-{{ $part->slug }}-title"
+                aria-describedby="modal-prod-{{ $part->slug }}-desc">
                 <header class="modal__header">
-                    <h2 class="modal__title" id="modal-1-title">Заполните форму</h2>
-                    <p class="modal__description">Мы свяжемся с вами в течение 5-ти минут <br> и ответим на все вопросы
-                    </p>
+                    <h2 class="modal__title" id="modal-prod-{{ $part->slug }}-title">Остались вопросы?</h2>
+                    <p class="modal__description" id="modal-prod-{{ $part->slug }}-desc">Заполните форму и мы свяжемся с вами<br>в течение 5-ти минут и ответим на все вопросы</p>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
-                <form class="modal-form-product" action="{{ route('request_product_section.store') }}" method="POST">
+                <form class="modal-form modal-form-product" action="{{ route('request_product.store') }}"
+                    data-action="{{ route('request_product.store') }}" data-ym-goal="prices" data-ym-mode="manual"
+                    method="POST">
                     @csrf
-                    <input type="hidden" name="product_id" id="productIdInput" value="{{ $part->id }}" />
-                    <input type="hidden" name="product_price" id="productPriceInput" value="" />
-                    <input type="hidden" name="price_id" id="productPriceId" value="" />
-                    <input type="text" placeholder="Имя" class="input" name="name" />
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
-                    <input type="hidden" name="form_id" value="modal-form-product {{ $part->slug }}">
+                    <div class="input-item">
+                        <input type="text" placeholder="Имя" class="input" name="name" />
+                        <div class="field-error" data-error-for="name"></div>
+                    </div>
+
+                    <div class="input-item">
+                        <input type="tel" placeholder="+7 (999) 000-00-00" class="input" name="phone" />
+                        <div class="field-error" data-error-for="phone"></div>
+                    </div>
+
+                    <input type="hidden" name="current_url" value="{{ request()->fullUrl() }}">
+                    <input type="hidden" name="car" value="Без привязки к авто(Блок на главной)">
+                    <input type="hidden" name="data" id="productDataInput" value="[]">
+                    <input type="hidden" name="total_price" id="productTotalInput" value="">
+                    <input type="hidden" name="form_id" value="modal-form-product-{{ $part->slug }}">
                     {{-- UTM метки --}}
                     <input type="hidden" name="utm_source" value="{{ $utm['utm_source'] ?? '' }}">
                     <input type="hidden" name="utm_medium" value="{{ $utm['utm_medium'] ?? '' }}">
@@ -31,17 +43,22 @@
                     <input type="hidden" name="utm_content" value="{{ $utm['utm_content'] ?? '' }}">
                     <input type="hidden" name="cm_id" value="{{ $utm['cm_id'] ?? '' }}">
 
-                    <div class="form-policy">
-                        <input type="checkbox" id="product-policy-{{ $part->id }}" name="policy" value="1"
-                            required checked>
-                        <label for="product-policy-{{ $part->id }}">
-                            Я соглашаюсь с
-                            <a href="{{ url('/policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-                            и даю согласие на обработку персональных данных
-                        </label>
-                    </div>
-
                     <button class="btn lg submit-modal" type="submit">Отправить</button>
+
+                    <div class="form-policy-wrap">
+                        <div class="form-policy">
+                            <input type="checkbox" id="product-policy-{{ $part->id }}" name="policy" value="1"
+                                required checked>
+                            <label for="product-policy-{{ $part->id }}">
+                                Я соглашаюсь с
+                                <a href="{{ url('/policy.pdf') }}" target="_blank" rel="noopener noreferrer">
+                                    политикой конфиденциальности
+                                </a>
+                                и даю согласие на обработку персональных данных
+                            </label>
+                        </div>
+                        <div class="field-error field-error--policy" data-error-for="policy"></div>
+                    </div>
                 </form>
 
             </div>

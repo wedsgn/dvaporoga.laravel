@@ -3,7 +3,7 @@
 
 @include('parts.head')
 
-<body>
+<body class="{{ request()->routeIs('home') ? 'page-home' : '' }}">
     @include('parts.header')
 
     @yield('content')
@@ -12,34 +12,34 @@
 
     <x-forms.modal-request-form modal-id="modal-1" title-id="modal-1-title" desc-id="modal-1-desc" goal="banner"
         form-id="modal-1" checkbox-id="policy-modal-1"
-        description="Мы свяжемся с вами в течение 5-ти минут
-и ответим на все вопросы" />
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
 
     <x-forms.modal-request-form modal-id="modal-hero" title-id="modal-hero-title" desc-id="modal-hero-desc" goal="banner"
         form-id="modal-form-hero" checkbox-id="policy-modal-hero"
-        description="Мы свяжемся с вами в течение 5-ти минут
-и ответим на все вопросы" />
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
 
     <x-forms.modal-request-form modal-id="modal-about" title-id="modal-about-title" desc-id="modal-about-desc"
         goal="company" form-id="modal-form-about" checkbox-id="policy-modal-about"
-        description="Мы свяжемся с вами в течение 5-ти минут
-и ответим на все вопросы" />
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
 
     <x-forms.modal-request-form modal-id="modal-delivery" title-id="modal-delivery-title" desc-id="modal-delivery-desc"
         goal="delivery" form-id="modal-form-delivery" checkbox-id="policy-modal-delivery"
-        description="Мы свяжемся с вами в течение 5-ти минут
-и ответим на все вопросы" />
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
 
     <x-forms.modal-request-form modal-id="modal-faq" title-id="modal-faq-title" desc-id="modal-faq-desc" goal="faq"
         form-id="modal-form-faq" checkbox-id="policy-modal-faq"
-        description="Мы свяжемся с вами в течение 5-ти минут
-и ответим на все вопросы" />
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
 
     <x-forms.modal-request-form modal-id="modal-product" title-id="modal-product-title" desc-id="modal-product-desc"
         action="{{ route('request_product.store') }}" goal="calculator" form-id="modal-product"
         checkbox-id="policy-modal-product" product-mode="true" :car-title="$car->title ?? ''"
-        description="Мы свяжемся с вами в течение 5-ти минут
-и ответим на все вопросы" />
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
 
     <div class="modal modal-success micromodal-slide" id="modal-2" aria-hidden="true">
         <div class="modal__overlay" data-micromodal-close>
@@ -60,7 +60,8 @@
 
     <x-forms.modal-request-form modal-id="modal-3" title-id="modal-3-title" desc-id="modal-3-desc"
         title="Остались вопросы?" goal="automatic" form-id="modal-3" checkbox-id="policy-modal-3"
-        description="Оставьте свой номер телефона и мы перезвоним Вам в кратчайшее время, чтобы ответить на все Ваши вопросы!" />
+        description="Заполните форму и мы свяжемся с вами
+в течение 5-ти минут и ответим на все вопросы" />
     <x-ui.float-widget :phone="$main_info->phone" :vk="$main_info->vk" :max="$main_info->max" :telegram="$main_info->telegram" />
     <x-ui.cookie-banner />
     <script src="https://app.reviewlab.ru/widget/index-es2015.js" defer></script>

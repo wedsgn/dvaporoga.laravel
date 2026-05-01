@@ -5,29 +5,45 @@
 
     {{ Breadcrumbs::render('car_make.show', $car_make) }}
 
-    <section class="catalog-page-section">
+    <section class="catalog-models-page">
       <div class="container">
-        <div class="catalog-page-top --model">
-          <div class="catalog-page-top__left">
-            <h1 class="h1 catalog-page__title">Модели автомобилей {{ $car_make->title }}</h1>
+        <div class="catalog-models-page__hero">
+          <h1 class="catalog-models-page__title">
+            <span class="catalog-models-page__title-line">Модели автомобилей</span>
+            <span class="catalog-models-page__title-line">{{ $car_make->title }}</span>
+          </h1>
 
-            {{-- <p class="model-count">{{ $car_models->count() }} Моделей</p> --}}
-          </div>
-          {{-- <div class="catalog-page__description">
-            {!! $car_make->description !!}
-          </div> --}}
-        </div>
-        <div class="blog-search">
-          <form action="#" method="get" id="modelSearchForm">
-            @csrf
-            <input type="text" name="search" class="blog-search__input" id="modelSearchInput"
-              placeholder="Поиск модели" />
-            <button type="submit" class="blog-search__btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <form action="#" method="get" id="modelSearchForm" class="catalog-models-search">
+            <label class="catalog-models-search__field" for="modelSearchInput">
+              <input
+                type="text"
+                name="search"
+                id="modelSearchInput"
+                class="catalog-models-search__input"
+                placeholder="Поиск модели"
+                autocomplete="off" />
+            </label>
+
+            <button type="submit" class="catalog-models-search__submit" aria-label="Найти модель">
+              <span class="catalog-models-search__submit-label">Найти</span>
+              <svg
+                class="catalog-models-search__submit-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none">
                 <path
-                  d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z"
-                  stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M13.1696 13.168L17.5 17.4984" stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="round"
+                  d="M6.125 10.5C8.54125 10.5 10.5 8.54125 10.5 6.125C10.5 3.70875 8.54125 1.75 6.125 1.75C3.70875 1.75 1.75 3.70875 1.75 6.125C1.75 8.54125 3.70875 10.5 6.125 10.5Z"
+                  stroke="#383838"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M9.21777 9.21777L12.2503 12.2503"
+                  stroke="#383838"
+                  stroke-width="1"
+                  stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
             </button>
@@ -36,12 +52,10 @@
       </div>
     </section>
 
-
-
-    <section class="catalog-models">
+    <section class="catalog-models-results">
       <div class="container" id="modelsCatalog">
-        <h2 class="h3">Выберите модель</h2>
-        <div class="catalog-models__wrap">
+        <h2 class="catalog-models-results__title">Выберите модель</h2>
+        <div class="catalog-models-grid">
           <!-- Card -->
           @foreach ($car_models as $car_model)
             <x-car-model-card :car_make="$car_make" :car_model="$car_model" />
@@ -49,7 +63,7 @@
         </div>
       </div>
     </section>
-    {{-- 
+    {{--
     <x-section.about-parts />
     <x-section.how-we-work />
     <x-section.about-company />
@@ -57,26 +71,25 @@
 
   </main>
   <script>
-    const search = document.getElementById('modelSearchInput')
+    const modelSearchInput = document.getElementById('modelSearchInput');
+    const modelSearchForm = document.getElementById('modelSearchForm');
+    const modelsCatalog = document.getElementById('modelsCatalog');
+    const searchRoute = "{{ route('car_model.search', $car_make) }}";
 
-    search.addEventListener('keyup', () => {
-      const searchInput = document.getElementById('modelSearchInput').value;
-      const url = "{{ route('car_model.search', $car_make) }}?search=" + searchInput;
-      fetch(url)
+    const loadModelResults = () => {
+      const searchValue = encodeURIComponent(modelSearchInput.value);
+      fetch(`${searchRoute}?search=${searchValue}`)
         .then(response => response.text())
         .then(data => {
-          document.getElementById('modelsCatalog').innerHTML = data;
+          modelsCatalog.innerHTML = data;
         });
-    })
-    document.getElementById('modelSearchForm').addEventListener('submit', function(event) {
+    };
+
+    modelSearchInput.addEventListener('keyup', loadModelResults);
+
+    modelSearchForm.addEventListener('submit', function(event) {
       event.preventDefault();
-      const searchInput = document.getElementById('modelSearchInput').value;
-      const url = "{{ route('car_model.search', $car_make) }}?search=" + searchInput;
-      fetch(url)
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('modelsCatalog').innerHTML = data;
-        });
+      loadModelResults();
     });
   </script>
 @endsection

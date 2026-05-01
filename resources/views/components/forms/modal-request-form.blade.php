@@ -2,8 +2,8 @@
     'modalId',
     'titleId',
     'descId',
-    'title' => 'Заполните форму',
-    'description' => 'Мы свяжемся с вами в течение 5-ти минут и ответим на все вопросы',
+    'title' => 'Остались вопросы?',
+    'description' => "Заполните форму и мы свяжемся с вами\nв течение 5-ти минут и ответим на все вопросы",
     'action' => route('request_consultation.store'),
     'goal' => 'banner',
     'formId' => 'modal-form',
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="input-item">
-                    <input type="tel" placeholder="+7 (___) ___ __ __" class="input" name="phone" />
+                    <input type="tel" placeholder="+7 (999) 000-00-00" class="input" name="phone" />
                     <div class="field-error" data-error-for="phone"></div>
                 </div>
 

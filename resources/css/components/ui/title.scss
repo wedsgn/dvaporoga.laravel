@@ -1,8 +1,10 @@
 .h1 {
-  font-size: 64px;
+  font-size: 59px;
   font-weight: 800;
   line-height: 100%;
-  font-family: "Gilroy", sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: "Golos Text", "Golos", sans-serif;
 
   span {
     color: $red;
@@ -10,10 +12,12 @@
 }
 
 .h2 {
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 110%;
-  font-family: "Gilroy", sans-serif;
+  font-size: 59px;
+  font-weight: 800;
+  line-height: 100%;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: "Golos Text", "Golos", sans-serif;
 
   span {
     color: $red;
@@ -22,35 +26,46 @@
 
 @media screen and (max-width: 1440px) {
   .h1 {
-    // font-size: 44px;
-    font-size: 36px;
+    font-size: 59px;
+  }
+
+  .h2 {
+    font-size: 59px;
   }
 }
 
 @media screen and (max-width: 1024px) {
   .h1 {
-    font-size: 38px;
+    font-size: 44px;
   }
 
   .h2 {
-    font-size: 28px;
+    font-size: 44px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .h1 {
-    font-size: 28px;
+    font-size: 24px;
+    letter-spacing: 0.01em;
   }
+
   .h2 {
     font-size: 24px;
+    letter-spacing: 0.01em;
   }
 }
 
 @media screen and (max-width: 550px) {
   .h1 {
+    font-size: 24px;
+
     br {
       display: none;
     }
-    // font-size: 32px;вернул
+  }
+
+  .h2 {
+    font-size: 24px;
   }
 }

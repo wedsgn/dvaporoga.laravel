@@ -1,39 +1,46 @@
 .input {
   width: 100%;
+  min-height: 52px;
   border-radius: 8px;
-  border: 1px solid $gray;
+  border: 1px solid rgba(56, 56, 56, 0.15);
+  background: $white;
   margin: 0;
-  padding: 15px 19px;
-  transition: all 0.2s ease-in-out;
+  padding: 16px 20px;
   box-sizing: border-box;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-size: 16px;
+  line-height: 100%;
+  color: $text;
+  transition: border-color 0.2s ease-in-out;
 
   &:focus {
-    border: 1px solid $black;
+    border-color: $grayDark;
   }
 
   &::placeholder {
     opacity: 1;
-    color: #000;
+    color: $muted;
   }
 
   &.is-invalid {
-    border: 1px solid $red;
+    border-color: $red;
   }
 
   &.black {
-    background: #373737;
-    border: 1px solid #373737;
-    color: #fff;
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: $text;
 
     &::placeholder {
-      color: #fff !important;
+      color: #bdbdbd !important;
     }
   }
 }
 
 .field-error {
+  margin-top: 8px;
   font-size: 14px;
-  line-height: 140%;
+  line-height: 120%;
   color: $red;
 }
 
@@ -41,26 +48,19 @@
   display: none;
 }
 
-.select-item {
-  width: 100%;
-}
-
+.select-item,
 .input-item {
   width: 100%;
 }
 
-.input-item .field-error {
-  margin-top: 8px;
-}
-
 .copyright {
-  font-size: 14px;
-  line-height: 130%;
+  font-size: 16px;
+  line-height: 140%;
 
   a {
-    color: $red;
     display: inline;
     text-decoration: underline;
+    text-underline-offset: 2px;
     transition: color 0.2s ease-in-out;
 
     &:hover {
@@ -79,8 +79,8 @@
   gap: 10px;
 
   a {
-    color: $red;
     text-decoration: underline;
+    text-underline-offset: 2px;
   }
 }
 
@@ -90,6 +90,7 @@
   line-height: 140%;
   cursor: pointer;
   min-width: 0;
+  font-size: 16px;
 }
 
 .form-policy input {
@@ -105,8 +106,8 @@
   width: 24px;
   height: 24px;
   margin-right: 10px;
-  border: 1px solid $red;
-  border-radius: 2px;
+  border: 2px solid currentColor;
+  border-radius: 6px;
   background-color: transparent;
   box-sizing: border-box;
 }
@@ -115,12 +116,12 @@
   content: "";
   display: block;
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  background: $red;
+  top: 5px;
+  left: 5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: currentColor;
 }
 
 .field-error--policy {
@@ -137,16 +138,17 @@
 }
 
 .choices__inner {
-  display: inline-block;
-  height: 100%;
+  display: inline-flex;
+  align-items: center;
   width: 100%;
-  padding: 16px 20px;
-  border: 1px solid #c1c1c1;
+  min-height: 52px;
+  padding: 0 20px;
+  border: 1px solid rgba(56, 56, 56, 0.15);
   line-height: 100%;
   border-radius: 8px;
   font-size: 16px;
-  background: none;
-  min-height: 56px;
+  background: $white;
+  color: $text;
   box-sizing: border-box;
 }
 
@@ -155,12 +157,7 @@
   padding: 8px;
   z-index: 10;
   border-radius: 8px;
-  top: 60px;
-}
-
-.choices__list--dropdown .choices__list,
-.choices__list[aria-expanded] .choices__list {
-  margin-top: 16px;
+  top: calc(100% + 6px);
 }
 
 .choices__list--single {
@@ -169,10 +166,11 @@
 
 .choices__placeholder {
   opacity: 1;
+  color: $muted;
 }
 
 .choices__list--single .choices__item {
-  line-height: 130%;
+  line-height: 120%;
 }
 
 .modal-form .input-item {
@@ -192,49 +190,9 @@
 }
 
 .modal-form .submit-modal {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
-@media screen and (max-width: 1024px) {
-  .choices__inner {
-    height: 56px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .input {
-    width: 100%;
-    border-radius: 8px;
-    margin: 0;
-    padding: 12px 19px;
-    transition: all 0.2s ease-in-out;
-
-    &:focus {
-      border: 1px solid $black;
-    }
-  }
-
-  .modal__container .copyright {
-    text-align: left;
-  }
-
-  .form-policy {
-    gap: 8px;
-  }
-
-  .form-policy label:before {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-  }
-
-  .form-policy input:checked + label:after {
-    top: 3px;
-    left: 3px;
-    width: 14px;
-    height: 14px;
-  }
-}
 .form-policy.is-invalid label:before {
   border-color: $red;
   box-shadow: 0 0 0 1px $red inset;
@@ -243,4 +201,40 @@
 .form-policy input[aria-invalid="true"] + label:before {
   border-color: $red;
   box-shadow: 0 0 0 1px $red inset;
+}
+
+@media screen and (max-width: 768px) {
+  .input {
+    min-height: 46px;
+    padding: 13px 18px;
+    font-size: 16px;
+  }
+
+  .form-policy {
+    gap: 8px;
+  }
+
+  .form-policy label {
+    font-size: 14px;
+    line-height: 130%;
+  }
+
+  .form-policy label:before {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    border-radius: 6px;
+  }
+
+  .form-policy input:checked + label:after {
+    top: 5px;
+    left: 4px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .choices__inner {
+    min-height: 46px;
+    padding: 0 18px;
+  }
 }

@@ -1,67 +1,149 @@
 .about-parts-section {
-  background: #ffffff;
-  color: #1b1b1b;
-  padding: 64px 0;
+  color: $text;
+  padding: 0;
+}
+
+.marks-section + .about-parts-section.section {
+  margin-top: 102px;
+}
+
+.about-parts-section__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-parts-section .h2 {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 59px;
+  line-height: 100%;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #383838;
 }
 
 .about-parts__list {
-  margin-top: 20px;
+  margin-top: 36px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  flex-direction: column;
-  gap: 32px 24px;
-}
-
-.about-parts-btn {
-  margin-top: 32px;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.about-parts-section__descr {
-  margin-top: 12px;
-  color: #555;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
 }
 
 .about-parts__item {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  min-height: 176px;
+  padding: 28px 49px 27px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.about-parts__item p {
+  margin: 0;
+  font-family: "Golos Text", "Golos", sans-serif;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 120%;
+  font-weight: 500;
+  color: #383838;
+}
+
+.about-parts__hl {
+  color: #e51026;
+  font-weight: 700;
 }
 
 .about-parts__icon {
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  color: $red;
-  border-radius: 100%;
-  border: 1px solid $red;
-  display: flex;
+  width: 40px;
+  height: 40px;
+  color: #383838;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
+}
+
+.about-parts__icon img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 @media screen and (max-width: 1200px) {
+  .about-parts-section .h2 {
+    font-size: 44px;
+  }
+
   .about-parts__list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .about-parts__item {
+    min-height: 164px;
+    padding: 24px 24px;
+  }
+
+  .about-parts__item p {
+    font-size: 18px;
   }
 }
 
 @media screen and (max-width: 768px) {
+  .marks-section + .about-parts-section.section {
+    margin-top: 50px;
+  }
+
+  .about-parts-section .h2 {
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
   .about-parts__list {
-    grid-template-columns: repeat(1, 1fr);
-    gap: 24px;
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+    gap: 10px;
   }
 
   .about-parts__item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     gap: 12px;
-    align-items: flex-start;
+    min-height: 0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: none;
   }
 
-  .about-parts-btn {
-    width: 100%;
+  .about-parts__item p {
+    flex: 1;
+    font-size: 16px;
+    line-height: 120%;
+    font-weight: 500;
+  }
+
+  .about-parts__icon {
+    width: 28px;
+    height: 28px;
+    margin-top: 0;
+  }
+
+  .about-parts__icon img {
+    max-width: 100%;
+    max-height: 100%;
   }
 }

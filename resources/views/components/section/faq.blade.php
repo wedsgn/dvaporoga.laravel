@@ -1,18 +1,18 @@
 <section class="faq-section section" id="faq">
   <div class="container">
-    <h2 class="h2">
-      Часто задаваемые вопросы
-    </h2>
-
     <div class="faq-section__top">
-      <p class="faq-description">
-        Если не нашли ответ на нужный вопрос
-        <a href="javascript:void(0)" data-micromodal-trigger="modal-faq">оставьте заявку</a> или свяжитесь с
-        нами. Мы с
-        удовольствием расскажем все подробнее и проконсультируем вас.
-      </p>
+      <div class="faq-section__meta">
+        <h2 class="faq-section__title">Часто задаваемые вопросы</h2>
 
-      <button class="btn lg" data-micromodal-trigger="modal-faq">Получить консультацию</button>
+        <p class="faq-description">
+          Если не нашли ответ на нужный вопрос
+          <a href="javascript:void(0)" data-micromodal-trigger="modal-faq">оставьте заявку</a> или свяжитесь с
+          нами. Мы с
+          удовольствием расскажем все подробнее и проконсультируем вас.
+        </p>
+      </div>
+
+      <button class="btn faq-section__btn" data-micromodal-trigger="modal-faq">Бесплатная консультация</button>
     </div>
     <div class="faq-wrap">
       <!--  -->
@@ -21,7 +21,7 @@
       <!-- Right -->
       <div class="faq-accordition">
         <!-- Item -->
-        <div class="faq-item accordion active">
+        <div class="faq-item accordion">
           <div class="faq-item__head accordion__intro">
             <p>У вас есть пороги на все модели авто?</p>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

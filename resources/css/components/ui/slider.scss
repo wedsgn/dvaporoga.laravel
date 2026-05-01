@@ -1,11 +1,11 @@
 .slider-arrow {
-  width: 64px;
-  height: 64px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid #e1e1e1;
-  background: #f9fbfa;
-  transition: all 0.3s ease-in-out;
-  color: #000;
+  border: 1px solid rgba(56, 56, 56, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+  transition: all 0.2s ease-in-out;
+  color: $grayDark;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,15 +21,15 @@
   }
 
   &:hover {
-    background: $red;
-    color: #fff;
-    border: 1px solid $red;
+    background: $gradient-red;
+    color: $white;
+    border-color: transparent;
   }
 
   svg {
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     fill: none !important;
   }
 }
@@ -43,51 +43,52 @@
   background: $red;
 }
 
+.swiper-pagination-bullet {
+  width: 7px;
+  height: 7px;
+  opacity: 1;
+  background: #d2d2d2;
+}
+
 .banners-pagination {
   display: none;
   z-index: 2;
 }
 @media screen and (max-width: 1440px) {
   .slider-arrow {
-    width: 56px;
-    height: 56px;
+    width: 40px;
+    height: 40px;
   }
 
   .banners-pagination {
     bottom: -54px !important;
     display: block;
-    font-weight: 500;
-    font-family: "Golos", sans-serif;
-    font-size: 18px;
+    font-size: 0;
   }
+
   .slider-arrow-next {
     right: 0 !important;
     top: auto !important;
-    bottom: -70px;
-  }
-
-  .swiper-pagination-current {
-    color: $red;
-    font-size: 16px;
+    bottom: -60px;
   }
 
   .slider-arrow-prev {
     left: 0px !important;
     top: auto !important;
-    bottom: -70px;
+    bottom: -60px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .slider-arrow {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
   }
 
   .slider-arrow svg {
     display: block;
-    width: 16px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
     fill: none !important;
   }
 

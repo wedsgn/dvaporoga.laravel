@@ -12,3 +12,11 @@
 @include font("Golos", "golos/Golos-SemiBold", "600", "normal");
 @include font("Golos", "golos/Golos-Medium", "500", "normal");
 @include font("Golos", "golos/Golos-Regular", "400", "normal");
+
+// Alias used in Figma export
+@include font("Golos Text", "golos/Golos-Black", "900", "normal");
+@include font("Golos Text", "golos/Golos-Bold", "700", "normal");
+@include font("Golos Text", "golos/Golos-ExtraBold", "800", "normal");
+@include font("Golos Text", "golos/Golos-SemiBold", "600", "normal");
+@include font("Golos Text", "golos/Golos-Medium", "500", "normal");
+@include font("Golos Text", "golos/Golos-Regular", "400", "normal");

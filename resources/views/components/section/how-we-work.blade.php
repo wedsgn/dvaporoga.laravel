@@ -42,6 +42,7 @@
           </h4>
           <p class="how-we-work__info_description">
             Формируем, упаковываем и отправляем заказ.
+          </p>
         </div>
 
         <!-- Item -->

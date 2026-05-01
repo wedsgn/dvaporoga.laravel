@@ -1,0 +1,24 @@
+.reviews-widget-section .h2 {
+  text-align: center;
+}
+
+.reviews-widget-section .container {
+  overflow: hidden;
+}
+
+.reviews-widget-section__title {
+  margin-bottom: 28px;
+}
+
+.reviews-widget-section review-lab {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 280px;
+}
+
+@media (max-width: 768px) {
+  .reviews-widget-section__title {
+    margin-bottom: 18px;
+  }
+}

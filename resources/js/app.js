@@ -261,7 +261,7 @@ window.addEventListener("load", () => {
 
   var phones = document.querySelectorAll('input[type="tel"]');
   var maskOptions = {
-    mask: "+7 (000) 000 00 00",
+    mask: "+{7} (000) 000-00-00",
   };
 
   phones.forEach((element) => {
@@ -275,9 +275,10 @@ window.addEventListener("load", () => {
       const priceDeiv = product.querySelector(".product-price span");
       const data = product.getAttribute("data-item");
       const dataRes = JSON.parse(data);
+      const productButton = product.querySelector(".product-btn");
       const steelSelector = product.querySelector(".steel-select");
-      const priceInput = product.querySelector("#productPriceInput");
-      const priceIdInput = product.querySelector("#productPriceId");
+      const totalPriceInput = product.querySelector("#productTotalInput");
+      const productDataInput = product.querySelector("#productDataInput");
       const thicknessSelector = product.querySelector(".thickness_select");
       const typeSelector = product.querySelector(".type-selector");
       const sizeSelector = product.querySelector(".size-selector");
@@ -287,6 +288,23 @@ window.addEventListener("load", () => {
         steel_type_id: steelSelector.value,
         thickness_id: thicknessSelector.value,
         type_id: typeSelector.value,
+      };
+
+      const syncProductRequestPayload = (price) => {
+        if (productDataInput) {
+          productDataInput.value = JSON.stringify([
+            {
+              id: Number(dataRes.id),
+              title: dataRes.title || "",
+              source: "home",
+              car: null,
+            },
+          ]);
+        }
+
+        if (totalPriceInput) {
+          totalPriceInput.value = price ? String(price.one_side || "").replace(/[^\d]/g, "") : "";
+        }
       };
 
       const getPrice = () => {
@@ -301,9 +319,12 @@ window.addEventListener("load", () => {
 
         if (price) {
           priceDeiv.innerHTML = price.one_side;
-          priceInput.value = price;
-          priceIdInput.value = price.id;
+          syncProductRequestPayload(price);
+          return;
         }
+
+        priceDeiv.innerHTML = "";
+        syncProductRequestPayload(null);
       };
 
       steelSelector.addEventListener("change", function (e) {
@@ -327,31 +348,47 @@ window.addEventListener("load", () => {
 
       priceDeiv.innerHTML = "";
       getPrice();
+
+      if (productButton) {
+        productButton.addEventListener("click", getPrice);
+      }
     });
   }
   // Корзина
 
-  const swiper = new Swiper(".swiper-banner", {
-    loop: true,
-    autoplay: {
-      delay: 5000,
-    },
-    slidesPerView: 1,
-    spaceBetween: 32,
-    pagination: {
-      el: ".hero-pag",
-    },
+  const heroBanners = document.querySelectorAll(".swiper-banner");
 
-    navigation: {
-      nextEl: ".hero-banner-arrow-next",
-      prevEl: ".hero-banner-arrow-prev",
-    },
+  heroBanners.forEach((heroBanner) => {
+    // eslint-disable-next-line no-new
+    new Swiper(heroBanner, {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+      },
+      slidesPerView: 1,
+      spaceBetween: 32,
+      pagination: {
+        el: heroBanner.querySelector(".hero-pag"),
+        clickable: true,
+        dynamicBullets: false,
+        renderBullet: function (index, className) {
+          return `<span class="${className}" aria-label="Слайд ${index + 1}"></span>`;
+        },
+      },
+      navigation: {
+        nextEl: heroBanner.querySelector(".hero-banner-arrow-next"),
+        prevEl: heroBanner.querySelector(".hero-banner-arrow-prev"),
+      },
+    });
   });
 
   const swiperGallery = new Swiper(".gallery-swiper", {
     slidesPerView: 1,
-    spaceBetween: 16,
+    spaceBetween: 0,
     loop: true,
+    observer: true,
+    observeParents: true,
+    resizeObserver: true,
     pagination: {
       el: ".gallery-pagination",
       type: "fraction",
