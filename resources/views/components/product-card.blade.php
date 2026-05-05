@@ -50,11 +50,7 @@
                             <input type="checkbox" id="product-policy-{{ $part->id }}" name="policy" value="1"
                                 required>
                             <label for="product-policy-{{ $part->id }}">
-                                Я соглашаюсь с
-                                <a href="{{ url('/policy.pdf') }}" target="_blank" rel="noopener noreferrer">
-                                    политикой конфиденциальности
-                                </a>
-                                и даю согласие на обработку персональных данных
+                                <x-forms.policy-consent submit-text="Отправить" />
                             </label>
                         </div>
                         <div class="field-error field-error--policy" data-error-for="policy"></div>

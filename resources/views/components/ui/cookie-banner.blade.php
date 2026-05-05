@@ -1,8 +1,13 @@
+@php
+    $policyUrl = asset('docs/ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ.docx');
+@endphp
+
 <div id="cookie-banner" class="cookie-banner">
     <div class="cookie-banner__container">
         <span class="cookie-banner__text">
-            Мы используем файлы cookies для улучшения работы сайта.
+            Сайт использует файлы cookie и веб-аналитику Яндекс Метрика.
             Оставаясь на нашем сайте, вы соглашаетесь с условиями использования файлов cookies.
+            <a href="{{ $policyUrl }}" target="_blank" rel="noopener noreferrer">Подробнее</a>
         </span>
 
         <button id="cookie-accept" class="cookie-banner__button">

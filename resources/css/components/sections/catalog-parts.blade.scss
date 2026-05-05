@@ -204,7 +204,6 @@
   }
 
   .catalog-parts-section__title::before {
-    content: "Детали для 3500+ моделей авто";
     display: block;
     width: 100%;
     max-width: 360px;
@@ -286,6 +285,6 @@
     height: 30px;
     margin-top: 0;
     border-radius: 6px;
-    font-size: 8px;
+    font-size: clamp(12px, 1.8vw, 15px);
   }
 }

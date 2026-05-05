@@ -23,6 +23,16 @@
   &__text {
     font-size: 14px;
     line-height: 1.4;
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      &:hover {
+        opacity: 0.85;
+      }
+    }
   }
 
   &__button {
@@ -43,10 +53,13 @@
 }
 
 @media (max-width: 768px) {
-
   .cookie-banner__container {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .cookie-banner__text {
+    font-size: 12px;
   }
 
 }

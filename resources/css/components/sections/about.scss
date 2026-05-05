@@ -236,7 +236,7 @@
   }
 
   .about-section__description {
-    font-size: clamp(10px, 1.8vw, 14px);
+    font-size: clamp(12px, 1.8vw, 14px);
     font-weight: 400;
     line-height: 140%;
   }
@@ -291,13 +291,13 @@
 
   .about-section__stat-card p {
     margin-top: 6px;
-    font-size: clamp(8px, 1.3vw, 11px);
+    font-size: 12px;
     line-height: 140%;
   }
 
   .about-section__tech-intro {
     margin: 7px 0 0;
-    font-size: clamp(10px, 1.8vw, 14px);
+    font-size: clamp(12px, 1.8vw, 14px);
     line-height: 140%;
   }
 
@@ -308,7 +308,7 @@
 
   .about-section__tech-list li {
     padding-left: 12px;
-    font-size: clamp(10px, 1.8vw, 14px);
+    font-size: clamp(12px, 1.8vw, 14px);
     line-height: 140%;
   }
 
@@ -325,7 +325,7 @@
 
   .about-section__tech-goal {
     margin: 10px 0 0;
-    font-size: clamp(10px, 1.8vw, 14px);
+    font-size: clamp(12px, 1.8vw, 14px);
     line-height: 140%;
   }
 }
@@ -336,7 +336,7 @@
   }
 
   .about-section__description {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .about-section__subtitle,
@@ -349,12 +349,12 @@
   }
 
   .about-section__stat-card p {
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .about-section__tech-intro,
   .about-section__tech-list li,
   .about-section__tech-goal {
-    font-size: 10px;
+    font-size: 12px;
   }
 }

@@ -48,9 +48,7 @@
           <div class="form-policy">
             <input type="checkbox" id="choose-check" name="policy" value="1" required>
             <label for="choose-check">
-              Я соглашаюсь с
-              <a href="{{ asset('policy.pdf') }}" target="_blank">политикой конфиденциальности</a>
-              и даю согласие на обработку персональных данных
+              <x-forms.policy-consent submit-text="Отправить заявку" />
             </label>
           </div>
           <div class="field-error" data-error-for="policy"></div>

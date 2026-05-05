@@ -318,7 +318,7 @@ main:has(.partnership-page) .breadcrumbs {
   }
 
   main:has(.partnership-page) .breadcrumbs {
-    font-size: 8px;
+    font-size: 12px;
     line-height: 10px;
     letter-spacing: 0.02em;
     gap: 4px;
@@ -343,7 +343,7 @@ main:has(.partnership-page) .breadcrumbs {
   .partnership-page__lead {
     max-width: 290px;
     margin-top: 12px;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 140%;
   }
 
@@ -359,7 +359,7 @@ main:has(.partnership-page) .breadcrumbs {
 
   .partnership-page__benefit-item {
     padding: 9px 8px;
-    font-size: 9px;
+    font-size: 12px;
     line-height: 120%;
   }
 
@@ -373,7 +373,7 @@ main:has(.partnership-page) .breadcrumbs {
     }
 
     span {
-      font-size: 9px;
+      font-size: 12px;
       line-height: 120%;
     }
   }
@@ -414,7 +414,7 @@ main:has(.partnership-page) .breadcrumbs {
     min-height: 34px;
     padding: 11px 24px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: clamp(12px, 1.8vw, 15px);
   }
 
   .partnership-page__about {
@@ -440,7 +440,7 @@ main:has(.partnership-page) .breadcrumbs {
 
     li {
       padding-left: 10px;
-      font-size: 10px;
+      font-size: 12px;
       line-height: 189%;
 
       &::before {

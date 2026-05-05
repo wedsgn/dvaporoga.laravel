@@ -5,6 +5,7 @@
     'title' => 'Оставьте заявку',
     'descr' => 'Мы подберем деталь под ваш автомобиль и ответим на все вопросы',
     'sectionClass' => '--white',
+    'submitText' => 'Отправить',
 ])
 
 <section class="car-single-form-section home-page-form-section {{ $sectionClass }}">
@@ -49,18 +50,14 @@
                     <div class="field-error" data-error-for="phone"></div>
                 </div>
 
-                <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
+                <button type="submit" class="btn btn-black car-single-form-btn">{{ $submitText }}</button>
             </div>
 
             <div class="form-policy-wrap">
                 <div class="form-policy">
                     <input type="checkbox" id="{{ $checkboxId }}" name="policy" value="1" required>
                     <label for="{{ $checkboxId }}">
-                        Я соглашаюсь с
-                        <a href="{{ url('/policy.pdf') }}" target="_blank" rel="noopener noreferrer">
-                            политикой конфиденциальности
-                        </a>
-                        и даю согласие на обработку персональных данных
+                        <x-forms.policy-consent :submit-text="$submitText" />
                     </label>
                 </div>
 

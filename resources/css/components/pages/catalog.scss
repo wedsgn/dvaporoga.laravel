@@ -449,7 +449,7 @@
 
   main:has(.catalog-models-page) .breadcrumbs {
     gap: 4px 6px;
-    font-size: 8px;
+    font-size: 12px;
     line-height: 10px;
   }
 
@@ -485,7 +485,7 @@
   .catalog-models-search__input {
     height: 38px;
     padding: 0 44px 0 10px;
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .catalog-models-search__submit {
@@ -529,7 +529,7 @@
   }
 
   .catalog-model-card__title {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .catalog-models-results__empty {
@@ -1115,6 +1115,10 @@
     gap: 16px 8px;
   }
 
+  .product-part__bottom .btn {
+    font-size: clamp(12px, 1.8vw, 15px);
+  }
+
   .catalog-page-top__btn {
     width: 100%;
   }
@@ -1424,7 +1428,7 @@
 
   main:has(.catalog-parts-page) .breadcrumbs {
     gap: 4px 6px;
-    font-size: 8px;
+    font-size: 12px;
     line-height: 10px;
   }
 
@@ -1466,7 +1470,7 @@
     width: 100%;
     height: clamp(38px, 5.3vw, 48px);
     padding: 0 clamp(40px, 6vw, 52px) 0 clamp(10px, 2vw, 16px);
-    font-size: clamp(8px, 1.4vw, 12px);
+    font-size: 12px;
   }
 
   .catalog-parts-search__submit,
@@ -1534,7 +1538,7 @@
   }
 
   .catalog-make-card__title {
-    font-size: clamp(10px, 1.8vw, 14px);
+    font-size: clamp(12px, 1.8vw, 14px);
     white-space: normal;
   }
 

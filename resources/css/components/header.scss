@@ -463,4 +463,8 @@ body.page-partnership main {
     height: 37px;
     min-height: 37px;
   }
+
+  .mobile-nav__nav .header__link.--highlighted {
+    font-size: clamp(12px, 1.8vw, 15px);
+  }
 }
