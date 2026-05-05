@@ -154,14 +154,14 @@
 
   .home-page-form-section .car-single-form-section__title {
     font-weight: 800;
-    font-size: clamp(16px, 3vw, 28px);
+    font-size: 16px;
     line-height: 120%;
   }
 
   .home-page-form-section .car-single-form-section__descr {
     margin-top: 8px;
     max-width: 100%;
-    font-size: clamp(10px, 1.7vw, 15px);
+    font-size: clamp(12px, 2.2vw, 17px);
     line-height: 140%;
   }
 
@@ -194,13 +194,17 @@
     padding: 0 20px;
     border: 1px solid #e1e1e1;
     border-radius: 6px;
-    font-size: clamp(8px, 1.5vw, 14px);
+    font-size: clamp(11px, 2vw, 16px);
     line-height: 100%;
   }
 
   .home-page-form-section .choose-section__form_row .input::placeholder {
     color: #383838;
     opacity: 1;
+  }
+
+  .home-page-form-section .choose-section__form_row .input[type="tel"]::placeholder {
+    color: #d9d9d9;
   }
 
   .home-page-form-section .car-single-form-btn {

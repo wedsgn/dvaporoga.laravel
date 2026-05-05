@@ -217,14 +217,19 @@
   }
 
   .marks-section .catalog-concern__wrap .mark-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 0 !important;
     box-shadow: none !important;
   }
 
-  .mark-image img {
+  .marks-section .catalog-concern__wrap .mark-image img {
     max-width: 82%;
     max-height: 76%;
-    transform: scale(1.1);
+    object-fit: contain;
+    transform: translateY(-4%) scale(1.1);
+    transform-origin: center center;
   }
 
   .marks-section .marks-catalog-btn {

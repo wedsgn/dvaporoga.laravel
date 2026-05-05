@@ -145,14 +145,14 @@
             </div>
 
             <div class="input-item">
-              <input class="input black" type="tel" placeholder="+7 (___) ___ __ __">
+              <input class="input black" type="tel" placeholder="+7 (999) 000-00-00">
             </div>
 
             <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
           </div>
 
           <div class="form-policy">
-            <input type="checkbox" id="choose-check" name="policy" value="1" checked="" required="">
+            <input type="checkbox" id="choose-check" name="policy" value="1" required="">
             <label for="choose-check">
               Я соглашаюсь с
               <a href="http://localhost:8000/policy.pdf" target="_blank">политикой конфиденциальности</a>

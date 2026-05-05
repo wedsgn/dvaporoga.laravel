@@ -265,6 +265,7 @@ window.addEventListener("load", () => {
   };
 
   phones.forEach((element) => {
+    element.placeholder = "+7 (999) 000-00-00";
     var mask = new IMask(element, maskOptions);
   });
 

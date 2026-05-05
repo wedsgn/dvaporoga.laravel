@@ -22,6 +22,10 @@
     color: $muted;
   }
 
+  &[type="tel"]::placeholder {
+    color: #d9d9d9;
+  }
+
   &.is-invalid {
     border-color: $red;
   }
@@ -34,6 +38,10 @@
     &::placeholder {
       color: #bdbdbd !important;
     }
+  }
+
+  &.black[type="tel"]::placeholder {
+    color: #d9d9d9 !important;
   }
 }
 

@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="input-item">
-                        <input class="input" type="tel" name="phone" placeholder="+7 (___) ___ __ __">
+                        <input class="input" type="tel" name="phone" placeholder="+7 (999) 000-00-00">
                         <div class="field-error" data-error-for="phone"></div>
                     </div>
 
@@ -42,7 +42,7 @@
 
                     <div class="form-policy-wrap">
                         <div class="form-policy">
-                            <input type="checkbox" id="policy-partnership" name="policy" value="1" required checked>
+                            <input type="checkbox" id="policy-partnership" name="policy" value="1" required>
                             <label for="policy-partnership">
                                 Я соглашаюсь с
                                 <a href="{{ url('/policy.pdf') }}" target="_blank" rel="noopener noreferrer">

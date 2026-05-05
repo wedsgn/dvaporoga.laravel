@@ -371,7 +371,7 @@
 }
 
 .modal:not(.modal-success) :is(.modal-form, .modal-form-product) input[type="tel"]::placeholder {
-  color: #cfcfcf;
+  color: #d9d9d9;
   opacity: 1;
 }
 
@@ -435,75 +435,79 @@
 }
 
 .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy input:checked + label:after {
-  top: 4px;
-  left: 4px;
+  top: 12px;
+  left: 12px;
   width: 16px;
   height: 16px;
   border-radius: 2px;
   background: #383838;
+  transform: translate(-50%, -50%);
 }
 
 @media screen and (max-width: 768px) {
   .modal:not(.modal-success) .modal__container {
-    width: 290px;
-    min-height: 307px;
+    width: min(420px, calc(100vw - 30px));
+    min-height: clamp(307px, calc((100vw - 30px) * 1.0586), 445px);
     height: auto;
     max-height: calc(100vh - 24px);
-    max-width: calc(100vw - 24px);
-    padding: 28px 13px 28px;
-    border-radius: 16px;
+    max-width: min(420px, calc(100vw - 30px));
+    padding:
+      clamp(28px, calc((100vw - 30px) * 0.0966), 41px)
+      clamp(13px, calc((100vw - 30px) * 0.0448), 19px);
+    border-radius: clamp(16px, calc((100vw - 30px) * 0.0552), 23px);
+    container-type: inline-size;
   }
 
   .modal:not(.modal-success) .modal__header,
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) {
-    width: 263px;
+    width: 90.69cqw;
     max-width: 100%;
   }
 
   .modal:not(.modal-success) .modal__title {
-    max-width: 190px;
+    max-width: 65.52cqw;
     margin: 0 auto;
-    font-size: 20px;
+    font-size: 6.9cqw;
   }
 
   .modal:not(.modal-success) .modal__description {
-    max-width: 252px;
-    margin: 6px auto 0;
-    font-size: 10px;
+    max-width: 86.9cqw;
+    margin: 2.07cqw auto 0;
+    font-size: 3.45cqw;
     line-height: 140%;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) {
-    margin-top: 19px;
+    margin-top: 6.55cqw;
     gap: 0;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input,
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .submit-modal {
-    min-height: 34px;
-    height: 34px;
+    min-height: 11.72cqw;
+    height: 11.72cqw;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input-item + .input-item {
-    margin-top: 8px;
+    margin-top: 2.76cqw;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input {
-    padding: 14px 12px 14px 20px;
+    padding: 0 4.14cqw 0 6.9cqw;
     border: 1px solid #e1e1e1;
-    border-radius: 6px;
-    font-size: 8px;
+    border-radius: 2.07cqw;
+    font-size: 2.76cqw;
     line-height: 100%;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .field-error {
-    margin-top: 4px;
-    font-size: 10px;
+    margin-top: 1.38cqw;
+    font-size: 3.45cqw;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy-wrap {
     order: 2;
-    margin-top: 5px;
+    margin-top: 1.72cqw;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy {
@@ -511,36 +515,38 @@
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label {
-    max-width: 247px;
-    padding-left: 20px;
-    font-size: 10px;
+    max-width: none;
+    padding-left: 6.9cqw;
+    font-size: 3.45cqw;
     line-height: 140%;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label:before {
-    top: 1px;
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
+    top: 0;
+    left: 0;
+    width: 4.14cqw;
+    height: 4.14cqw;
+    border-radius: 0.69cqw;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy input:checked + label:after {
-    top: 2px;
-    left: 2px;
-    width: 8px;
-    height: 8px;
-    border-radius: 1px;
+    top: 2.07cqw;
+    left: 2.07cqw;
+    width: 2.76cqw;
+    height: 2.76cqw;
+    border-radius: 0.34cqw;
+    transform: translate(-50%, -50%);
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .submit-modal {
     order: 3;
     align-self: center;
-    width: 181px;
-    min-height: 34px;
-    height: 34px;
-    margin-top: 19px;
-    padding: 11px 24px !important;
-    border-radius: 6px;
+    width: 62.41cqw;
+    min-height: 11.72cqw;
+    height: 11.72cqw;
+    margin-top: 6.55cqw;
+    padding: 0 8.28cqw !important;
+    border-radius: 2.07cqw;
     font-size: 0;
     line-height: 1;
   }
@@ -549,7 +555,7 @@
     content: "Отправить заявку";
     color: #fff;
     font-family: "Golos Text", "Golos", sans-serif;
-    font-size: 12px;
+    font-size: 4.14cqw;
     font-style: normal;
     font-weight: 400;
     line-height: 100%;

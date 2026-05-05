@@ -267,7 +267,7 @@
 
                             <div class="car-single-form__row">
                                 <div class="input-item">
-                                    <input class="input black" type="tel" name="phone" placeholder="+7 (___) ___ __ __"
+                                    <input class="input black" type="tel" name="phone" placeholder="+7 (999) 000-00-00"
                                         required>
                                     <div class="field-error" data-error-for="phone"></div>
                                 </div>

@@ -296,6 +296,10 @@
   color: #383838;
 }
 
+.car-single-form--page .input.black[type="tel"]::placeholder {
+  color: #d9d9d9;
+}
+
 .car-single-form--page .input.black:focus {
   outline: 1px solid rgba(255, 255, 255, 0.35);
 }
@@ -973,13 +977,13 @@
   }
 
   .car-single-form-card__title {
-    font-size: clamp(16px, 3vw, 28px);
+    font-size: 16px;
     font-weight: 800;
     line-height: 120%;
   }
 
   .car-single-form-card__descr {
-    font-size: clamp(10px, 1.7vw, 15px);
+    font-size: clamp(12px, 2.2vw, 17px);
     line-height: 140%;
   }
 
@@ -993,13 +997,17 @@
     padding: 0 20px;
     border: 1px solid #e1e1e1;
     border-radius: 6px;
-    font-size: clamp(8px, 1.5vw, 14px);
+    font-size: clamp(11px, 2vw, 16px);
     line-height: 100%;
   }
 
   .car-single-form--page .input.black::placeholder {
     color: #383838;
     opacity: 1;
+  }
+
+  .car-single-form--page .input.black[type="tel"]::placeholder {
+    color: #d9d9d9;
   }
 
   .car-single-form--page .car-single-form-btn,
