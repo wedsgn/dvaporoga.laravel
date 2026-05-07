@@ -4,7 +4,7 @@
     'consentUrl' => asset('docs/СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ.docx'),
 ])
 
-Нажимая «{{ $submitText }}», даю
+Даю
 <a href="{{ $consentUrl }}" target="_blank" rel="noopener noreferrer">
     согласие
 </a>
