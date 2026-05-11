@@ -34,12 +34,24 @@ body.page-partnership main {
 
 .header__logo {
   display: block;
+  text-decoration: none;
 
   img {
     display: block;
     width: 152px;
     height: 30px;
   }
+}
+
+.header__logo-text {
+  display: block;
+  color: $text;
+  font-family: "Gilroy", sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 30px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .header__nav {
@@ -371,7 +383,7 @@ body.page-partnership main {
 
 @media screen and (max-width: 768px) {
   .header {
-    height: 37px;
+    height: 44px;
     background: rgba(255, 255, 255, 0.68);
     box-shadow: 0 0 3.4px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(17.25px);
@@ -379,15 +391,15 @@ body.page-partnership main {
   }
 
   .header .container {
-    height: 37px;
+    height: 44px;
   }
 
   body.page-home main {
-    padding-top: 37px;
+    padding-top: 44px;
   }
 
   body.page-partnership main {
-    padding-top: 37px;
+    padding-top: 44px;
   }
 
   .header__left {
@@ -454,14 +466,14 @@ body.page-partnership main {
     display: none;
   }
 
-  .header__logo img {
-    width: 124px;
-    height: 24px;
+  .header__logo-text {
+    font-size: 21px;
+    line-height: 24px;
   }
 
   .header__wrap {
-    height: 37px;
-    min-height: 37px;
+    height: 44px;
+    min-height: 44px;
   }
 
   .mobile-nav__nav .header__link.--highlighted {

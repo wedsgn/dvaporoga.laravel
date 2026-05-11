@@ -12,3 +12,4 @@
 
   <h3 class="catalog-model-card__title">{{ $car_model->title }}</h3>
 </a>
+

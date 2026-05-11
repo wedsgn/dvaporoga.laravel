@@ -17,7 +17,7 @@
                 name="search"
                 class="catalog-parts-search__input"
                 id="concernSearchInput"
-                placeholder="Введите марку, модель или кузов автомобиля"
+                placeholder="Введите марку"
                 autocomplete="off"
               />
             </label>

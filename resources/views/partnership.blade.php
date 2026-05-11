@@ -30,6 +30,8 @@
 
         $partnershipPhone = $page->phone ?: $main_info->phone_clients ?: $main_info->phone;
         $partnershipPhoneHref = preg_replace('/[^0-9+]/', '', (string) $partnershipPhone);
+        $brandName = 'ДВАПОРОГА';
+        $partnershipTitle = str_ireplace('2POROGA', $brandName, $page->title);
     @endphp
 
     <main class="partnership-page">
@@ -38,7 +40,7 @@
         <section class="partnership-page__hero">
             <div class="container">
                 <div class="partnership-page__hero-head">
-                    <h1 class="partnership-page__title">{{ $page->title }}</h1>
+                    <h1 class="partnership-page__title">{{ $partnershipTitle }}</h1>
                     <div class="partnership-page__lead">{!! $page->description !!}</div>
                 </div>
 
@@ -91,11 +93,11 @@
             <div class="container">
                 <div class="partnership-page__about-layout">
                     <div class="partnership-page__about-image">
-                        <img src="{{ asset('images/partnership/team-photo.png') }}" alt="Команда 2POROGA" loading="lazy">
+                        <img src="{{ asset('images/partnership/team-photo.png') }}" alt="Команда {{ $brandName }}" loading="lazy">
                     </div>
 
                     <div class="partnership-page__about-content">
-                        <h2 class="partnership-page__about-title">Автопороги.ру - это</h2>
+                        <h2 class="partnership-page__about-title">{{ $brandName }} - это</h2>
 
                         <ul class="partnership-page__about-list">
                             <li><b>Собственное производство.</b> Детали в наличии или изготовим за <b>1 день</b> с момента обращения</li>

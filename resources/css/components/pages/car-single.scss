@@ -662,7 +662,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1200px) {
   main:has(.car-single-page) .breadcrumbs-section {
-    margin-top: 84px;
+    margin-top: 82px;
   }
 
   .car-single-page__heading {
@@ -761,7 +761,7 @@
 
 @media screen and (max-width: 767px) {
   main:has(.car-single-page) .breadcrumbs-section {
-    margin-top: 46px;
+    margin-top: 53px;
   }
 
   main:has(.car-single-page) .breadcrumbs {
@@ -1122,6 +1122,72 @@
   .car-single-part__btn button {
     min-height: 30px;
     font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .car-single-page__badges {
+    left: 50%;
+    bottom: 2.76cqw;
+    width: 92.07cqw;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: flex-end;
+    gap: 1.38cqw;
+    transform: translateX(-50%);
+  }
+
+  .car-single-page__badge {
+    position: static;
+    flex: 0 1 calc(50% - 0.69cqw);
+    max-width: calc(50% - 0.69cqw);
+    width: auto !important;
+    min-width: 0;
+    height: auto;
+    min-height: 8.62cqw;
+    padding: 1.21cqw 1.72cqw;
+    border-radius: 4.83cqw;
+    font-size: 12px;
+    line-height: 115%;
+    white-space: normal;
+    text-align: center;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .car-single-page__promo-card {
+    min-height: 15.17cqw;
+    aspect-ratio: auto;
+  }
+
+  .car-single-page__promo-copy {
+    grid-template-columns: 13.79cqw auto;
+    gap: 3.1cqw;
+  }
+
+  .car-single-page__promo-title {
+    width: 13.79cqw;
+    font-size: 12px;
+    line-height: 120%;
+  }
+
+  .car-single-page__promo-prices {
+    gap: 2.07cqw;
+  }
+
+  .car-single-page__promo-price {
+    font-size: 6.21cqw;
+  }
+
+  .car-single-page__promo-price-old {
+    font-size: 12px;
+  }
+
+  .car-single-page__promo-media {
+    width: 36cqw;
   }
 }
 

@@ -4,7 +4,7 @@
             <div class="footer-main__grid">
                 <div class="footer-main__brand">
                     <a href="{{ route('home') }}" class="footer-logo">
-                        <img src="{{ asset('images/footerlogo.svg') }}" alt="2POROGA">
+                        <span class="footer-logo__text">ДВАПОРОГА</span>
                     </a>
 
                     <div class="footer-main__descr">

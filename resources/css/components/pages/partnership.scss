@@ -6,11 +6,11 @@ body.page-partnership main {
   padding-top: 73px;
 }
 
-main:has(.partnership-page) .breadcrumbs-section {
+main.partnership-page .breadcrumbs-section {
   margin-top: 18px;
 }
 
-main:has(.partnership-page) .breadcrumbs {
+main.partnership-page .breadcrumbs {
   font-size: 16px;
   line-height: 19px;
   letter-spacing: 0.02em;
@@ -269,12 +269,12 @@ main:has(.partnership-page) .breadcrumbs {
     padding-top: 73px;
   }
 
-  main:has(.partnership-page) .breadcrumbs-section {
-    margin-top: 12px;
+  main.partnership-page .breadcrumbs-section {
+    margin-top: 9px;
   }
 
   .partnership-page__hero {
-    margin-top: 44px;
+    margin-top: 19px;
   }
 
   .partnership-page__title,
@@ -310,14 +310,14 @@ main:has(.partnership-page) .breadcrumbs {
 
 @media screen and (max-width: 768px) {
   body.page-partnership main {
-    padding-top: 37px;
+    padding-top: 44px;
   }
 
-  main:has(.partnership-page) .breadcrumbs-section {
+  main.partnership-page .breadcrumbs-section {
     margin-top: 9px;
   }
 
-  main:has(.partnership-page) .breadcrumbs {
+  main.partnership-page .breadcrumbs {
     font-size: 12px;
     line-height: 10px;
     letter-spacing: 0.02em;

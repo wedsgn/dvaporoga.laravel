@@ -33,12 +33,24 @@
 
 .footer-logo {
   display: inline-block;
+  text-decoration: none;
 }
 
 .footer-logo img {
   display: block;
   width: 152px;
   height: auto;
+}
+
+.footer-logo__text {
+  display: block;
+  color: #fff;
+  font-family: "Gilroy", sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .footer-main__descr {
@@ -317,9 +329,9 @@
     border-bottom: 1px solid #323232;
   }
 
-  .footer-logo img {
+  .footer-logo__text {
     margin: 0 auto;
-    width: 152px;
+    font-size: 24px;
   }
 
   .footer-main__descr {

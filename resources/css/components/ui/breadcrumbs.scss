@@ -21,11 +21,20 @@
 
 @media screen and (max-width: 1200px) {
   .breadcrumbs-section {
-    margin-top: 68px;
+    margin-top: 82px;
+    padding-top: 0;
+  }
+
+  .breadcrumbs-section + * {
+    margin-top: 19px !important;
   }
 }
 
 @media screen and (max-width: 768px) {
+  .breadcrumbs-section {
+    margin-top: 53px;
+  }
+
   .breadcrumbs {
     flex-wrap: wrap;
     gap: 4px 8px;
@@ -35,11 +44,11 @@
 }
 
 main:has(.breadcrumbs-section) .car-single__hero-section {
-  margin-top: 20px;
+  margin-top: 19px;
 }
 
 @media (max-width: 768px) {
   main:has(.breadcrumbs-section) .car-single__hero-section {
-    margin-top: 20px;
+    margin-top: 19px;
   }
 }

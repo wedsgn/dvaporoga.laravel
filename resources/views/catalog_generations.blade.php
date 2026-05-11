@@ -3,7 +3,7 @@
 @section('content')
   <main>
     {{ Breadcrumbs::render('car_model.show', $car_make, $car_model) }}
-    <section class="catalog-page-section">
+    <section class="catalog-page-section catalog-generations-page">
       <div class="container">
         <div class="catalog-page-top --model">
           <div class="catalog-page-top__left">

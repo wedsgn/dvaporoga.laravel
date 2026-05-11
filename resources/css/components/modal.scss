@@ -411,10 +411,10 @@
   padding-left: 36px;
   color: #383838;
   font-family: "Golos Text", "Golos", sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%;
+  line-height: 135%;
 }
 
 .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy a {
@@ -517,8 +517,8 @@
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label {
     max-width: none;
     padding-left: 6.9cqw;
-    font-size: clamp(12px, 3.45cqw, 16px);
-    line-height: 140%;
+    font-size: 12px;
+    line-height: 130%;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label:before {

@@ -3,7 +3,7 @@
         <div class="header__wrap">
             <div class="header__left">
                 <a href="/" class="header__logo">
-                    <img src="/images/2p.svg" alt="Логотип два порога" />
+                    <span class="header__logo-text">ДВАПОРОГА</span>
                 </a>
 
                 <div class="header-div"></div>
