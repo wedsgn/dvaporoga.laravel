@@ -13,6 +13,8 @@ class YandexFeedBuilder
 {
     protected string $filePath;
 
+    protected string $catalogFallbackPath = 'images/hero-car.webp';
+
     public function __construct()
     {
         $this->filePath = storage_path('app/feeds/yandex.yml');
@@ -40,6 +42,7 @@ class YandexFeedBuilder
         $this->writeCurrencies($xml);
         $this->writeCategories($xml);
         $this->writeOffers($xml);
+        $this->writeCollections($xml);
 
         $xml->endElement(); // shop
         $xml->endElement(); // yml_catalog
@@ -65,9 +68,6 @@ class YandexFeedBuilder
         $xml->startElement('categories');
 
         $this->writeCategory($xml, 1, 'Автодетали');
-        $this->writeCategory($xml, 2, 'Каталог по марке', 1);
-        $this->writeCategory($xml, 3, 'Каталог по модели', 2);
-        $this->writeCategory($xml, 4, 'Каталог по автомобилю', 3);
         $this->writeCategory($xml, 10, 'Детали', 1);
         $this->writeCategory($xml, 11, 'Пороги', 10);
 
@@ -77,10 +77,10 @@ class YandexFeedBuilder
     protected function writeCategory(XMLWriter $xml, int $id, string $title, ?int $parentId = null): void
     {
         $xml->startElement('category');
-        $xml->writeAttribute('id', (string)$id);
+        $xml->writeAttribute('id', (string) $id);
 
         if ($parentId !== null) {
-            $xml->writeAttribute('parentId', (string)$parentId);
+            $xml->writeAttribute('parentId', (string) $parentId);
         }
 
         $xml->text($title);
@@ -91,154 +91,143 @@ class YandexFeedBuilder
     {
         $xml->startElement('offers');
 
-        $this->writeMakeOffers($xml);
-        $this->writeModelOffers($xml);
-        $this->writeCarAndProductOffers($xml);
+        $this->carFeedQuery()->chunk(50, function ($cars) use ($xml) {
+            foreach ($cars as $car) {
+                if (!$car->car_model || !$car->car_model->car_make) {
+                    continue;
+                }
+
+                /** @var Collection $products */
+                $products = $car->products
+                    ->filter(fn($product) => (int) ($product->price ?? 0) > 0)
+                    ->values();
+
+                foreach ($products as $product) {
+                    $this->writeProductOffer($xml, $car, $product);
+                }
+            }
+        });
 
         $xml->endElement();
     }
 
-    protected function writeMakeOffers(XMLWriter $xml): void
+    protected function writeCollections(XMLWriter $xml): void
+    {
+        $xml->startElement('collections');
+
+        $this->writeMakeCollections($xml);
+        $this->writeModelCollections($xml);
+        $this->writeCarCollections($xml);
+
+        $xml->endElement();
+    }
+
+    protected function writeMakeCollections(XMLWriter $xml): void
     {
         CarMake::query()
             ->visible()
-            ->whereHas('car_models.cars.products', fn($q) => $q->where('price', '>', 0))
+            ->whereHas('car_models.cars.products', fn($query) => $query->where('price', '>', 0))
             ->orderBy('id')
             ->chunk(50, function ($makes) use ($xml) {
+                $imageMap = $this->firstValidCarImagesByMake($makes->pluck('id')->all());
+
                 foreach ($makes as $make) {
-                    $price = $this->getMinPriceForMake($make);
-
-                    if ($price <= 0) {
-                        continue;
-                    }
-
-                    $this->writeLandingOffer(
+                    $this->writeCollection(
                         xml: $xml,
                         id: 'make-' . $make->id,
-                        categoryId: 2,
-                        name: $this->normalizeText('Кузовные детали для ' . $make->title),
                         url: $this->buildMakeUrl($make),
-                        price: $price,
-                        picture: $this->resolveMakeImage($make),
+                        name: $this->normalizeText('Кузовные детали для ' . $make->title),
+                        picture: $this->resolveMakeCollectionImage($make, $imageMap),
                         description: $this->buildMakeDescription($make),
-                        vendor: (string)$make->title,
-                        model: '',
-                        params: [
-                            'Тип страницы' => 'Марка',
-                            'Марка' => (string)$make->title,
-                        ]
                     );
                 }
             });
     }
 
-    protected function writeModelOffers(XMLWriter $xml): void
+    protected function writeModelCollections(XMLWriter $xml): void
     {
         CarModel::query()
             ->with('car_make')
-            ->whereHas('car_make', fn($q) => $q->visible())
-            ->whereHas('cars.products', fn($q) => $q->where('price', '>', 0))
+            ->whereHas('car_make', fn($query) => $query->visible())
+            ->whereHas('cars.products', fn($query) => $query->where('price', '>', 0))
             ->orderBy('id')
             ->chunk(50, function ($models) use ($xml) {
+                $imageMap = $this->firstValidCarImagesByModel($models->pluck('id')->all());
+
                 foreach ($models as $model) {
                     if (!$model->car_make) {
                         continue;
                     }
 
-                    $price = $this->getMinPriceForModel($model);
-
-                    if ($price <= 0) {
-                        continue;
-                    }
-
-                    $this->writeLandingOffer(
+                    $this->writeCollection(
                         xml: $xml,
                         id: 'model-' . $model->id,
-                        categoryId: 3,
-                        name: $this->normalizeText('Кузовные детали для ' . $model->car_make->title . ' ' . $model->title),
                         url: $this->buildModelUrl($model),
-                        price: $price,
-                        picture: $this->resolveModelImage($model),
+                        name: $this->normalizeText('Кузовные детали для ' . $model->car_make->title . ' ' . $model->title),
+                        picture: $this->resolveModelCollectionImage($model, $imageMap),
                         description: $this->buildModelDescription($model),
-                        vendor: (string)$model->car_make->title,
-                        model: (string)$model->title,
-                        params: [
-                            'Тип страницы' => 'Модель',
-                            'Марка' => (string)$model->car_make->title,
-                            'Модель' => (string)$model->title,
-                        ]
                     );
                 }
             });
     }
 
-    protected function writeCarAndProductOffers(XMLWriter $xml): void
+    protected function writeCarCollections(XMLWriter $xml): void
     {
-        Car::query()
-            ->with([
-                'car_model.car_make',
-                'products' => fn($q) => $q->withPivot(['image', 'image_mob'])->orderBy('products.id'),
-            ])
-            ->whereHas('products', fn($q) => $q->where('price', '>', 0))
-            ->orderBy('id')
-            ->chunk(50, function ($cars) use ($xml) {
-                foreach ($cars as $car) {
-                    if (!$car->car_model || !$car->car_model->car_make) {
-                        continue;
-                    }
+        $this->carFeedQuery()->chunk(50, function ($cars) use ($xml) {
+            $modelIds = $cars->pluck('car_model_id')->filter()->unique()->values()->all();
+            $makeIds = $cars
+                ->pluck('car_model.car_make.id')
+                ->filter()
+                ->unique()
+                ->values()
+                ->all();
 
-                    /** @var Collection $products */
-                    $products = $car->products
-                        ->filter(fn($product) => (int)($product->price ?? 0) > 0)
-                        ->values();
+            $modelImageMap = $this->firstValidCarImagesByModel($modelIds);
+            $makeImageMap = $this->firstValidCarImagesByMake($makeIds);
 
-                    if ($products->isEmpty()) {
-                        continue;
-                    }
-
-                    $this->writeCatalogOffer($xml, $car, $products);
-
-                    foreach ($products as $product) {
-                        $this->writeProductOffer($xml, $car, $product);
-                    }
+            foreach ($cars as $car) {
+                if (!$car->car_model || !$car->car_model->car_make) {
+                    continue;
                 }
-            });
+
+                /** @var Collection $products */
+                $products = $car->products
+                    ->filter(fn($product) => (int) ($product->price ?? 0) > 0)
+                    ->values();
+
+                if ($products->isEmpty()) {
+                    continue;
+                }
+
+                $this->writeCollection(
+                    xml: $xml,
+                    id: 'car-' . $car->id,
+                    url: $this->buildCarUrl($car),
+                    name: $this->buildCatalogName($car),
+                    picture: $this->resolveCatalogCollectionImage($car, $modelImageMap, $makeImageMap),
+                    description: $this->buildCatalogDescription($car, $products),
+                );
+            }
+        });
     }
 
-    protected function writeLandingOffer(
+    protected function writeCollection(
         XMLWriter $xml,
         string $id,
-        int $categoryId,
-        string $name,
         string $url,
-        int $price,
+        string $name,
         string $picture,
-        string $description,
-        string $vendor = '',
-        string $model = '',
-        array $params = []
+        string $description
     ): void {
-        $xml->startElement('offer');
+        $xml->startElement('collection');
         $xml->writeAttribute('id', $id);
-        $xml->writeAttribute('available', 'true');
-
-        $xml->writeElement('name', $name);
         $xml->writeElement('url', $url);
-        $xml->writeElement('price', (string)max(1, $price));
-        $xml->writeElement('currencyId', 'RUB');
-        $xml->writeElement('categoryId', (string)$categoryId);
 
         if ($picture !== '') {
             $xml->writeElement('picture', $picture);
         }
 
-        if ($vendor !== '') {
-            $xml->writeElement('vendor', $vendor);
-        }
-
-        if ($model !== '') {
-            $xml->writeElement('model', $model);
-        }
+        $xml->writeElement('name', $name);
 
         if ($description !== '') {
             $xml->startElement('description');
@@ -246,44 +235,24 @@ class YandexFeedBuilder
             $xml->endElement();
         }
 
-        foreach ($params as $paramName => $paramValue) {
-            $this->writeParam($xml, (string)$paramName, (string)$paramValue);
-        }
-
         $xml->endElement();
     }
 
-    protected function writeCatalogOffer(XMLWriter $xml, $car, Collection $products): void
+    protected function carFeedQuery()
     {
-        $vendor = (string)($car->car_model->car_make->title ?? '');
-        $model = (string)($car->car_model->title ?? '');
-        $fullModel = trim($model . ' ' . (string)($car->generation ?? ''));
-
-        $this->writeLandingOffer(
-            xml: $xml,
-            id: 'catalog-' . $car->id,
-            categoryId: 4,
-            name: $this->buildCatalogName($car),
-            url: $this->buildCarUrl($car),
-            price: $this->getCatalogMinPrice($products),
-            picture: $this->resolveCatalogImage($car, $products),
-            description: $this->buildCatalogDescription($car, $products),
-            vendor: $vendor,
-            model: $fullModel,
-            params: [
-                'Тип страницы' => 'Автомобиль',
-                'Марка' => $vendor,
-                'Модель' => $model,
-                'Поколение' => (string)($car->generation ?? ''),
-                'Годы выпуска' => (string)($car->years ?? ''),
-                'Кузов' => (string)($car->body ?? ''),
-            ]
-        );
+        return Car::query()
+            ->with([
+                'car_model.car_make',
+                'products' => fn($query) => $query->withPivot(['image', 'image_mob'])->orderBy('products.id'),
+            ])
+            ->whereHas('car_model.car_make', fn($query) => $query->visible())
+            ->whereHas('products', fn($query) => $query->where('price', '>', 0))
+            ->orderBy('id');
     }
 
     protected function writeProductOffer(XMLWriter $xml, $car, $product): void
     {
-        $price = (int)($product->price ?? 0);
+        $price = (int) ($product->price ?? 0);
 
         if ($price <= 0) {
             return;
@@ -297,25 +266,41 @@ class YandexFeedBuilder
 
         $xml->writeElement('name', $name);
         $xml->writeElement('url', $this->buildProductUrl($car, $product));
-        $xml->writeElement('price', (string)$price);
+        $xml->writeElement('price', (string) $price);
 
         $old = $this->getOldPrice($product);
         if ($old !== null && $old > $price) {
-            $xml->writeElement('oldprice', (string)$old);
+            $xml->writeElement('oldprice', (string) $old);
         }
 
         $xml->writeElement('currencyId', 'RUB');
-        $xml->writeElement('categoryId', (string)$this->resolveCategoryId($product));
+        $xml->writeElement('categoryId', (string) $this->resolveCategoryId($product));
         $xml->writeElement('picture', $this->resolveImage($car, $product));
 
-        $vendor = (string)($car->car_model->car_make->title ?? '');
+        $vendor = (string) ($car->car_model->car_make->title ?? '');
         if ($vendor !== '') {
             $xml->writeElement('vendor', $vendor);
         }
 
-        $model = (string)($car->car_model->title ?? '');
+        $model = (string) ($car->car_model->title ?? '');
         if ($model !== '') {
-            $xml->writeElement('model', trim($model . ' ' . (string)($car->generation ?? '')));
+            $xml->writeElement('model', trim($model . ' ' . (string) ($car->generation ?? '')));
+        }
+
+        $makeId = (int) ($car->car_model->car_make->id ?? 0);
+        $modelId = (int) ($car->car_model->id ?? 0);
+        $carId = (int) ($car->id ?? 0);
+
+        if ($makeId > 0) {
+            $xml->writeElement('collectionId', 'make-' . $makeId);
+        }
+
+        if ($modelId > 0) {
+            $xml->writeElement('collectionId', 'model-' . $modelId);
+        }
+
+        if ($carId > 0) {
+            $xml->writeElement('collectionId', 'car-' . $carId);
         }
 
         $desc = $this->buildDescription($car, $product);
@@ -326,22 +311,22 @@ class YandexFeedBuilder
         }
 
         $this->writeParam($xml, 'Тип страницы', 'Деталь');
-        $this->writeParam($xml, 'Деталь', (string)($product->title ?? ''));
+        $this->writeParam($xml, 'Деталь', (string) ($product->title ?? ''));
         $this->writeParam($xml, 'Марка', $vendor);
-        $this->writeParam($xml, 'Модель', (string)($car->car_model->title ?? ''));
-        $this->writeParam($xml, 'Поколение', (string)($car->generation ?? ''));
-        $this->writeParam($xml, 'Годы выпуска', (string)($car->years ?? ''));
-        $this->writeParam($xml, 'Кузов', (string)($car->body ?? ''));
+        $this->writeParam($xml, 'Модель', (string) ($car->car_model->title ?? ''));
+        $this->writeParam($xml, 'Поколение', (string) ($car->generation ?? ''));
+        $this->writeParam($xml, 'Годы выпуска', (string) ($car->years ?? ''));
+        $this->writeParam($xml, 'Кузов', (string) ($car->body ?? ''));
 
         $xml->endElement();
     }
 
     protected function buildCatalogName($car): string
     {
-        $make = (string)($car->car_model->car_make->title ?? '');
-        $model = (string)($car->car_model->title ?? '');
-        $generation = trim((string)($car->generation ?? ''));
-        $years = trim((string)($car->years ?? ''));
+        $make = (string) ($car->car_model->car_make->title ?? '');
+        $model = (string) ($car->car_model->title ?? '');
+        $generation = trim((string) ($car->generation ?? ''));
+        $years = trim((string) ($car->years ?? ''));
         $body = $this->bodyWithDoors($car);
 
         return $this->normalizeText(implode(' ', array_filter([
@@ -351,94 +336,64 @@ class YandexFeedBuilder
             $generation,
             $years !== '' ? "({$years})" : null,
             $body,
-        ], fn($v) => $v !== null && trim((string)$v) !== '')));
+        ], fn($value) => $value !== null && trim((string) $value) !== '')));
     }
 
     protected function buildProductName($car, $product): string
     {
-        $make  = (string)($car->car_model->car_make->title ?? '');
-        $model = (string)($car->car_model->title ?? '');
-        $generation = trim((string)($car->generation ?? ''));
-        $years = trim((string)($car->years ?? ''));
+        $make = (string) ($car->car_model->car_make->title ?? '');
+        $model = (string) ($car->car_model->title ?? '');
+        $generation = trim((string) ($car->generation ?? ''));
+        $years = trim((string) ($car->years ?? ''));
         $body = $this->bodyWithDoors($car);
 
         return $this->normalizeText(implode(' ', array_filter([
-            trim((string)($product->title ?? '')),
+            trim((string) ($product->title ?? '')),
             $make,
             $model,
             $generation,
             $years !== '' ? "({$years})" : null,
             $body,
-        ], fn($v) => $v !== null && trim((string)$v) !== '')));
+        ], fn($value) => $value !== null && trim((string) $value) !== '')));
     }
 
     protected function buildMakeDescription(CarMake $make): string
     {
-        $models = $make->car_models()
-            ->whereHas('cars.products', fn($q) => $q->where('price', '>', 0))
-            ->orderBy('title')
-            ->limit(20)
-            ->pluck('title')
-            ->filter()
-            ->implode(', ');
-
-        $text = 'Каталог кузовных деталей для ' . $make->title . '. ';
-
-        if ($models !== '') {
-            $text .= 'Модели: ' . $models . '. ';
-        }
-
-        $text .= 'Пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.';
-
-        return trim($text);
+        return sprintf(
+            'Каталог кузовных деталей для %s. Пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.',
+            $make->title
+        );
     }
 
     protected function buildModelDescription(CarModel $model): string
     {
-        $cars = $model->cars()
-            ->whereHas('products', fn($q) => $q->where('price', '>', 0))
-            ->orderBy('years')
-            ->limit(20)
-            ->get()
-            ->map(fn($car) => $this->normalizeText(implode(' ', array_filter([
-                $car->generation,
-                $car->years ? '(' . $car->years . ')' : null,
-                $this->bodyWithDoors($car),
-            ]))))
-            ->filter()
-            ->implode(', ');
-
-        $text = 'Каталог кузовных деталей для ' . $model->car_make->title . ' ' . $model->title . '. ';
-
-        if ($cars !== '') {
-            $text .= 'Поколения и кузова: ' . $cars . '. ';
-        }
-
-        $text .= 'Пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.';
-
-        return trim($text);
+        return sprintf(
+            'Каталог кузовных деталей для %s %s. Пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.',
+            $model->car_make->title,
+            $model->title
+        );
     }
 
     protected function buildCatalogDescription($car, Collection $products): string
     {
-        $make = (string)($car->car_model->car_make->title ?? '');
-        $model = (string)($car->car_model->title ?? '');
-        $generation = trim((string)($car->generation ?? ''));
-        $years = trim((string)($car->years ?? ''));
+        $make = (string) ($car->car_model->car_make->title ?? '');
+        $model = (string) ($car->car_model->title ?? '');
+        $generation = trim((string) ($car->generation ?? ''));
+        $years = trim((string) ($car->years ?? ''));
         $body = $this->bodyWithDoors($car);
 
-        $carName = $this->normalizeText(implode(' ', array_filter([
+        $carName = rtrim($this->normalizeText(implode(' ', array_filter([
             $make,
             $model,
             $generation,
             $years !== '' ? "({$years})" : null,
             $body,
-        ])));
+        ]))), '. ');
 
         $productNames = $products
             ->pluck('title')
             ->filter()
-            ->map(fn($title) => trim((string)$title))
+            ->map(fn($title) => trim((string) $title))
             ->unique()
             ->values()
             ->take(20)
@@ -455,44 +410,6 @@ class YandexFeedBuilder
         return trim($text);
     }
 
-    protected function getMinPriceForMake(CarMake $make): int
-    {
-        return (int)(DB::table('products')
-            ->join('car_product', 'products.id', '=', 'car_product.product_id')
-            ->join('cars', 'cars.id', '=', 'car_product.car_id')
-            ->join('car_models', 'car_models.id', '=', 'cars.car_model_id')
-            ->where('car_models.car_make_id', $make->id)
-            ->whereNull('products.deleted_at')
-            ->whereNull('cars.deleted_at')
-            ->whereNull('car_models.deleted_at')
-            ->where('products.price', '>', 0)
-            ->min('products.price') ?? 0);
-    }
-
-    protected function getMinPriceForModel(CarModel $model): int
-    {
-        return (int)(DB::table('products')
-            ->join('car_product', 'products.id', '=', 'car_product.product_id')
-            ->join('cars', 'cars.id', '=', 'car_product.car_id')
-            ->where('cars.car_model_id', $model->id)
-            ->whereNull('products.deleted_at')
-            ->whereNull('cars.deleted_at')
-            ->where('products.price', '>', 0)
-            ->min('products.price') ?? 0);
-    }
-
-    protected function getCatalogMinPrice(Collection $products): int
-    {
-        $min = $products
-            ->pluck('price')
-            ->filter(fn($price) => $price !== null && $price !== '')
-            ->map(fn($price) => (int)$price)
-            ->filter(fn($price) => $price > 0)
-            ->min();
-
-        return (int)($min ?? 0);
-    }
-
     protected function buildMakeUrl(CarMake $make): string
     {
         return $this->absoluteUrl('/katalog/' . $make->slug);
@@ -503,7 +420,7 @@ class YandexFeedBuilder
         return $this->absoluteUrl(sprintf(
             '/katalog/%s/%s',
             $model->car_make->slug,
-            $model->slug
+            $model->slug,
         ));
     }
 
@@ -513,84 +430,143 @@ class YandexFeedBuilder
             '/katalog/%s/%s/%s',
             $car->car_model->car_make->slug,
             $car->car_model->slug,
-            $car->slug
+            $car->slug,
         ));
     }
 
     protected function buildProductUrl($car, $product): string
     {
-        return $this->buildCarUrl($car) . '?part=' . rawurlencode((string)$product->slug);
+        return $this->buildCarUrl($car) . '?part=' . rawurlencode((string) $product->slug);
     }
 
-    protected function resolveMakeImage(CarMake $make): string
+    protected function resolveMakeCollectionImage(CarMake $make, array $imageMap): string
     {
-        if (!empty($make->image) && $make->image !== 'default') {
-            return $this->toPublicUrl((string)$make->image);
+        if (isset($imageMap[$make->id])) {
+            return $this->toPublicUrl($imageMap[$make->id]);
         }
 
-        $car = Car::query()
-            ->whereHas('car_model', fn($q) => $q->where('car_make_id', $make->id))
-            ->whereNotNull('image')
-            ->where('image', '<>', '')
-            ->where('image', '<>', 'default')
-            ->orderBy('id')
-            ->first();
-
-        if ($car) {
-            return $this->toPublicUrl((string)$car->image);
-        }
-
-        return $this->fallbackImage();
+        return $this->catalogFallbackImage();
     }
 
-    protected function resolveModelImage(CarModel $model): string
+    protected function resolveModelCollectionImage(CarModel $model, array $imageMap): string
     {
-        if (!empty($model->image) && $model->image !== 'default') {
-            return $this->toPublicUrl((string)$model->image);
+        if (isset($imageMap[$model->id])) {
+            return $this->toPublicUrl($imageMap[$model->id]);
         }
 
-        $car = $model->cars()
-            ->whereNotNull('image')
-            ->where('image', '<>', '')
-            ->where('image', '<>', 'default')
-            ->orderBy('id')
-            ->first();
-
-        if ($car) {
-            return $this->toPublicUrl((string)$car->image);
-        }
-
-        return $this->fallbackImage();
+        return $this->catalogFallbackImage();
     }
 
-    protected function resolveCatalogImage($car, Collection $products): string
+    protected function resolveCatalogCollectionImage($car, array $modelImageMap, array $makeImageMap): string
     {
-        $carImage = (string)($car->image ?? '');
-        if ($carImage !== '' && $carImage !== 'default') {
+        $carImage = trim((string) ($car->image ?? ''));
+        if ($this->hasValidImagePath($carImage)) {
             return $this->toPublicUrl($carImage);
         }
 
-        $firstProduct = $products->first();
-        if ($firstProduct) {
-            return $this->resolveImage($car, $firstProduct);
+        $modelId = (int) ($car->car_model_id ?? 0);
+        if ($modelId > 0 && isset($modelImageMap[$modelId])) {
+            return $this->toPublicUrl($modelImageMap[$modelId]);
         }
 
-        return $this->fallbackImage();
+        $makeId = (int) ($car->car_model->car_make->id ?? 0);
+        if ($makeId > 0 && isset($makeImageMap[$makeId])) {
+            return $this->toPublicUrl($makeImageMap[$makeId]);
+        }
+
+        return $this->catalogFallbackImage();
     }
 
     protected function resolveImage($car, $product): string
     {
-        $img = $product->pivot->image ?? null;
-        if (!empty($img) && $img !== 'default') {
-            return $this->toPublicUrl((string)$img);
+        $image = $product->pivot->image ?? null;
+        if ($this->hasValidImagePath($image)) {
+            return $this->toPublicUrl((string) $image);
         }
 
-        $img = $product->image ?? null;
-        if (!empty($img) && $img !== 'default') {
-            return $this->toPublicUrl((string)$img);
+        $image = $product->image ?? null;
+        if ($this->hasValidImagePath($image)) {
+            return $this->toPublicUrl((string) $image);
         }
 
         return $this->defaultProductImage($product);
+    }
+
+    protected function firstValidCarImagesByMake(array $makeIds): array
+    {
+        $makeIds = array_values(array_unique(array_filter(array_map('intval', $makeIds))));
+        if ($makeIds === []) {
+            return [];
+        }
+
+        $firstCarIds = $this->validCarsWithImagesQuery()
+            ->whereIn('car_models.car_make_id', $makeIds)
+            ->selectRaw('car_models.car_make_id as group_id, MIN(cars.id) as car_id')
+            ->groupBy('car_models.car_make_id')
+            ->pluck('car_id', 'group_id');
+
+        return $this->mapGroupedCarIdsToImages($firstCarIds);
+    }
+
+    protected function firstValidCarImagesByModel(array $modelIds): array
+    {
+        $modelIds = array_values(array_unique(array_filter(array_map('intval', $modelIds))));
+        if ($modelIds === []) {
+            return [];
+        }
+
+        $firstCarIds = $this->validCarsWithImagesQuery()
+            ->whereIn('cars.car_model_id', $modelIds)
+            ->selectRaw('cars.car_model_id as group_id, MIN(cars.id) as car_id')
+            ->groupBy('cars.car_model_id')
+            ->pluck('car_id', 'group_id');
+
+        return $this->mapGroupedCarIdsToImages($firstCarIds);
+    }
+
+    protected function validCarsWithImagesQuery()
+    {
+        return DB::table('cars')
+            ->join('car_models', 'car_models.id', '=', 'cars.car_model_id')
+            ->join('car_makes', 'car_makes.id', '=', 'car_models.car_make_id')
+            ->join('car_product', 'car_product.car_id', '=', 'cars.id')
+            ->join('products', 'products.id', '=', 'car_product.product_id')
+            ->whereNull('cars.deleted_at')
+            ->whereNull('car_models.deleted_at')
+            ->whereNull('car_makes.deleted_at')
+            ->whereNull('products.deleted_at')
+            ->where('car_makes.is_hidden', false)
+            ->where('products.price', '>', 0)
+            ->whereNotNull('cars.image')
+            ->where('cars.image', '<>', '')
+            ->where('cars.image', '<>', 'default');
+    }
+
+    protected function mapGroupedCarIdsToImages($groupedCarIds): array
+    {
+        $groupedCarIds = collect($groupedCarIds)
+            ->map(fn($carId) => (int) $carId)
+            ->filter(fn($carId) => $carId > 0);
+
+        if ($groupedCarIds->isEmpty()) {
+            return [];
+        }
+
+        $imagesByCarId = DB::table('cars')
+            ->whereIn('id', $groupedCarIds->unique()->values()->all())
+            ->pluck('image', 'id');
+
+        return $groupedCarIds
+            ->mapWithKeys(function ($carId, $groupId) use ($imagesByCarId) {
+                $image = (string) ($imagesByCarId[$carId] ?? '');
+
+                if (!$this->hasValidImagePath($image)) {
+                    return [];
+                }
+
+                return [(int) $groupId => $image];
+            })
+            ->all();
     }
 
     protected function toPublicUrl(string $path): string
@@ -598,81 +574,129 @@ class YandexFeedBuilder
         $path = trim($path);
 
         if ($path === '') {
-            return $this->fallbackImage();
+            return '';
+        }
+
+        $image = $this->resolvePublicImageData($path);
+
+        return $this->versionedImageUrl($image['url'], $image['sourcePath']);
+    }
+
+    protected function resolvePublicImageData(string $path): array
+    {
+        $path = trim($path);
+
+        if ($path === '') {
+            return ['url' => '', 'sourcePath' => null];
         }
 
         if (preg_match('~^https?://~i', $path)) {
-            return $path;
+            return ['url' => $path, 'sourcePath' => null];
         }
 
-        $path = ltrim($path, '/');
+        $normalized = ltrim($path, '/');
 
-        if (str_starts_with($path, 'storage/uploads/')) {
-            return $this->absoluteUrl($path);
+        if (str_starts_with($normalized, 'products_default/')) {
+            return [
+                'url' => $this->absoluteUrl('storage/' . $normalized),
+                'sourcePath' => storage_path('app/public/' . $normalized),
+            ];
         }
 
-        if (str_starts_with($path, 'products_default/')) {
-            return $this->absoluteUrl('storage/' . $path);
+        if (str_starts_with($normalized, 'storage/')) {
+            $storageRelative = substr($normalized, strlen('storage/'));
+
+            return [
+                'url' => $this->absoluteUrl($normalized),
+                'sourcePath' => storage_path('app/public/' . $storageRelative),
+            ];
         }
 
-        if (str_starts_with($path, 'storage/')) {
-            return $this->absoluteUrl($path);
+        if (str_starts_with($normalized, 'uploads/')) {
+            return [
+                'url' => $this->absoluteUrl('storage/' . $normalized),
+                'sourcePath' => storage_path('app/public/' . $normalized),
+            ];
         }
 
-        if (str_starts_with($path, 'images/')) {
-            return $this->absoluteUrl($path);
+        if (str_starts_with($normalized, 'images/')) {
+            return [
+                'url' => $this->absoluteUrl($normalized),
+                'sourcePath' => public_path($normalized),
+            ];
         }
 
-        return $this->absoluteUrl('storage/' . $path);
+        return [
+            'url' => $this->absoluteUrl('storage/' . $normalized),
+            'sourcePath' => storage_path('app/public/' . $normalized),
+        ];
+    }
+
+    protected function versionedImageUrl(string $url, ?string $sourcePath = null): string
+    {
+        if ($url === '' || $sourcePath === null || !is_file($sourcePath)) {
+            return $url;
+        }
+
+        $mtime = @filemtime($sourcePath);
+        if ($mtime === false) {
+            return $url;
+        }
+
+        return str_contains($url, '?')
+            ? $url . '&v=' . $mtime
+            : $url . '?v=' . $mtime;
     }
 
     protected function defaultProductImage($product): string
     {
-        $t = mb_strtolower(trim((string)($product->title ?? '')));
+        $title = mb_strtolower(trim((string) ($product->title ?? '')));
 
-        if (str_contains($t, 'лонжерон')) {
-            return $this->absoluteUrl('storage/products_default/lonzeron.png');
+        if (str_contains($title, 'лонжерон')) {
+            return $this->toPublicUrl('products_default/lonzeron.png');
         }
 
-        if (str_contains($t, 'торцев') || str_contains($t, 'заглушк')) {
-            return $this->absoluteUrl('storage/products_default/torcevaia-zagluska.jpeg');
+        if (str_contains($title, 'торцев') || str_contains($title, 'заглушк')) {
+            return $this->toPublicUrl('products_default/torcevaia-zagluska.jpeg');
         }
 
-        if (str_contains($t, 'ремкомплект') && str_contains($t, 'пола')) {
-            return $this->absoluteUrl('storage/products_default/remkomplekt-pola.jpeg');
+        if (str_contains($title, 'ремкомплект') && str_contains($title, 'пола')) {
+            return $this->toPublicUrl('products_default/remkomplekt-pola.jpeg');
         }
 
-        if (str_contains($t, 'усилител') || str_contains($t, 'соединител')) {
-            return $this->absoluteUrl('storage/products_default/usilitel-soedinitel-porogov.png');
+        if (str_contains($title, 'усилител') || str_contains($title, 'соединител')) {
+            return $this->toPublicUrl('products_default/usilitel-soedinitel-porogov.png');
         }
 
-        if (str_contains($t, 'пенк') || str_contains($t, 'пена')) {
-            if (str_contains($t, 'багаж')) {
-                return $this->absoluteUrl('storage/products_default/penka-bagaznika.jpg');
+        if (str_contains($title, 'пенк') || str_contains($title, 'пена')) {
+            if (str_contains($title, 'багаж')) {
+                return $this->toPublicUrl('products_default/penka-bagaznika.jpg');
             }
-            if (str_contains($t, 'перед') && str_contains($t, 'двер')) {
-                return $this->absoluteUrl('storage/products_default/penka-perednei-dveri.jpg');
+            if (str_contains($title, 'перед') && str_contains($title, 'двер')) {
+                return $this->toPublicUrl('products_default/penka-perednei-dveri.jpg');
             }
-            if (str_contains($t, 'зад') && str_contains($t, 'двер')) {
-                return $this->absoluteUrl('storage/products_default/penka-zadnei-dveri.jpg');
+            if (str_contains($title, 'зад') && str_contains($title, 'двер')) {
+                return $this->toPublicUrl('products_default/penka-zadnei-dveri.jpg');
             }
-            return $this->absoluteUrl('storage/products_default/penka-bagaznika.jpg');
+
+            return $this->toPublicUrl('products_default/penka-bagaznika.jpg');
         }
 
-        if (str_contains($t, 'арка')) {
-            if (str_contains($t, 'карман') && str_contains($t, 'зад')) {
-                return $this->absoluteUrl('storage/products_default/arka-karman-zadniaia.jpg');
+        if (str_contains($title, 'арка')) {
+            if (str_contains($title, 'карман') && str_contains($title, 'зад')) {
+                return $this->toPublicUrl('products_default/arka-karman-zadniaia.jpg');
             }
-            if (str_contains($t, 'перед')) {
-                return $this->absoluteUrl('storage/products_default/arka-peredniaia.jpg');
+            if (str_contains($title, 'перед')) {
+                return $this->toPublicUrl('products_default/arka-peredniaia.jpg');
             }
-            if (str_contains($t, 'внутрен') && str_contains($t, 'универс')) {
-                return $this->absoluteUrl('storage/products_default/arka-vnutrenniaia-universalnaia.jpeg');
+            if (str_contains($title, 'внутрен') && str_contains($title, 'универс')) {
+                return $this->toPublicUrl('products_default/arka-vnutrenniaia-universalnaia.jpeg');
             }
-            if (str_contains($t, 'внутрен')) {
-                return $this->absoluteUrl('storage/products_default/arka-vnutrenniaia.jpeg');
+            if (str_contains($title, 'внутрен')) {
+                return $this->toPublicUrl('products_default/arka-vnutrenniaia.jpeg');
             }
-            return $this->absoluteUrl('storage/products_default/arka-zadniaia.jpg');
+
+            return $this->toPublicUrl('products_default/arka-zadniaia.jpg');
         }
 
         return $this->fallbackImage();
@@ -680,7 +704,12 @@ class YandexFeedBuilder
 
     protected function fallbackImage(): string
     {
-        return $this->absoluteUrl('storage/products_default/porog.png');
+        return $this->toPublicUrl('products_default/porog.png');
+    }
+
+    protected function catalogFallbackImage(): string
+    {
+        return $this->toPublicUrl($this->catalogFallbackPath);
     }
 
     protected function writeParam(XMLWriter $xml, string $name, string $value): void
@@ -698,7 +727,7 @@ class YandexFeedBuilder
 
     protected function resolveCategoryId($product): int
     {
-        $title = mb_strtolower((string)($product->title ?? ''));
+        $title = mb_strtolower((string) ($product->title ?? ''));
 
         if (str_contains($title, 'порог')) {
             return 11;
@@ -711,7 +740,7 @@ class YandexFeedBuilder
     {
         foreach (['oldprice', 'old_price', 'price_old', 'oldPrice'] as $field) {
             if (isset($product->{$field}) && $product->{$field} !== null && $product->{$field} !== '') {
-                return (int)$product->{$field};
+                return (int) $product->{$field};
             }
         }
 
@@ -722,7 +751,7 @@ class YandexFeedBuilder
     {
         foreach (['description', 'desc', 'text'] as $field) {
             if (!empty($product->{$field})) {
-                return trim((string)$product->{$field});
+                return trim((string) $product->{$field});
             }
         }
 
@@ -731,15 +760,16 @@ class YandexFeedBuilder
 
     protected function bodyWithDoors($car): string
     {
-        $body = trim((string)($car->body ?? ''));
+        $body = trim((string) ($car->body ?? ''));
 
         if ($body !== '' && preg_match('/\b\d+\s*дв\.?/ui', $body)) {
             return $body;
         }
 
-        $title = (string)($car->title ?? '');
-        if (preg_match('/\b(\d+)\s*дв\.?/ui', $title, $m)) {
-            $doors = $m[1] . ' дв.';
+        $title = (string) ($car->title ?? '');
+        if (preg_match('/\b(\d+)\s*дв\.?/ui', $title, $matches)) {
+            $doors = $matches[1] . ' дв.';
+
             return trim($body !== '' ? ($body . ' ' . $doors) : $doors);
         }
 
@@ -748,7 +778,7 @@ class YandexFeedBuilder
 
     protected function siteUrl(): string
     {
-        $url = trim((string)config('app.url'));
+        $url = trim((string) config('app.url'));
 
         if ($url === '' || str_contains($url, 'localhost') || str_contains($url, '127.0.0.1')) {
             $url = 'https://dvaporoga.ru';
@@ -769,5 +799,12 @@ class YandexFeedBuilder
     protected function normalizeText(string $text): string
     {
         return trim(preg_replace('/\s+/u', ' ', $text) ?? $text);
+    }
+
+    protected function hasValidImagePath(?string $path): bool
+    {
+        $path = trim((string) $path);
+
+        return $path !== '' && $path !== 'default';
     }
 }
