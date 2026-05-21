@@ -101,6 +101,48 @@
   }
 }
 
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+  .marks-section + .about-parts-section.section {
+    margin-top: 102px;
+  }
+
+  .about-parts-section .container {
+    width: calc(100% - 30px);
+    max-width: 810px;
+    padding: 0;
+  }
+
+  .about-parts-section .h2 {
+    font-size: 56px;
+    line-height: 100%;
+  }
+
+  .about-parts__list {
+    margin-top: 40px;
+    grid-template-columns: repeat(3, 259px);
+    gap: 16px;
+  }
+
+  .about-parts__item {
+    width: 259px;
+    min-height: 229px;
+    padding: 38px 24px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+
+  .about-parts__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .about-parts__item p {
+    font-size: 20px;
+    line-height: 120%;
+  }
+}
+
+
 @media screen and (max-width: 768px) {
   .marks-section + .about-parts-section.section {
     margin-top: 50px;

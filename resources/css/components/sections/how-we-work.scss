@@ -147,6 +147,157 @@
   display: none;
 }
 
+@media screen and (min-width: 1201px) and (max-width: 1600px) {
+  .how-we-work__top {
+    gap: 10px;
+  }
+
+  .how-we-work__description {
+    max-width: 560px;
+    font-size: 14px;
+  }
+
+  .how-we-work__wrap {
+    --step-gap: 14px;
+    --step-card-height: 156px;
+    --flow-offset-top: 17px;
+    margin-top: 28px;
+    padding-top: var(--flow-offset-top);
+    padding-bottom: 18px;
+  }
+
+  .how-we-work__info {
+    min-height: var(--step-card-height);
+    gap: 10px;
+    padding: 22px 24px 24px;
+  }
+
+  .how-we-work__info_title {
+    gap: 10px;
+    font-size: 18px;
+
+    .num {
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+    }
+  }
+
+  .how-we-work__info_description {
+    font-size: 14px;
+    line-height: 140%;
+  }
+
+  .how-we-work-fx {
+    width: calc(var(--step-col) + var(--step-gap) - 14px);
+    max-width: none;
+  }
+
+  .how-we-work-fx:nth-child(1) {
+    top: 0;
+    left: calc((var(--step-col) / 2) + 1px);
+  }
+
+  .how-we-work-fx:nth-child(2) {
+    top: 0;
+    left: calc((2 * (var(--step-col) + var(--step-gap))) + (var(--step-col) / 2) + 1px);
+  }
+
+  .how-we-work-fx:nth-child(3) {
+    top: calc(var(--flow-offset-top) + var(--step-card-height) + 6px);
+    left: calc((var(--step-col) + var(--step-gap)) + (var(--step-col) / 2) + 1px);
+  }
+
+  .how-we-work-fx {
+    display: block;
+    width: calc(var(--step-col) + var(--step-gap));
+    height: var(--flow-offset-top);
+    max-width: none;
+    box-sizing: border-box;
+    border: 1px solid #4e4e4e;
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    opacity: 1;
+    overflow: visible;
+  }
+
+  .how-we-work-fx img {
+    display: none;
+  }
+
+  .how-we-work-fx::before,
+  .how-we-work-fx::after {
+    content: "";
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .how-we-work-fx::before {
+    left: -3px;
+    bottom: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4e4e4e;
+  }
+
+  .how-we-work-fx::after {
+    right: -4px;
+    bottom: 0;
+    width: 8px;
+    height: 7px;
+    background: #4e4e4e;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+  }
+
+  .how-we-work-fx:nth-child(1) {
+    top: 0;
+    left: calc(var(--step-col) / 2);
+  }
+
+  .how-we-work-fx:nth-child(2) {
+    top: 0;
+    left: calc((2 * (var(--step-col) + var(--step-gap))) + (var(--step-col) / 2));
+  }
+
+  .how-we-work-fx:nth-child(3) {
+    top: calc(var(--flow-offset-top) + var(--step-card-height));
+    left: calc((var(--step-col) + var(--step-gap)) + (var(--step-col) / 2));
+    height: 24px;
+    border-top: 0;
+    border-bottom: 1px solid #4e4e4e;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .how-we-work-fx:nth-child(3)::before {
+    left: -3px;
+    top: -3px;
+    bottom: auto;
+  }
+
+  .how-we-work-fx:nth-child(3)::after {
+    right: -4px;
+    top: 0;
+    bottom: auto;
+    width: 8px;
+    height: 7px;
+    background: #4e4e4e;
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+  }
+
+  .how-we-work__bottom {
+    margin-top: 24px;
+  }
+
+  .how-we-work__btn {
+    width: 276px;
+    height: 46px;
+    font-size: 16px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .how-we-work__wrap {
     margin-top: 24px;
@@ -171,6 +322,173 @@
     margin-top: 24px;
   }
 }
+
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+  .how-we-work-section .container {
+    width: calc(100% - 30px);
+    max-width: 810px;
+    padding: 0;
+  }
+
+  .how-we-work__top {
+    gap: 8px;
+  }
+
+  .how-we-work__title {
+    width: 712px;
+    max-width: 100%;
+    margin: 0 auto;
+    font-size: 56px;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  .how-we-work__description {
+    max-width: 712px;
+    font-size: 16px;
+    line-height: 140%;
+  }
+
+  .how-we-work__wrap {
+    --step-gap: 10.8px;
+    --step-col: 194.4px;
+    width: 810px;
+    height: 261.37px;
+    margin-top: 36px;
+    padding: 25.47px 0 0;
+    position: relative;
+    overflow: visible;
+  }
+
+  .how-we-work__wrap_info {
+    display: grid;
+    grid-template-columns: repeat(4, 194.4px);
+    gap: 10.8px;
+    height: 211.78px;
+    align-items: stretch;
+    position: relative;
+    z-index: 2;
+  }
+
+  .how-we-work__info {
+    min-height: 0;
+    height: 211.78px;
+    padding: 24px;
+    gap: 10px;
+    border-radius: 8px;
+  }
+
+  .how-we-work__info_title {
+    font-size: 20px;
+    gap: 8px;
+  }
+
+  .how-we-work__info_title .num {
+    width: 33px;
+    height: 33px;
+    font-size: 16px;
+  }
+
+  .how-we-work__info_description {
+    font-size: 16px;
+    line-height: 140%;
+  }
+
+  .how-we-work-fx {
+    display: block;
+    position: absolute;
+    z-index: 4;
+    width: 205.2px;
+    height: 25.47px;
+    max-width: none;
+    box-sizing: border-box;
+    border: 1px solid #4e4e4e;
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    opacity: 1;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  .how-we-work-fx img {
+    display: none;
+  }
+
+  .how-we-work-fx::before,
+  .how-we-work-fx::after {
+    content: "";
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .how-we-work-fx::before {
+    left: -3px;
+    bottom: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4e4e4e;
+  }
+
+  .how-we-work-fx::after {
+    right: -4px;
+    bottom: 0;
+    width: 8px;
+    height: 7px;
+    background: #4e4e4e;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+  }
+
+  .how-we-work-fx:nth-child(1) {
+    top: 0;
+    left: 97.2px;
+  }
+
+  .how-we-work-fx:nth-child(2) {
+    top: 0;
+    left: 507.6px;
+  }
+
+  .how-we-work-fx:nth-child(3) {
+    top: 237.25px;
+    bottom: auto;
+    left: 302.4px;
+    height: 24.13px;
+    border-top: 0;
+    border-bottom: 1px solid #4e4e4e;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .how-we-work-fx:nth-child(3)::before {
+    left: -3px;
+    top: -3px;
+    bottom: auto;
+  }
+
+  .how-we-work-fx:nth-child(3)::after {
+    right: -4px;
+    top: 0;
+    bottom: auto;
+    width: 8px;
+    height: 7px;
+    background: #4e4e4e;
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+  }
+
+  .how-we-work__bottom {
+    margin-top: 36px;
+  }
+
+  .how-we-work__btn {
+    width: 276px;
+    height: 49px;
+    font-size: 20px;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .how-we-work-section .container {

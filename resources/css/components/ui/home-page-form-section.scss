@@ -118,11 +118,213 @@
   background: $white;
 }
 
+@media screen and (min-width: 1201px) and (max-width: 1600px) {
+  .home-page-form-section {
+    margin-top: 70px;
+  }
+
+  .index-hero-section + .home-page-form-section {
+    margin-top: 56px;
+  }
+
+  .home-page-form-section .container {
+    min-height: 238px;
+    padding: 36px 32px;
+    border-radius: 14px;
+  }
+
+  .home-page-form-section .car-single-form-section__title {
+    font-size: 26px;
+  }
+
+  .home-page-form-section .car-single-form-section__descr {
+    margin-top: 6px;
+    font-size: 14px;
+  }
+
+  .home-page-form-section .car-single-form {
+    margin-top: 18px;
+    gap: 18px;
+  }
+
+  .home-page-form-section .choose-section__form_row {
+    gap: 12px;
+  }
+
+  .home-page-form-section .choose-section__form_row .input {
+    min-height: 44px;
+    height: 44px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .home-page-form-section .car-single-form-btn {
+    height: 44px;
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  .home-page-form-section .form-policy {
+    max-width: 900px;
+    gap: 7px;
+  }
+
+  .home-page-form-section .form-policy label {
+    font-size: 13px;
+  }
+
+  .home-page-form-section .form-policy label:before {
+    width: 20px;
+    height: 20px;
+    margin-right: 7px;
+  }
+
+  .home-page-form-section .form-policy input:checked + label:after {
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .home-page-form-section .container {
     padding: 34px 24px;
   }
 }
+
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+  .home-page-form-section {
+    margin-top: 60px;
+  }
+
+  .index-hero-section + .home-page-form-section {
+    margin-top: 60px;
+  }
+
+  .home-page-form-section .container {
+    width: calc(100% - 30px);
+    max-width: 810px;
+    min-height: 393px;
+    margin: 0 auto;
+    padding: 25px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    border-radius: 16px;
+    background: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
+  }
+
+  .home-page-form-section .car-single-form-section__top {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .home-page-form-section .car-single-form-section__title {
+    font-family: "Gilroy", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 100%;
+  }
+
+  .home-page-form-section .car-single-form-section__descr {
+    width: 100%;
+    max-width: 766px;
+    margin: -16px auto 0;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+  }
+
+  .home-page-form-section .car-single-form {
+    width: 485px;
+    max-width: 100%;
+    margin-top: 0;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .home-page-form-section .choose-section__form_row {
+    width: 485px;
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .home-page-form-section .choose-section__form_row .input-item,
+  .home-page-form-section .choose-section__form_row .input {
+    width: 100%;
+  }
+
+  .home-page-form-section .choose-section__form_row .input {
+    height: 52px;
+    min-height: 52px;
+    padding: 14px 20px;
+    border: 0;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 100%;
+  }
+
+  .home-page-form-section .car-single-form-btn {
+    width: 485px;
+    max-width: 100%;
+    height: 52px;
+    min-height: 52px;
+    margin-top: 0;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  .home-page-form-section .form-policy-wrap,
+  .home-page-form-section .form-policy {
+    width: 477px;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .home-page-form-section .form-policy {
+    gap: 0;
+    align-items: flex-start;
+  }
+
+  .home-page-form-section .form-policy label {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 24px;
+    padding-left: 36px;
+    font-size: 16px;
+    line-height: 120%;
+  }
+
+  .home-page-form-section .form-policy label:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    border-width: 1px;
+    border-radius: 4px;
+  }
+
+  .home-page-form-section .form-policy input:checked + label:after {
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .index-hero-section + .home-page-form-section {

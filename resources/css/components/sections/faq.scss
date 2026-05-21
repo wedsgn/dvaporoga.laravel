@@ -127,6 +127,59 @@
   line-height: 140%;
 }
 
+@media screen and (min-width: 1201px) and (max-width: 1600px) {
+  .faq-section .container {
+    max-width: 1120px;
+    gap: 28px;
+  }
+
+  .faq-section__top {
+    align-items: flex-end;
+    gap: 28px;
+  }
+
+  .faq-section__meta {
+    max-width: 560px;
+    gap: 12px;
+  }
+
+  .faq-section__title {
+    max-width: 430px;
+    font-size: 28px;
+  }
+
+  .faq-description {
+    max-width: 560px;
+    font-size: 14px;
+  }
+
+  .faq-section__btn {
+    width: 270px;
+    height: 46px;
+    font-size: 15px;
+  }
+
+  .faq-accordition {
+    gap: 10px;
+  }
+
+  .faq-item .faq-item__head {
+    height: 60px;
+    padding: 20px 18px 20px 24px;
+    font-size: 18px;
+  }
+
+  .faq-item .faq-item__head svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .faq-item .faq-item__content {
+    padding: 0 24px 20px;
+    font-size: 14px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .faq-section .container {
     gap: 24px;
@@ -150,6 +203,68 @@
 
   .faq-item .faq-item__head {
     font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+  .faq-section .container {
+    width: calc(100% - 30px);
+    max-width: 810px;
+    padding: 0;
+    gap: 32px;
+  }
+
+  .faq-section__top {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+  }
+
+  .faq-section__meta {
+    width: 480px;
+    max-width: 480px;
+    gap: 16px;
+  }
+
+  .faq-section__title {
+    max-width: 480px;
+    font-family: "Gilroy", sans-serif;
+    font-size: 32px;
+    line-height: 100%;
+  }
+
+  .faq-description {
+    width: 480px;
+    max-width: 480px;
+    font-size: 16px;
+    line-height: 140%;
+  }
+
+  .faq-section__btn {
+    width: 252px;
+    height: 41px;
+    flex: 0 0 252px;
+    font-size: 16px;
+  }
+
+  .faq-wrap,
+  .faq-accordition {
+    width: 100%;
+  }
+
+  .faq-item .faq-item__head {
+    height: 64px;
+    padding: 22px 16px 22px 24px;
+    font-size: 20px;
+    line-height: 100%;
+  }
+
+  .faq-item .faq-item__head svg {
+    width: 32px;
+    height: 32px;
   }
 }
 

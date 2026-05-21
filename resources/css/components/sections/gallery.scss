@@ -28,6 +28,28 @@
   display: none;
 }
 
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+  .gallery-section .container {
+    width: calc(100% - 30px);
+    max-width: 810px;
+    padding: 0;
+  }
+
+  .gallery-section__wrap {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 33px;
+  }
+
+  .gallery-section__wrap a {
+    display: block;
+    aspect-ratio: 396 / 238;
+    border-radius: 26px;
+  }
+}
+
+
 @media screen and (max-width: 768px) {
   .gallery-section .container {
     width: calc(100% - 30px);

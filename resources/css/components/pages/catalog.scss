@@ -1580,3 +1580,54 @@
     font-size: 12px;
   }
 }
+
+@media screen and (min-width: 1201px) and (max-width: 1600px) {
+  .catalog-parts-page > .container,
+  .catalog-models-page > .container,
+  .catalog-models-results > .container {
+    max-width: 1120px;
+  }
+
+  .catalog-parts-search,
+  .catalog-models-search {
+    width: 100%;
+  }
+
+  .catalog-makes-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 28px 16px;
+    justify-content: stretch;
+  }
+
+  .catalog-make-card {
+    width: 100%;
+  }
+
+  .catalog-make-card__media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .catalog-make-card__media img {
+    max-width: 82%;
+    max-height: 82%;
+    transform: scale(1.16);
+  }
+
+  .catalog-models-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    justify-content: stretch;
+  }
+
+  .catalog-model-card {
+    width: 100%;
+  }
+
+  .catalog-model-card__media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 228 / 157;
+  }
+}

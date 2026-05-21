@@ -51,6 +51,23 @@
   background: #e51026;
 }
 
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+  .index-hero__slide {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .index-hero__slide img {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .index-hero__slide {
     border-radius: 12px;

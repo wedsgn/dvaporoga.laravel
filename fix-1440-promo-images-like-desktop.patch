@@ -1,0 +1,40 @@
+diff --git a/resources/css/components/pages/car-single.scss b/resources/css/components/pages/car-single.scss
+index 56eaa03..55637a9 100644
+--- a/resources/css/components/pages/car-single.scss
++++ b/resources/css/components/pages/car-single.scss
+@@ -572,23 +572,23 @@
+   }
+ 
+   .car-single-page__promo-media {
+-    top: 0;
+-    right: 0;
+-    width: 210px;
+-    height: 100%;
+-    overflow: hidden;
+-    border-radius: 0 26px 26px 0;
++    top: -24px;
++    right: 7px;
++    width: 401px;
++    height: 270px;
++    overflow: visible;
++    border-radius: 0;
+   }
+ 
+   .car-single-page__promo-media img {
+     position: absolute;
+-    top: 0;
+-    right: 0;
+-    width: 100%;
+-    height: 100%;
++    top: -34px;
++    right: -78px;
++    width: 470px;
++    height: auto;
+     max-width: none;
+-    object-fit: contain;
+-    object-position: right center;
++    object-fit: initial;
++    object-position: initial;
+   }
+ }
+ 
