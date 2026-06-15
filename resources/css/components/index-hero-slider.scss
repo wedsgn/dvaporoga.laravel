@@ -3,20 +3,32 @@
 }
 
 .index-hero__slide {
+  width: 100%;
+  height: 481px;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  background: #d2d2d2;
   cursor: pointer;
+}
+
+.index-hero__slide_wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.index-hero__slide_image {
+  width: 100%;
+  height: 100%;
 }
 
 .index-hero__slide img {
   display: block;
   width: 100%;
-  height: auto;
-}
-
-.index-hero__slide_wrap {
-  position: relative;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
 }
 
 .hero-banner-arrow-prev,
@@ -26,7 +38,7 @@
 
 .hero-pag {
   position: static;
-  margin-top: 12px;
+  margin-top: 19px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,12 +50,12 @@
 }
 
 .index-hero__banners .hero-pag .swiper-pagination-bullet {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #a7a7a7;
   opacity: 1;
-  margin: 0 3px !important;
+  margin: 0 2.5px !important;
   transition: background-color 0.2s ease-in-out;
 }
 
@@ -51,30 +63,36 @@
   background: #e51026;
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
+@media screen and (min-width: 1025px) and (max-width: 1488px) {
   .index-hero__slide {
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
-    overflow: hidden;
+    height: 481px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .index-hero__slide {
+    height: 495px;
   }
 
-  .index-hero__slide img {
-    width: 100%;
-    height: auto;
-    max-height: none;
-    object-fit: contain;
-    object-position: center;
+  .hero-pag {
+    margin-top: 14px;
+  }
+
+  .index-hero__banners .hero-pag .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    margin: 0 2.5px !important;
   }
 }
 
 @media screen and (max-width: 768px) {
   .index-hero__slide {
+    height: 363px;
     border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+    box-shadow: none;
   }
 
   .hero-pag {
-    margin-top: 10px;
+    margin-top: 16px;
   }
 }
