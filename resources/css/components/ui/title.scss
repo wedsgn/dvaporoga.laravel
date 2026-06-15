@@ -1,18 +1,6 @@
-.h1 {
-  font-size: 59px;
-  font-weight: 800;
-  line-height: 100%;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  font-family: "Golos Text", "Golos", sans-serif;
-
-  span {
-    color: $red;
-  }
-}
-
+.h1,
 .h2 {
-  font-size: 59px;
+  font-size: 60px;
   font-weight: 800;
   line-height: 100%;
   letter-spacing: 0.04em;
@@ -21,38 +9,15 @@
 
   span {
     color: $red;
-  }
-}
-
-@media screen and (max-width: 1440px) {
-  .h1 {
-    font-size: 59px;
-  }
-
-  .h2 {
-    font-size: 59px;
   }
 }
 
 @media screen and (min-width: 1201px) and (max-width: 1600px) {
-  .h1 {
-    font-size: 52px;
-    letter-spacing: 0.03em;
-  }
-
+  .h1,
   .h2 {
-    font-size: 52px;
-    letter-spacing: 0.03em;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .h1 {
-    font-size: 44px;
-  }
-
-  .h2 {
-    font-size: 44px;
+    font-size: 60px;
+    line-height: 100%;
+    letter-spacing: 0.04em;
   }
 }
 
@@ -67,14 +32,11 @@
 
 
 @media screen and (max-width: 768px) {
-  .h1 {
-    font-size: 24px;
-    letter-spacing: 0.01em;
-  }
-
+  .h1,
   .h2 {
     font-size: 24px;
-    letter-spacing: 0.01em;
+    line-height: 100%;
+    letter-spacing: 0.04em;
   }
 }
 

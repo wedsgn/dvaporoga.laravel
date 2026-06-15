@@ -1,34 +1,26 @@
 .container {
   position: relative;
-  max-width: 1448px;
   width: 100%;
-  margin: 0 auto;
-  padding: 0;
+  max-width: 1448px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-@media screen and (max-width: 1488px) {
+@media screen and (max-width: 1488px) and (min-width: 1201px) {
   .container {
-    padding: 0 20px;
-  }
-}
-
-@media screen and (min-width: 1201px) and (max-width: 1600px) {
-  .container {
-    max-width: 1120px;
-    padding: 0 24px;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .container {
-    padding: 0 15px;
+    width: 1200px;
+    max-width: calc(100% - 40px);
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1200px) {
   .container {
-    width: calc(100% - 30px);
-    max-width: 810px;
+    width: 810px;
+    max-width: calc(100% - 30px);
     margin-left: auto;
     margin-right: auto;
     padding-left: 0;
@@ -36,3 +28,11 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    width: 290px;
+    max-width: calc(100% - 30px);
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

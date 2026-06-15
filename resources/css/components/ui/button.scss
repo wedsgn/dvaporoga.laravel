@@ -1,12 +1,16 @@
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: $gradient-red;
   color: $white;
   transition: filter 0.2s ease-in-out, transform 0.2s ease-in-out;
   border-radius: 8px;
-  padding: 12px 24px;
+  min-height: 49px;
+  padding: 12px 24px 13px;
   line-height: 100%;
   font-family: "Golos Text", "Golos", sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 400;
   text-align: center;
 
@@ -34,7 +38,10 @@
 
 @media screen and (max-width: 768px) {
   .btn {
-    font-size: clamp(12px, 1.8vw, 15px);
+    min-height: 30px;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 12px;
 
     &.lg {
       padding: 12px 24px 13px;

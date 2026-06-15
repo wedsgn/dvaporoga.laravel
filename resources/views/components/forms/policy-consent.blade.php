@@ -4,12 +4,12 @@
     'consentUrl' => asset('docs/СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ.docx'),
 ])
 
-Даю
+Я соглашаюсь с
+<a href="{{ $policyUrl }}" target="_blank" rel="noopener noreferrer">
+    политикой конфиденциальности
+</a>
+и даю
 <a href="{{ $consentUrl }}" target="_blank" rel="noopener noreferrer">
     согласие
 </a>
-на обработку персональных данных.
-Подробнее — в
-<a href="{{ $policyUrl }}" target="_blank" rel="noopener noreferrer">
-    Политике
-</a>.
+на обработку персональных данных

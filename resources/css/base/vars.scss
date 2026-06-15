@@ -1,6 +1,6 @@
 // Brand Colors (Figma)
 $red: #e51026;
-$redHover: #f43044;
+$redHover: #f53c4f;
 $yellow: #ffc600;
 $text: #383838;
 $white: #ffffff;
@@ -9,10 +9,12 @@ $gray: #d7d7d7;
 $grayDark: #4e4e4e;
 $stroke: #d7d7d7;
 $grayLight: #eeeeee;
+$pageBg: #eeeeee;
+$figmaLightGray: #eaeaea;
 $muted: #a7a7a7;
 
 // Shared gradients from design
-$gradient-red: linear-gradient(271.88deg, #e51026 32.54%, #f43044 81.98%);
+$gradient-red: linear-gradient(271.69deg, #e51026 15.06%, #f53c4f 85.57%);
 $gradient-red-horizontal: linear-gradient(90deg, #f9384c 0%, #e9172e 100%);
 $gradient-dark: linear-gradient(271.69deg, #383838 15.06%, #4e4e4e 85.57%);
 $gradient-dark-light: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
