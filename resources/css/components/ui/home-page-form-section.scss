@@ -134,6 +134,18 @@
   .home-page-form-section .car-single-form-btn {
     width: 357px;
   }
+
+  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row {
+    grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
+  }
+
+  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row .input-item,
+  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row .input,
+  .index-hero-section + .home-page-form-section.home-page-form-section .car-single-form-btn {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1200px) {
@@ -176,7 +188,7 @@
     max-width: none;
     margin: 0;
     display: grid;
-    grid-template-columns: 357px 355px 357px;
+    grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
     justify-content: space-between;
     align-items: center;
     gap: 16px;
@@ -198,8 +210,9 @@
   }
 
   .index-hero-section + .home-page-form-section.home-page-form-section .car-single-form-btn {
-    width: 357px;
+    width: 100%;
     max-width: none;
+    min-width: 0;
     height: 52px;
     min-height: 52px;
     margin-top: 0;
