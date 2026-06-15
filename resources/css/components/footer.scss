@@ -18,6 +18,10 @@
   display: none;
 }
 
+.footer-main__brand {
+  min-width: 0;
+}
+
 .footer-main__grid {
   display: grid;
   grid-template-columns: 350px 333px 333px 333px;
@@ -46,9 +50,9 @@
   display: block;
   color: #fff;
   font-family: "Gilroy", sans-serif;
-  font-size: 26px;
+  font-size: 46px;
   font-weight: 800;
-  line-height: 1;
+  line-height: 56px;
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
@@ -197,14 +201,35 @@
   }
 }
 
-@media screen and (max-width: 1488px) {
+@media screen and (min-width: 1201px) and (max-width: 1488px) {
   .footer-main__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
+    grid-template-columns: 228px 167px 284px 232px;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .footer-main__brand {
+    width: 228px;
+  }
+
+  .footer-main__menu {
+    width: 167px;
+  }
+
+  .footer-main__docs {
+    width: 284px;
+  }
+
+  .footer-main__contacts {
+    width: 232px;
   }
 
   .footer-main__descr {
-    max-width: 100%;
+    max-width: 228px;
+  }
+
+  .footer-main__company {
+    max-width: 228px;
   }
 }
 
@@ -421,14 +446,15 @@
 
   .footer-logo__text {
     margin: 0 auto;
-    font-size: 24px;
+    font-size: 32px;
+    line-height: 100%;
   }
 
   .footer-main__descr {
     margin: 0;
     width: 290px;
     max-width: 290px;
-    font-size: 12px;
+    font-size: 10px;
     line-height: 140%;
     text-align: center;
   }
@@ -504,8 +530,8 @@
   }
 
   .footer-social {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
   }
 
   .footer-main__nav,
@@ -541,7 +567,7 @@
     width: 290px;
     color: #9c9c9c;
     font-family: "Golos Text", "Golos", sans-serif;
-    font-size: 12px;
+    font-size: 8px;
     font-weight: 400;
     line-height: 120%;
     text-align: center;
@@ -551,7 +577,7 @@
     width: 290px;
     color: #fff;
     font-family: "Golos Text", "Golos", sans-serif;
-    font-size: 12px;
+    font-size: 8px;
     font-weight: 400;
     line-height: 102%;
     text-align: center;

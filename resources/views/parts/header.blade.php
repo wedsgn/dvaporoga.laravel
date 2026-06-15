@@ -3,13 +3,13 @@
         <div class="header__wrap">
             <div class="header__left">
                 <a href="/" class="header__logo">
-                    <span class="header__logo-text">ДВАПОРОГА</span>
+                    <span class="header__logo-text">2POROGA</span>
                 </a>
 
                 <div class="header-div"></div>
                 <nav class="header__nav">
                     <a href="{{ route('catalog') }}" class="header__link --highlighted">Каталог</a>
-                    <a href="{{ route('home') }}#features" class="header__link">Преимуществa</a>
+                    <a href="{{ route('home') }}#features" class="header__link">Преимущества</a>
 
 
                     {{-- <a href="{{ route('blog') }}" class="header__link">Блог</a> --}}
@@ -52,11 +52,12 @@
                         </svg>
                         <a href="tel:{{ $main_info->phone }}">{{ $main_info->phone }}</a>
                     </div>
-                    <span>Бесплатный звонок по РФ</span>
+                    <span>Бесплатный звонок</span>
                 </div>
                 <div class="header-div"></div>
                 <button class="btn header-consultation-btn" data-micromodal-trigger="modal-1">
-                    Обратный звонок
+                    <span class="header-consultation-btn__desktop">Обратный звонок</span>
+                    <span class="header-consultation-btn__tablet">Бесплатный звонок</span>
                 </button>
 
 
