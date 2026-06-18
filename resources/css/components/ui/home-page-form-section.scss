@@ -4,12 +4,11 @@
   color: $white;
 }
 
-.index-hero-section + .home-page-form-section {
+.index-hero-section+.home-page-form-section {
   margin-top: 64px;
 }
 
 .home-page-form-section .container {
-  width: calc(100% - 30px);
   margin: 0 auto;
   background: $gradient-dark-light;
   border: 0;
@@ -108,9 +107,10 @@
   border-width: 1px;
   border-color: #ffffff;
   border-radius: 4px;
+  margin-top: -2px;
 }
 
-.home-page-form-section .form-policy input:checked + label:after {
+.home-page-form-section .form-policy input:checked+label:after {
   top: 4px;
   left: 4px;
   width: 16px;
@@ -135,13 +135,13 @@
     width: 357px;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row {
+  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row {
     grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row .input-item,
-  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row .input,
-  .index-hero-section + .home-page-form-section.home-page-form-section .car-single-form-btn {
+  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input-item,
+  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input,
+  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-btn {
     width: 100%;
     max-width: none;
     min-width: 0;
@@ -149,33 +149,31 @@
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1200px) {
-  .index-hero-section + .home-page-form-section.home-page-form-section {
-    margin-top: 64px;
+  .index-hero-section+.home-page-form-section.home-page-form-section {
+    margin-top: 20px;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .container {
-    width: calc(100% - 40px);
-    max-width: 1200px;
+  .index-hero-section+.home-page-form-section.home-page-form-section .container {
     min-height: 294px;
     padding: 47px 48px 61px;
     display: block;
     border-radius: 16px;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .car-single-form-section__top {
+  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-section__top {
     width: 100%;
     align-items: flex-start;
     text-align: left;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .car-single-form-section__descr {
+  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-section__descr {
     width: auto;
     max-width: none;
     margin: 8px 0 0;
     text-align: left;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .car-single-form {
+  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form {
     width: 100%;
     max-width: none;
     margin-top: 24px;
@@ -183,7 +181,7 @@
     align-items: stretch;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row {
+  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row {
     width: 100%;
     max-width: none;
     margin: 0;
@@ -194,12 +192,12 @@
     gap: 16px;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row .input-item,
-  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row .input {
+  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input-item,
+  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input {
     width: 100%;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .choose-section__form_row .input {
+  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input {
     height: 52px;
     min-height: 52px;
     padding: 14px 20px;
@@ -209,7 +207,7 @@
     line-height: 100%;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .car-single-form-btn {
+  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-btn {
     width: 100%;
     max-width: none;
     min-width: 0;
@@ -220,19 +218,19 @@
     font-size: 16px;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .form-policy-wrap,
-  .index-hero-section + .home-page-form-section.home-page-form-section .form-policy {
+  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy-wrap,
+  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy {
     width: 100%;
     max-width: none;
     margin: 0;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .form-policy {
+  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy {
     gap: 8px;
     align-items: center;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .form-policy label {
+  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy label {
     width: auto;
     min-height: 24px;
     padding-left: 0;
@@ -240,7 +238,7 @@
     line-height: 100%;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .form-policy label:before {
+  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy label:before {
     position: static;
     width: 24px;
     height: 24px;
@@ -249,7 +247,7 @@
     border-radius: 4px;
   }
 
-  .index-hero-section + .home-page-form-section.home-page-form-section .form-policy input:checked + label:after {
+  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy input:checked+label:after {
     top: 4px;
     left: 4px;
     width: 16px;
@@ -269,13 +267,11 @@
     margin-top: 60px;
   }
 
-  .index-hero-section + .home-page-form-section {
+  .index-hero-section+.home-page-form-section {
     margin-top: 60px;
   }
 
   .home-page-form-section .container {
-    width: calc(100% - 30px);
-    max-width: 810px;
     min-height: 393px;
     margin: 0 auto;
     padding: 25px 24px 40px;
@@ -386,7 +382,7 @@
     border-radius: 4px;
   }
 
-  .home-page-form-section .form-policy input:checked + label:after {
+  .home-page-form-section .form-policy input:checked+label:after {
     top: 4px;
     left: 4px;
     width: 16px;
@@ -397,7 +393,7 @@
 
 
 @media screen and (max-width: 768px) {
-  .index-hero-section + .home-page-form-section {
+  .index-hero-section+.home-page-form-section {
     margin-top: 50px;
   }
 
@@ -406,8 +402,6 @@
   }
 
   .home-page-form-section .container {
-    width: 290px;
-    max-width: calc(100% - 30px);
     min-height: 307px;
     height: auto;
     margin: 0 auto;
@@ -460,7 +454,7 @@
     min-width: 0;
   }
 
-  .home-page-form-section .choose-section__form_row .input-item + .input-item {
+  .home-page-form-section .choose-section__form_row .input-item+.input-item {
     margin-top: 0;
   }
 
@@ -526,7 +520,7 @@
     border-radius: 4px;
   }
 
-  .home-page-form-section .form-policy input:checked + label:after {
+  .home-page-form-section .form-policy input:checked+label:after {
     top: 4px;
     left: 4px;
     width: 12px;

@@ -13,9 +13,12 @@
   color: $text;
   font-size: 59px;
   line-height: 100%;
-  text-align: center;
-  letter-spacing: 0.04em;
+  text-align: left;
   text-transform: uppercase;
+
+  br {
+    display: none;
+  }
 }
 
 .index-hero-section__descr {
@@ -23,7 +26,7 @@
 }
 
 .index-hero__banners {
-  margin-top: 37px;
+  margin-top: 20px;
 }
 
 .index-hero__banners .swiper {
@@ -32,10 +35,7 @@
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1488px) {
-  .index-hero-section .container {
-    width: calc(100% - 40px);
-    max-width: 1200px;
-  }
+  .index-hero-section .container {}
 
   .index-hero-section.section {
     margin-top: 52px;
@@ -43,7 +43,7 @@
 
   .index-hero-section .h1-home {
     font-size: 59px;
-    line-height: 120%;
+    line-height: 100%;
   }
 
   .index-hero__banners {
@@ -58,7 +58,6 @@
 
   .index-hero-section .h1-home {
     font-size: 56px;
-    line-height: 120%;
   }
 
   .index-hero__banners {
@@ -73,9 +72,7 @@
 
   .index-hero-section .h1-home {
     font-size: 24px;
-    line-height: 100%;
-    text-align: center;
-    letter-spacing: 0.01em;
+    text-align: left;
   }
 
   .index-hero__banners {

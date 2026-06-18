@@ -189,11 +189,7 @@
 }
 
 @media screen and (min-width: 769px) and (max-width: 1200px) {
-  .catalog-parts-section .container {
-    width: calc(100% - 30px);
-    max-width: 810px;
-    padding: 0;
-  }
+
 
   .catalog-parts-section__title {
     font-size: 56px;
@@ -268,11 +264,11 @@
 
 
 @media screen and (max-width: 640px) {
-  .catalog-parts-section .container {
-    width: calc(100% - 30px);
-    max-width: none;
-    padding: 0;
-  }
+  // .catalog-parts-section .container {
+  //   width: calc(100% - 30px);
+  //   max-width: none;
+  //   padding: 0;
+  // }
 
   .catalog-parts-section__title {
     width: 100%;

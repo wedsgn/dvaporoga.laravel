@@ -296,11 +296,7 @@
 }
 
 @media screen and (min-width: 769px) and (max-width: 1200px) {
-  .about-section .container {
-    width: calc(100% - 30px);
-    max-width: 810px;
-    padding: 0;
-  }
+
 
   .about-section__head {
     max-width: 760px;
@@ -386,12 +382,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .about-section .container {
-    width: calc(100% - 30px);
-    max-width: none;
-    margin: 0 auto;
-    padding: 0;
-  }
+
 
   .about-section__head {
     max-width: none;

@@ -325,8 +325,6 @@
 
 @media screen and (min-width: 769px) and (max-width: 1200px) {
   .how-we-work-section .container {
-    width: calc(100% - 30px);
-    max-width: 810px;
     padding: 0;
   }
 
@@ -492,7 +490,6 @@
 
 @media screen and (max-width: 768px) {
   .how-we-work-section .container {
-    width: calc(100% - 30px);
     max-width: none;
     margin: 0 auto;
     padding: 0;
@@ -748,18 +745,8 @@
     --mobile-card-3-h: 100px;
     --mobile-card-4-h: 74px;
     aspect-ratio: auto;
-    height: calc(
-      var(--mobile-card-1-h) + var(--mobile-card-gap) +
-      var(--mobile-card-2-h) + var(--mobile-card-gap) +
-      var(--mobile-card-3-h) + var(--mobile-card-gap) +
-      var(--mobile-card-4-h)
-    );
-    min-height: calc(
-      var(--mobile-card-1-h) + var(--mobile-card-gap) +
-      var(--mobile-card-2-h) + var(--mobile-card-gap) +
-      var(--mobile-card-3-h) + var(--mobile-card-gap) +
-      var(--mobile-card-4-h)
-    );
+    height: calc(var(--mobile-card-1-h) + var(--mobile-card-gap) + var(--mobile-card-2-h) + var(--mobile-card-gap) + var(--mobile-card-3-h) + var(--mobile-card-gap) + var(--mobile-card-4-h));
+    min-height: calc(var(--mobile-card-1-h) + var(--mobile-card-gap) + var(--mobile-card-2-h) + var(--mobile-card-gap) + var(--mobile-card-3-h) + var(--mobile-card-gap) + var(--mobile-card-4-h));
   }
 
   .how-we-work__info {
@@ -779,19 +766,12 @@
   }
 
   .how-we-work__info:nth-child(3) {
-    top: calc(
-      var(--mobile-card-1-h) + var(--mobile-card-gap) +
-      var(--mobile-card-2-h) + var(--mobile-card-gap)
-    );
+    top: calc(var(--mobile-card-1-h) + var(--mobile-card-gap) + var(--mobile-card-2-h) + var(--mobile-card-gap));
     min-height: var(--mobile-card-3-h);
   }
 
   .how-we-work__info:nth-child(4) {
-    top: calc(
-      var(--mobile-card-1-h) + var(--mobile-card-gap) +
-      var(--mobile-card-2-h) + var(--mobile-card-gap) +
-      var(--mobile-card-3-h) + var(--mobile-card-gap)
-    );
+    top: calc(var(--mobile-card-1-h) + var(--mobile-card-gap) + var(--mobile-card-2-h) + var(--mobile-card-gap) + var(--mobile-card-3-h) + var(--mobile-card-gap));
     min-height: var(--mobile-card-4-h);
   }
 

@@ -2,7 +2,7 @@
   padding: 0;
 }
 
-.home-page-form-section + .marks-section {
+.home-page-form-section+.marks-section {
   margin-top: 64px;
 }
 
@@ -110,8 +110,8 @@
   white-space: nowrap;
 }
 
-@media screen and (min-width: 1201px) and (max-width: 1600px) {
-  .home-page-form-section + .marks-section {
+@media screen and (max-width: 1600px) {
+  .home-page-form-section+.marks-section {
     margin-top: 56px;
   }
 
@@ -183,15 +183,9 @@
 }
 
 @media screen and (min-width: 769px) and (max-width: 1200px) {
-  .home-page-form-section + .marks-section {
-    margin-top: 64px;
-  }
+  .home-page-form-section+.marks-section {}
 
-  .marks-section .container {
-    width: calc(100% - 30px);
-    max-width: 810px;
-    padding: 0;
-  }
+  .marks-section .container {}
 
   .marks-layout {
     row-gap: 36px;
@@ -208,7 +202,7 @@
 
   .mark__wrap,
   .marks-section .catalog-concern__wrap {
-    grid-template-columns: repeat(4, 192px);
+    grid-template-columns: repeat(4, 1fr);
     gap: 14px;
   }
 
@@ -236,23 +230,19 @@
 
 
 @media screen and (max-width: 768px) {
-  .home-page-form-section + .marks-section {
-    margin-top: 50px;
-  }
+  .home-page-form-section+.marks-section {}
 
   .marks-section {
     margin-top: 50px;
   }
 
-  .marks-section + .about-parts-section.section {
+  .marks-section+.about-parts-section.section {
     margin-top: 50px;
   }
 
   .marks-section .container {
-    width: calc(100% - 30px);
     max-width: none;
     margin: 0 auto;
-    padding: 0;
   }
 
   .marks-layout {
@@ -291,18 +281,53 @@
     gap: clamp(6px, 1vw, 10px) !important;
   }
 
-  .mark:nth-child(1) { order: 1; }
-  .mark:nth-child(2) { order: 2; }
-  .mark:nth-child(3) { order: 3; }
-  .mark:nth-child(4) { order: 4; }
-  .mark:nth-child(5) { order: 5; }
-  .mark:nth-child(6) { order: 6; }
-  .mark:nth-child(7) { order: 8; }
-  .mark:nth-child(8) { order: 7; }
-  .mark:nth-child(9) { order: 9; }
-  .mark:nth-child(10) { order: 11; }
-  .mark:nth-child(11) { order: 10; }
-  .mark:nth-child(12) { order: 12; }
+  .mark:nth-child(1) {
+    order: 1;
+  }
+
+  .mark:nth-child(2) {
+    order: 2;
+  }
+
+  .mark:nth-child(3) {
+    order: 3;
+  }
+
+  .mark:nth-child(4) {
+    order: 4;
+  }
+
+  .mark:nth-child(5) {
+    order: 5;
+  }
+
+  .mark:nth-child(6) {
+    order: 6;
+  }
+
+  .mark:nth-child(7) {
+    order: 8;
+  }
+
+  .mark:nth-child(8) {
+    order: 7;
+  }
+
+  .mark:nth-child(9) {
+    order: 9;
+  }
+
+  .mark:nth-child(10) {
+    order: 11;
+  }
+
+  .mark:nth-child(11) {
+    order: 10;
+  }
+
+  .mark:nth-child(12) {
+    order: 12;
+  }
 
   .mark-image {
     width: 100%;
