@@ -182,11 +182,7 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
-  .home-page-form-section+.marks-section {}
-
-  .marks-section .container {}
-
+@media screen and (max-width: 1200px) {
   .marks-layout {
     row-gap: 36px;
   }
@@ -238,11 +234,6 @@
 
   .marks-section+.about-parts-section.section {
     margin-top: 50px;
-  }
-
-  .marks-section .container {
-    max-width: none;
-    margin: 0 auto;
   }
 
   .marks-layout {

@@ -34,9 +34,7 @@
   height: auto;
 }
 
-@media screen and (min-width: 1025px) and (max-width: 1488px) {
-  .index-hero-section .container {}
-
+@media screen and (max-width: 1488px) {
   .index-hero-section.section {
     margin-top: 52px;
   }
@@ -51,7 +49,7 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .index-hero-section.section {
     margin-top: 52px;
   }

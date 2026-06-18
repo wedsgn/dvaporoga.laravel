@@ -101,7 +101,7 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .marks-section+.about-parts-section.section {
     margin-top: 102px;
   }
@@ -115,12 +115,11 @@
 
   .about-parts__list {
     margin-top: 40px;
-    grid-template-columns: repeat(3, 259px);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
 
   .about-parts__item {
-    width: 259px;
     min-height: 229px;
     padding: 38px 24px;
     gap: 10px;

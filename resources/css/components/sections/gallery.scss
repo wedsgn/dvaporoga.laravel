@@ -28,11 +28,7 @@
   display: none;
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
-  .gallery-section .container {
-    padding: 0;
-  }
-
+@media screen and (max-width: 1200px) {
   .gallery-section__wrap {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -49,11 +45,6 @@
 
 
 @media screen and (max-width: 768px) {
-  .gallery-section .container {
-    max-width: none;
-    padding: 0;
-  }
-
   .gallery-section .h2 {
     width: 100%;
     max-width: 289px;

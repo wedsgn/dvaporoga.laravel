@@ -550,7 +550,7 @@
   }
 }
 
-@media screen and (min-width: 1201px) and (max-width: 1600px) {
+@media screen and (max-width: 1600px) {
   .car-single-page__promo-card {
     padding-right: 180px;
   }
@@ -703,7 +703,7 @@
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   main:has(.car-single-page) .breadcrumbs-section {
     margin-top: 82px;
   }
@@ -1271,12 +1271,6 @@
 }
 
 @media screen and (max-width: 640px) {
-  .car-single-parts-section .container {
-    width: calc(100% - 30px);
-    max-width: none;
-    padding: 0;
-  }
-
   .car-single-parts {
     margin-top: 18px;
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -147,7 +147,7 @@
   display: none;
 }
 
-@media screen and (min-width: 1201px) and (max-width: 1600px) {
+@media screen and (max-width: 1600px) {
   .how-we-work__top {
     gap: 10px;
   }
@@ -323,11 +323,7 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
-  .how-we-work-section .container {
-    padding: 0;
-  }
-
+@media screen and (max-width: 1200px) {
   .how-we-work__top {
     gap: 8px;
   }
@@ -361,9 +357,9 @@
 
   .how-we-work__wrap_info {
     display: grid;
-    grid-template-columns: repeat(4, 194.4px);
-    gap: 10.8px;
-    height: 211.78px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    height: 212px;
     align-items: stretch;
     position: relative;
     z-index: 2;
@@ -489,12 +485,6 @@
 
 
 @media screen and (max-width: 768px) {
-  .how-we-work-section .container {
-    max-width: none;
-    margin: 0 auto;
-    padding: 0;
-  }
-
   .how-we-work__top {
     gap: 5px;
   }

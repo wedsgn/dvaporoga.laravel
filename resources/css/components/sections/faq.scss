@@ -1,5 +1,4 @@
 .faq-section .container {
-  // max-width: 1440px;
   display: flex;
   flex-direction: column;
   gap: 36px;
@@ -127,9 +126,8 @@
   line-height: 140%;
 }
 
-@media screen and (min-width: 1201px) and (max-width: 1600px) {
+@media screen and (max-width: 1600px) {
   .faq-section .container {
-    // max-width: 1120px;
     gap: 28px;
   }
 
@@ -206,11 +204,8 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .faq-section .container {
-    // width: calc(100% - 30px);
-    // max-width: 810px;
-    padding: 0;
     gap: 32px;
   }
 
@@ -270,9 +265,6 @@
 
 @media screen and (max-width: 768px) {
   .faq-section .container {
-    width: calc(100% - 30px);
-    max-width: none;
-    padding: 0;
     gap: 12px;
     align-items: center;
   }

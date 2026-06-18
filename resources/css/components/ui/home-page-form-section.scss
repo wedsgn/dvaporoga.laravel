@@ -5,10 +5,10 @@
 }
 
 .index-hero-section+.home-page-form-section {
-  margin-top: 64px;
+  margin-top: 32px;
 }
 
-.home-page-form-section .container {
+.home-page-form-section .car-single-form-section__card {
   margin: 0 auto;
   background: $gradient-dark-light;
   border: 0;
@@ -119,8 +119,8 @@
   background: $white;
 }
 
-@media screen and (min-width: 1201px) and (max-width: 1488px) {
-  .home-page-form-section .container {
+@media screen and (max-width: 1488px) {
+  .home-page-form-section .car-single-form-section__card {
     min-height: 294px;
     padding: 47px 48px 61px;
     border-radius: 16px;
@@ -148,12 +148,12 @@
   }
 }
 
-@media screen and (min-width: 1025px) and (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .index-hero-section+.home-page-form-section.home-page-form-section {
     margin-top: 20px;
   }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .container {
+  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-section__card {
     min-height: 294px;
     padding: 47px 48px 61px;
     display: block;
@@ -257,12 +257,12 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .home-page-form-section .container {
+  .home-page-form-section .car-single-form-section__card {
     padding: 34px 24px;
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .home-page-form-section {
     margin-top: 60px;
   }
@@ -271,7 +271,7 @@
     margin-top: 60px;
   }
 
-  .home-page-form-section .container {
+  .home-page-form-section .car-single-form-section__card {
     min-height: 393px;
     margin: 0 auto;
     padding: 25px 24px 40px;
@@ -401,7 +401,7 @@
     margin-top: 50px;
   }
 
-  .home-page-form-section .container {
+  .home-page-form-section .car-single-form-section__card {
     min-height: 307px;
     height: auto;
     margin: 0 auto;

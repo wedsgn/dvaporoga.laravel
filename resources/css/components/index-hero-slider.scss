@@ -63,13 +63,13 @@
   background: #e51026;
 }
 
-@media screen and (min-width: 1025px) and (max-width: 1488px) {
+@media screen and (max-width: 1488px) {
   .index-hero__slide {
     height: 481px;
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .index-hero__slide {
     height: 495px;
   }

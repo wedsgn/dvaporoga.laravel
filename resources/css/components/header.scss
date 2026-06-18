@@ -365,10 +365,9 @@ body.page-partnership main {
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .header {
     height: 87px;
-    background: rgba(255, 255, 255, 0.39);
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -550,7 +549,6 @@ body.page-partnership main {
 @media screen and (max-width: 768px) {
   .header {
     height: 37px;
-    background: rgba(255, 255, 255, 0.68);
     box-shadow: 0 0 3.4px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(17.25px);
     -webkit-backdrop-filter: blur(17.25px);
