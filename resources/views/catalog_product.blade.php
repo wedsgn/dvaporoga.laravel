@@ -116,49 +116,6 @@
         );
         $carMeta = implode(' • ', $carMetaParts);
 
-        $heroBadges = [
-            'Оплата при получении',
-            'Повторение оригинала',
-            'ХКС и Оцинковка',
-            'Доставка по РФ',
-            'От 0,8 до 1,5 мм',
-        ];
-
-        $staticPromoProducts = \App\Models\Product::query()
-            ->whereIn('slug', ['porog', 'arka-peredniaia'])
-            ->get()
-            ->keyBy('slug');
-
-        $sillsProduct = $staticPromoProducts->get('porog') ?:
-            ($products->firstWhere('slug', 'porog') ?:
-                $products->first(fn($product) => str_contains(mb_strtolower($product->title), 'порог')));
-        $archesProduct = $staticPromoProducts->get('arka-peredniaia') ?:
-            ($products->firstWhere('slug', 'arka-peredniaia') ?:
-                $products->first(function ($product) {
-                    $title = mb_strtolower($product->title);
-
-                    return str_contains($title, 'арка') && str_contains($title, 'перед');
-                }));
-
-        $heroPromos = collect([
-            ['label' => 'Пороги', 'product' => $sillsProduct, 'modifier' => 'sills'],
-            ['label' => 'Арки', 'product' => $archesProduct, 'modifier' => 'arches'],
-        ])
-            ->filter(fn($item) => !empty($item['product']))
-            ->map(function ($item) use ($resolveProductImage) {
-                $product = $item['product'];
-
-                return [
-                    'label' => $item['label'],
-                    'modifier' => $item['modifier'],
-                    'image' => $resolveProductImage($product),
-                    'image_alt' => $product->alt ?: $product->title,
-                    'price' => $product->price ? number_format((int) $product->price, 0, '.', ' ') . ' ₽' : '',
-                    'price_old' => $product->price_old ? number_format((int) $product->price_old, 0, '.', ' ') . ' ₽' : '',
-                ];
-            })
-            ->values();
-
         $preparedProducts = $products->map(function ($product) use ($resolveProductImage) {
             return [
                 'id' => $product->id,
@@ -178,54 +135,21 @@
         <section class="car-single__hero-section">
             <div class="container">
                 <div class="car-single-page">
+                    <div class="car-single-page__image">
+                        <img src="{{ $img }}" alt="{{ $car->title }}">
+                    </div>
+
                     <div class="car-single-page__heading">
                         <h1 class="car-single-page__title">
                             <span class="car-single-page__title-line">Кузовные элементы</span>
-                            <span class="car-single-page__title-line">для {{ $carHeadingTitle }}</span>
+                            <span class="car-single-page__title-line car-single-page__title-line--accent">для {{ $car_make->title }}</span>
+                            <span class="car-single-page__title-line car-single-page__title-line--accent">{{ $car_model->title }}</span>
                         </h1>
 
                         @if (!empty($carMeta))
                             <p class="car-single-page__subtitle">{{ $carMeta }}</p>
                         @endif
                     </div>
-
-                    <div class="car-single-page__visual">
-                        <div class="car-single-page__image">
-                            <img src="{{ $img }}" alt="{{ $car->title }}">
-                        </div>
-
-                        <div class="car-single-page__badges">
-                            @foreach ($heroBadges as $badge)
-                                <div class="car-single-page__badge">{{ $badge }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    @if ($heroPromos->isNotEmpty())
-                        <div class="car-single-page__promo-grid">
-                            @foreach ($heroPromos as $promo)
-                                <article class="car-single-page__promo-card car-single-page__promo-card--{{ $promo['modifier'] }}">
-                                    <div class="car-single-page__promo-copy">
-                                        <h2 class="car-single-page__promo-title">{{ $promo['label'] }}</h2>
-
-                                        <div class="car-single-page__promo-prices">
-                                            @if (!empty($promo['price']))
-                                                <div class="car-single-page__promo-price">{{ $promo['price'] }}</div>
-                                            @endif
-
-                                            @if (!empty($promo['price_old']))
-                                                <div class="car-single-page__promo-price-old">{{ $promo['price_old'] }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="car-single-page__promo-media">
-                                        <img src="{{ $promo['image'] }}" alt="{{ $promo['image_alt'] }}">
-                                    </div>
-                                </article>
-                            @endforeach
-                        </div>
-                    @endif
                 </div>
             </div>
         </section>
