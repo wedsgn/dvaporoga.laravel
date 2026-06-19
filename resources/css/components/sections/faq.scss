@@ -265,7 +265,7 @@
 
 @media screen and (max-width: 768px) {
   .faq-section .container {
-    gap: 12px;
+    gap: 32px;
     align-items: center;
   }
 
@@ -280,7 +280,7 @@
   .faq-section__meta {
     width: 100%;
     max-width: none;
-    gap: 6px;
+    gap: 16px;
   }
 
   .faq-section__title {
@@ -288,7 +288,7 @@
     max-width: none;
     color: #383838;
     font-family: "Golos Text", "Golos", sans-serif;
-    font-size: clamp(24px, 6vw, 48px);
+    font-size: 24px;
     font-weight: 800;
     line-height: 100%;
     text-align: center;
@@ -299,12 +299,13 @@
   .faq-description {
     width: 100%;
     max-width: none;
-    font-size: clamp(12px, 2.1vw, 16px);
+    font-size: 16px;
     line-height: 140%;
     color: #323232;
   }
 
-  .faq-section__btn {
+
+  .btn.faq-section__btn {
     display: none;
   }
 

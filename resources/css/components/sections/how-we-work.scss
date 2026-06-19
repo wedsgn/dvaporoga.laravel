@@ -138,7 +138,7 @@
 }
 
 .how-we-work-fx:nth-child(3) {
-  top: calc(var(--flow-offset-top) + 133px);
+  bottom: 0;
   left: calc((var(--step-col) + var(--step-gap)) + (var(--step-col) / 2));
 }
 
@@ -263,7 +263,8 @@
   }
 
   .how-we-work-fx:nth-child(3) {
-    top: calc(var(--flow-offset-top) + var(--step-card-height));
+    top: auto;
+    bottom: 0;
     left: calc((var(--step-col) + var(--step-gap)) + (var(--step-col) / 2));
     height: 24px;
     border-top: 0;
@@ -347,10 +348,9 @@
   .how-we-work__wrap {
     --step-gap: 10.8px;
     --step-col: 194.4px;
-    width: 810px;
-    height: 261.37px;
+    width: 100%;
+    height: auto;
     margin-top: 36px;
-    padding: 25.47px 0 0;
     position: relative;
     overflow: visible;
   }
@@ -359,7 +359,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    height: 212px;
+    height: auto;
     align-items: stretch;
     position: relative;
     z-index: 2;
@@ -367,7 +367,7 @@
 
   .how-we-work__info {
     min-height: 0;
-    height: 211.78px;
+    height: auto;
     padding: 24px;
     gap: 10px;
     border-radius: 8px;
@@ -390,7 +390,7 @@
   }
 
   .how-we-work-fx {
-    display: block;
+    display: none;
     position: absolute;
     z-index: 4;
     width: 205.2px;
@@ -514,7 +514,7 @@
     --flow-radius: clamp(6px, 1vw, 8px);
     width: 100%;
     max-width: none;
-    aspect-ratio: 290 / 262;
+    aspect-ratio: none;
     height: auto;
     margin: 18px auto 0;
     padding: 0;
@@ -523,25 +523,28 @@
   }
 
   .how-we-work__wrap_info {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     width: 100%;
     height: 100%;
     position: relative;
+    height: auto;
   }
 
   .how-we-work__info {
-    position: absolute;
+    position: static;
     z-index: 2;
-    width: 63.45%;
-    height: 23.29%;
-    min-height: 0;
+
+    min-height: auto;
+    height: auto;
     container-type: inline-size;
     --info-pad-y: clamp(10px, 5.43cqw, 18px);
     --info-pad-x: clamp(12px, 6.52cqw, 22px);
     --info-badge-size: clamp(19px, 10.33cqw, 32px);
     --info-gap: clamp(10px, 5.43cqw, 18px);
     --info-offset: calc(var(--info-badge-size) + var(--info-gap));
-    padding: var(--info-pad-y) var(--info-pad-x);
+    padding: 12px;
     gap: 0;
     background: #fff;
     border-radius: 6px;
@@ -551,20 +554,28 @@
   .how-we-work__info:nth-child(1) {
     left: 0;
     top: 0;
+    width: 100%;
+    position: static;
   }
 
   .how-we-work__info:nth-child(2) {
     left: 36.55%;
     top: 25.57%;
+    width: 100%;
+    position: static;
   }
 
   .how-we-work__info:nth-child(3) {
     left: 0;
+    width: 100%;
+    position: static;
     top: 51.15%;
   }
 
   .how-we-work__info:nth-child(4) {
     left: 36.55%;
+    width: 100%;
+    position: static;
     top: 76.72%;
   }
 
@@ -599,7 +610,7 @@
   }
 
   .how-we-work-fx {
-    display: block;
+    display: none;
     width: 16.2%;
     height: 13.36%;
     max-width: none;
@@ -675,13 +686,13 @@
   }
 
   .how-we-work-section .how-we-work__btn {
-    width: 62.41%;
+    width: 100%;
     max-width: none;
     min-width: 181px;
-    height: clamp(30px, 4.6vw, 44px);
+    height: auto;
     border-radius: 6px;
-    padding: 0 !important;
-    font-size: clamp(12px, 1.8vw, 15px);
+    padding: 12px 20px !important;
+    font-size: 16px;
     line-height: 100%;
   }
 }

@@ -198,9 +198,8 @@
 
   .catalog-parts-grid {
     margin-top: 36px;
-    grid-template-columns: repeat(3, 260px);
-    column-gap: 15px;
-    row-gap: 36px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
 
   .catalog-parts-card {
@@ -211,7 +210,7 @@
   }
 
   .catalog-parts-card__image {
-    width: 260px;
+    width: 100%;
     height: 242px;
     padding: 14px;
     border-radius: 8px;
@@ -229,7 +228,7 @@
   .catalog-parts-card__title {
     max-width: 260px;
     min-height: 0;
-    font-size: 26px;
+    font-size: 16px;
     line-height: 100%;
   }
 
@@ -293,12 +292,7 @@
     text-transform: uppercase;
   }
 
-  .catalog-parts-grid {
-    margin-top: 18px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 6px;
-    row-gap: 10px;
-  }
+
 
   .catalog-parts-card {
     width: 100%;
@@ -361,5 +355,17 @@
     margin-top: 0;
     border-radius: 6px;
     font-size: clamp(12px, 1.8vw, 15px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .catalog-parts-grid {
+    margin-top: 18px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+  }
+
+  .catalog-parts-card__btn {
+    width: 100%;
   }
 }

@@ -2,263 +2,265 @@
   margin-top: 86px;
   background: transparent;
   color: $white;
+
+  .car-single-form-section__card {
+    margin: 0 auto;
+    background: $gradient-dark-light;
+    border: 0;
+    border-radius: 16px;
+    min-height: 294px;
+    padding: 54px 46px;
+  }
+
+  .car-single-form-section__top {
+    align-items: flex-start;
+  }
+
+  .car-single-form-section__title {
+    font-family: "Gilroy", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 100%;
+    color: $white;
+  }
+
+  .car-single-form-section__descr {
+    margin-top: 8px;
+    max-width: none;
+    font-size: 16px;
+    line-height: 140%;
+    color: $white;
+  }
+
+  .car-single-form {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .choose-section__form_row {
+    display: grid;
+    grid-template-columns: 442px 440px 442px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .choose-section__form_row .input-item {
+    width: auto;
+  }
+
+  .choose-section__form_row .input {
+    min-height: 52px;
+    height: 52px;
+    padding: 14px 20px;
+    border: 0;
+    border-radius: 8px;
+  }
+
+  .car-single-form-btn {
+    width: 442px;
+    height: 52px;
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 8px;
+    background: $gradient-red;
+    color: $white;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
+  }
+
+  .form-policy-wrap {
+    margin-top: 0;
+  }
+
+  .form-policy {
+    max-width: 1067px;
+    align-items: center;
+    gap: 8px;
+    color: $white;
+  }
+
+  .form-policy a {
+    color: inherit;
+  }
+
+  .form-policy label {
+    font-size: 16px;
+    line-height: 100%;
+  }
+
+  .form-policy label:before {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    border-width: 1px;
+    border-color: #ffffff;
+    border-radius: 4px;
+    margin-top: -2px;
+  }
+
+  .form-policy input:checked+label:after {
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    background: $white;
+  }
 }
 
 .index-hero-section+.home-page-form-section {
   margin-top: 32px;
 }
 
-.home-page-form-section .car-single-form-section__card {
-  margin: 0 auto;
-  background: $gradient-dark-light;
-  border: 0;
-  border-radius: 16px;
-  min-height: 294px;
-  padding: 54px 46px;
-}
-
-.home-page-form-section .car-single-form-section__top {
-  align-items: flex-start;
-}
-
-.home-page-form-section .car-single-form-section__title {
-  font-family: "Gilroy", sans-serif;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 100%;
-  color: $white;
-}
-
-.home-page-form-section .car-single-form-section__descr {
-  margin-top: 8px;
-  max-width: none;
-  font-size: 16px;
-  line-height: 140%;
-  color: $white;
-}
-
-.home-page-form-section .car-single-form {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.home-page-form-section .choose-section__form_row {
-  display: grid;
-  grid-template-columns: 442px 440px 442px;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
-.home-page-form-section .choose-section__form_row .input-item {
-  width: auto;
-}
-
-.home-page-form-section .choose-section__form_row .input {
-  min-height: 52px;
-  height: 52px;
-  padding: 14px 20px;
-  border: 0;
-  border-radius: 8px;
-}
-
-.home-page-form-section .car-single-form-btn {
-  width: 442px;
-  height: 52px;
-  min-height: 52px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-  border-radius: 8px;
-  background: $gradient-red;
-  color: $white;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 100%;
-}
-
-.home-page-form-section .form-policy-wrap {
-  margin-top: 0;
-}
-
-.home-page-form-section .form-policy {
-  max-width: 1067px;
-  align-items: center;
-  gap: 8px;
-  color: $white;
-}
-
-.home-page-form-section .form-policy a {
-  color: inherit;
-}
-
-.home-page-form-section .form-policy label {
-  font-size: 16px;
-  line-height: 100%;
-}
-
-.home-page-form-section .form-policy label:before {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  border-width: 1px;
-  border-color: #ffffff;
-  border-radius: 4px;
-  margin-top: -2px;
-}
-
-.home-page-form-section .form-policy input:checked+label:after {
-  top: 4px;
-  left: 4px;
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  background: $white;
-}
-
 @media screen and (max-width: 1488px) {
-  .home-page-form-section .car-single-form-section__card {
-    min-height: 294px;
-    padding: 47px 48px 61px;
-    border-radius: 16px;
+  .home-page-form-section {
+    .car-single-form-section__card {
+      min-height: 294px;
+      padding: 47px 48px 61px;
+      border-radius: 16px;
+    }
+
+    .choose-section__form_row {
+      grid-template-columns: 357px 355px 357px;
+      justify-content: space-between;
+    }
+
+    .car-single-form-btn {
+      width: 357px;
+    }
   }
 
-  .home-page-form-section .choose-section__form_row {
-    grid-template-columns: 357px 355px 357px;
-    justify-content: space-between;
-  }
+  .index-hero-section+.home-page-form-section {
+    .choose-section__form_row {
+      grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
+    }
 
-  .home-page-form-section .car-single-form-btn {
-    width: 357px;
-  }
-
-  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row {
-    grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
-  }
-
-  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input-item,
-  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input,
-  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-btn {
-    width: 100%;
-    max-width: none;
-    min-width: 0;
+    .choose-section__form_row .input-item,
+    .choose-section__form_row .input,
+    .car-single-form-btn {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+    }
   }
 }
 
 @media screen and (max-width: 1200px) {
-  .index-hero-section+.home-page-form-section.home-page-form-section {
+  .index-hero-section+.home-page-form-section {
     margin-top: 20px;
-  }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-section__card {
-    min-height: 294px;
-    padding: 47px 48px 61px;
-    display: block;
-    border-radius: 16px;
-  }
+    .car-single-form-section__card {
+      min-height: 294px;
+      padding: 16px;
+      display: block;
+      border-radius: 16px;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-section__top {
-    width: 100%;
-    align-items: flex-start;
-    text-align: left;
-  }
+    .car-single-form-section__top {
+      width: 100%;
+      align-items: flex-start;
+      text-align: left;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-section__descr {
-    width: auto;
-    max-width: none;
-    margin: 8px 0 0;
-    text-align: left;
-  }
+    .car-single-form-section__descr {
+      width: auto;
+      max-width: none;
+      margin: 8px 0 0;
+      text-align: left;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form {
-    width: 100%;
-    max-width: none;
-    margin-top: 24px;
-    gap: 24px;
-    align-items: stretch;
-  }
+    .car-single-form {
+      width: 100%;
+      max-width: none;
+      margin-top: 24px;
+      gap: 24px;
+      align-items: stretch;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    display: grid;
-    grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-  }
+    .choose-section__form_row {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input-item,
-  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input {
-    width: 100%;
-  }
+    .choose-section__form_row .input-item,
+    .choose-section__form_row .input {
+      width: 100%;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .choose-section__form_row .input {
-    height: 52px;
-    min-height: 52px;
-    padding: 14px 20px;
-    border: 0;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 100%;
-  }
+    .choose-section__form_row .input {
+      height: 52px;
+      min-height: 52px;
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 100%;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .car-single-form-btn {
-    width: 100%;
-    max-width: none;
-    min-width: 0;
-    height: 52px;
-    min-height: 52px;
-    margin-top: 0;
-    border-radius: 8px;
-    font-size: 16px;
-  }
+    .car-single-form-btn {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      height: 52px;
+      min-height: 52px;
+      margin-top: 0;
+      border-radius: 8px;
+      font-size: 16px;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy-wrap,
-  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-  }
+    .form-policy-wrap,
+    .form-policy {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy {
-    gap: 8px;
-    align-items: center;
-  }
+    .form-policy {
+      gap: 8px;
+      align-items: center;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy label {
-    width: auto;
-    min-height: 24px;
-    padding-left: 0;
-    font-size: 16px;
-    line-height: 100%;
-  }
+    .form-policy label {
+      width: auto;
+      min-height: 24px;
+      padding-left: 0;
+      font-size: 16px;
+      line-height: 100%;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy label:before {
-    position: static;
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-    border-width: 1px;
-    border-radius: 4px;
-  }
+    .form-policy label:before {
+      position: static;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      border-width: 1px;
+      border-radius: 4px;
+    }
 
-  .index-hero-section+.home-page-form-section.home-page-form-section .form-policy input:checked+label:after {
-    top: 4px;
-    left: 4px;
-    width: 16px;
-    height: 16px;
-    border-radius: 2px;
+    .form-policy input:checked+label:after {
+      top: 4px;
+      left: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+    }
   }
 }
 
 @media screen and (max-width: 1024px) {
   .home-page-form-section .car-single-form-section__card {
-    padding: 34px 24px;
+    padding: 16px;
   }
 }
 
@@ -271,126 +273,127 @@
     margin-top: 60px;
   }
 
-  .home-page-form-section .car-single-form-section__card {
-    min-height: 393px;
-    margin: 0 auto;
-    padding: 25px 24px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    border-radius: 16px;
-    background: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
-  }
+  .home-page-form-section {
+    .car-single-form-section__card {
+      min-height: 393px;
+      margin: 0 auto;
+      padding: 25px 24px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
+    }
 
-  .home-page-form-section .car-single-form-section__top {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-  }
+    .car-single-form-section__top {
+      width: 100%;
+      align-items: center;
+      text-align: center;
+    }
 
-  .home-page-form-section .car-single-form-section__title {
-    font-family: "Gilroy", sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 100%;
-  }
+    .car-single-form-section__title {
+      font-family: "Gilroy", sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 100%;
+    }
 
-  .home-page-form-section .car-single-form-section__descr {
-    width: 100%;
-    max-width: 766px;
-    margin: -16px auto 0;
-    font-size: 16px;
-    line-height: 140%;
-    text-align: center;
-  }
+    .car-single-form-section__descr {
+      width: 100%;
+      max-width: 766px;
+      margin: -16px auto 0;
+      font-size: 16px;
+      line-height: 140%;
+      text-align: center;
+    }
 
-  .home-page-form-section .car-single-form {
-    width: 485px;
-    max-width: 100%;
-    margin-top: 0;
-    gap: 15px;
-    align-items: stretch;
-  }
+    .car-single-form {
+      width: 485px;
+      max-width: 100%;
+      margin-top: 0;
+      gap: 15px;
+      align-items: stretch;
+    }
 
-  .home-page-form-section .choose-section__form_row {
-    width: 485px;
-    max-width: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
-  }
+    .choose-section__form_row {
+      width: 485px;
+      max-width: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+    }
 
-  .home-page-form-section .choose-section__form_row .input-item,
-  .home-page-form-section .choose-section__form_row .input {
-    width: 100%;
-  }
+    .choose-section__form_row .input-item,
+    .choose-section__form_row .input {
+      width: 100%;
+    }
 
-  .home-page-form-section .choose-section__form_row .input {
-    height: 52px;
-    min-height: 52px;
-    padding: 14px 20px;
-    border: 0;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 100%;
-  }
+    .choose-section__form_row .input {
+      height: 52px;
+      min-height: 52px;
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 100%;
+    }
 
-  .home-page-form-section .car-single-form-btn {
-    width: 485px;
-    max-width: 100%;
-    height: 52px;
-    min-height: 52px;
-    margin-top: 0;
-    border-radius: 8px;
-    font-size: 16px;
-  }
+    .car-single-form-btn {
+      width: 485px;
+      max-width: 100%;
+      height: 52px;
+      min-height: 52px;
+      margin-top: 0;
+      border-radius: 8px;
+      font-size: 16px;
+    }
 
-  .home-page-form-section .form-policy-wrap,
-  .home-page-form-section .form-policy {
-    width: 477px;
-    max-width: 100%;
-    margin: 0;
-  }
+    .form-policy-wrap,
+    .form-policy {
+      width: 477px;
+      max-width: 100%;
+      margin: 0;
+    }
 
-  .home-page-form-section .form-policy {
-    gap: 0;
-    align-items: flex-start;
-  }
+    .form-policy {
+      gap: 0;
+      align-items: flex-start;
+    }
 
-  .home-page-form-section .form-policy label {
-    position: relative;
-    display: block;
-    width: 100%;
-    min-height: 24px;
-    padding-left: 36px;
-    font-size: 16px;
-    line-height: 120%;
-  }
+    .form-policy label {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-height: 24px;
+      padding-left: 36px;
+      font-size: 16px;
+      line-height: 120%;
+    }
 
-  .home-page-form-section .form-policy label:before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 24px;
-    height: 24px;
-    margin: 0;
-    border-width: 1px;
-    border-radius: 4px;
-  }
+    .form-policy label:before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      margin: 0;
+      border-width: 1px;
+      border-radius: 4px;
+    }
 
-  .home-page-form-section .form-policy input:checked+label:after {
-    top: 4px;
-    left: 4px;
-    width: 16px;
-    height: 16px;
-    border-radius: 2px;
+    .form-policy input:checked+label:after {
+      top: 4px;
+      left: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+    }
   }
 }
-
 
 @media screen and (max-width: 768px) {
   .index-hero-section+.home-page-form-section {
@@ -399,132 +402,132 @@
 
   .home-page-form-section {
     margin-top: 50px;
-  }
 
-  .home-page-form-section .car-single-form-section__card {
-    min-height: 307px;
-    height: auto;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 16px 14px 28px;
-    border-radius: 6px;
-    background: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
-  }
+    .car-single-form-section__card {
+      min-height: 307px;
+      height: auto;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 14px 28px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
+    }
 
-  .home-page-form-section .car-single-form-section__top {
-    width: 100%;
-    max-width: none;
-  }
+    .car-single-form-section__top {
+      width: 100%;
+      max-width: none;
+    }
 
-  .home-page-form-section .car-single-form-section__title {
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 120%;
-    text-align: center;
-  }
+    .car-single-form-section__title {
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 120%;
+      text-align: center;
+    }
 
-  .home-page-form-section .car-single-form-section__descr {
-    width: 237px;
-    margin: 8px auto 0;
-    text-align: center;
-    font-size: 12px;
-    line-height: 140%;
-  }
+    .car-single-form-section__descr {
+      width: 237px;
+      margin: 8px auto 0;
+      text-align: center;
+      font-size: 12px;
+      line-height: 140%;
+    }
 
-  .home-page-form-section .car-single-form {
-    width: 263px;
-    max-width: 100%;
-    margin: 24px auto 0;
-    gap: 16px;
-  }
+    .car-single-form {
+      width: 263px;
+      max-width: 100%;
+      margin: 24px auto 0;
+      gap: 16px;
+    }
 
-  .home-page-form-section .choose-section__form_row {
-    width: 263px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
+    .choose-section__form_row {
+      width: 263px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
 
-  .home-page-form-section .choose-section__form_row .input-item {
-    width: 100%;
-    min-width: 0;
-  }
+    .choose-section__form_row .input-item {
+      width: 100%;
+      min-width: 0;
+    }
 
-  .home-page-form-section .choose-section__form_row .input-item+.input-item {
-    margin-top: 0;
-  }
+    .choose-section__form_row .input-item+.input-item {
+      margin-top: 0;
+    }
 
-  .home-page-form-section .choose-section__form_row .input {
-    width: 100%;
-    min-height: 34px;
-    height: 34px;
-    padding: 0 20px;
-    border: 1px solid #e1e1e1;
-    border-radius: 6px;
-    font-size: 12px;
-    line-height: 100%;
-  }
+    .choose-section__form_row .input {
+      width: 100%;
+      min-height: 34px;
+      height: 34px;
+      padding: 0 20px;
+      border: 1px solid #e1e1e1;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 100%;
+    }
 
-  .home-page-form-section .choose-section__form_row .input::placeholder {
-    color: #383838;
-    opacity: 1;
-  }
+    .choose-section__form_row .input::placeholder {
+      color: #383838;
+      opacity: 1;
+    }
 
-  .home-page-form-section .choose-section__form_row .input[type="tel"]::placeholder {
-    color: #d9d9d9;
-  }
+    .choose-section__form_row .input[type="tel"]::placeholder {
+      color: #d9d9d9;
+    }
 
-  .home-page-form-section .car-single-form-btn {
-    width: 181px;
-    min-height: 34px;
-    height: 34px;
-    margin: 0 auto;
-    padding: 0 24px;
-    border-radius: 6px;
-    font-size: 12px;
-    line-height: 100%;
-  }
+    .car-single-form-btn {
+      width: 181px;
+      min-height: 34px;
+      height: 34px;
+      margin: 0 auto;
+      padding: 0 24px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 100%;
+    }
 
-  .home-page-form-section .form-policy-wrap {
-    width: 100%;
-    margin-top: 8px;
-  }
+    .form-policy-wrap {
+      width: 100%;
+      margin-top: 8px;
+    }
 
-  .home-page-form-section .form-policy {
-    width: 100%;
-    align-items: flex-start;
-    gap: 8px;
-  }
+    .form-policy {
+      width: 100%;
+      align-items: flex-start;
+      gap: 8px;
+    }
 
-  .home-page-form-section .form-policy label {
-    position: relative;
-    display: block;
-    width: 225px;
-    padding-left: 28px;
-    max-width: none;
-    font-size: 12px;
-    line-height: 130%;
-  }
+    .form-policy label {
+      position: relative;
+      display: block;
+      width: 225px;
+      padding-left: 28px;
+      max-width: none;
+      font-size: 12px;
+      line-height: 130%;
+    }
 
-  .home-page-form-section .form-policy label:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    border-radius: 4px;
-  }
+    .form-policy label:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      border-radius: 4px;
+    }
 
-  .home-page-form-section .form-policy input:checked+label:after {
-    top: 4px;
-    left: 4px;
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
+    .form-policy input:checked+label:after {
+      top: 4px;
+      left: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
   }
 }

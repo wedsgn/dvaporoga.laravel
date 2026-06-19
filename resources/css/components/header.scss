@@ -415,7 +415,7 @@ body.page-partnership main {
   }
 
   .header__nav {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 0;
     margin-left: auto;
@@ -474,7 +474,6 @@ body.page-partnership main {
 
   .burger {
     display: inline-flex;
-    flex: 0 0 55px;
     width: 55px;
     height: 55px;
     border-radius: 31px;
@@ -548,7 +547,8 @@ body.page-partnership main {
 
 @media screen and (max-width: 768px) {
   .header {
-    height: 37px;
+    height: auto;
+    padding: 8px 0;
     box-shadow: 0 0 3.4px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(17.25px);
     -webkit-backdrop-filter: blur(17.25px);
@@ -590,8 +590,10 @@ body.page-partnership main {
   .burger {
     width: 32px;
     height: 32px;
+    flex-shrink: 0;
     border-radius: 31px;
     background: #fa3636;
+    flex-shrink: 0;
 
     span {
       left: 7px;

@@ -120,7 +120,7 @@
   box-sizing: border-box;
 }
 
-.form-policy input:checked + label:after {
+.form-policy input:checked+label:after {
   content: "";
   display: block;
   position: absolute;
@@ -185,7 +185,7 @@
   width: 100%;
 }
 
-.modal-form .input-item + .input-item {
+.modal-form .input-item+.input-item {
   margin-top: 16px;
 }
 
@@ -206,7 +206,7 @@
   box-shadow: 0 0 0 1px $red inset;
 }
 
-.form-policy input[aria-invalid="true"] + label:before {
+.form-policy input[aria-invalid="true"]+label:before {
   border-color: $red;
   box-shadow: 0 0 0 1px $red inset;
 }
@@ -234,7 +234,7 @@
     border-radius: 6px;
   }
 
-  .form-policy input:checked + label:after {
+  .form-policy input:checked+label:after {
     top: 5px;
     left: 4px;
     width: 14px;
