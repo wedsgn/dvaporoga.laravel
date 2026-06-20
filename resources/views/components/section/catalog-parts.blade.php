@@ -26,7 +26,7 @@
     <section class="catalog-parts-section section">
         <div class="container">
             @if (!empty($title))
-                <h2 class="h2 catalog-parts-section__title">{{ $title }}</h2>
+                <h2 class="h2">{{ $title }}</h2>
             @endif
 
             <div class="catalog-parts-grid">

@@ -17,7 +17,7 @@
     <section class="repair-examples-section section">
         <div class="container">
             <div class="repair-examples-section__top">
-                <h2 class="h2 repair-examples-section__title">{{ $title }}</h2>
+                <h2 class="h2">{{ $title }}</h2>
             </div>
 
             <div class="swiper repair-examples-slider">

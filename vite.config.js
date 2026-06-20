@@ -10,6 +10,15 @@ export default defineConfig({
     }),
     sassGlobImports(),
   ],
+  server: {
+    // Страница отдаётся nginx по http://localhost, поэтому и Vite должен
+    // светить ассеты/HMR с того же origin (localhost), иначе localhost vs
+    // 127.0.0.1 = разные origin и HMR может срываться в полную перезагрузку.
+    host: "localhost",
+    hmr: {
+      host: "localhost",
+    },
+  },
   css: {
     preprocessorOptions: {
       scss: {

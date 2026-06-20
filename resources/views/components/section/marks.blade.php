@@ -2,7 +2,7 @@
     <div class="container" id="concernsCatalog">
         <div class="marks-layout">
             <div class="marks-header">
-                <h2 class="h2">
+                <h2 class="h2-small">
                     Поиск по марке
                 </h2>
             </div>
