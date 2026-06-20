@@ -2,13 +2,13 @@
 @foreach($generations as $generation => $models)
 
 <div class="car-generation">
+  <div class="car-generation__years h2-small">
+    @if ($models->first()->body)
+     {{ $models->first()->body }} /
+    @endif
+      {{ $generation }}
+  </div>
   <div class="car-generation__info">
-    <div class="car-generation__years">
-      @if ($models->first()->body)
-       {{ $models->first()->body }} /
-      @endif
-        {{ $generation }}
-    </div>
     @php $count = count($models); $i = 1; @endphp
     @php $prev_years = null; @endphp
     @foreach($models as $model)

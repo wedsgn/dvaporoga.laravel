@@ -7,7 +7,7 @@
       <div class="container">
         <div class="catalog-page-top --model">
           <div class="catalog-page-top__left">
-            <h1 class="h1 catalog-page__title">Поколения модели {{ $car_make->title }} {{ $car_model->title }}
+            <h1 class="h1  text-center">Поколения модели {{ $car_make->title }} {{ $car_model->title }}
             </h1>
           </div>
         </div>
