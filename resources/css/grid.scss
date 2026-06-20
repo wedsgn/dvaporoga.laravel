@@ -1,12 +1,7 @@
-// Единый источник правды для .container.
-// Размеры/паддинги/маргины контейнера задаются ТОЛЬКО здесь.
-// В секциях .container не переопределяется по box-model — только layout (flex/gap).
 .container {
   position: relative;
   width: 100%;
-  max-width: 1448px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 15px;
-  padding-right: 15px;
+  max-width: 1478px;
+  margin: 0 auto;
+  padding: 0 15px;
 }

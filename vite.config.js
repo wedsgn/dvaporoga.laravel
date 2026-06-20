@@ -10,9 +10,11 @@ export default defineConfig({
     }),
     sassGlobImports(),
   ],
-  server: {
-    watch: {
-      usePolling: true,
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+      },
     },
   },
 });
