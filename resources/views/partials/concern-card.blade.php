@@ -1,6 +1,5 @@
 ﻿@if ($car_makes->count() > 0)
-  <div class="catalog-makes-grid">
-    @foreach ($car_makes as $car_make)
+  <div class="catalog-makes-grid">@foreach ($car_makes as $car_make)
       @php
         $fallbackImage = asset('images/mark/' . $car_make->slug . '.png');
         $imageUrl = empty($car_make->image) || $car_make->image === 'default'

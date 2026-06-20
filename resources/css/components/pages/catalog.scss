@@ -105,6 +105,8 @@
   gap: 28px 14px;
   justify-content: center;
   min-width: 0;
+
+
 }
 
 .catalog-make-card {
@@ -438,7 +440,6 @@
 
 @media (max-width: 768px) {
   main:has(.catalog-models-page) .breadcrumbs-section {
-    margin-top: 53px;
     position: relative;
     z-index: 1;
   }
@@ -1313,7 +1314,7 @@
   }
 
   .catalog-makes-grid {
-    grid-template-columns: repeat(5, 230px);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
@@ -1437,9 +1438,7 @@
     margin-top: 28px;
   }
 
-  .catalog-makes-grid {
-    gap: 18px 10px;
-  }
+
 
   .catalog-make-card {
     gap: 8px;
@@ -1458,7 +1457,7 @@
 
 @media (max-width: 768px) {
   main:has(.catalog-parts-page) .breadcrumbs-section {
-    margin-top: 53px;
+    margin-top: 16px;
     position: relative;
     z-index: 1;
   }
@@ -1545,8 +1544,8 @@
   .catalog-makes-grid {
     margin-top: 0;
     width: 100%;
+    gap: 8px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(10px, 1.8vw, 16px) clamp(6px, 1.2vw, 12px);
     justify-content: stretch;
   }
 
@@ -1594,11 +1593,13 @@
     width: 100%;
   }
 
-  .catalog-makes-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 28px 16px;
-    justify-content: stretch;
-  }
+  // .catalog-makes-grid {
+  //   grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  //   justify-content: stretch;
+  // }
+
+
 
   .catalog-make-card {
     width: 100%;
@@ -1630,5 +1631,11 @@
     width: 100%;
     height: auto;
     aspect-ratio: 228 / 157;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .catalog-models-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
