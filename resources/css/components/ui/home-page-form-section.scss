@@ -155,8 +155,6 @@
     margin-top: 20px;
 
     .car-single-form-section__card {
-      min-height: 294px;
-      padding: 16px;
       display: block;
       border-radius: 16px;
     }
@@ -256,11 +254,7 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .home-page-form-section .car-single-form-section__card {
-    padding: 16px;
-  }
-}
+@media screen and (max-width: 1024px) {}
 
 @media screen and (max-width: 1200px) {
   .home-page-form-section {
@@ -275,7 +269,7 @@
     .car-single-form-section__card {
       min-height: 393px;
       margin: 0 auto;
-      padding: 25px 24px 40px;
+      padding: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;

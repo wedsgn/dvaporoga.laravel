@@ -114,9 +114,9 @@
   width: 24px;
   height: 24px;
   margin-right: 10px;
-  border: 2px solid currentColor;
+  border: 1.5px solid $stroke;
   border-radius: 6px;
-  background-color: transparent;
+  background-color: $white;
   box-sizing: border-box;
 }
 
