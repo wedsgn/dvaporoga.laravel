@@ -435,6 +435,7 @@
 
   .catalog-models-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 8px;
   }
 }
 
@@ -546,14 +547,11 @@
 @media (max-width: 480px) {
   .catalog-models-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px 6px;
   }
 }
 
 @media (max-width: 1200px) {
-  main:has(.catalog-generations-page) .breadcrumbs-section {
-    margin-top: 82px;
-  }
+
 
   .catalog-generations-page {
     margin-top: 19px;
@@ -561,11 +559,7 @@
 }
 
 @media (max-width: 768px) {
-  main:has(.catalog-generations-page) .breadcrumbs-section {
-    margin-top: 53px;
-    position: relative;
-    z-index: 1;
-  }
+
 
   main:has(.catalog-generations-page) .breadcrumbs {
     gap: 4px 6px;
@@ -1619,7 +1613,6 @@
 
   .catalog-models-grid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 16px;
     justify-content: stretch;
   }
 

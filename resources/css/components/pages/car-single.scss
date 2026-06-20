@@ -713,9 +713,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-  main:has(.car-single-page) .breadcrumbs-section {
-    margin-top: 82px;
-  }
+
 
   .car-single-page__heading {
     min-height: 0;
@@ -848,9 +846,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  main:has(.car-single-page) .breadcrumbs-section {
-    margin-top: 64px;
-  }
+
 
   main:has(.car-single-page) .breadcrumbs {
     gap: 4px;
