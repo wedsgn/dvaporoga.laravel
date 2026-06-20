@@ -116,7 +116,7 @@
   margin-right: 10px;
   border: 1.5px solid $stroke;
   border-radius: 6px;
-  background-color: $white;
+  margin-top: -2px;
   box-sizing: border-box;
 }
 
@@ -124,12 +124,16 @@
   content: "";
   display: block;
   position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 14px;
-  height: 14px;
+  top: 2px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
   border-radius: 3px;
   background: currentColor;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 0;
+  }
 }
 
 .field-error--policy {

@@ -133,6 +133,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -142,6 +143,7 @@
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -151,6 +153,7 @@
   from {
     transform: translateY(10%);
   }
+
   to {
     transform: translateY(0);
   }
@@ -160,6 +163,7 @@
   from {
     transform: translateY(0);
   }
+
   to {
     transform: translateY(-6%);
   }
@@ -311,7 +315,13 @@
   font-weight: 700;
   line-height: 100%;
   text-align: center;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 24px;
+
+  }
 }
+
 
 .modal:not(.modal-success) .modal__description {
   margin: 18px 0 0;
@@ -346,7 +356,7 @@
   order: 1;
 }
 
-.modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input-item + .input-item {
+.modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input-item+.input-item {
   margin-top: 0;
 }
 
@@ -403,19 +413,7 @@
   color: #383838;
 }
 
-.modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label {
-  position: relative;
-  max-width: 411px;
-  display: block;
-  box-sizing: border-box;
-  padding-left: 39px;
-  color: #383838;
-  font-family: "Golos Text", "Golos", sans-serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-}
+
 
 .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy a {
   color: inherit;
@@ -423,18 +421,9 @@
   text-underline-offset: 2px;
 }
 
-.modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  margin-right: 0;
-  border: 1px solid #383838;
-  border-radius: 4px;
-}
 
-.modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy input:checked + label:after {
+
+.modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy input:checked+label:after {
   top: 4px;
   left: 4px;
   width: 16px;
@@ -451,23 +440,13 @@
     max-height: calc(100vh - 24px);
     max-width: min(420px, calc(100vw - 30px));
     padding:
-      clamp(28px, calc((100vw - 30px) * 0.0966), 41px)
-      clamp(13px, calc((100vw - 30px) * 0.0448), 19px);
+      clamp(28px, calc((100vw - 30px) * 0.0966), 41px) clamp(13px, calc((100vw - 30px) * 0.0448), 19px);
     border-radius: clamp(16px, calc((100vw - 30px) * 0.0552), 23px);
     container-type: inline-size;
   }
 
-  .modal:not(.modal-success) .modal__header,
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) {
-    width: 90.69cqw;
-    max-width: 100%;
-  }
 
-  .modal:not(.modal-success) .modal__title {
-    max-width: 65.52cqw;
-    margin: 0 auto;
-    font-size: 6.9cqw;
-  }
+
 
   .modal:not(.modal-success) .modal__description {
     max-width: 86.9cqw;
@@ -476,77 +455,19 @@
     line-height: 140%;
   }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) {
-    margin-top: 6.55cqw;
-    gap: 0;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input,
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .submit-modal {
-    min-height: 11.72cqw;
-    height: 11.72cqw;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input-item + .input-item {
-    margin-top: 2.76cqw;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .input {
-    padding: 0 4.14cqw 0 6.9cqw;
-    border: 1px solid #e1e1e1;
-    border-radius: 2.07cqw;
-    font-size: clamp(12px, 2.76cqw, 16px);
-    line-height: 100%;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .field-error {
-    margin-top: 1.38cqw;
-    font-size: clamp(12px, 3.45cqw, 16px);
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy-wrap {
-    order: 2;
-    margin-top: 1.72cqw;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy {
-    display: block;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label {
-    max-width: none;
-    padding-left: 6.9cqw;
-    font-size: 12px;
-    line-height: 130%;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy label:before {
-    top: 0;
-    left: 0;
-    width: 4.14cqw;
-    height: 4.14cqw;
-    border-radius: 0.69cqw;
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy input:checked + label:after {
-    top: 2.07cqw;
-    left: 2.07cqw;
-    width: 2.76cqw;
-    height: 2.76cqw;
-    border-radius: 0.34cqw;
-    transform: translate(-50%, -50%);
-  }
 
-  .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .submit-modal {
-    order: 3;
-    align-self: center;
-    width: 62.41cqw;
-    min-height: 11.72cqw;
-    height: 11.72cqw;
-    margin-top: 6.55cqw;
-    padding: 0 8.28cqw !important;
-    border-radius: 2.07cqw;
-    font-size: clamp(12px, 3.45cqw, 16px);
-    line-height: 100%;
-  }
+
+
+
+
+
 }
