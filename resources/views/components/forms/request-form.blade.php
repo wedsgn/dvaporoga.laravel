@@ -56,10 +56,22 @@
 
                 <div class="form-policy-wrap">
                     <div class="form-policy">
-                        <input type="checkbox" id="{{ $checkboxId }}" name="policy" value="1" required>
-                        <label for="{{ $checkboxId }}">
+                        <input
+                            class="form-policy__input"
+                            type="checkbox"
+                            id="{{ $checkboxId }}"
+                            name="policy"
+                            value="1"
+                            required
+                        >
+                        <label
+                            class="form-policy__checkbox"
+                            for="{{ $checkboxId }}"
+                            aria-label="Согласие с политикой конфиденциальности и обработкой персональных данных"
+                        ></label>
+                        <div class="form-policy__text">
                             <x-forms.policy-consent :submit-text="$submitText" />
-                        </label>
+                        </div>
                     </div>
 
                     <div class="field-error field-error--policy" data-error-for="policy"></div>

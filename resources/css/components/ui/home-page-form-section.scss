@@ -5,11 +5,10 @@
 
   .car-single-form-section__card {
     margin: 0 auto;
-    background: $gradient-dark-light;
+    padding: 54px 46px;
     border: 0;
     border-radius: 16px;
-    min-height: 294px;
-    padding: 54px 46px;
+    background: $gradient-dark-light;
   }
 
   .car-single-form-section__top {
@@ -17,41 +16,43 @@
   }
 
   .car-single-form-section__title {
+    color: $white;
     font-family: "Gilroy", sans-serif;
     font-size: 32px;
     font-weight: 700;
     line-height: 100%;
-    color: $white;
   }
 
   .car-single-form-section__descr {
-    margin-top: 8px;
     max-width: none;
+    margin-top: 8px;
+    color: $white;
     font-size: 16px;
     line-height: 140%;
-    color: $white;
   }
 
   .car-single-form {
-    margin-top: 24px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
+    margin-top: 24px;
   }
 
   .choose-section__form_row {
     display: grid;
     grid-template-columns: 442px 440px 442px;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
   }
 
   .choose-section__form_row .input-item {
-    width: auto;
+    width: 100%;
+    min-width: 0;
   }
 
   .choose-section__form_row .input {
+    width: 100%;
     min-height: 52px;
     height: 52px;
     padding: 14px 20px;
@@ -59,14 +60,38 @@
     border-radius: 8px;
   }
 
+  .choose-section__form_row .input::placeholder {
+    color: #383838;
+    opacity: 1;
+  }
+
+  .choose-section__form_row .input[type="tel"]::placeholder {
+    color: #d9d9d9;
+  }
+
+  .choose-section__form_row .input:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.65);
+    outline-offset: 2px;
+  }
+
+  .field-error {
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+  }
+
+  .field-error--policy {
+    margin-top: 8px;
+  }
+
   .car-single-form-btn {
     width: 442px;
-    height: 52px;
     min-height: 52px;
+    height: 52px;
+    padding: 0 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
     border-radius: 8px;
     background: $gradient-red;
     color: $white;
@@ -80,64 +105,73 @@
   }
 
   .form-policy {
-    max-width: 1067px;
-    align-items: center;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    column-gap: 8px;
+    align-items: flex-start;
+    width: 100%;
     color: $white;
   }
 
-  .form-policy a {
-    color: inherit;
+  .form-policy__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
   }
 
-  .form-policy label {
-    font-size: 16px;
-    line-height: 100%;
-  }
-
-  .form-policy label:before {
+  .form-policy__checkbox {
+    position: relative;
+    display: block;
     width: 24px;
     height: 24px;
-    margin-right: 8px;
-    border-width: 1px;
-    border-color: #ffffff;
+    margin: 0;
+    border: 1px solid $white;
     border-radius: 4px;
-    margin-top: -2px;
+    box-sizing: border-box;
+    cursor: pointer;
   }
 
-  .form-policy input:checked+label:after {
-    top: 4px;
-    left: 4px;
+  .form-policy__input:checked + .form-policy__checkbox::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 16px;
     height: 16px;
     border-radius: 2px;
     background: $white;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-policy__input:focus-visible + .form-policy__checkbox {
+    outline: 2px solid $white;
+    outline-offset: 2px;
+  }
+
+  .form-policy__input[aria-invalid="true"] + .form-policy__checkbox {
+    border-color: $red;
+    box-shadow: 0 0 0 1px $red inset;
+  }
+
+  .form-policy__text {
+    min-width: 0;
+    font-size: 16px;
+    line-height: 120%;
+  }
+
+  .form-policy__text a {
+    display: inline;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 }
 
-
-
 @media screen and (max-width: 1488px) {
   .home-page-form-section {
-    .car-single-form-section__card {
-      min-height: 294px;
-      padding: 47px 48px 61px;
-      border-radius: 16px;
-    }
-
-    .choose-section__form_row {
-      grid-template-columns: 357px 355px 357px;
-      justify-content: space-between;
-    }
-
-    .car-single-form-btn {
-      width: 357px;
-    }
-  }
-
-  .index-hero-section+.home-page-form-section {
     .choose-section__form_row {
       grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
+      justify-content: space-between;
     }
 
     .choose-section__form_row .input-item,
@@ -151,132 +185,19 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .index-hero-section+.home-page-form-section {
-    margin-top: 20px;
-
-    .car-single-form-section__card {
-      display: block;
-      border-radius: 16px;
-    }
-
-    .car-single-form-section__top {
-      width: 100%;
-      align-items: flex-start;
-      text-align: left;
-    }
-
-    .car-single-form-section__descr {
-      width: auto;
-      max-width: none;
-      margin: 8px 0 0;
-      text-align: left;
-    }
-
-    .car-single-form {
-      width: 100%;
-      max-width: none;
-      margin-top: 24px;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .choose-section__form_row {
-      width: 100%;
-      max-width: none;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .choose-section__form_row .input-item,
-    .choose-section__form_row .input {
-      width: 100%;
-    }
-
-    .choose-section__form_row .input {
-      height: 52px;
-      min-height: 52px;
-      padding: 14px 20px;
-      border: 0;
-      border-radius: 8px;
-      font-size: 16px;
-      line-height: 100%;
-    }
-
-    .car-single-form-btn {
-      width: 100%;
-      max-width: none;
-      min-width: 0;
-      height: 52px;
-      min-height: 52px;
-      margin-top: 0;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .form-policy-wrap,
-    .form-policy {
-      width: 100%;
-      max-width: none;
-      margin: 0;
-    }
-
-    .form-policy {
-      gap: 8px;
-      align-items: center;
-    }
-
-    .form-policy label {
-      width: auto;
-      min-height: 24px;
-      padding-left: 0;
-      font-size: 16px;
-      line-height: 100%;
-    }
-
-    .form-policy label:before {
-      position: static;
-      width: 24px;
-      height: 24px;
-      margin-right: 8px;
-      border-width: 1px;
-      border-radius: 4px;
-    }
-
-    .form-policy input:checked+label:after {
-      top: 4px;
-      left: 4px;
-      width: 16px;
-      height: 16px;
-      border-radius: 2px;
-    }
-  }
-}
-
-@media screen and (max-width: 1024px) {}
-
-@media screen and (max-width: 1200px) {
   .home-page-form-section {
     margin-top: 60px;
-  }
 
-  .index-hero-section+.home-page-form-section {
-    margin-top: 60px;
-  }
-
-  .home-page-form-section {
     .car-single-form-section__card {
+      width: 810px;
+      max-width: 100%;
       min-height: 393px;
       margin: 0 auto;
-      padding: 48px;
+      padding: 24px 48px 32px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 24px;
       border-radius: 16px;
-      background: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
     }
 
     .car-single-form-section__top {
@@ -286,16 +207,15 @@
     }
 
     .car-single-form-section__title {
-      font-family: "Gilroy", sans-serif;
       font-size: 32px;
-      font-weight: 700;
-      line-height: 100%;
+      line-height: 120%;
+      text-align: center;
     }
 
     .car-single-form-section__descr {
       width: 100%;
       max-width: 766px;
-      margin: -16px auto 0;
+      margin: 8px auto 0;
       font-size: 16px;
       line-height: 140%;
       text-align: center;
@@ -304,8 +224,8 @@
     .car-single-form {
       width: 485px;
       max-width: 100%;
-      margin-top: 0;
-      gap: 15px;
+      margin-top: 18px;
+      gap: 26px;
       align-items: stretch;
     }
 
@@ -322,11 +242,16 @@
     .choose-section__form_row .input-item,
     .choose-section__form_row .input {
       width: 100%;
+      min-width: 0;
+    }
+
+    .choose-section__form_row .input-item + .input-item {
+      margin-top: 0;
     }
 
     .choose-section__form_row .input {
-      height: 52px;
       min-height: 52px;
+      height: 52px;
       padding: 14px 20px;
       border: 0;
       border-radius: 8px;
@@ -337,189 +262,104 @@
     .car-single-form-btn {
       width: 485px;
       max-width: 100%;
-      height: 52px;
+      min-width: 0;
       min-height: 52px;
+      height: 52px;
       margin-top: 0;
       border-radius: 8px;
       font-size: 16px;
     }
 
-    .form-policy-wrap,
-    .form-policy {
+    .form-policy-wrap {
       width: 477px;
       max-width: 100%;
-      margin: 0;
+      margin: 0 auto;
     }
 
     .form-policy {
-      gap: 0;
-      align-items: flex-start;
-    }
-
-    .form-policy label {
-      position: relative;
-      display: block;
       width: 100%;
-      min-height: 24px;
-      padding-left: 36px;
-      font-size: 16px;
-      line-height: 120%;
-    }
-
-    .form-policy label:before {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 24px;
-      height: 24px;
+      max-width: none;
       margin: 0;
-      border-width: 1px;
-      border-radius: 4px;
-    }
-
-    .form-policy input:checked+label:after {
-      top: 4px;
-      left: 4px;
-      width: 16px;
-      height: 16px;
-      border-radius: 2px;
     }
   }
 }
 
-@media screen and (max-width: 768px) {
-  .index-hero-section+.home-page-form-section {
-    margin-top: 50px;
-  }
-
+@media screen and (max-width: 767px) {
   .home-page-form-section {
     margin-top: 50px;
 
     .car-single-form-section__card {
-      min-height: 307px;
-      height: auto;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      padding: 16px 14px 28px;
-      border-radius: 6px;
-      background: linear-gradient(90deg, #383838 0%, #a7a7a7 100%);
-    }
-
-    .car-single-form-section__top {
       width: 100%;
-      max-width: none;
+      min-height: 307px;
+      padding: 16px 14px 20px;
+      border-radius: 6px;
     }
 
     .car-single-form-section__title {
-      font-weight: 800;
-      font-size: 24px;
+      font-size: 16px;
       line-height: 120%;
-      text-align: center;
     }
 
     .car-single-form-section__descr {
       width: 237px;
-      margin: 8px auto 0;
-      text-align: center;
+      max-width: 100%;
+      margin-top: 8px;
       font-size: 12px;
       line-height: 140%;
     }
 
     .car-single-form {
       width: 263px;
-      max-width: 100%;
-      margin: 24px auto 0;
+      margin-top: 16px;
       gap: 16px;
     }
 
     .choose-section__form_row {
       width: 263px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
       gap: 8px;
     }
 
-    .choose-section__form_row .input-item {
-      width: 100%;
-      min-width: 0;
-    }
-
-    .choose-section__form_row .input-item+.input-item {
-      margin-top: 0;
-    }
-
     .choose-section__form_row .input {
-      width: 100%;
       min-height: 34px;
       height: 34px;
       padding: 0 20px;
       border: 1px solid #e1e1e1;
       border-radius: 6px;
       font-size: 12px;
-      line-height: 100%;
-    }
-
-    .choose-section__form_row .input::placeholder {
-      color: #383838;
-      opacity: 1;
-    }
-
-    .choose-section__form_row .input[type="tel"]::placeholder {
-      color: #d9d9d9;
     }
 
     .car-single-form-btn {
       width: 181px;
       min-height: 34px;
       height: 34px;
-      margin: 0 auto;
+      margin: 8px auto 0;
       padding: 0 24px;
       border-radius: 6px;
       font-size: 12px;
-      line-height: 100%;
     }
 
     .form-policy-wrap {
-      width: 100%;
-      margin-top: 8px;
+      width: 263px;
     }
 
     .form-policy {
-      width: 100%;
-      align-items: flex-start;
-      gap: 8px;
+      grid-template-columns: 20px minmax(0, 1fr);
+      column-gap: 8px;
     }
 
-    .form-policy label {
-      position: relative;
-      display: block;
-      width: 225px;
-      padding-left: 28px;
-      max-width: none;
-      font-size: 12px;
-      line-height: 130%;
-    }
-
-    .form-policy label:before {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .form-policy__checkbox {
       width: 20px;
       height: 20px;
-      margin: 0;
-      border-radius: 4px;
     }
 
-    .form-policy input:checked+label:after {
-      top: 4px;
-      left: 4px;
+    .form-policy__input:checked + .form-policy__checkbox::after {
       width: 12px;
       height: 12px;
-      border-radius: 2px;
+    }
+
+    .form-policy__text {
+      font-size: 12px;
+      line-height: 130%;
     }
   }
 }

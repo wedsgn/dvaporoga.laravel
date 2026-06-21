@@ -92,7 +92,7 @@
   }
 }
 
-.form-policy label {
+.form-policy label:not(.form-policy__checkbox) {
   position: relative;
   display: block;
   line-height: 140%;
@@ -107,7 +107,7 @@
   pointer-events: none;
 }
 
-.form-policy label:before {
+.form-policy label:not(.form-policy__checkbox):before {
   content: "";
   display: inline-block;
   vertical-align: top;
@@ -120,7 +120,7 @@
   box-sizing: border-box;
 }
 
-.form-policy input:checked+label:after {
+.form-policy input:not(.form-policy__input):checked+label:after {
   content: "";
   display: block;
   position: absolute;
@@ -205,12 +205,12 @@
   margin-top: 20px;
 }
 
-.form-policy.is-invalid label:before {
+.form-policy.is-invalid label:not(.form-policy__checkbox):before {
   border-color: $red;
   box-shadow: 0 0 0 1px $red inset;
 }
 
-.form-policy input[aria-invalid="true"]+label:before {
+.form-policy input:not(.form-policy__input)[aria-invalid="true"]+label:before {
   border-color: $red;
   box-shadow: 0 0 0 1px $red inset;
 }
@@ -226,19 +226,19 @@
     gap: 8px;
   }
 
-  .form-policy label {
+  .form-policy label:not(.form-policy__checkbox) {
     font-size: 12px;
     line-height: 125%;
   }
 
-  .form-policy label:before {
+  .form-policy label:not(.form-policy__checkbox):before {
     width: 24px;
     height: 24px;
     margin-right: 8px;
     border-radius: 6px;
   }
 
-  .form-policy input:checked+label:after {
+  .form-policy input:not(.form-policy__input):checked+label:after {
     top: 5px;
     left: 4px;
     width: 14px;

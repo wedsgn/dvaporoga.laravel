@@ -22,7 +22,15 @@ class CarModelController extends BaseController
   public function show($car_model_slug)
   {
       $user = Auth::user();
-      $item = CarModel::whereSlug($car_model_slug)->firstOrFail();
+      $item = CarModel::with([
+          'car_make',
+          'cars' => fn($query) => $query
+              ->withCount('products')
+              ->orderByRaw("CASE WHEN generation IS NULL OR generation = '' THEN 1 ELSE 0 END")
+              ->orderBy('generation')
+              ->orderBy('years')
+              ->orderBy('title'),
+      ])->whereSlug($car_model_slug)->firstOrFail();
 
       return view('admin.car_models.show', compact('item', 'user'));
   }

@@ -22,7 +22,17 @@ class CarMakeController extends BaseController
   public function show($car_make_slug)
   {
     $user = Auth::user();
-    $item = CarMake::whereSlug($car_make_slug)->firstOrFail();
+    $item = CarMake::with([
+      'car_models' => fn($query) => $query
+        ->withCount('cars')
+        ->with([
+          'cars' => fn($carsQuery) => $carsQuery
+            ->select('cars.id', 'cars.title', 'cars.slug', 'cars.years', 'cars.generation', 'cars.body', 'cars.image', 'cars.car_model_id')
+            ->orderBy('title'),
+        ])
+        ->orderBy('title'),
+    ])->whereSlug($car_make_slug)->firstOrFail();
+
     return view('admin.car_makes.show', compact('item', 'user'));
   }
 

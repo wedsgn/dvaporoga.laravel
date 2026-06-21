@@ -134,6 +134,7 @@ Route::get('/import-catalog/download/{run}', [\App\Http\Controllers\Admin\Catalo
     Route::get('/search', [CarController::class, 'search'])->name('search');
     Route::get('/create', [CarController::class, 'create'])->name('create');
     Route::post('/store', [CarController::class, 'store'])->name('store');
+    Route::post('/{car_slug}/products/images', [CarController::class, 'updateProductImages'])->name('products.images.update');
     Route::get('/{car_slug}', [CarController::class, 'show'])->name('show');
     Route::get('/{car_slug}/edit', [CarController::class, 'edit'])->name('edit');
     Route::patch('/{car_slug}', [CarController::class, 'update'])->name('update');

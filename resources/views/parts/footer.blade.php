@@ -67,15 +67,15 @@
                     </button>
 
                     <div class="footer-socials">
-                        @if (!empty($main_info->telegram))
-                            <a href="{{ $main_info->telegram }}" target="_blank" class="footer-social footer-social--telegram" rel="noopener noreferrer">
-                                <img src="{{ asset('images/socials/footer-telegram.svg') }}" alt="Telegram">
-                            </a>
-                        @endif
-
                         @if (!empty($main_info->vk))
                             <a href="{{ $main_info->vk }}" target="_blank" class="footer-social footer-social--vk" rel="noopener noreferrer">
                                 <img src="{{ asset('images/socials/footer-vk.svg') }}" alt="VK">
+                            </a>
+                        @endif
+
+                        @if (!empty($main_info->telegram))
+                            <a href="{{ $main_info->telegram }}" target="_blank" class="footer-social footer-social--telegram" rel="noopener noreferrer">
+                                <img src="{{ asset('images/socials/footer-telegram.svg') }}" alt="Telegram">
                             </a>
                         @endif
                     </div>

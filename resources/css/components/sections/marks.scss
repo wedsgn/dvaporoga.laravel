@@ -105,7 +105,7 @@
   font-family: "Golos Text", "Golos", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 100%;
   text-align: center;
   white-space: nowrap;
@@ -221,7 +221,7 @@
     min-width: 276px;
     height: 49px;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
@@ -357,7 +357,7 @@
     gap: 12px;
     border-radius: 6px;
     background: linear-gradient(90deg, #f43044 0%, #e51026 100%);
-    font-size: clamp(12px, 1.6vw, 14px);
+    font-size: 16px;
     font-weight: 400;
     line-height: 100%;
   }
