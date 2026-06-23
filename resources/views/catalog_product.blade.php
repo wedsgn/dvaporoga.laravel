@@ -89,15 +89,28 @@
             return null;
         };
 
-        $bodyLabel = trim((string) ($car->body ?? ''));
+        $normalizeBodyLabel = function ($value) {
+            $value = trim((string) $value);
+
+            if ($value === '') {
+                return '';
+            }
+
+            $value = preg_replace('/\s{2,}/u', ' ', $value) ?? $value;
+            $value = preg_replace('/\s+([.,;:])/u', '$1', $value) ?? $value;
+            $value = preg_replace('/(?:\s*[•·|\/]+\s*)+/u', ' ', $value) ?? $value;
+            $value = trim($value, " \t\n\r\0\x0B-–—,.;:•·|/");
+            $value = preg_replace('/\s{2,}/u', ' ', $value) ?? $value;
+
+            return preg_match('/^[\.\-–—,;:•·|\/]+$/u', $value) ? '' : $value;
+        };
+
+        $bodyLabel = $normalizeBodyLabel($car->body ?? '');
         $doorsCount = $extractDoorsCount($bodyLabel);
 
         if ($doorsCount !== null) {
-            $bodyLabel = trim(
-                preg_replace('/\b\d+\s*(?:дв\.?|двер(?:ь|и|ей))\b/ui', '', $bodyLabel) ?? '',
-                " \t\n\r\0\x0B-–—,",
-            );
-            $bodyLabel = preg_replace('/\s{2,}/u', ' ', $bodyLabel) ?? $bodyLabel;
+            $bodyLabel = preg_replace('/\b\d+\s*(?:дв\.?|двер(?:ь|и|ей))\b/ui', '', $bodyLabel) ?? '';
+            $bodyLabel = $normalizeBodyLabel($bodyLabel);
         }
 
         if ($doorsCount === null) {
@@ -142,14 +155,25 @@
                     <div class="car-single-page__heading">
                         <h1 class="car-single-page__title">
                             <span class="car-single-page__title-line">Кузовные элементы</span>
-                            <span class="car-single-page__title-line car-single-page__title-line--accent">для {{ $car_make->title }}</span>
-                            <span class="car-single-page__title-line car-single-page__title-line--accent">{{ $car_model->title }}</span>
+                            <span class="car-single-page__title-line car-single-page__title-line--accent">для {{ $car_make->title }} {{ $car_model->title }}</span>
                         </h1>
 
                         @if (!empty($carMeta))
                             <p class="car-single-page__subtitle">{{ $carMeta }}</p>
                         @endif
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="car-single-parts-section">
+            <div class="container">
+                <div class="car-single-parts">
+                    @foreach ($preparedProducts as $product)
+                        <x-car-single-part :id="$product['id']" :image="$product['image']" :title="$product['title']" :description="$product['description']"
+                            :price="$product['price']" :priceOld="$product['price_old']" :alt="$product['alt']"
+                            request-source="car" :request-car="$car->title" />
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -197,41 +221,21 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-black car-single-form-btn">Отправить</button>
+                            <button type="submit" class="btn btn-black car-single-form-btn">Отправить заявку</button>
 
                             <div class="form-policy-wrap">
                                 <div class="form-policy">
-                                    <input type="checkbox" id="choose-check" name="policy" value="1" required>
-                                    <label for="choose-check">
+                                    <input class="form-policy__input" type="checkbox" id="choose-check" name="policy" value="1" required>
+                                    <label class="form-policy__checkbox" for="choose-check"
+                                        aria-label="Согласие с политикой конфиденциальности и обработкой персональных данных"></label>
+                                    <div class="form-policy__text">
                                         <x-forms.policy-consent submit-text="Отправить" />
-                                    </label>
+                                    </div>
                                 </div>
                                 <div class="field-error field-error--policy" data-error-for="policy"></div>
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="car-single-parts-section">
-            <div class="container">
-                <div class="car-single-parts-section__heading">
-                    <h2 class="car-single-parts-section__title">Детали</h2>
-
-                    <p class="car-single-parts-section__subtitle">
-                        на {{ $car->title }}@if (!empty($carMeta))
-                            / {{ $carMeta }}
-                        @endif
-                    </p>
-                </div>
-
-                <div class="car-single-parts">
-                    @foreach ($preparedProducts as $product)
-                        <x-car-single-part :id="$product['id']" :image="$product['image']" :title="$product['title']" :description="$product['description']"
-                            :price="$product['price']" :priceOld="$product['price_old']" :alt="$product['alt']"
-                            request-source="car" :request-car="$car->title" />
-                    @endforeach
                 </div>
             </div>
         </section>

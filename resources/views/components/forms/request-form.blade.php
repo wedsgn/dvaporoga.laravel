@@ -5,7 +5,7 @@
     'title' => 'Оставьте заявку',
     'descr' => 'Мы подберем деталь под ваш автомобиль и ответим на все вопросы',
     'sectionClass' => '--white',
-    'submitText' => 'Отправить',
+    'submitText' => 'Отправить заявку',
 ])
 
 <section class="car-single-form-section home-page-form-section {{ $sectionClass }}">

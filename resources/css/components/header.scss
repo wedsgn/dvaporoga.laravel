@@ -191,7 +191,7 @@
     }
 
     &-note {
-      font-size: 14px;
+      font-size: 16px;
       line-height: 100%;
       white-space: nowrap;
       color: $text;
@@ -445,7 +445,7 @@
     gap: 6px;
     text-decoration: none;
     color: $text;
-    font-size: 14px;
+    font-size: 16px;
 
     img,
     svg {
@@ -484,7 +484,7 @@
     gap: 2px;
 
     small {
-      font-size: 13px;
+      font-size: 16px;
       color: $grayDark;
     }
   }

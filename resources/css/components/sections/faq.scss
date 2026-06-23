@@ -146,7 +146,7 @@
 
   .faq-description {
     max-width: 560px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .faq-section__btn {
@@ -170,7 +170,7 @@
 
   .faq-item .faq-item__content {
     padding: 0 24px 20px;
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -331,7 +331,7 @@
     height: auto;
     padding: 0 0 10px;
     min-height: 25px;
-    font-size: clamp(12px, 2.35vw, 20px);
+    font-size: clamp(16px, 2.35vw, 20px);
     font-weight: 500;
     line-height: 120%;
     align-items: start;
@@ -342,7 +342,7 @@
   .faq-item .faq-item__head p {
     margin: 0;
     color: #383838;
-    font-size: clamp(12px, 2.35vw, 20px);
+    font-size: clamp(16px, 2.35vw, 20px);
     font-weight: 500;
     line-height: 120%;
     align-self: start;
@@ -361,7 +361,7 @@
 
   .faq-item .faq-item__content {
     padding: 6px 0 0;
-    font-size: clamp(12px, 1.9vw, 14px);
+    font-size: 16px;
     line-height: 140%;
   }
 

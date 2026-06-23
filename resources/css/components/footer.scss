@@ -75,7 +75,7 @@
   max-width: 269px;
   color: #9c9c9c;
   font-family: "Golos Text", "Golos", sans-serif;
-  font-size: 12px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 120%;
@@ -104,7 +104,7 @@
   min-height: 29px;
   color: #fff;
   font-family: "Golos Text", "Golos", sans-serif;
-  font-size: 12px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 120%;
@@ -326,7 +326,7 @@
   .footer__nav-link {
     min-height: 0;
     padding: 2px 0;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 130%;
   }
 
@@ -378,7 +378,7 @@
   .footer-main__legal-note {
     width: min(100%, 560px);
     font-family: "Golos Text", "Golos", sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 130%;
     text-align: center;
@@ -458,7 +458,7 @@
 
   .footer__nav-link {
     width: 100%;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 130%;
     overflow-wrap: anywhere;
   }
@@ -472,6 +472,6 @@
   .footer-main__legal-company,
   .footer-main__legal-note {
     width: min(100%, 320px);
-    font-size: 10px;
+    font-size: 16px;
   }
 }

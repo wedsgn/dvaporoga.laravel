@@ -236,7 +236,7 @@
   .modal__description {
     margin-top: 8px;
     max-width: 320px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 140%;
 
     br {
@@ -472,12 +472,12 @@
   .modal:not(.modal-success) .modal__description {
     max-width: 86.9cqw;
     margin: 2.07cqw auto 0;
-    font-size: clamp(12px, 3.45cqw, 18px);
+    font-size: clamp(16px, 3.45cqw, 18px);
     line-height: 140%;
   }
 
   .modal:not(.modal-success) :is(.modal-form, .modal-form-product) .form-policy__text {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 140%;
   }
 

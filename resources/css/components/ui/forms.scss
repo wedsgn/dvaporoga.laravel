@@ -47,7 +47,7 @@
 
 .field-error {
   margin-top: 8px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 120%;
   color: $red;
 }
@@ -98,7 +98,7 @@
   line-height: 140%;
   cursor: pointer;
   min-width: 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .form-policy input {
@@ -227,7 +227,7 @@
   }
 
   .form-policy label:not(.form-policy__checkbox) {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 125%;
   }
 

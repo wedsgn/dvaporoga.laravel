@@ -189,7 +189,7 @@
   }
 
   .about-section__description {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .about-section__layout {
@@ -229,7 +229,7 @@
 
   .about-section__stat-card p {
     margin-top: 12px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .about-section__tech h3 {
@@ -238,7 +238,7 @@
 
   .about-section__tech-intro {
     margin-top: 14px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .about-section__tech-list {
@@ -248,7 +248,7 @@
 
   .about-section__tech-list li {
     padding-left: 18px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .about-section__tech-list li::before {
@@ -259,7 +259,7 @@
 
   .about-section__tech-goal {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -390,7 +390,7 @@
   }
 
   .about-section__description {
-    font-size: clamp(12px, 1.8vw, 14px);
+    font-size: 16px;
     font-weight: 400;
     line-height: 140%;
   }
@@ -426,7 +426,7 @@
   .about-section__subtitle,
   .about-section__tech h3 {
     font-family: "Gilroy", sans-serif;
-    font-size: clamp(12px, 2vw, 18px);
+    font-size: clamp(16px, 2vw, 18px);
     font-weight: 800;
     line-height: 120%;
   }
@@ -439,19 +439,19 @@
   }
 
   .about-section__stat-card h4 {
-    font-size: clamp(12px, 1.8vw, 16px);
+    font-size: 16px;
     line-height: 120%;
   }
 
   .about-section__stat-card p {
     margin-top: 6px;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 140%;
   }
 
   .about-section__tech-intro {
     margin: 7px 0 0;
-    font-size: clamp(12px, 1.8vw, 14px);
+    font-size: 16px;
     line-height: 140%;
   }
 
@@ -462,7 +462,7 @@
 
   .about-section__tech-list li {
     padding-left: 12px;
-    font-size: clamp(12px, 1.8vw, 14px);
+    font-size: 16px;
     line-height: 140%;
   }
 
@@ -479,7 +479,7 @@
 
   .about-section__tech-goal {
     margin: 10px 0 0;
-    font-size: clamp(12px, 1.8vw, 14px);
+    font-size: 16px;
     line-height: 140%;
   }
 }
@@ -490,25 +490,25 @@
   }
 
   .about-section__description {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .about-section__subtitle,
   .about-section__tech h3 {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .about-section__stat-card h4 {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .about-section__stat-card p {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .about-section__tech-intro,
   .about-section__tech-list li,
   .about-section__tech-goal {
-    font-size: 12px;
+    font-size: 16px;
   }
 }

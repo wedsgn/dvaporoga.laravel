@@ -37,13 +37,13 @@
   .breadcrumbs {
     flex-wrap: wrap;
     gap: 4px 8px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1;
   }
 }
 
 main:has(.breadcrumbs-section) .car-single__hero-section {
-  margin-top: 19px;
+  margin-top: 44px;
 }
 
 @media (max-width: 768px) {

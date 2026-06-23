@@ -168,7 +168,25 @@
 }
 
 .catalog-models-page {
-  margin-top: 68px;
+  margin-top: 44px;
+}
+
+.catalog-generations-page {
+  margin-top: 44px;
+}
+
+.catalog-generations-page__title {
+  width: 100%;
+  margin: 0;
+  color: #383838;
+}
+
+.catalog-generations-page__title-line {
+  display: block;
+}
+
+.catalog-generations-page__title .catalog-generations-page__title-line {
+  color: #383838;
 }
 
 // .catalog-models-page>.container,
@@ -377,7 +395,7 @@
   }
 
   .catalog-models-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .catalog-model-card {
@@ -413,7 +431,7 @@
   }
 
   .catalog-models-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
 
@@ -434,7 +452,7 @@
   }
 
   .catalog-models-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px 8px;
   }
 }
@@ -447,7 +465,7 @@
 
   main:has(.catalog-models-page) .breadcrumbs {
     gap: 4px 6px;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 10px;
   }
 
@@ -483,7 +501,7 @@
   .catalog-models-search__input {
     height: 38px;
     padding: 0 44px 0 10px;
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .catalog-models-search__submit {
@@ -513,8 +531,8 @@
 
   .catalog-models-grid {
     margin-top: 12px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px 6px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 8px;
   }
 
   .catalog-model-card {
@@ -527,7 +545,7 @@
   }
 
   .catalog-model-card__title {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .catalog-models-results__empty {
@@ -546,7 +564,7 @@
 
 @media (max-width: 480px) {
   .catalog-models-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -563,7 +581,7 @@
 
   main:has(.catalog-generations-page) .breadcrumbs {
     gap: 4px 6px;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 10px;
   }
 
@@ -1001,7 +1019,7 @@
 
   .product-part__bottom {
     .btn {
-      font-size: 14px;
+      font-size: 16px;
       border-radius: 4px;
       padding: 8px 16px;
     }
@@ -1062,12 +1080,12 @@
   }
 
   .product-part__info_item {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 100%;
   }
 
   .total-form__part {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 100%;
   }
 
@@ -1080,7 +1098,7 @@
   }
 
   .catalog-page-top__left p {
-    font-size: 14px;
+    font-size: 16px;
     display: none;
     padding: 4px 12px;
   }
@@ -1166,7 +1184,7 @@
   }
 
   .catalog-page__description {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 130%;
   }
 
@@ -1198,7 +1216,7 @@
   }
 
   .product-page__description {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 130%;
   }
 
@@ -1207,7 +1225,7 @@
   }
 
   .product-part__info_item {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 100%;
   }
 }
@@ -1445,7 +1463,7 @@
   }
 
   .catalog-make-card__title {
-    font-size: clamp(15px, 2.4vw, 20px);
+    font-size: clamp(16px, 2.4vw, 20px);
   }
 }
 
@@ -1458,7 +1476,7 @@
 
   main:has(.catalog-parts-page) .breadcrumbs {
     gap: 4px 6px;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 10px;
   }
 
@@ -1500,7 +1518,7 @@
     width: 100%;
     height: clamp(38px, 5.3vw, 48px);
     padding: 0 clamp(40px, 6vw, 52px) 0 clamp(10px, 2vw, 16px);
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .catalog-parts-search__submit,
@@ -1568,13 +1586,13 @@
   }
 
   .catalog-make-card__title {
-    font-size: clamp(12px, 1.8vw, 14px);
+    font-size: 16px;
     white-space: normal;
   }
 
   .catalog-makes-empty {
     padding: 18px 0;
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 
@@ -1611,9 +1629,11 @@
     transform: scale(1.16);
   }
 
-  .catalog-models-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    justify-content: stretch;
+  @media screen and (min-width: 1201px) {
+    .catalog-models-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      justify-content: stretch;
+    }
   }
 
   .catalog-model-card {
@@ -1629,6 +1649,6 @@
 
 @media screen and (max-width: 768px) {
   .catalog-models-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
