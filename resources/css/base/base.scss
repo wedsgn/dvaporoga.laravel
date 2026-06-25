@@ -22,6 +22,16 @@ body {
   scroll-padding-top: 92px;
 }
 
+html.is-yandex-metrika-frame {
+  scroll-behavior: auto;
+
+  .cookie-banner,
+  .call-float {
+    display: none !important;
+    pointer-events: none !important;
+  }
+}
+
 body {
   display: flex;
   flex-direction: column;

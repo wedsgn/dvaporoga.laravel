@@ -23,6 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!banner || !button) return;
 
+    if (window.__IS_YANDEX_METRIKA_FRAME__) {
+        banner.remove();
+        document.body.classList.remove("cookie-visible");
+        document.documentElement.style.setProperty("--cookie-height", "0px");
+        return;
+    }
+
     function updateUI() {
         const accepted = localStorage.getItem("cookieAccepted") === "true";
 

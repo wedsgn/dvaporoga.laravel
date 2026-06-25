@@ -28,6 +28,25 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.0/dist/fancybox/fancybox.css" />
 
   <script type="text/javascript">
+    (function () {
+      var referrer = document.referrer || "";
+      var isFrame = false;
+
+      try {
+        isFrame = window.self !== window.top;
+      } catch (e) {
+        isFrame = true;
+      }
+
+      window.__IS_YANDEX_METRIKA_FRAME__ = isFrame && /(^https?:\/\/)?([^\/]+\.)?(webvisor\.com|metri[ck]a\.yandex\.(ru|by|com|com\.tr))(\/|$)/i.test(referrer);
+
+      if (window.__IS_YANDEX_METRIKA_FRAME__) {
+        document.documentElement.classList.add("is-yandex-metrika-frame");
+      }
+    })();
+  </script>
+
+  <script type="text/javascript">
     window._ab_id_ = 164880
   </script>
   <script src="https://cdn.botfaqtor.ru/one.js"></script>
