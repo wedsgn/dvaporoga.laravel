@@ -40,7 +40,7 @@
 
   .choose-section__form_row {
     display: grid;
-    grid-template-columns: 442px 440px 442px;
+    grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
     align-items: center;
     justify-content: space-between;
     gap: 16px;
@@ -48,11 +48,13 @@
 
   .choose-section__form_row .input-item {
     width: 100%;
+    max-width: none;
     min-width: 0;
   }
 
   .choose-section__form_row .input {
     width: 100%;
+    max-width: none;
     min-height: 52px;
     height: 52px;
     padding: 14px 20px;
@@ -85,7 +87,9 @@
   }
 
   .car-single-form-btn {
-    width: 442px;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
     min-height: 52px;
     height: 52px;
     padding: 0 20px;
@@ -164,23 +168,6 @@
     color: inherit;
     text-decoration: underline;
     text-underline-offset: 2px;
-  }
-}
-
-@media screen and (max-width: 1488px) {
-  .home-page-form-section {
-    .choose-section__form_row {
-      grid-template-columns: minmax(0, 357fr) minmax(0, 355fr) minmax(0, 357fr);
-      justify-content: space-between;
-    }
-
-    .choose-section__form_row .input-item,
-    .choose-section__form_row .input,
-    .car-single-form-btn {
-      width: 100%;
-      max-width: none;
-      min-width: 0;
-    }
   }
 }
 

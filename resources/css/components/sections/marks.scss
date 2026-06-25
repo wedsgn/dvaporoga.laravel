@@ -3,7 +3,7 @@
 }
 
 .home-page-form-section+.marks-section {
-  margin-top: 64px;
+  margin-top: 56px;
 }
 
 .marks-layout {
@@ -13,7 +13,7 @@
     "header"
     "grid"
     "button";
-  row-gap: 36px;
+  row-gap: 28px;
 }
 
 .marks-header {
@@ -26,7 +26,7 @@
   font-family: "Gilroy", sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 26px;
   line-height: 100%;
   letter-spacing: 0;
   text-transform: none;
@@ -36,14 +36,14 @@
 .mark__wrap {
   grid-area: grid;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
   margin: 0;
 }
 
 .marks-section .catalog-concern__wrap {
   margin-top: 0;
-  gap: 14px;
+  gap: 10px;
 }
 
 .mark {
@@ -58,14 +58,14 @@
 .mark-image {
   box-sizing: border-box;
   width: 100%;
-  height: 230px;
+  height: 168px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px;
+  padding: 14px;
   background: #ffffff;
   border: 0.5px solid #000000;
-  border-radius: 16px;
+  border-radius: 14px;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -80,10 +80,10 @@
   display: block;
   width: auto;
   height: auto;
-  max-width: 78%;
-  max-height: 78%;
+  max-width: 76%;
+  max-height: 76%;
   object-fit: contain;
-  transform: scale(1.45);
+  transform: scale(1.2);
   transform-origin: center;
 }
 
@@ -94,9 +94,9 @@
 .marks-catalog-btn {
   grid-area: button;
   justify-self: center;
-  width: 276px;
-  min-width: 276px;
-  height: 49px;
+  width: 220px;
+  min-width: 220px;
+  height: 44px;
   padding: 0;
   display: inline-flex;
   align-items: center;

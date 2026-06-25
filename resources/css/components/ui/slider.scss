@@ -1,6 +1,6 @@
 .slider-arrow {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(56, 56, 56, 0.12);
   background: rgba(255, 255, 255, 0.95);
@@ -51,8 +51,22 @@
 }
 
 .banners-pagination {
-  display: none;
+  bottom: -54px !important;
+  display: block;
   z-index: 2;
+  font-size: 0;
+}
+
+.slider-arrow-next {
+  right: 0 !important;
+  top: auto !important;
+  bottom: -60px;
+}
+
+.slider-arrow-prev {
+  left: 0 !important;
+  top: auto !important;
+  bottom: -60px;
 }
 @media screen and (max-width: 1440px) {
   .slider-arrow {

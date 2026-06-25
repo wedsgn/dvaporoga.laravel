@@ -1,11 +1,11 @@
 .features-section {
-  padding-top: 94px;
+  padding-top: 64px;
 }
 
 .features-items__wrap {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 16px;
 }
 
 .feature-item {

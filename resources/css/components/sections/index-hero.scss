@@ -13,8 +13,9 @@
   color: $text;
   font-size: 59px;
   line-height: 100%;
-  text-align: left;
+  text-align: center;
   text-transform: uppercase;
+  margin-top: 52px;
 
   br {
     display: none;
@@ -34,14 +35,6 @@
   height: auto;
 }
 
-@media screen and (max-width: 1488px) {
-  .index-hero-section .h1-home {
-    text-align: center;
-    margin-top: 52px;
-  }
-
-
-}
 
 @media screen and (max-width: 1200px) {
   .index-hero__banners {
