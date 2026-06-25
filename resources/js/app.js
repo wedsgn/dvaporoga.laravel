@@ -242,13 +242,17 @@ window.addEventListener("load", () => {
     });
   }
 
+  const isYandexMetrikaFrame = Boolean(window.__IS_YANDEX_METRIKA_FRAME__);
+
   MicroModal.init({
-    disableScroll: true,
+    disableScroll: !isYandexMetrikaFrame,
   });
 
-  setTimeout(() => {
-    MicroModal.show("modal-3");
-  }, 90000);
+  if (!isYandexMetrikaFrame) {
+    setTimeout(() => {
+      MicroModal.show("modal-3");
+    }, 90000);
+  }
 
   accordition();
   sliders();

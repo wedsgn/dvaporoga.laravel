@@ -23,13 +23,22 @@ body {
 }
 
 html.is-yandex-metrika-frame {
+  height: auto;
+  min-height: 100%;
+  overflow-y: visible;
   scroll-behavior: auto;
+}
 
-  .cookie-banner,
-  .call-float {
-    display: none !important;
-    pointer-events: none !important;
-  }
+html.is-yandex-metrika-frame body {
+  height: auto;
+  min-height: 100vh;
+  overflow-y: visible;
+}
+
+html.is-yandex-metrika-frame *,
+html.is-yandex-metrika-frame *::before,
+html.is-yandex-metrika-frame *::after {
+  scroll-behavior: auto !important;
 }
 
 body {
