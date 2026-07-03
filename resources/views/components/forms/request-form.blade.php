@@ -2,7 +2,7 @@
     'goal' => 'banner',
     'formId' => 'car-single-form',
     'checkboxId' => 'request-form-policy',
-    'title' => 'Оставьте заявку',
+    'title' => 'Подбор деталей',
     'descr' => 'Мы подберем деталь под ваш автомобиль и ответим на все вопросы',
     'sectionClass' => '--white',
     'submitText' => 'Отправить заявку',

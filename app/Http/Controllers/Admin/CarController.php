@@ -18,7 +18,7 @@ class CarController extends BaseController
     public function index()
     {
         $user = Auth::user();
-        $cars = Car::orderBy('id', 'DESC')->paginate(50);
+        $cars = Car::orderBy('title')->paginate(50);
 
         return view('admin.cars.index', compact('cars', 'user'));
     }
@@ -172,7 +172,8 @@ class CarController extends BaseController
         $cars = Car::query()
             ->with(['car_model'])
             ->smartFilter($q)
-            ->orderByDesc('id')
+            ->when($q === '', fn($query) => $query->orderBy('title'))
+            ->when($q !== '', fn($query) => $query->orderByDesc('id'))
             ->paginate(50)
             ->appends(['search' => $q]);
 

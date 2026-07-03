@@ -140,6 +140,10 @@
                 'alt' => $product->alt ?: $product->title,
             ];
         });
+
+        $activeOffers = ($car->offers ?? collect())
+            ->filter(fn($offer) => (bool) ($offer->is_active ?? true))
+            ->values();
     @endphp
 
     <main>
@@ -148,8 +152,10 @@
         <section class="car-single__hero-section">
             <div class="container">
                 <div class="car-single-page">
-                    <div class="car-single-page__image">
-                        <img src="{{ $img }}" alt="{{ $car->title }}">
+                    <div class="car-single-page__visual">
+                        <div class="car-single-page__image">
+                            <img src="{{ $img }}" alt="{{ $car->title }}">
+                        </div>
                     </div>
 
                     <div class="car-single-page__heading">
@@ -158,23 +164,44 @@
                             <span class="car-single-page__title-line car-single-page__title-line--accent">для {{ $car_make->title }} {{ $car_model->title }}</span>
                         </h1>
 
+                        <div class="car-single-page__badges" aria-label="Преимущества">
+                            <div class="car-single-page__badge">Без предоплаты</div>
+                            <div class="car-single-page__badge">ХКС и Оцинковка</div>
+                            <div class="car-single-page__badge">От 0,8 до 1,5 мм</div>
+                            <div class="car-single-page__badge">Доставка по РФ</div>
+                        </div>
+
                         @if (!empty($carMeta))
                             <p class="car-single-page__subtitle">{{ $carMeta }}</p>
                         @endif
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="car-single-parts-section">
-            <div class="container">
-                <div class="car-single-parts">
-                    @foreach ($preparedProducts as $product)
-                        <x-car-single-part :id="$product['id']" :image="$product['image']" :title="$product['title']" :description="$product['description']"
-                            :price="$product['price']" :priceOld="$product['price_old']" :alt="$product['alt']"
-                            request-source="car" :request-car="$car->title" />
-                    @endforeach
-                </div>
+                @if ($activeOffers->isNotEmpty())
+                    <div class="car-single-page__promo-grid">
+                        @foreach ($activeOffers as $offer)
+                            <div class="car-single-page__promo-card">
+                                <div class="car-single-page__promo-copy">
+                                    <div class="car-single-page__promo-title">{{ $offer->title }}</div>
+
+                                    <div class="car-single-page__promo-prices">
+                                        @if (!is_null($offer->price_from))
+                                            <div class="car-single-page__promo-price">
+                                                от {{ number_format((int) $offer->price_from, 0, '.', ' ') }} {{ $offer->currency ?? '₽' }}
+                                            </div>
+                                        @endif
+
+                                        @if (!is_null($offer->price_old))
+                                            <div class="car-single-page__promo-price-old">
+                                                {{ number_format((int) $offer->price_old, 0, '.', ' ') }} {{ $offer->currency ?? '₽' }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </section>
 
@@ -183,7 +210,7 @@
                 <div class="car-single-form-card">
                     <div class="car-single-form-card__content">
                         <div class="car-single-form-card__header">
-                            <h2 class="car-single-form-card__title">Оставьте заявку</h2>
+                            <h2 class="car-single-form-card__title">Бесплатный подбор деталей</h2>
 
                             <p class="car-single-form-card__descr">
                                 Мы подберем деталь под ваш автомобиль и ответим на все вопросы
@@ -236,6 +263,18 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="car-single-parts-section">
+            <div class="container">
+                <div class="car-single-parts">
+                    @foreach ($preparedProducts as $product)
+                        <x-car-single-part :id="$product['id']" :image="$product['image']" :title="$product['title']" :description="$product['description']"
+                            :price="$product['price']" :priceOld="$product['price_old']" :alt="$product['alt']"
+                            request-source="car" :request-car="$car->title" />
+                    @endforeach
                 </div>
             </div>
         </section>

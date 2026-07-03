@@ -21,7 +21,12 @@
         </section>
 
 
-        <x-forms.request-form goal="banner" form-id="car-single-form-home-banner" checkbox-id="choose-check-home-banner" />
+        <x-forms.request-form
+            goal="banner"
+            form-id="car-single-form-home-banner"
+            checkbox-id="choose-check-home-banner"
+            title="Подбор деталей"
+        />
         {{-- <x-section.choose-auto :makes="$makesForForm" /> --}}
         {{-- <x-section.marquee /> --}}
         {{-- <x-section.features /> --}}

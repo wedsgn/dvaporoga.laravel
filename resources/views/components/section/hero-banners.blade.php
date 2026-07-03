@@ -12,10 +12,7 @@
         <div class="swiper-wrapper">
           @foreach ($desktopBanners as $banner)
             <div class="swiper-slide">
-              <div class="index-hero__slide"
-                   data-micromodal-trigger="modal-hero"
-                   role="button"
-                   tabindex="0">
+              <a class="index-hero__slide" href="{{ route('catalog') }}" aria-label="Перейти в каталог">
 
                 <div class="index-hero__slide_wrap">
                   <div class="index-hero__slide_image">
@@ -24,7 +21,7 @@
                   </div>
                 </div>
 
-              </div>
+              </a>
             </div>
           @endforeach
         </div>
@@ -46,10 +43,7 @@
         <div class="swiper-wrapper">
           @foreach ($mobileBanners as $banner)
             <div class="swiper-slide">
-              <div class="index-hero__slide"
-                   data-micromodal-trigger="modal-hero"
-                   role="button"
-                   tabindex="0">
+              <a class="index-hero__slide" href="{{ route('catalog') }}" aria-label="Перейти в каталог">
 
                 <div class="index-hero__slide_wrap">
                   <div class="index-hero__slide_image">
@@ -58,7 +52,7 @@
                   </div>
                 </div>
 
-              </div>
+              </a>
             </div>
           @endforeach
         </div>

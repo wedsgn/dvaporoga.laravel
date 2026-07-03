@@ -12,7 +12,7 @@
 .catalog-parts-grid {
   margin-top: 36px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 16px;
   row-gap: 36px;
 }
@@ -61,7 +61,7 @@
   min-width: 0;
   font-family: "Gilroy", sans-serif;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 26px;
   line-height: 100%;
   color: #383838;
@@ -79,11 +79,11 @@
   white-space: nowrap;
   font-family: "Gilroy", sans-serif;
   font-style: normal;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 26px;
   line-height: 140%;
   text-align: right;
-  color: #a7a7a7;
+  color: #383838;
 }
 
 .catalog-parts-card.has-discount .catalog-parts-card__price {
@@ -91,17 +91,17 @@
 }
 
 .catalog-parts-card__price-old {
-  margin-top: -4px;
+  margin-top: 0;
   position: relative;
   white-space: nowrap;
   font-family: "Gilroy", sans-serif;
   font-style: normal;
-  font-weight: 800;
-  font-size: 45px;
-  line-height: 100%;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 140%;
   text-align: right;
   color: #a7a7a7;
-  transform: scale(0.58);
+  transform: none;
   transform-origin: right center;
 }
 
@@ -119,6 +119,9 @@
 .catalog-parts-card__btn {
   width: 100%;
   height: 49px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   border-radius: 8px;
   background: linear-gradient(271.69deg, #383838 15.06%, #4e4e4e 85.57%);
@@ -129,6 +132,7 @@
   font-size: 16px;
   line-height: 100%;
   text-align: center;
+  text-decoration: none;
   cursor: pointer;
   transition: filter 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
@@ -143,7 +147,7 @@
 
 @media screen and (max-width: 1440px) {
   .catalog-parts-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     row-gap: 36px;
   }
 
@@ -226,13 +230,19 @@
     font-size: clamp(18px, 2.2vw, 24px);
     line-height: 140%;
     text-align: left;
-    color: rgba(229, 16, 38, 0.68);
+    font-weight: 700;
+    color: #383838;
+  }
+
+  .catalog-parts-card.has-discount .catalog-parts-card__price {
+    color: #e51026;
   }
 
   .catalog-parts-card__price-old {
-    margin-top: -4px;
-    font-size: 42px;
-    transform: scale(0.58);
+    margin-top: 0;
+    font-size: clamp(18px, 2.2vw, 24px);
+    line-height: 140%;
+    transform: none;
   }
 
   .catalog-parts-card__btn {
@@ -315,7 +325,12 @@
     font-size: clamp(16px, 5.13vw, 24px);
     line-height: 120%;
     text-align: left;
-    color: rgba(229, 16, 38, 0.68);
+    font-weight: 700;
+    color: #383838;
+  }
+
+  .catalog-parts-card.has-discount .catalog-parts-card__price {
+    color: #e51026;
   }
 
   .catalog-parts-card__price-old {

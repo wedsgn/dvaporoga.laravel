@@ -60,7 +60,7 @@
                                         $img = $pivotImg ?: $product->image;
                                         $src = $img ? asset('storage/' . ltrim($img, '/')) : null;
                                     @endphp
-                                    <tr>
+                                    <tr id="car-image-{{ $car->id }}">
                                         <td>
                                             <div class="fw-semibold">{{ $car->title }}</div>
                                             <div class="text-muted" style="font-size:12px;">car_id: {{ $car->id }}
@@ -124,7 +124,8 @@
                                         <td>
                                             <form method="POST"
                                                 action="{{ route('admin.products.cars.image', [$product, $car]) }}"
-                                                enctype="multipart/form-data" class="d-flex gap-2 align-items-start">
+                                                enctype="multipart/form-data" class="d-flex gap-2 align-items-start"
+                                                data-scroll-preserve-form>
                                                 @csrf
                                                 <input type="file" name="image" class="form-control">
                                                 <button class="btn btn-soft-success" type="submit">Заменить</button>
@@ -160,4 +161,26 @@
 
         </div>
     </div>
+
+    <script>
+        (function() {
+            const key = 'product_car_images_scroll:{{ $product->id }}';
+
+            document.addEventListener('submit', function(event) {
+                if (!event.target.matches('[data-scroll-preserve-form]')) return;
+                sessionStorage.setItem(key, String(window.scrollY || 0));
+            });
+
+            window.addEventListener('load', function() {
+                const saved = sessionStorage.getItem(key);
+                if (saved === null) return;
+
+                sessionStorage.removeItem(key);
+                const top = parseInt(saved, 10);
+                if (Number.isFinite(top)) {
+                    window.scrollTo(0, top);
+                }
+            });
+        })();
+    </script>
 @endsection

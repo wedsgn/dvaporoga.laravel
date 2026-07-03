@@ -35,7 +35,7 @@ class YandexFeedBuilder
         $xml->writeAttribute('date', now()->format('Y-m-d H:i'));
 
         $xml->startElement('shop');
-        $xml->writeElement('name', config('app.name'));
+        $xml->writeElement('name', 'Пороги и арки');
         $xml->writeElement('company', config('app.name'));
         $xml->writeElement('url', $this->siteUrl());
 

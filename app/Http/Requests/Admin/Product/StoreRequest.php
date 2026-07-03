@@ -17,8 +17,8 @@ class StoreRequest extends FormRequest
       'title' => ['required', 'max:70'],
 
 
-      'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
-      'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
+      'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg,webp',
+      'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg,webp',
       'description' => ['nullable'],
       'car_ids' => ['nullable', 'array'],
       'car_ids.*' => ['integer', 'exists:cars,id'],

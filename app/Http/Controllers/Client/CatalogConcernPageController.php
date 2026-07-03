@@ -44,7 +44,7 @@ public function car_make_show($slug)
   public function search(Request $request)
   {
     $search = $request->input('search');
-    $car_makes = CarMake::visible()->smartFilter($search)->get();
+    $car_makes = CarMake::visible()->smartFilter($search)->orderBy('title')->get();
     return view('partials.concern-card', compact('car_makes'));
   }
 }

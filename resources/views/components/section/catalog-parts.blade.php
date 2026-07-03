@@ -75,12 +75,9 @@
                             @endif
                         </div>
 
-                        <button type="button" class="catalog-parts-card__btn" data-micromodal-trigger="modal-product"
-                            data-product-id="{{ $p->id }}" data-product-title="{{ $p->title }}"
-                            data-product-price="{{ $price }}" data-product-price-old="{{ $priceOld }}"
-                            data-request-source="home" data-request-car="">
-                            Заказать
-                        </button>
+                        <a class="catalog-parts-card__btn" href="{{ route('catalog') }}">
+                            Подробнее
+                        </a>
                     </article>
                 @endforeach
             </div>

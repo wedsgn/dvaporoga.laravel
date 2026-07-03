@@ -14,7 +14,13 @@ class CatalogModelPageController extends Controller
     $car_make = CarMake::where('slug', $car_make_slug)->firstOrFail();
 
     $car_model = $car_make->car_models()->where('slug', $slug)->firstOrFail();
-    $generations = $car_model->cars()->orderBy('years')->get()->groupBy(function ($item, $key) {
+    $generations = $car_model->cars()
+      ->orderBy('years')
+      ->orderBy('generation')
+      ->orderBy('body')
+      ->orderBy('title')
+      ->get()
+      ->groupBy(function ($item, $key) {
       return $item->generation;
     });
     $page = $car_model;
@@ -34,7 +40,7 @@ class CatalogModelPageController extends Controller
   {
     $search = $request->input('search');
     $car_make = CarMake::where('slug', $car_make_slug)->firstOrFail();
-    $car_models = $car_make->car_models()->smartFilter($search)->get();
+    $car_models = $car_make->car_models()->smartFilter($search)->orderBy('title')->get();
     return view('partials.model-card', compact('car_models', 'car_make'));
   }
 }
