@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\PageBanner;
 use App\Services\UploadFiles;
+use App\Support\UploadValidation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PageBannerController extends Controller
 {
@@ -21,32 +23,36 @@ class PageBannerController extends Controller
       'title'         => ['nullable', 'string', 'max:255'],
       'sort_order'    => ['nullable', 'integer'],
       'is_active'     => ['nullable', 'boolean'],
-      'image_desktop' => ['nullable', 'image', 'max:5120'],
-      'image_mobile'  => ['nullable', 'image', 'max:5120'],
-    ]);
+      'image_desktop' => UploadValidation::imageRules(),
+      'image_mobile'  => UploadValidation::imageRules(),
+    ], UploadValidation::messages(['image_desktop', 'image_mobile']));
 
     $data['page_id']   = $page->id;
     $data['is_active'] = $request->boolean('is_active');
 
-    $banner = PageBanner::create($data);
+    $banner = DB::transaction(function () use ($request, $data) {
+      $banner = PageBanner::create($data);
 
-    if ($request->hasFile('image_desktop')) {
-      $path = $this->uploadFiles->imageConvertAndStore(
-        $request,
-        $request->file('image_desktop'),
-        $banner->id
-      );
-      $banner->update(['image_desktop' => $path]);
-    }
+      if ($request->hasFile('image_desktop')) {
+        $path = $this->uploadFiles->imageConvertAndStore(
+          $request,
+          $request->file('image_desktop'),
+          $banner->id
+        );
+        $banner->update(['image_desktop' => $path]);
+      }
 
-    if ($request->hasFile('image_mobile')) {
-      $path = $this->uploadFiles->imageConvertAndStore(
-        $request,
-        $request->file('image_mobile'),
-        $banner->id
-      );
-      $banner->update(['image_mobile' => $path]);
-    }
+      if ($request->hasFile('image_mobile')) {
+        $path = $this->uploadFiles->imageConvertAndStore(
+          $request,
+          $request->file('image_mobile'),
+          $banner->id
+        );
+        $banner->update(['image_mobile' => $path]);
+      }
+
+      return $banner->fresh();
+    });
 
     $html = view('admin.pages.partials.banner-card', [
       'banner' => $banner,
@@ -72,32 +78,35 @@ class PageBannerController extends Controller
       'title'         => ['nullable', 'string', 'max:255'],
       'sort_order'    => ['nullable', 'integer'],
       'is_active'     => ['nullable', 'boolean'],
-      'image_desktop' => ['nullable', 'image', 'max:5120'],
-      'image_mobile'  => ['nullable', 'image', 'max:5120'],
-    ]);
+      'image_desktop' => UploadValidation::imageRules(),
+      'image_mobile'  => UploadValidation::imageRules(),
+    ], UploadValidation::messages(['image_desktop', 'image_mobile']));
 
     $data['is_active'] = $request->boolean('is_active');
 
-    if ($request->hasFile('image_desktop')) {
-      $path = $this->uploadFiles->imageConvertAndStore(
-        $request,
-        $request->file('image_desktop'),
-        $banner->id
-      );
-      $data['image_desktop'] = $path;
-    }
+    $banner = DB::transaction(function () use ($request, $banner, $data) {
+      if ($request->hasFile('image_desktop')) {
+        $path = $this->uploadFiles->imageConvertAndStore(
+          $request,
+          $request->file('image_desktop'),
+          $banner->id
+        );
+        $data['image_desktop'] = $path;
+      }
 
-    if ($request->hasFile('image_mobile')) {
-      $path = $this->uploadFiles->imageConvertAndStore(
-        $request,
-        $request->file('image_mobile'),
-        $banner->id
-      );
-      $data['image_mobile'] = $path;
-    }
+      if ($request->hasFile('image_mobile')) {
+        $path = $this->uploadFiles->imageConvertAndStore(
+          $request,
+          $request->file('image_mobile'),
+          $banner->id
+        );
+        $data['image_mobile'] = $path;
+      }
 
-    $banner->update($data);
-    $banner->refresh();
+      $banner->update($data);
+
+      return $banner->fresh();
+    });
 
     $html = view('admin.pages.partials.banner-card', [
       'banner' => $banner,

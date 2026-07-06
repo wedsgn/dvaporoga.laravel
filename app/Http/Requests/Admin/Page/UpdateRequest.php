@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Page;
 
+use App\Models\Page;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'max:140', Rule::unique('pages')->ignore($this->old_title, 'title')],
+            'title' => ['required', 'max:140', Rule::unique('pages', 'title')->ignore(Page::where('slug', $this->route('page_slug'))->value('id'))],
             'description'  => ['nullable'],
             'phone' => ['nullable', 'max:50'],
             'meta_title' => ['nullable', 'max:140'],

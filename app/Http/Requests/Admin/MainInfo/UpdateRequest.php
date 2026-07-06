@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\MainInfo;
 
+use App\Support\UploadValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -30,7 +31,7 @@ class UpdateRequest extends FormRequest
       'vk' => ['nullable', 'string'],
       'max' => ['nullable', 'string'],
       'phone_clients' => ['nullable', 'string'],
-      'company_image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
+      'company_image' => UploadValidation::imageRules(),
     ];
   }
 
@@ -47,13 +48,10 @@ class UpdateRequest extends FormRequest
       'phone.string' => 'Телефон должен быть строкой',
       'whats_app.string' => 'WhatsApp должен быть строкой',
       'telegram.string' => 'Telegram должен быть строкой',
-      'company_image.image' => 'Изображение должно быть изображением',
-      'company_image.max' => 'Изображение должно быть меньше 200 КБ',
+      ...UploadValidation::messages(['company_image']),
       'vk.string' => 'VK должен быть строкой',
       'max.string' => 'MAX должен быть строкой',
       'phone_clients.string' => 'Телефон клиентов должен быть строкой',
-      'company_image.mimes' => 'Изображение должно быть в формате jpeg,png,jpg,gif,svg'
     ];
   }
 }
-

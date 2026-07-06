@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Blog;
 
+use App\Support\UploadValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -25,8 +26,8 @@ class StoreRequest extends FormRequest
             'title' => ['required', 'max:70', 'unique:blogs,title'],
             'description'  => ['required'],
             'description_short'  => ['required'],
-            'image' => ['nullable', 'image', 'max:200000', 'mimes:jpeg,png,jpg,gif,svg'],
-            'image_mob' => ['nullable', 'image', 'max:200000', 'mimes:jpeg,png,jpg,gif,svg'],
+            'image' => UploadValidation::imageRules(),
+            'image_mob' => UploadValidation::imageRules(),
             'meta_title' => ['nullable', 'max:70'],
             'meta_description' => ['nullable', 'max:160'],
             'meta_keywords' => ['nullable', 'max:500'],
@@ -49,12 +50,7 @@ class StoreRequest extends FormRequest
             'title.unique' => 'Поле заголовок должно быть уникальным',
             'description.required' => 'Поле описание не может быть пустым',
             'description_short.required' => 'Поле краткое описание не может быть пустым',
-            'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
-            'image_mob.max' => 'Размер изображения (мобильная) не должен превышать 200 Мбайт',
-            'image.image' => 'Изображение должно быть файлом изображения',
-            'image_mob.image' => 'Изображение (мобильная) должно быть файлом изображения',
-            'image.mimes' => 'Формат изображения не поддерживается',
-            'image_mob.mimes' => 'Формат изображения (мобильная) не поддерживается',
+            ...UploadValidation::messages(['image', 'image_mob']),
             'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
             'meta_description.max' => 'Поле meta_description не может быть больше 160 символов',
             'meta_keywords.max' => 'Поле meta_keywords не может быть больше 500 символов',
@@ -64,4 +60,3 @@ class StoreRequest extends FormRequest
         ];
     }
 }
-

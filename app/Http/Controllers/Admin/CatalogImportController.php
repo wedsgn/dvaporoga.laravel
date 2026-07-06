@@ -16,6 +16,7 @@ use App\Models\CarMake;
 use App\Models\CarModel;
 use App\Models\Car;
 use App\Models\Product;
+use App\Support\UploadValidation;
 use Illuminate\Support\Str;
 
 class CatalogImportController extends Controller
@@ -42,8 +43,8 @@ class CatalogImportController extends Controller
   public function upload(Request $request)
   {
     $request->validate([
-      'file' => ['required', 'file', 'mimes:xlsx,xls,csv'],
-    ]);
+      'file' => UploadValidation::importRules(),
+    ], UploadValidation::messages(['file'], 'import', false));
 
     $file = $request->file('file');
 

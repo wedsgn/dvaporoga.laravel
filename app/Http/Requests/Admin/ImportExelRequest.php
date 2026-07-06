@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Support\UploadValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ImportExelRequest extends FormRequest
@@ -22,7 +23,7 @@ class ImportExelRequest extends FormRequest
     public function rules(): array
     {
         return [
-              'file_exel' => 'required|mimes:xlsx, xls'
+              'file_exel' => UploadValidation::importRules()
         ];
     }
 
@@ -35,8 +36,7 @@ class ImportExelRequest extends FormRequest
     {
         return [
             'file_exel.required' => 'Поле Файл обязательно для заполнения',
-            'file_exel.mimes' => 'Допустимые форматы файлов: xlsx, xls',
+            ...UploadValidation::messages(['file_exel'], 'import', false),
         ];
     }
 }
-

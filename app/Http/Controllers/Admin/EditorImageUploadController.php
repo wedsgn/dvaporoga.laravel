@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Support\UploadValidation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
+use Throwable;
 
 class EditorImageUploadController extends Controller
 {
@@ -16,17 +18,29 @@ class EditorImageUploadController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $validator = Validator::make($request->all(), ['upload' => 'required|file|image|max:5000']);
+        $validator = Validator::make(
+            $request->all(),
+            ['upload' => UploadValidation::fileImageRules('required', 'editor_image')],
+            UploadValidation::messages(['upload'], 'editor_image', false)
+        );
 
         if ($validator->fails()) {
             return response()->json([
                 'error' => [
                     'message' => $validator->errors()->first('upload')
                 ]
-            ], 400);
+            ], 422);
         }
 
-        $defaultImage = Image::read($request->file('upload'));
+        try {
+            $defaultImage = Image::read($request->file('upload'));
+        } catch (Throwable) {
+            return response()->json([
+                'error' => [
+                    'message' => UploadValidation::processingFailedMessage()
+                ]
+            ], 422);
+        }
         $imageWidth = $defaultImage->width();
         $imageSizes = [];
 
@@ -41,9 +55,17 @@ class EditorImageUploadController extends Controller
                 break;
             }
 
-            $image = Image::read($request->file('upload'))
-                ->resize($size, null, fn($constraint) => $constraint->aspectRatio())
-                ->toWebp(80);
+            try {
+                $image = Image::read($request->file('upload'))
+                    ->resize($size, null, fn($constraint) => $constraint->aspectRatio())
+                    ->toWebp(80);
+            } catch (Throwable) {
+                return response()->json([
+                    'error' => [
+                        'message' => UploadValidation::processingFailedMessage()
+                    ]
+                ], 422);
+            }
 
             $path = 'uploads_editors/' . Str::ulid() . "-$size.webp";
             Storage::disk('public')->put($path, (string)$image);
@@ -55,7 +77,7 @@ class EditorImageUploadController extends Controller
             'uploaded' => 1,
             'url' => $urls['default']
             ] :
-            ['error' => ['message' => 'Upload failed!']];
+            ['error' => ['message' => UploadValidation::processingFailedMessage()]];
         return response()->json($data);
     }
 }

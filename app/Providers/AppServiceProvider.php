@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
       'pages_routes' => Page::$pages_routes,
       'blocks_routes' => Block::$blocks_routes,
 
-      'main_info' => MainInfo::first(),
+      'main_info' => $this->shouldSkipMainInfoQuery() ? null : MainInfo::first(),
     ]);
 
     Car::observe(CarObserver::class);
@@ -72,5 +72,18 @@ class AppServiceProvider extends ServiceProvider
         MarkYandexFeedDirty::mark();
       }
     });
+  }
+
+  private function shouldSkipMainInfoQuery(): bool
+  {
+    if ($this->app->runningUnitTests()) {
+      return true;
+    }
+
+    if (!$this->app->runningInConsole()) {
+      return false;
+    }
+
+    return in_array($_SERVER['argv'][1] ?? '', ['test', 'route:list', 'optimize:clear'], true);
   }
 }

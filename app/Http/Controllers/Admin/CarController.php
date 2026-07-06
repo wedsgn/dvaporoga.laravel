@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Car\UpdateRequest;
 use App\Models\Car;
 use App\Models\CarModel;
 use App\Models\Product;
+use App\Support\UploadValidation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,8 +55,8 @@ class CarController extends BaseController
 
         $request->validate([
             'product_images' => ['nullable', 'array'],
-            'product_images.*' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-        ]);
+            'product_images.*' => UploadValidation::fileImageRules('nullable'),
+        ], UploadValidation::messages(['product_images.*'], 'image', false));
 
         $relatedProducts = $car->products->keyBy('id');
         $uploadedProducts = $request->file('product_images', []);

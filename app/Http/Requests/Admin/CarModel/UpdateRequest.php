@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Admin\CarModel;
 
+use App\Models\CarModel;
+use App\Support\UploadValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,9 +25,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'max:70', Rule::unique('car_models')->ignore($this->old_title, 'title')],
-            'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
-            'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
+            'title' => ['required', 'max:70', Rule::unique('car_models', 'title')->ignore(CarModel::where('slug', $this->route('car_model_slug'))->value('id'))],
+            'image' => UploadValidation::imageRules(),
+            'image_mob' => UploadValidation::imageRules(),
             'description'  => ['required'],
             'car_make_id' => 'required',
             'meta_title' => ['nullable', 'max:70'],
@@ -47,8 +49,7 @@ class UpdateRequest extends FormRequest
             'title.required' => 'Поле "Название" обязательно для заполнения',
             'title.max' => 'Поле "Название" должно быть не более 70 символов',
             'title.unique' => 'Модель автомобиля с таким названием уже существует',
-            'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
-            'image_mob.max' => 'Размер изображения не должен превышать 200 Мбайт',
+            ...UploadValidation::messages(['image', 'image_mob']),
             'car_make_id.required' => 'Поле "Марка" обязательно для заполнения',
             'description.required' => 'Поле "Описание" обязательно для заполнения',
             'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
@@ -60,4 +61,3 @@ class UpdateRequest extends FormRequest
         ];
     }
 }
-

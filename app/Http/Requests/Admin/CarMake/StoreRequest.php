@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\CarMake;
 
+use App\Support\UploadValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -23,8 +24,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => ['required', 'max:70', 'unique:car_makes,title'],
-            'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
-            'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg',
+            'image' => UploadValidation::imageRules(),
+            'image_mob' => UploadValidation::imageRules(),
             'description'  => ['required'],
             'meta_title' => ['nullable', 'max:70'],
             'meta_description' => ['nullable', 'max:160'],
@@ -47,8 +48,7 @@ class StoreRequest extends FormRequest
             'title.required' => 'Поле "Название" обязательно для заполнения',
             'title.max' => 'Поле "Название" должно быть не более 70 символов',
             'title.unique' => 'Марка автомобиля с таким названием уже существует',
-            'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
-            'image_mob.max' => 'Размер изображения не должен превышать 200 Мбайт',
+            ...UploadValidation::messages(['image', 'image_mob']),
             'description.required' => 'Поле "Описание" обязательно для заполнения',
             'meta_title.max' => 'Поле meta_title не может быть больше 70 символов',
             'meta_description.max' => 'Поле meta_description не может быть больше 160 символов',
@@ -59,4 +59,3 @@ class StoreRequest extends FormRequest
         ];
     }
 }
-

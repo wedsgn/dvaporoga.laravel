@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\Product;
+use App\Support\UploadValidation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -51,8 +52,8 @@ class ProductCarImagesController extends Controller
     }
 
     $request->validate([
-      'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-    ]);
+      'image' => UploadValidation::fileImageRules(),
+    ], UploadValidation::messages(['image'], 'image', false));
 
     $file = $request->file('image');
     $ext  = $file->getClientOriginalExtension() ?: 'jpg';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Product;
 
+use App\Support\UploadValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -18,8 +19,8 @@ class UpdateRequest extends FormRequest
 
 
 
-      'image' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg,webp',
-      'image_mob' => 'nullable|image|max:200000|mimes:jpeg,png,jpg,gif,svg,webp',
+      'image' => UploadValidation::imageRules(),
+      'image_mob' => UploadValidation::imageRules(),
       'description' => ['nullable'],
       'car_ids' => ['nullable', 'array'],
       'car_ids.*' => ['integer', 'exists:cars,id'],
@@ -37,8 +38,7 @@ class UpdateRequest extends FormRequest
       'title.max' => 'Поле "Название" должно быть не более 70 символов',
 
 
-      'image.max' => 'Размер изображения не должен превышать 200 Мбайт',
-      'image_mob.max' => 'Размер изображения (мобильная) не должен превышать 200 Мбайт',
+      ...UploadValidation::messages(['image', 'image_mob']),
     ];
   }
 }

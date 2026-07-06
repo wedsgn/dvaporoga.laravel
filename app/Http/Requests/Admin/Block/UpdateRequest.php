@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Block;
 
+use App\Support\UploadValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -25,15 +26,24 @@ class UpdateRequest extends FormRequest
       'keep_images.*' => ['string'],
 
       'new_images' => ['nullable', 'array'],
-      'new_images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+      'new_images.*' => UploadValidation::imageRules('nullable'),
 
       'keep_items' => ['nullable', 'array'],
       'keep_items.*' => ['integer'],
 
       'new_items' => ['nullable', 'array'],
-      'new_items.*.before' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-      'new_items.*.after' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+      'new_items.*.before' => UploadValidation::imageRules('nullable'),
+      'new_items.*.after' => UploadValidation::imageRules('nullable'),
 
     ];
+  }
+
+  public function messages(): array
+  {
+    return UploadValidation::messages([
+      'new_images.*',
+      'new_items.*.before',
+      'new_items.*.after',
+    ]);
   }
 }
