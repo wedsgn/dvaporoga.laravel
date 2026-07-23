@@ -35,7 +35,7 @@ class YandexFeedBuilder
         $xml->writeAttribute('date', now()->format('Y-m-d H:i'));
 
         $xml->startElement('shop');
-        $xml->writeElement('name', 'Пороги и арки');
+        $xml->writeElement('name', 'Арки и пороги');
         $xml->writeElement('company', config('app.name'));
         $xml->writeElement('url', $this->siteUrl());
 
@@ -68,7 +68,7 @@ class YandexFeedBuilder
         $xml->startElement('categories');
 
         $this->writeCategory($xml, 1, 'Автодетали');
-        $this->writeCategory($xml, 10, 'Детали', 1);
+        $this->writeCategory($xml, 10, 'Арки и пороги', 1);
         $this->writeCategory($xml, 11, 'Пороги', 10);
 
         $xml->endElement();
@@ -136,7 +136,7 @@ class YandexFeedBuilder
                         xml: $xml,
                         id: 'make-' . $make->id,
                         url: $this->buildMakeUrl($make),
-                        name: $this->normalizeText('Кузовные детали для ' . $make->title),
+                        name: $this->normalizeText('Арки и пороги для ' . $make->title),
                         picture: $this->resolveMakeCollectionImage($make, $imageMap),
                         description: $this->buildMakeDescription($make),
                     );
@@ -163,7 +163,7 @@ class YandexFeedBuilder
                         xml: $xml,
                         id: 'model-' . $model->id,
                         url: $this->buildModelUrl($model),
-                        name: $this->normalizeText('Кузовные детали для ' . $model->car_make->title . ' ' . $model->title),
+                        name: $this->normalizeText('Арки и пороги для ' . $model->car_make->title . ' ' . $model->title),
                         picture: $this->resolveModelCollectionImage($model, $imageMap),
                         description: $this->buildModelDescription($model),
                     );
@@ -330,7 +330,7 @@ class YandexFeedBuilder
         $body = $this->bodyWithDoors($car);
 
         return $this->normalizeText(implode(' ', array_filter([
-            'Каталог деталей',
+            'Арки и пороги',
             $make,
             $model,
             $generation,
@@ -360,7 +360,7 @@ class YandexFeedBuilder
     protected function buildMakeDescription(CarMake $make): string
     {
         return sprintf(
-            'Каталог кузовных деталей для %s. Пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.',
+            'Арки и пороги для %s. В наличии пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.',
             $make->title
         );
     }
@@ -368,7 +368,7 @@ class YandexFeedBuilder
     protected function buildModelDescription(CarModel $model): string
     {
         return sprintf(
-            'Каталог кузовных деталей для %s %s. Пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.',
+            'Арки и пороги для %s %s. В наличии пороги, арки и другие кузовные элементы собственного производства. Оплата при получении, доставка по РФ.',
             $model->car_make->title,
             $model->title
         );
@@ -399,7 +399,7 @@ class YandexFeedBuilder
             ->take(20)
             ->implode(', ');
 
-        $text = 'Каталог кузовных деталей для ' . $carName . '. ';
+        $text = 'Арки и пороги для ' . $carName . '. ';
 
         if ($productNames !== '') {
             $text .= 'В наличии: ' . $productNames . '. ';
