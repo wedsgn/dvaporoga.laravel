@@ -242,7 +242,12 @@
           openThanks();
 
           document.dispatchEvent(
-            new CustomEvent("form:success", { detail: { form } }),
+            new CustomEvent("form:success", {
+              detail: {
+                form,
+                formData: fd,
+              },
+            }),
           );
         } else {
           const msg =

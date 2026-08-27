@@ -9,6 +9,7 @@ import { Fancybox } from "@fancyapps/ui";
 import Choices from "choices.js";
 import "./modules/product-modal";
 import "./modules/forms-ajax";
+import "./modules/uis-form-tracking";
 import "./modules/ym-goals";
 window.MicroModal = MicroModal;
 window.Choices = Choices;
