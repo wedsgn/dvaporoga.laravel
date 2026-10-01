@@ -8,7 +8,7 @@ import Swiper from "swiper/bundle";
 import { Fancybox } from "@fancyapps/ui";
 import Choices from "choices.js";
 import "./modules/product-modal";
-import "./modules/forms-ajax";
+import { appendMetrikaClientId } from "./modules/forms-ajax";
 import "./modules/uis-form-tracking";
 import "./modules/ym-goals";
 window.MicroModal = MicroModal;
@@ -162,7 +162,7 @@ window.addEventListener("load", () => {
       }
 
       try {
-        const fd = new FormData(form);
+        const fd = appendMetrikaClientId(new FormData(form));
         const res = await fetch(form.action, {
           method: "POST",
           headers: {
@@ -178,16 +178,30 @@ window.addEventListener("load", () => {
           cache: "no-store",
         });
 
+        let data = null;
+        try {
+          data = await res.clone().json();
+        } catch (e) {}
+
         if (res.status === 201 || res.ok) {
-          if (window.YMGoals && typeof window.YMGoals.fire === "function") {
-            window.YMGoals.fire(form, { trigger: "success" });
-          } else {
-            console.log(
-              "[YMGoals] fire skipped: YMGoals или ym не доступны",
-              window.YMGoals,
-              typeof window.ym
-            );
-          }
+          const trackingId =
+            data && typeof data.tracking_id === "string" ? data.tracking_id : "";
+          const trackingAckUrl =
+            data && data.tracking && typeof data.tracking.ack_url === "string"
+              ? data.tracking.ack_url
+              : "";
+
+          document.dispatchEvent(
+            new CustomEvent("form:success", {
+              detail: {
+                form,
+                formData: fd,
+                trackingId,
+                trackingAckUrl,
+                ymTrigger: "success",
+              },
+            }),
+          );
 
           MicroModal.show("modal-2");
 
@@ -215,10 +229,9 @@ window.addEventListener("load", () => {
         }
 
         if (res.status === 422 || res.status === 429) {
-          const data = await res.json();
           const errors =
-            data.errors ||
-            (data.message ? { phone: [data.message] } : {});
+            (data && data.errors) ||
+            (data && data.message ? { phone: [data.message] } : {});
 
           console.log(errors);
 

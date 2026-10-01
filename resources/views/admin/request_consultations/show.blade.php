@@ -67,6 +67,7 @@
                     </div>
                 </div><!-- end card body -->
             </div>
+            @include('admin.partials.delivery_status_details', ['item' => $item])
         </div>
     </div>
 @endsection

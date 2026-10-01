@@ -42,6 +42,7 @@ return [
     'webhook' => env('BITRIX24_WEBHOOK'),
     'source_id' => env('BITRIX24_SOURCE_ID'),
     'responsible_id' => env('BITRIX24_RESPONSIBLE_ID'),
+    'metrika_client_id_field' => env('BITRIX24_METRIKA_CLIENT_ID_FIELD'),
   ],
   'teletype' => [
     'id' => env('TELETYPE_ID'),

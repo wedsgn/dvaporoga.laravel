@@ -14,6 +14,7 @@ use App\Jobs\RequestCarMailSendJob;
 
 use App\Models\Product;
 use App\Models\RequestConsultation;
+use App\Models\RequestDeliveryStatus;
 use App\Models\RequestProduct;
 use App\Models\CarMake;
 use App\Models\CarModel;
@@ -24,8 +25,10 @@ use App\Notifications\TelegramNotificationCar;
 
 use App\Services\Bitrix24Service;
 use App\Services\Forms\FormSubmissionCooldownService;
+use App\Services\RequestDeliveryTracker;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class RequestsController extends Controller
 {
@@ -34,6 +37,7 @@ class RequestsController extends Controller
   public function store_request_consultation(
     RequestConsultationStoreRequest $request,
     Bitrix24Service $b24,
+    RequestDeliveryTracker $deliveryTracker,
     FormSubmissionCooldownService $cooldown
   ) {
     if ($response = $this->acquireCooldownOrRespond($request->input('phone'), $cooldown)) {
@@ -43,7 +47,14 @@ class RequestsController extends Controller
     try {
       $rc = new RequestConsultation();
       $rc->fill($request->validated());
+      $rc->metrika_client_id = $this->normalizeMetrikaClientId($request->input('metrika_client_id'));
       $rc->save();
+      $deliveryTracker->initialize(
+        RequestDeliveryStatus::REQUEST_CONSULTATION,
+        (int) $rc->id,
+        $rc->tracking_id,
+        ['form_id' => $rc->form_id]
+      );
 
       $site  = $this->siteTag($request);
       $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
@@ -52,12 +63,20 @@ class RequestsController extends Controller
 
       try {
         $utm = $this->resolveUtm($request);
+        $deliveryTracker->markProcessing(
+          RequestDeliveryStatus::REQUEST_CONSULTATION,
+          (int) $rc->id,
+          RequestDeliveryStatus::CHANNEL_BITRIX,
+          $rc->tracking_id,
+          ['form_id' => $rc->form_id]
+        );
 
         $res = $b24->addLead([
           'TITLE'   => $title,
           'NAME'    => preg_replace('/[_\*]/', ' ', $rc->name),
           'PHONE'   => $rc->phone,
           'EMAIL'   => $rc->email ?? null,
+          'METRIKA_CLIENT_ID' => $rc->metrika_client_id,
 
           'SOURCE_DESCRIPTION' => $this->comments([
             'form_id'     => $rc->form_id,
@@ -84,11 +103,32 @@ class RequestsController extends Controller
         if (!($res['ok'] ?? false)) {
           Log::warning('B24 lead add failed (consultation)', $res);
         }
+
+        $this->trackBitrixResult(
+          $deliveryTracker,
+          RequestDeliveryStatus::REQUEST_CONSULTATION,
+          (int) $rc->id,
+          $rc->tracking_id,
+          $rc->form_id,
+          $res
+        );
       } catch (\Throwable $e) {
         Log::error('B24 consult exception: ' . $e->getMessage());
+        $deliveryTracker->markFailed(
+          RequestDeliveryStatus::REQUEST_CONSULTATION,
+          (int) $rc->id,
+          RequestDeliveryStatus::CHANNEL_BITRIX,
+          [
+            'tracking_id' => $rc->tracking_id,
+            'error_code' => 'exception',
+            'error_message' => 'Bitrix24 request exception',
+            'meta' => ['form_id' => $rc->form_id],
+          ],
+          false
+        );
       }
 
-      return response()->json(['success' => true], 201);
+      return response()->json($this->successPayload($rc), 201);
     } catch (\Throwable $e) {
       $cooldown->release($request->input('phone'));
       throw $e;
@@ -98,6 +138,7 @@ class RequestsController extends Controller
   public function store_request_product(
     RequestProductStoreRequest $request,
     Bitrix24Service $b24,
+    RequestDeliveryTracker $deliveryTracker,
     FormSubmissionCooldownService $cooldown
   ) {
     if ($response = $this->acquireCooldownOrRespond($request->input('phone'), $cooldown)) {
@@ -107,6 +148,7 @@ class RequestsController extends Controller
     try {
       $rp = new RequestProduct();
       $rp->fill($request->validated());
+      $rp->metrika_client_id = $this->normalizeMetrikaClientId($request->input('metrika_client_id'));
 
       $raw = json_decode($request->validated()['data'] ?? '[]', true) ?: [];
       $ids = [];
@@ -118,6 +160,12 @@ class RequestsController extends Controller
 
       $rp->data = json_encode($ids);
       $rp->save();
+      $deliveryTracker->initialize(
+        RequestDeliveryStatus::REQUEST_PRODUCT,
+        (int) $rp->id,
+        $rp->tracking_id,
+        ['form_id' => $rp->form_id]
+      );
 
       $site  = $this->siteTag($request);
       $title = $this->titleRu('Заявка с сайта', $rp->form_id, $site);
@@ -126,6 +174,13 @@ class RequestsController extends Controller
 
       try {
         $utm = $this->resolveUtm($request);
+        $deliveryTracker->markProcessing(
+          RequestDeliveryStatus::REQUEST_PRODUCT,
+          (int) $rp->id,
+          RequestDeliveryStatus::CHANNEL_BITRIX,
+          $rp->tracking_id,
+          ['form_id' => $rp->form_id]
+        );
 
         $items = [];
         foreach ($ids as $pid) {
@@ -139,6 +194,7 @@ class RequestsController extends Controller
           'NAME'    => preg_replace('/[_\*]/', ' ', $rp->name),
           'PHONE'   => $rp->phone,
           'EMAIL'   => $rp->email ?? null,
+          'METRIKA_CLIENT_ID' => $rp->metrika_client_id,
 
           'SOURCE_DESCRIPTION' => $this->comments([
             'form_id'     => $rp->form_id,
@@ -166,11 +222,32 @@ class RequestsController extends Controller
         if (!($res['ok'] ?? false)) {
           Log::warning('B24 lead add failed (product)', $res);
         }
+
+        $this->trackBitrixResult(
+          $deliveryTracker,
+          RequestDeliveryStatus::REQUEST_PRODUCT,
+          (int) $rp->id,
+          $rp->tracking_id,
+          $rp->form_id,
+          $res
+        );
       } catch (\Throwable $e) {
         Log::error('B24 product exception: ' . $e->getMessage());
+        $deliveryTracker->markFailed(
+          RequestDeliveryStatus::REQUEST_PRODUCT,
+          (int) $rp->id,
+          RequestDeliveryStatus::CHANNEL_BITRIX,
+          [
+            'tracking_id' => $rp->tracking_id,
+            'error_code' => 'exception',
+            'error_message' => 'Bitrix24 request exception',
+            'meta' => ['form_id' => $rp->form_id],
+          ],
+          false
+        );
       }
 
-      return response()->json(['success' => true], 201);
+      return response()->json($this->successPayload($rp), 201);
     } catch (\Throwable $e) {
       $cooldown->release($request->input('phone'));
       throw $e;
@@ -180,6 +257,7 @@ class RequestsController extends Controller
   public function store_request_car(
     RequestCarStoreRequest $request,
     Bitrix24Service $b24,
+    RequestDeliveryTracker $deliveryTracker,
     FormSubmissionCooldownService $cooldown
   ) {
     if ($response = $this->acquireCooldownOrRespond($request->input('phone'), $cooldown)) {
@@ -193,7 +271,14 @@ class RequestsController extends Controller
         'phone'   => $request->input('phone'),
         'form_id' => $request->input('form_id', 'car-page-form'),
       ]);
+      $rc->metrika_client_id = $this->normalizeMetrikaClientId($request->input('metrika_client_id'));
       $rc->save();
+      $deliveryTracker->initialize(
+        RequestDeliveryStatus::REQUEST_CONSULTATION,
+        (int) $rc->id,
+        $rc->tracking_id,
+        ['form_id' => $rc->form_id]
+      );
 
       $site  = $this->siteTag($request);
       $title = $this->titleRu('Заявка с сайта', $rc->form_id, $site);
@@ -226,12 +311,20 @@ class RequestsController extends Controller
 
       try {
         $utm = $this->resolveUtm($request);
+        $deliveryTracker->markProcessing(
+          RequestDeliveryStatus::REQUEST_CONSULTATION,
+          (int) $rc->id,
+          RequestDeliveryStatus::CHANNEL_BITRIX,
+          $rc->tracking_id,
+          ['form_id' => $rc->form_id]
+        );
 
         $res = $b24->addLead([
           'TITLE'   => $title,
           'NAME'    => $details['name'] ?: null,
           'PHONE'   => $details['phone'],
           'EMAIL'   => null,
+          'METRIKA_CLIENT_ID' => $rc->metrika_client_id,
 
           'SOURCE_DESCRIPTION' => $this->comments([
             'form_id'     => $rc->form_id,
@@ -261,11 +354,32 @@ class RequestsController extends Controller
         if (!($res['ok'] ?? false)) {
           Log::warning('B24 lead add failed (car-page)', $res);
         }
+
+        $this->trackBitrixResult(
+          $deliveryTracker,
+          RequestDeliveryStatus::REQUEST_CONSULTATION,
+          (int) $rc->id,
+          $rc->tracking_id,
+          $rc->form_id,
+          $res
+        );
       } catch (\Throwable $e) {
         Log::error('B24 car-page exception: ' . $e->getMessage());
+        $deliveryTracker->markFailed(
+          RequestDeliveryStatus::REQUEST_CONSULTATION,
+          (int) $rc->id,
+          RequestDeliveryStatus::CHANNEL_BITRIX,
+          [
+            'tracking_id' => $rc->tracking_id,
+            'error_code' => 'exception',
+            'error_message' => 'Bitrix24 request exception',
+            'meta' => ['form_id' => $rc->form_id],
+          ],
+          false
+        );
       }
 
-      return response()->json(['success' => true], 201);
+      return response()->json($this->successPayload($rc), 201);
     } catch (\Throwable $e) {
       $cooldown->release($request->input('phone'));
       throw $e;
@@ -293,6 +407,114 @@ class RequestsController extends Controller
       ],
     ], 429)->header('Retry-After', (string) $retryAfter);
   }
+
+  private function successPayload($requestModel): array
+  {
+    return [
+      'success' => true,
+      'tracking_id' => $requestModel->tracking_id,
+      'tracking' => [
+        'ack_url' => $this->trackingAckUrl($requestModel->tracking_id),
+      ],
+    ];
+  }
+
+  private function normalizeMetrikaClientId(mixed $value): ?string
+  {
+    if (
+      $value === null ||
+      is_bool($value) ||
+      is_array($value) ||
+      (is_object($value) && !$value instanceof \Stringable)
+    ) {
+      return null;
+    }
+
+    if (!is_scalar($value) && !$value instanceof \Stringable) {
+      return null;
+    }
+
+    try {
+      $clientId = trim((string) $value);
+    } catch (\Throwable $e) {
+      return null;
+    }
+
+    if ($clientId === '' || strlen($clientId) > 100) {
+      return null;
+    }
+
+    return preg_match('/^[A-Za-z0-9._:-]+$/', $clientId) === 1 ? $clientId : null;
+  }
+
+  private function trackingAckUrl(?string $trackingId): ?string
+  {
+    if (!$trackingId) {
+      return null;
+    }
+
+    try {
+      return URL::temporarySignedRoute(
+        'request-tracking.ack',
+        now()->addHours(2),
+        ['tracking_id' => $trackingId]
+      );
+    } catch (\Throwable $e) {
+      Log::error('Request delivery ACK URL generation failed', [
+        'tracking_id' => $trackingId,
+        'message' => $e->getMessage(),
+      ]);
+
+      return null;
+    }
+  }
+
+  private function trackBitrixResult(
+    RequestDeliveryTracker $deliveryTracker,
+    string $requestType,
+    int $requestId,
+    ?string $trackingId,
+    ?string $formId,
+    array $result
+  ): void {
+    $externalId = data_get($result, 'response.result');
+    $externalId = is_scalar($externalId) ? (string) $externalId : null;
+
+    if ($result['ok'] ?? false) {
+      $deliveryTracker->markSent(
+        $requestType,
+        $requestId,
+        RequestDeliveryStatus::CHANNEL_BITRIX,
+        [
+          'tracking_id' => $trackingId,
+          'external_id' => $externalId,
+          'http_status' => $result['status'] ?? null,
+          'meta' => ['form_id' => $formId],
+        ],
+        false
+      );
+
+      return;
+    }
+
+    $exceptionMessage = data_get($result, 'response.exception');
+
+    $deliveryTracker->markFailed(
+      $requestType,
+      $requestId,
+      RequestDeliveryStatus::CHANNEL_BITRIX,
+      [
+        'tracking_id' => $trackingId,
+        'external_id' => $externalId,
+        'http_status' => $result['status'] ?? null,
+        'error_code' => data_get($result, 'response.error') ?: ($exceptionMessage ? 'exception' : null),
+        'error_message' => data_get($result, 'response.error_description') ?: ($exceptionMessage ? 'Bitrix24 request exception' : 'Bitrix24 lead add failed'),
+        'meta' => ['form_id' => $formId],
+      ],
+      false
+    );
+  }
+
   /* ===================== NOTIFICATIONS ===================== */
 
   protected function send_request_consultation(RequestConsultation $rc, string $subject): void

@@ -1,3 +1,16 @@
+import { getMetrikaClientId } from "./metrika-client-id";
+
+export const appendMetrikaClientId = (formData) => {
+  try {
+    const clientId = getMetrikaClientId();
+    if (clientId && typeof formData?.set === "function") {
+      formData.set("metrika_client_id", clientId);
+    }
+  } catch (_) {}
+
+  return formData;
+};
+
 (() => {
   "use strict";
 
@@ -212,7 +225,7 @@
       return;
     }
 
-    const fd = new FormData(form);
+    const fd = appendMetrikaClientId(new FormData(form));
     const csrf = csrfOf(form);
 
     setLoading(form, true);
@@ -236,6 +249,13 @@
 
       if (res.ok) {
         if (data && data.success === true) {
+          const trackingId =
+            typeof data.tracking_id === "string" ? data.tracking_id : "";
+          const trackingAckUrl =
+            data.tracking && typeof data.tracking.ack_url === "string"
+              ? data.tracking.ack_url
+              : "";
+
           form.reset();
           clearErrors(form);
           closeParentModalIfAny(form);
@@ -246,6 +266,8 @@
               detail: {
                 form,
                 formData: fd,
+                trackingId,
+                trackingAckUrl,
               },
             }),
           );

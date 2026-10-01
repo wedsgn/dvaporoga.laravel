@@ -17,6 +17,7 @@ use App\Http\Controllers\Client\CatalogConcernPageController;
 use App\Http\Controllers\Client\CatalogGenerationPageController;
 use App\Http\Controllers\Client\CatalogModelPageController;
 use App\Http\Controllers\Client\PartnershipPageController;
+use App\Http\Controllers\Client\RequestTrackingAckController;
 use App\Http\Controllers\Client\RequestsController;
 use App\Http\Controllers\Client\WelcomePageController;
 use App\Http\Controllers\Client\CarAjaxController;
@@ -47,6 +48,9 @@ Route::get('/blog/{slug}', [BlogPageController::class, 'show'])->name('blog.sing
 Route::post('/request-consultation', [RequestsController::class, 'store_request_consultation'])->name('request_consultation.store');
 Route::post('/requests/car', [RequestsController::class, 'store_request_car'])->name('requests.car');
 Route::post('/request-product', [RequestsController::class, 'store_request_product'])->name('request_product.store');
+Route::post('/request-tracking/ack', RequestTrackingAckController::class)
+  ->middleware(['signed', 'throttle:30,1'])
+  ->name('request-tracking.ack');
 
 Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
 

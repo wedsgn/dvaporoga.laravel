@@ -6,15 +6,16 @@
             <div class="row g-2">
                 <div class="col-sm-4">
                     <div class="search-box">
-                        <form class="d-flex" action="{{ route('admin.request_consultations.search') }}" method="get">
+                        <form class="d-flex" action="{{ route('admin.request_consultations.index') }}" method="get">
                             @csrf
                             <input class="form-control me-2" type="search" name="search" placeholder="{{__('admin.placeholder_search')}}"
-                                aria-label="Search">
+                                aria-label="Search" value="{{ request('search') }}">
                             <button class="btn btn-outline-primary" type="submit">{{__('admin.btn_search')}}</button>
                         </form>
                     </div>
                 </div>
             </div>
+            @include('admin.partials.delivery_filters', ['routeName' => 'admin.request_consultations.index'])
         </div>
     </div>
     <div class="row">
@@ -29,6 +30,10 @@
                                         <th scope="col" style="width: 80px;">ID</th>
                                         <th scope="col">{{__('admin.field_name')}}</th>
                                         <th scope="col">{{__('admin.field_phone')}}</th>
+                                        <th scope="col">Форма</th>
+                                        <th scope="col">Bitrix</th>
+                                        <th scope="col">UIS</th>
+                                        <th scope="col">Метрика</th>
                                         <th scope="col">{{__('admin.field_created_at')}}</th>
                                         <th scope="col" style="width: 150px;">{{__('admin.field_action')}}</th>
                                     </tr>
@@ -39,6 +44,10 @@
                                             <td>{{ $item->id }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->phone }}</td>
+                                            <td>{{ $item->form_id ?: '—' }}</td>
+                                            <td>@include('admin.partials.delivery_status_badge', ['item' => $item, 'channel' => 'bitrix'])</td>
+                                            <td>@include('admin.partials.delivery_status_badge', ['item' => $item, 'channel' => 'uis'])</td>
+                                            <td>@include('admin.partials.delivery_status_badge', ['item' => $item, 'channel' => 'yandex_metrika'])</td>
                                             <td>{{ $item->created_at->diffForHumans() }}</td>
                                             <td>
 
