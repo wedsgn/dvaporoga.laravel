@@ -4,7 +4,7 @@
   if (typeof document === "undefined") return;
 
   const RETRY_INTERVAL_MS = 250;
-  const MAX_WAIT_MS = 5000;
+  const MAX_WAIT_MS = 15000;
   const CALLBACK_TIMEOUT_MS = 5000;
   const ACK_MAX_ATTEMPTS = 2;
   const ACK_RETRY_MS = 600;
